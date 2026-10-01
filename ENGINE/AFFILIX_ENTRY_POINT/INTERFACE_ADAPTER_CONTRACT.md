@@ -30,7 +30,8 @@ The ChatGPT Project hosts the Affilix Skill and executes the canonical workflow 
 The interface may:
 
 - accept `/Affilix` and campaign input
-- present the current stage output
+- present only the fields owned by the current stage
+- filter runtime state by active-stage output scope before presentation
 - accept `/next` to advance the run
 - accept direct revision instructions
 - preserve the active run state within the current Project conversation
@@ -39,6 +40,8 @@ The interface must not:
 
 - implement competing stage logic
 - maintain a second canonical product or creator state
+- expose fields owned by a later stage before that stage is active
+- render the full campaign state as a generic Stage 01 summary
 - interpret `/next` as approval
 - bypass QC or Final Package
 - invent missing repository rules
