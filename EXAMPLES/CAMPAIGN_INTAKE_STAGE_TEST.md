@@ -173,3 +173,29 @@ Acceptance:
 - If Voice Script changes, affected Video Prompt becomes STALE and must be revalidated.
 - A dialogue-only revision must not automatically invalidate Visual Prompt unless visual or action timing is affected.
 - If dialogue crosses a generation segment boundary, the immutable bridge reference remains the continuity anchor.
+
+
+## Voice Script UGC Conversationality Regression
+
+A Voice Script must translate validated product facts into spoken creator language rather than reproducing product-page copy.
+
+Example input:
+- Product fact: contains ceramide complex
+- Supported benefit: helps hydrate and support the skin barrier
+- Texture: lightweight
+- CTA: Buy now
+
+The engine may use the facts, but should flag a line such as:
+"Memiliki ceramide complex untuk membantu hidrasi dan mendukung skin barrier dengan sensasi ringan untuk rutinitas skincare. Buy now."
+
+as NEEDS_REFINEMENT because it stacks feature/benefit language and ends with an abrupt promotional CTA.
+
+A conversational alternative may be:
+"Yang aku suka dari ini, ada ceramide complex-nya dan teksturnya juga ringan. Jadi enak dipakai sehari-hari."
+
+Acceptance:
+1. Product facts remain unchanged and supported.
+2. The engine does not invent first-person usage or outcomes.
+3. The CTA intent remains represented when a CTA is required.
+4. Conversationality validation is advisory and may return NEEDS_REFINEMENT.
+5. Voice Script remains canonical for exact spoken wording consumed by Video Prompt.
