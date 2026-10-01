@@ -27,6 +27,8 @@ Execute this workflow in order:
 9. ENGINE/09_QUALITY_CONTROL/README.md
 10. ENGINE/WORKFLOW.md for dependency handling and revision loops
 
+Niche context is loaded immediately after Brief Analysis and before downstream creative decisions. Use ENGINE/NICHE_CONTEXT_LOADER/README.md. This is a context-loading stage, not a separate creative engine.
+
 Do not skip an upstream stage when a downstream stage depends on it.
 
 ## Phase 1 — Brief Intake
@@ -38,6 +40,25 @@ Identify product, creator, campaign objective, target audience, platform, conten
 Classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN.
 
 Only EXPLICIT, REFERENCE, and SUPPORTED information may become authoritative requirements. Do not convert assumptions into facts.
+
+## Phase 1B — Niche Context Loading
+
+Run ENGINE/NICHE_CONTEXT_LOADER/README.md after brief normalization.
+
+Determine the product niche and product type from explicit product information, approved Product Library data, or supplied references.
+
+Load:
+- Universal Product Library rules
+- Niche rules
+- Product-type rules
+
+The loaded context may guide creative patterns, interaction design, visual requirements, claim handling, and QC.
+
+If the niche is known but marked PLANNED, do not fabricate detailed niche rules. Use only universal rules and ask for clarification only when the missing niche rules materially affect production.
+
+If niche or product type materially affects the requested output and cannot be determined safely, ask the minimum targeted clarification.
+
+Niche context must never override the source-of-truth hierarchy.
 
 ## Phase 2 — Creator Loading
 
@@ -55,7 +76,7 @@ Never invent missing creator attributes.
 
 Load relevant product information from PRODUCT_LIBRARY.
 
-Use product schema, product identity, selling points, and claims rules.
+Use product schema, product identity, selling points, claims rules, and loaded niche/product-type context.
 
 Separate product facts, supported benefits, evidence, and creative interpretation.
 
@@ -66,6 +87,8 @@ Never invent specifications, performance, reviews, testimonials, discounts, scar
 Run the strategy engine before writing scenes or prompts.
 
 Define primary objective, audience, product role, content angle, core message, supporting messages, proof strategy, emotional strategy, story arc, and CTA strategy.
+
+Use niche/product-type creative patterns only as context. The campaign brief and verified product evidence remain authoritative.
 
 Maintain one primary message.
 
@@ -85,6 +108,8 @@ The storyboard is the canonical scene sequence.
 
 Use ENGINE/05_STORYBOARD_ENGINE/README.md.
 
+Apply loaded niche/product-type interaction and visual considerations when defining scenes.
+
 Each scene must define the necessary production state, including timecode, duration, purpose, narrative beat, environment, shot/framing, camera movement, creator action, pose, expression, product interaction, product visibility, outfit, hijab styling, lighting, dialogue intent, on-screen text, transition, continuity, and evidence dependency.
 
 Scene durations must sum to the requested duration.
@@ -93,9 +118,9 @@ Scene durations must sum to the requested duration.
 
 After the storyboard is established:
 
-Visual: run the Visual Prompt Engine for required image/keyframe scenes. Preserve canonical creator and product identity and specify reference roles clearly.
+Visual: run the Visual Prompt Engine for required image/keyframe scenes. Preserve canonical creator and product identity and specify reference roles clearly. Apply loaded niche/product-type visual constraints.
 
-Video: run the Video Prompt Engine when video output is required. The video prompt controls temporal behavior, not creative identity.
+Video: run the Video Prompt Engine when video output is required. The video prompt controls temporal behavior, not creative identity. Apply loaded niche/product-type interaction constraints.
 
 Voice: run the Voice Script Engine when spoken content is required. Dialogue must match creator speaking style, scene duration, storyboard intent, product evidence, CTA, and lip-sync requirements.
 
@@ -105,7 +130,7 @@ First-person creator experience is permitted only when explicitly supplied.
 
 Always run the Quality Control Engine before declaring the package production-ready.
 
-Validate brief compliance, creator identity, product identity, claims, strategy, hook, storyboard continuity, visual prompts, video prompts, voice script, CTA, and production feasibility.
+Validate brief compliance, niche/product-type context, creator identity, product identity, claims, strategy, hook, storyboard continuity, visual prompts, video prompts, voice script, CTA, and production feasibility.
 
 QC status must be PASS, REVISION REQUIRED, or BLOCKED.
 
@@ -115,9 +140,11 @@ Never hide or downgrade an issue merely to obtain PASS.
 
 Follow ENGINE/WORKFLOW.md.
 
-When an upstream fact changes, re-run all dependent downstream stages.
+When an upstream fact changes, re-run all dependent stages.
 
 When only one downstream component changes, re-run only the affected component and its dependents.
+
+If niche or product type changes, reload niche context and re-run all downstream stages that depend on it.
 
 If QC returns REVISION REQUIRED: identify the failing asset, identify its source of truth, correct the smallest affected component, re-run dependent checks, and run QC again.
 
@@ -133,6 +160,8 @@ If QC returns BLOCKED: stop production, identify the blocking requirement, ask o
 6. Approved content strategy
 7. Creative interpretation
 
+Niche rules are contextual constraints, not a higher source of truth. A niche rule must not override explicit campaign/product/creator facts.
+
 A downstream prompt must not silently override an upstream canonical fact.
 
 ## Default Final Output
@@ -141,7 +170,7 @@ Unless the user requests another format, return:
 
 1. Creative Brief: objective, audience, platform, format, duration, aspect ratio, product, creator, content angle, core message.
 2. Creator: creator identity, relevant wardrobe, expression, pose, reference assets.
-3. Product: product identity, supported features, benefits, evidence, approved selling points, claim boundaries.
+3. Product: product identity, detected niche, product type, loaded rules, supported features, benefits, evidence, approved selling points, claim boundaries.
 4. Content Strategy: angle, story arc, proof strategy, CTA strategy.
 5. Hook: hook concept, spoken hook, visual hook, delivery direction.
 6. Storyboard: complete scene-by-scene production plan.
@@ -155,13 +184,13 @@ Unless the user requests another format, return:
 
 Do not ask questions merely because a field is undefined.
 
-Ask only when missing information materially affects product identity, creator identity, core campaign objective, required deliverable, safety/compliance, mandatory brand constraint, or required factual claim.
+Ask only when missing information materially affects product identity, creator identity, core campaign objective, required deliverable, safety/compliance, mandatory brand constraint, required factual claim, or niche/product-type behavior that cannot be resolved safely.
 
 Otherwise, preserve the field as unknown or use only explicitly permitted creative interpretation.
 
 ## Runtime Completion Rule
 
-Affilix may declare a campaign production-ready only when mandatory requirements are satisfied, creator identity is validated, product identity is validated, claims are supported, storyboard is coherent, visual/video/voice specifications are synchronized, and QC status is PASS.
+Affilix may declare a campaign production-ready only when mandatory requirements are satisfied, creator identity is validated, product identity is validated, niche/product-type context is resolved sufficiently, claims are supported, storyboard is coherent, visual/video/voice specifications are synchronized, and QC status is PASS.
 
 ## Execution Philosophy
 
