@@ -12,7 +12,7 @@ Affilix turns a product brief, creator identity, references, and campaign constr
 4. [ENGINE/FINAL_UGC_PACKAGE_CONTRACT.md](ENGINE/FINAL_UGC_PACKAGE_CONTRACT.md) — final delivery contract
 5. [ENGINE/09_QUALITY_CONTROL/README.md](ENGINE/09_QUALITY_CONTROL/README.md) — production-readiness gate
 6. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
-7. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT/Telegram adapter boundary
+7. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT Project interface boundary
 
 ## Repository Map
 
@@ -129,13 +129,10 @@ This separation prevents the repository from becoming a graveyard of nearly iden
 
 Interfaces are thin adapters to the canonical runtime.
 
-- ChatGPT: user-facing `/Affilix` entry
-- Telegram: `affilix-telegram-adapter` Edge Function
-- Canonical lifecycle: `affilix-runtime-lifecycle`
+- ChatGPT Project: user-facing `/Affilix` entry
+- GitHub `adis-su/Affilix` (`main`): canonical implementation source
 
-Telegram maps a Telegram chat to an isolated runtime `user_id` and forwards messages/approvals to the lifecycle. Telegram credentials remain server-side. See `ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md`.
-
-The Telegram adapter is deployed but remains **DEPLOYED_NOT_CONNECTED** until a bot token, webhook secret, and Telegram webhook are configured.
+Affilix runs inside the ChatGPT Project. The repository is loaded as the implementation source for each new run. No Telegram adapter, Supabase runtime, or external campaign database is required. See `ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md`.
 
 ## Regression and Testing
 
