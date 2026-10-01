@@ -260,3 +260,8 @@ The video prompt is passed to:
 - 09_QUALITY_CONTROL
 
 The storyboard and visual prompt remain the source of truth for scene intent and appearance. The video prompt defines temporal behavior.
+
+
+## Layered Niche Context Integration
+
+Video prompts now receive Loaded Niche Context. Context may influence motion intensity, interaction pattern, setting, and camera behavior when supported by the storyboard. It must not create unsupported product performance claims. Continuity checks include context-driven wardrobe, environment, and action state.
