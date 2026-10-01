@@ -47,8 +47,8 @@ Execute each run in this order. After each stage is validated and completed, wai
 6. ENGINE/04_HOOK_ENGINE/README.md
 7. ENGINE/05_STORYBOARD_ENGINE/README.md
 8. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
-9. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
-10. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken content is required
+9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken content is required
+10. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
 11. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
 
 Do not skip an upstream stage when a downstream stage depends on it.
@@ -85,7 +85,7 @@ Load the selected Creator Library records and preserve identity across scenes. N
 
 Load Product Library facts, selling points, claims rules, niche context, and product-type rules. Never invent specifications, performance, reviews, testimonials, discounts, scarcity, guarantees, certifications, or personal experience.
 
-Run strategy before scenes or prompts. Generate hooks from the validated strategy. Storyboard is the canonical temporal and scene sequence. Visual, Video, and Voice specifications remain subordinate to the Storyboard and their upstream sources.
+Run strategy before scenes or prompts. Generate hooks from the validated strategy. Storyboard is the canonical temporal and scene sequence. Visual, Voice, and Video specifications remain subordinate to the Storyboard and their upstream sources. Voice Script is the canonical spoken-content source for Video Prompt.
 
 ## Reclassification and Revision
 
@@ -128,8 +128,8 @@ Stage order:
 6. Hook
 7. Storyboard
 8. Visual Prompt
-9. Video Prompt when required
-10. Voice Script when required
+9. Voice Script when required
+10. Video Prompt when required
 11. Production Output
 
 The run ends after the final required production output is generated. There is no separate QC stage and no separate Final UGC Package stage.
