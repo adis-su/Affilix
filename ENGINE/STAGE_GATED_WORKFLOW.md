@@ -154,7 +154,7 @@ Progression: automatic after validation.
 
 ### 05 — Hook
 Input: validated Strategy.
-Output: approved hook direction/copy and delivery direction.
+Output: validated hook direction/copy and delivery direction.
 Progression: automatic after validation.
 
 ### 06 — Storyboard
@@ -175,12 +175,12 @@ Progression: automatic after validation.
 Input: validated Storyboard, completed Visual Prompt where relevant, and active provider capability profile when video generation is required.
 Output: motion specification plus provider-compatible generation segment mapping.
 
-If the completed final duration exceeds a provider's single-generation limit, create multiple generation segments. Each segment must use a supported provider duration, and the segment durations must sum to the approved final duration.
+If the completed final duration exceeds a provider's single-generation limit, create multiple generation segments. Each segment must use a supported provider duration, and the segment durations must sum to the completed final duration.
 
 Progression: automatic after validation.
 
 ### 09 — Voice Script
-Input: validated Storyboard. Additional visual/video approval is required only when the active voice contract explicitly declares those dependencies.
+Input: validated Storyboard. Additional visual/video completion is required only when the active voice contract explicitly declares those dependencies.
 Output: scene-by-scene dialogue and delivery instructions.
 
 Voice timing follows the creative/storyboard timeline. Technical video segment boundaries must not redefine spoken wording or timing.
@@ -188,7 +188,7 @@ Voice timing follows the creative/storyboard timeline. Technical video segment b
 Progression: automatic after validation.
 
 ### 10 — Quality Control
-Input: all required approved production assets.
+Input: all required completed production assets.
 Output: QC status and corrections.
 
 QC must validate requested duration, creative duration, final assembled duration, provider compatibility, segment arithmetic, and continuity.
@@ -199,7 +199,7 @@ Gate: `PASS` permits Final UGC Package. `REVISION REQUIRED` routes to the smalle
 Input: QC `PASS` and no stale required assets.
 Output: final production package and production output.
 
-The package must preserve the approved requested duration and record any technical generation segmentation.
+The package must preserve the requested duration and record any technical generation segmentation.
 
 ## UX Rules
 
