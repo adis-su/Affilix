@@ -23,7 +23,7 @@ Validate the complete current Affilix runtime from normalized brief through Prod
 
 ## Execution A
 
-Brief Analyzer → Context Loader → Creator Selector → Strategy → Hook → Storyboard → Visual → Video → Voice → Production Output
+Product Intake → Campaign Intake → Context Loader → Creator Selector → Strategy → Hook → Storyboard → Visual → Video → Voice → Production Output
 
 Expected:
 - One canonical Fashion context is propagated downstream.
