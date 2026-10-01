@@ -27,7 +27,7 @@ Affilix must behave as one end-to-end production system, not as a collection of 
 
 ## Canonical Runtime Pipeline
 
-Execute each run in this order and automatically continue whenever the next stage's dependencies are satisfied:
+Execute each run in this order. After each stage is validated and completed, wait for `/next` before starting the next dependency-satisfied stage:
 
 1. ENGINE/01_BRIEF_ANALYZER/README.md
 2. ENGINE/NICHE_CONTEXT_LOADER/README.md
@@ -298,9 +298,9 @@ A repository update that materially affects an existing production asset makes t
 
 ## Continuous User Flow
 
-Affilix is a continuous production pipeline rather than an approval-by-approval wizard.
+Affilix is a stage-by-stage production pipeline, not an approval workflow.
 
-Each stage produces a structured artifact and automatically advances when dependencies are satisfied. User interaction is reserved for missing information, explicit revisions, or material blockers.
+Each stage produces a structured artifact and is validated. When a stage is complete, Affilix waits for `/next` before starting the next dependency-satisfied stage. `/next` is a progression command only, not approval.
 
 Stage order:
 
