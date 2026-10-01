@@ -84,6 +84,7 @@ niche_context:
 
 stages:
   brief_product: { status:, output: }
+  campaign_intake: { status:, output: }
   niche_context: { status:, output: }
   creator: { status:, output: }
   content_strategy: { status:, output: }
@@ -105,7 +106,7 @@ artifacts:
 
 ## Stage Orchestration
 
-Stages 01 through 06 execute in sequence. After each stage is validated and completed, wait for `/next`.
+Stages 01 through 07 execute in sequence, including the explicit Campaign Intake stage after Brief & Product. After each stage is validated and completed, wait for `/next`.
 
 After Storyboard, downstream stages execute according to deliverable requirements:
 - Visual Prompt when visual output is required.
@@ -116,6 +117,10 @@ These are dependency-driven stages, not approval branches.
 
 ## Canonical Stage Prerequisites
 
+- Campaign Intake: Brief & Product COMPLETED.
+- Niche Context: Brief & Product + Campaign Intake COMPLETED.
+- Creator: Niche Context + Campaign Intake COMPLETED.
+- Content Strategy: Brief & Product + Campaign Intake + Niche Context + Creator COMPLETED.
 - Visual Prompt: Storyboard COMPLETED.
 - Video Prompt: Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + provider capability profile when video is required.
 - Voice Script: Storyboard COMPLETED.
@@ -150,6 +155,7 @@ When a completed upstream canonical input changes:
 Examples:
 - Creator revision → Strategy, Hook, Storyboard, Visual, Video, Voice become STALE.
 - Product or niche revision → all dependent creative stages become STALE.
+- Campaign requirement revision → Niche Context, Creator, Strategy, Hook, Storyboard, Visual, Video, and Voice become STALE as applicable.
 - Strategy revision → Hook, Storyboard, Visual, Video, Voice become STALE.
 - Hook revision → affected Storyboard and downstream assets become STALE.
 - Storyboard revision → Visual, Video, Voice become STALE.
