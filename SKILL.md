@@ -23,6 +23,8 @@ Nama Produk:
 Link Produk:
 ```
 
+Stage 01 user-facing output is Product Intake only. Internal Campaign Intake fields may be initialized as UNKNOWN, but must not be rendered, summarized, or exposed until Stage 02 is active.
+
 Do not add a welcome message, production-run header, commit pinning message, repository diagnostics, or other bootstrap text before or after this intake block unless the user explicitly asks for runtime/debug information.
 
 Do not expose individual engines as user commands. `/Affilix` is the entry point; engines execute internally within the continuous production workflow defined in `ENGINE/STAGE_GATED_WORKFLOW.md`. `/next` is used only when the user wants to move to the next completed stage; it is not an approval gate.
