@@ -10,6 +10,7 @@ adis-su/Affilix @ main
 
 ```text
 Brief & Product
+→ Campaign Intake
 → Niche & Context
 → Creator
 → Content Strategy
@@ -52,7 +53,7 @@ None identified by this packaging audit.
 
 ## Non-Blocking Follow-Ups
 
-1. Keep future regression artifacts aligned with the ten-stage pipeline.
+1. Keep future regression artifacts aligned with the eleven-stage pipeline.
 2. Refresh this audit after material architecture changes.
 3. Add a formal CHANGELOG only when versioned releases require it.
 
