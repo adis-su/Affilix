@@ -65,3 +65,25 @@ The user-facing video prompt itself must be one standalone Markdown code block. 
 ## Invalidation
 
 Changes to Storyboard, Visual Prompt, Creator, Product, Context, provider capability profile, or requested duration invalidate Video Prompt as STALE.
+
+
+## Reference Transition Output
+
+Every transition must declare:
+
+```yaml
+from_reference_id:
+to_reference_id:
+action_beats: []
+primary_action:
+secondary_motion: []
+product_interaction:
+gaze_path:
+expression_behavior:
+camera_behavior:
+duration:
+```
+
+Every generation segment must declare `start_reference_id`, `target_reference_id`, and the transition IDs it contains. Bridge references must resolve to one immutable version across adjacent scenes.
+
+Stage completion: process, validate, mark `COMPLETED`, then wait for `/next`. If a reference changes, all transitions touching it become `STALE`.
