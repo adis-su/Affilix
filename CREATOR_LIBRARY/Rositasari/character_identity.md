@@ -6,65 +6,136 @@ This file defines the persistent visual identity of Rositasari for Affilix UGC g
 
 The identity must remain consistent across images, video scenes, storyboards, and prompts unless the user explicitly requests a controlled change.
 
-## Identity Status
+## Canonical Character Data
 
-- Creator ID: ROSITASARI
-- Identity Type: UGC Fashion Creator
-- Canonical Status: Initial profile
-- Source of Truth: This file + approved visual references
+### Character Identity
 
-## 1. Age Appearance
+- Name: Rositasari
+- Age: 25
+- Gender: Female
+- Height: 165 cm
+- Appearance: Young adult
+- Ethnicity/style presentation: Southeast Asian visual appearance
+- Hijab: Yes
+- Hijab identity: Hijabi woman; hair is covered in normal presentation unless the user explicitly requests otherwise.
 
-- Apparent age: [DEFINE]
-- Age presentation: [DEFINE]
-- Overall maturity: [DEFINE]
-- Face maturity: [DEFINE]
-- Avoid: making the creator noticeably younger or older without explicit instruction.
+## Face
 
-## 2. Face
+- Shape: Oval-rounded
+- Forehead: Moderately wide and smooth
+- Cheeks: Soft and naturally rounded
+- Jawline: Soft and rounded
+- Chin: Short-to-medium and rounded
 
-- Face shape: [DEFINE]
-- Facial proportions: [DEFINE]
-- Eyes: [DEFINE]
-- Eyebrows: [DEFINE]
-- Nose: [DEFINE]
-- Lips: [DEFINE]
-- Jawline: [DEFINE]
-- Cheek structure: [DEFINE]
-- Distinguishing facial features: [DEFINE]
-- Default expression: [DEFINE]
+## Eyes
 
-## 3. Hair
+- Size: Medium
+- Shape: Almond-round
+- Iris color: Very dark brown
+- Gaze: Natural and direct
+- Eyelids: Natural
+- Eyelashes: Subtle
+- Eye spacing: Balanced
 
+## Eyebrows
+
+- Color: Very dark brown
+- Thickness: Medium
+- Shape: Natural soft arch
+- Density: Moderately full
+- Tail: Slightly tapered
+
+## Nose
+
+- Size: Medium
+- Bridge: Relatively straight
+- Width: Narrow-to-medium
+- Tip: Rounded
+- Nostrils: Small-to-medium
+- Appearance: Natural
+
+## Lips
+
+- Size: Medium
+- Upper lip: Medium-thin
+- Lower lip: Slightly fuller
+- Cupid's bow: Soft and defined
+- Color: Natural muted pink
+- Corners: Neutral
+
+## Skin
+
+- Tone: Light-medium
+- Undertone: Warm-neutral
+- Texture: Natural
+- Pores: Subtle
+- Facial marks: Subtle natural marks
+- Finish: Natural skin
+- Makeup: Minimal
+
+## Facial Expression
+
+- Default: Calm neutral
+- Personality: Approachable
+- Gaze: Natural
+- Smile: Subtle when required
+
+## Hijab
+
+Hijab is a canonical part of Rositasari's creator identity.
+
+### Default Hijab Characteristics
+
+- Head covering: Full hijab coverage
+- Hair visibility: Not visible in standard scenes
+- Coverage: Neat and modest
+- Styling: Clean, natural, contemporary
+- Fit: Secure and realistic around the head, neck, and shoulders
+- Fabric: [DEFINE]
+- Default hijab style: [DEFINE]
+- Default hijab color palette: [DEFINE]
+
+### Hijab Variation
+
+The following may vary by campaign or outfit:
+
+- Hijab color
+- Hijab fabric
+- Draping style
+- Fold arrangement
+- Styling detail
+
+Variation must remain compatible with Rositasari's established hijabi identity.
+
+### Hijab Identity Lock
+
+Do not generate exposed hair, uncovered neck, or a non-hijab hairstyle in standard Rositasari scenes unless the user explicitly requests a different presentation.
+
+A hijab style reference controls the hijab styling, not Rositasari's facial identity.
+
+## Hair
+
+Because Rositasari wears hijab, hair is normally covered and should not be visually exposed.
+
+Underlying hair attributes may be stored when relevant to approved references, but they are not visible by default.
+
+- Hair visibility: Covered by hijab
 - Hair color: [DEFINE]
 - Hair length: [DEFINE]
 - Hair texture: [DEFINE]
-- Hair density: [DEFINE]
-- Hair style: [DEFINE]
-- Default hairstyle: [DEFINE]
-- Acceptable variations: [DEFINE]
-- Avoid: changing the core hair identity between scenes without instruction.
+- Hair style: Covered / not visible in standard scenes
 
-## 4. Skin
-
-- Skin tone: [DEFINE]
-- Undertone: [DEFINE]
-- Skin texture: [DEFINE]
-- Finish: [DEFINE]
-- Distinguishing marks: [DEFINE]
-- Makeup baseline: [DEFINE]
-
-## 5. Body
+## Body
 
 - Body type: [DEFINE]
-- Height presentation: [DEFINE]
+- Height presentation: 165 cm
 - Proportions: [DEFINE]
 - Shoulder/torso characteristics: [DEFINE]
 - Leg/arm proportions: [DEFINE]
 - Posture: [DEFINE]
 - Body presentation should remain natural and consistent with the approved reference.
 
-## 6. Style
+## Style
 
 ### Fashion Identity
 
@@ -75,6 +146,7 @@ The identity must remain consistent across images, video scenes, storyboards, an
 - Fabric/material preference: [DEFINE]
 - Accessories: [DEFINE]
 - Footwear: [DEFINE]
+- Hijab styling: Modest, clean, natural, and compatible with the outfit unless a campaign specifies otherwise.
 
 ### UGC Presentation
 
@@ -85,7 +157,7 @@ The identity must remain consistent across images, video scenes, storyboards, an
 - Typical setting: [DEFINE]
 - Overall visual language: [DEFINE]
 
-## 7. Reference
+## Reference
 
 Store approved references in:
 
@@ -95,8 +167,9 @@ Reference priority:
 
 1. Approved canonical face/identity reference
 2. Approved full-body reference
-3. Approved fashion/style reference
-4. Scene-specific references supplied by the user
+3. Approved hijab/fashion reference
+4. Approved fashion/style reference
+5. Scene-specific references supplied by the user
 
 When references conflict, prioritize the most recent explicitly approved canonical reference.
 
@@ -106,12 +179,13 @@ Every generated scene must preserve:
 
 - Face identity
 - Apparent age
-- Hair identity
+- Hijabi identity
+- Hijab coverage in standard scenes
 - Skin characteristics
 - Body proportions
 - Core fashion identity
 
-Clothing may change when required by the brief. Changing clothing does not change the creator's underlying identity.
+Clothing and hijab styling may change when required by the brief. Changing clothing or hijab styling does not change the creator's underlying identity.
 
 ## Controlled Variation
 
@@ -125,7 +199,10 @@ Allowed variation may include:
 - Environment
 - Outfit
 - Accessories
-- Hairstyle variation when compatible with the canonical identity
+- Hijab color
+- Hijab fabric
+- Hijab draping style
+- Makeup intensity within the established identity
 
 Uncontrolled variation is not allowed when it changes the creator's recognizable identity.
 
