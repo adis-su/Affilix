@@ -23,8 +23,8 @@ USER BRIEF
 → STAGE 06 HOOK
 → STAGE 07 STORYBOARD
 → STAGE 08 VISUAL PROMPT
-→ STAGE 09 VIDEO PROMPT when required
-→ STAGE 10 VOICE SCRIPT when required
+→ STAGE 09 VOICE SCRIPT when required
+→ STAGE 10 VIDEO PROMPT when required
 → STAGE 11 PRODUCTION OUTPUT
 
 After each stage is validated and completed, wait for `/next`. `/next` is not an approval action.
@@ -63,11 +63,13 @@ Provider limitations must not silently change campaign duration. Technical gener
 
 ## Downstream Production Specifications
 
-After Storyboard is completed and the user sends `/next`, run the applicable downstream engines:
+After Storyboard is completed and the user sends /next, run the applicable downstream engines in dependency order:
 
 - Visual Prompt
-- Video Prompt when video output is required
 - Voice Script when spoken content is required
+- Video Prompt when video output is required
+
+Video Prompt must not execute before the current Voice Script when spoken content exists.
 
 These outputs remain subordinate to the Storyboard and all upstream source-of-truth rules.
 
@@ -95,10 +97,11 @@ Dependency examples:
 - Niche/Product Type change → Strategy, Hook, Storyboard, Visual, Video, Voice
 - Strategy change → Hook, Storyboard, Visual, Video, Voice
 - Hook change → affected Storyboard and downstream production specs
-- Storyboard change → Visual, Video, Voice
-- Duration change → Storyboard and duration-sensitive downstream specs
+- Storyboard change → Visual, Voice, Video
+- Duration change → Storyboard and duration-sensitive Visual, Voice, and Video specs
 - Visual change → Video when motion/state is affected
-- Voice change → Voice only unless creative timing changes
+- Voice change → affected Voice and Video
+- Voice timing change → Video when dialogue synchronization is affected
 - Video segment-plan change → Video only unless creative timing changes
 
 ## Runtime State
