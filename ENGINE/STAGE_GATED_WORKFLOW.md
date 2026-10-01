@@ -164,7 +164,7 @@ Provider generation limits are technical constraints and must not silently redef
 ### 07 — Visual Prompt
 Input: approved Storyboard and all upstream approved state.
 Output: one production-ready image prompt per required visual scene.
-Gate: user approval before Video Prompt when video is required, otherwise Voice Script or QC as applicable.
+Gate: user approval for the Visual Prompt branch. Video and Voice branches may proceed independently when their prerequisites are satisfied; sibling approval is not implied.
 
 ### 08 — Video Prompt
 Input: approved Storyboard, approved Visual Prompt where relevant, and active provider capability profile when video generation is required.
@@ -172,10 +172,10 @@ Output: motion specification plus provider-compatible generation segment mapping
 
 If the approved final duration exceeds a provider's single-generation limit, create multiple generation segments. Each segment must use a supported provider duration, and the segment durations must sum to the approved final duration.
 
-Gate: user approval before Voice Script when voice is required, otherwise QC.
+Gate: user approval for the Video Prompt branch. Visual approval is additionally required only when `visual_continuity_required` is true.
 
 ### 09 — Voice Script
-Input: approved Storyboard and approved downstream visual/video state where relevant.
+Input: approved Storyboard. Additional visual/video approval is required only when the active voice contract explicitly declares those dependencies.
 Output: scene-by-scene dialogue and delivery instructions.
 
 Voice timing follows the creative/storyboard timeline. Technical video segment boundaries must not redefine spoken wording or timing.
