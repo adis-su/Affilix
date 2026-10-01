@@ -26,7 +26,7 @@ Runtime lifecycle, Stage 01–11 functions, interface boundary, failure/stale se
 | affilix-stage-08 | ACTIVE v2 |
 | affilix-quality-control | ACTIVE v2 |
 | affilix-final-package | ACTIVE v2 |
-| affilix-telegram-adapter | ACTIVE v2 |
+| affilix-telegram-adapter | ACTIVE v3 |
 
 ## Contract Checks
 
@@ -36,6 +36,7 @@ Runtime lifecycle, Stage 01–11 functions, interface boundary, failure/stale se
 - Video continuity can require Visual Prompt approval.
 - Revision propagates STALE state through declared dependents.
 - STALE stages cannot be approved.
+- Explicit skip is represented as `SKIPPED`.
 - QC gates Final Package.
 - Final Package rejects missing, stale, or unapproved required artifacts.
 - Repository commit pinning is part of run initialization.
@@ -46,7 +47,7 @@ Runtime lifecycle, Stage 01–11 functions, interface boundary, failure/stale se
 
 - Core Affilix runtime functions retain JWT verification.
 - Telegram webhook is intentionally public at the HTTP layer because Telegram cannot attach a Supabase JWT.
-- Telegram adapter therefore requires `TELEGRAM_WEBHOOK_SECRET` before processing requests.
+- Telegram adapter rejects requests unless `TELEGRAM_WEBHOOK_SECRET` is configured and matches the Telegram secret header.
 - Telegram bot credentials are expected only as server-side Supabase secrets.
 - Service-role credentials are never placed in Git or returned to clients.
 
@@ -54,11 +55,13 @@ Runtime lifecycle, Stage 01–11 functions, interface boundary, failure/stale se
 
 Live HTTP execution remains pending because the available Supabase tool surface does not expose an Edge Function invocation operation.
 
-The deployment state is therefore verified, but end-to-end runtime execution is not claimed as PASS.
+The deployment state is verified, but end-to-end runtime execution is not claimed as PASS.
 
 ## Telegram Status
 
-The Telegram adapter is deployed and hardened, but it is **DEPLOYED_NOT_CONNECTED**.
+The Telegram adapter is **DEPLOYED_NOT_CONNECTED**.
+
+It routes Telegram chat messages to the canonical lifecycle/stage functions and keeps transport state separate from production logic.
 
 Connection requires external Telegram configuration:
 
@@ -72,4 +75,4 @@ Connection requires external Telegram configuration:
 
 **CONDITIONAL RELEASE**
 
-The repository and deployed runtime are structurally ready for integration testing. Production release is not marked fully verified until live HTTP execution and Telegram webhook integration have been exercised successfully.
+The repository and deployed runtime are structurally ready for integration testing. Full production release remains pending live HTTP execution and Telegram webhook integration.
