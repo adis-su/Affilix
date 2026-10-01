@@ -137,7 +137,7 @@ Creative scene durations must add up to the requested final duration.
 
 Provider limitations must not silently change the requested final duration. If technical segmentation is needed, the storyboard should preserve natural creative beat boundaries that can later map to provider-supported generation segments.
 
-The storyboard becomes the canonical temporal source for Visual, Video, and Voice.
+The storyboard becomes the canonical temporal source for Visual, Video, and Voice. After approval, these downstream specifications may execute independently, subject to their branch-specific prerequisites.
 
 ## Phase 7 — Parallel Production Specifications
 
