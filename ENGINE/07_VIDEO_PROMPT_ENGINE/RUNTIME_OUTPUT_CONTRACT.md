@@ -1,19 +1,16 @@
 # Affilix — Video Prompt Runtime Output Contract
 
-## Stage Gate
-
-Stage 07 Video Prompt is a production specification generated after current Stage 06 Storyboard approval. Visual Prompt approval is required for appearance continuity; Voice Script approval is not required because audio and visual specifications are parallel descendants.
-
 ## Output
 
 ```yaml
-stage: 07_VIDEO_PROMPT
+stage: 08_VIDEO_PROMPT
 status: REVIEW
 provider:
   provider_id:
+  model_id:
   capability_profile_version:
-  supported_generation_durations: []
-  selected_generation_duration_policy:
+  supported_generation_durations: [4, 6, 8, 10]
+  selected_generation_duration_policy: EXACT_SEGMENT_COMPOSITION
 scenes:
   - scene_id:
     creative_duration:
@@ -37,8 +34,8 @@ validation:
   motion: PASS | REVIEW
   timing: PASS | REVIEW
   continuity: PASS | REVIEW
+  duration_feasibility: PASS | BLOCKED
 unresolved_requirements: []
-decision_queue: []
 provenance: []
 source_artifacts: []
 source_commit_sha:
@@ -46,16 +43,25 @@ source_commit_sha:
 
 ## Duration Invariant
 
-The sum of `creative_duration` equals the approved campaign duration. The sum of generation segment durations equals that same final duration. Provider limits may change segmentation, but never the approved creative duration.
+Every generation segment must use exactly one of:
 
-## Rules
+`4s | 6s | 8s | 10s`
 
-The storyboard owns scene intent and timing. Visual Prompt owns appearance. Video Prompt owns motion and technical generation segmentation. Voice Script owns wording.
+The sum of all generation segment durations must equal the requested final duration exactly.
 
-Every segment must have a coherent start and end state. No filler motion may be introduced solely to consume provider duration. Provider capabilities must be explicitly supplied or marked UNKNOWN.
+If exact composition is impossible, `duration_feasibility` is `BLOCKED`. Do not round or silently change the final duration.
 
-The artifact enters REVIEW and waits for approval before generation handoff.
+## Ownership
+
+- Storyboard owns creative scene intent and timing.
+- Visual Prompt owns static appearance.
+- Video Prompt owns motion and technical generation segmentation.
+- Voice Script owns wording and delivery.
+
+## Output Formatting
+
+The user-facing video prompt itself must be one standalone Markdown code block. Metadata remains outside the code block.
 
 ## Invalidation
 
-Changes to Storyboard, Visual Prompt, Creator, Product, Context, provider capability profile, or duration constraints invalidate Video Prompt as STALE.
+Changes to Storyboard, Visual Prompt, Creator, Product, Context, provider capability profile, or requested duration invalidate Video Prompt as STALE.
