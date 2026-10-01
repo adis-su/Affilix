@@ -317,3 +317,24 @@ Stage order:
 11. Final UGC Package
 
 See `ENGINE/STAGE_GATED_WORKFLOW.md` for approval, revision, stale-state, and dependency semantics.
+
+
+## Live Repository Runtime
+
+The repository is the canonical implementation source and must be resolved at runtime.
+
+At the start of every new `/Affilix` run:
+
+1. Resolve the current `main` branch head.
+2. Record its commit SHA.
+3. Pin that commit for the active run.
+4. Load relevant rules and assets from that pinned commit.
+5. Keep repository state separate from production-run state.
+
+Do not rely on copied Project Instructions, remembered repository content, or stale cached snapshots as authoritative implementation rules.
+
+A newer repository commit is used automatically by the next new run. The active run does not silently switch repository versions mid-production.
+
+See `ENGINE/REPOSITORY_RUNTIME/README.md` and `ENGINE/REPOSITORY_RUNTIME/RUNTIME_CONTRACT.md`.
+
+Interfaces such as ChatGPT and Telegram are adapters to the same runtime. They must not maintain competing workflow logic or canonical campaign state.
