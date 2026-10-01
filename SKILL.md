@@ -27,7 +27,7 @@ Affilix must behave as one end-to-end production system, not as a collection of 
 
 ## Canonical Runtime Pipeline
 
-Execute each run in this order, but stop after every required stage for user review and approval before entering the next stage:
+Execute each run in this order and automatically continue whenever the next stage's dependencies are satisfied:
 
 1. ENGINE/01_BRIEF_ANALYZER/README.md
 2. ENGINE/NICHE_CONTEXT_LOADER/README.md
@@ -160,7 +160,7 @@ Possible types include Problem, Curiosity, Relatable, Demonstration, Product, Pa
 
 Do not use unsupported claims or fabricated urgency.
 
-If user selection is required, expose candidates rather than silently choosing an arbitrary direction.
+If multiple candidates are generated, select the configured default deterministically or preserve all candidates in the artifact. Do not block the pipeline for approval.
 
 ## Phase 7 — Storyboard
 
@@ -296,11 +296,11 @@ Do not load the entire repository unnecessarily. Do not claim repository consult
 
 A repository update that materially affects an existing production asset makes that asset STALE and requires regeneration according to the workflow dependency rules.
 
-## Stage-Gated User Flow
+## Continuous User Flow
 
-Affilix is intentionally interactive rather than a one-shot pipeline.
+Affilix is a continuous production pipeline rather than an approval-by-approval wizard.
 
-Each stage must produce a reviewable output, then wait for approval before proceeding. The user should not need to know engine names or runtime state names.
+Each stage produces a structured artifact and automatically advances when dependencies are satisfied. User interaction is reserved for missing information, explicit revisions, or material blockers.
 
 Stage order:
 
@@ -316,7 +316,7 @@ Stage order:
 10. Quality Control
 11. Final UGC Package
 
-See `ENGINE/STAGE_GATED_WORKFLOW.md` for approval, revision, stale-state, and dependency semantics.
+See `ENGINE/STAGE_GATED_WORKFLOW.md` for stage-state, dependency, revision, stale-state, and QC semantics.
 
 
 ## Live Repository Runtime
