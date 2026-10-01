@@ -17,7 +17,7 @@ It must describe one coherent sequence, not a collection of unrelated shots.
 - Content strategy
 - Approved hook
 - Platform requirements
-- Duration
+- Requested total video duration
 - Aspect ratio
 - Brand and campaign constraints
 
@@ -32,12 +32,25 @@ Return:
 - Creator ID
 - Product ID
 - Platform
-- Total duration
+- Requested total duration
+- Creative total duration
+- Generation segmentation plan when provider limits require segmentation
 - Aspect ratio
 - Scene count
 - Primary content angle
 - Primary message
 - Approved hook
+
+### Duration Model
+
+Storyboard timing uses **creative duration** as the source of truth for storytelling.
+
+- `requested_duration`: the duration explicitly requested by the user/campaign.
+- `creative_duration`: the planned duration of the narrative sequence. It must equal the requested duration unless the user explicitly approves a change.
+- `generation_duration`: the technical duration used by a video provider for one generated segment.
+- `generation_segments`: one or more technical video generations that assemble into the requested final duration.
+
+The storyboard must never silently shorten or lengthen the requested final video because of provider limitations.
 
 ### Scene Record
 
@@ -45,7 +58,7 @@ Every scene should contain:
 
 - Scene ID
 - Timecode
-- Duration
+- Creative duration
 - Story purpose
 - Narrative beat
 - Location/environment
@@ -183,7 +196,35 @@ Suggested short-form distribution:
 
 These are planning ranges, not rigid platform requirements.
 
-Total scene duration must match the requested video duration.
+### Provider-Aware Duration Planning
+
+The storyboard plans **creative beats first**, then production tooling maps those beats to provider-supported generation durations.
+
+If the selected video provider supports only discrete durations such as [4, 6, 8, 10] seconds, the provider constraint must not redefine the campaign duration.
+
+For example:
+
+requested_duration = 18s
+
+may be represented as:
+
+Scene 01 = 4s + Scene 02 = 6s + Scene 03 = 8s
+
+or as another scene/segment arrangement that preserves the approved 18-second narrative.
+
+When a creative scene duration does not map cleanly to provider durations, Affilix must fit or restructure the scene intentionally. It must not silently add filler, cut meaningful action, or change the final duration.
+
+### Segment Boundaries
+
+When multiple generated clips are required:
+
+- Place boundaries at completed or naturally resumable visual beats.
+- Preserve creator, wardrobe, hijab, product, environment, lighting, and spatial continuity across segments.
+- Avoid splitting a critical physical action at an arbitrary point when a cleaner boundary is possible.
+- Record the technical generation duration separately from the creative scene duration.
+- The final assembled duration must equal the approved requested duration.
+
+Total creative scene duration must match the requested video duration.
 
 ## Dialogue Rules
 
@@ -255,9 +296,12 @@ Before handoff, check:
 
 ### Timing
 
-- Scene durations add up to the requested duration.
-- Dialogue can reasonably fit the scene duration.
+- Creative scene durations add up to the requested duration.
+- Any generation segmentation is explicitly represented.
+- Segment durations are supported by the selected provider profile.
+- Dialogue can reasonably fit the creative timing.
 - No scene is overloaded.
+- No provider limitation silently changes the approved final duration.
 
 ### Production
 
@@ -265,6 +309,7 @@ Before handoff, check:
 - Camera instructions are clear.
 - References are identifiable.
 - Transitions are physically plausible.
+- Segment boundaries support continuity when segmentation is required.
 
 ## Handoff
 
@@ -275,8 +320,7 @@ The completed storyboard becomes the source structure for:
 - 08_VOICE_SCRIPT_ENGINE
 - 09_QUALITY_CONTROL
 
-The storyboard should be treated as the canonical scene sequence for downstream generation.
-
+The storyboard should be treated as the canonical scene sequence and creative timing source for downstream generation.
 
 ## Layered Niche Context Integration
 
