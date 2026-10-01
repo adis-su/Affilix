@@ -1,12 +1,12 @@
-# Affilix — Stage-Gated Production Contract v1
+# Affilix — Continuous Production Contract v2
 
 ## Purpose
 
-Affilix runs as a **stage-gated production workflow**. The system must not silently execute the entire pipeline in one pass when the user is expected to review creative decisions.
+Affilix runs as a **continuous production workflow**. The runtime automatically advances through dependency-satisfied stages. User approval is not a progression requirement.
 
 Each stage follows:
 
-**INPUT → PROCESS → OUTPUT → REVIEW → APPROVAL → NEXT STAGE**
+**INPUT → PROCESS → OUTPUT → VALIDATE → NEXT STAGE**
 
 The user experiences one guided production assistant. Engine names remain implementation details.
 
@@ -38,21 +38,31 @@ Each stage has one of:
 - `SKIPPED`
 - `COMPLETED`
 
-`APPROVED` is the gate that permits progression to the next stage.
+`APPROVED` is an internal completion state for dependency tracking and audit. It is not a user-facing gate.
 
 QC additionally uses its existing validation statuses: `PASS`, `REVISION REQUIRED`, and `BLOCKED`.
 
-## Approval Contract
+## Automatic Progression Contract
 
 After producing a stage output:
-1. Set the stage to `REVIEW`.
-2. Present the output in user-facing language.
-3. Do not execute the next gated stage yet.
-4. Accept approval or revision instructions.
-5. On approval, set the stage to `APPROVED` and start the next required stage.
-6. On revision, keep the stage active, revise only the affected output, and return to `REVIEW`.
+1. Persist the artifact.
+2. Validate the stage and its prerequisites.
+3. Automatically advance to the next dependency-satisfied stage.
+4. Stop only for a material blocker, explicit revision, safety/compliance issue, or missing required information.
 
-Natural approvals such as `approve`, `approved`, `lanjut`, `lanjutkan`, `oke lanjut`, or an equivalent unambiguous confirmation are valid.
+The user-facing command /next is not required for normal progression.
+
+APPROVED may still be written internally when a stage has passed its required validation and is ready to satisfy downstream dependencies.
+
+REVISION returns control to the affected stage and automatically re-runs dependent stages after correction.
+
+STALE prevents stale artifacts from being consumed downstream.
+
+SKIPPED is explicit when a deliverable does not require a stage.
+
+QC PASS remains the final validation requirement before production packaging.
+
+/next may remain as a compatibility command, but it must not be presented as an approval requirement.
 
 ## Revision Contract
 
@@ -128,59 +138,59 @@ The exact runtime representation may differ, but the semantics must remain equiv
 ### 01 — Brief & Product
 Input: product name, product link/reference, campaign information available in the current run.
 Output: normalized brief and canonical product facts available from approved sources.
-Gate: user approval before Niche & Context.
+Progression: automatic after validation.
 
 The user's requested final video duration, when supplied, is a campaign requirement and must be preserved.
 
 ### 02 — Niche & Context
-Input: approved Brief & Product.
+Input: validated Brief & Product.
 Output: one canonical niche context.
-Gate: user approval before Creator.
+Progression: automatic after validation.
 
 ### 03 — Creator
-Input: approved context plus creator requirements.
+Input: validated context plus creator requirements.
 Output: selected creator identity and relevant creator references.
-Gate: user approval before Content Strategy.
+Progression: automatic after validation.
 
 ### 04 — Content Strategy
-Input: approved Brief, Context, Creator.
+Input: validated Brief, Context, Creator.
 Output: objective, audience, angle, core message, story arc, proof strategy, CTA strategy.
-Gate: user approval before Hook.
+Progression: automatic after validation.
 
 ### 05 — Hook
-Input: approved Strategy.
+Input: validated Strategy.
 Output: approved hook direction/copy and delivery direction.
-Gate: user approval before Storyboard.
+Progression: automatic after validation.
 
 ### 06 — Storyboard
-Input: approved Hook and all upstream approved state.
+Input: validated Hook and all upstream approved state.
 Output: canonical scene sequence, creative timing, and duration/segment planning intent.
-Gate: user approval before production prompts.
+Progression: automatic after validation.
 
 The storyboard is the source of truth for the approved creative duration. It must preserve the requested final duration unless the user explicitly approves a change.
 
 Provider generation limits are technical constraints and must not silently redefine the storyboard duration.
 
 ### 07 — Visual Prompt
-Input: approved Storyboard and all upstream approved state.
+Input: validated Storyboard and all upstream approved state.
 Output: one production-ready image prompt per required visual scene.
-Gate: user approval for the Visual Prompt branch. Video and Voice branches may proceed independently when their prerequisites are satisfied; sibling approval is not implied.
+Progression: automatic after validation.
 
 ### 08 — Video Prompt
-Input: approved Storyboard, approved Visual Prompt where relevant, and active provider capability profile when video generation is required.
+Input: validated Storyboard, approved Visual Prompt where relevant, and active provider capability profile when video generation is required.
 Output: motion specification plus provider-compatible generation segment mapping.
 
 If the approved final duration exceeds a provider's single-generation limit, create multiple generation segments. Each segment must use a supported provider duration, and the segment durations must sum to the approved final duration.
 
-Gate: user approval for the Video Prompt branch. Visual approval is additionally required only when `visual_continuity_required` is true.
+Progression: automatic after validation.
 
 ### 09 — Voice Script
-Input: approved Storyboard. Additional visual/video approval is required only when the active voice contract explicitly declares those dependencies.
+Input: validated Storyboard. Additional visual/video approval is required only when the active voice contract explicitly declares those dependencies.
 Output: scene-by-scene dialogue and delivery instructions.
 
 Voice timing follows the creative/storyboard timeline. Technical video segment boundaries must not redefine spoken wording or timing.
 
-Gate: user approval before QC.
+Progression: automatic after validation.
 
 ### 10 — Quality Control
 Input: all required approved production assets.
@@ -204,21 +214,21 @@ At each stage:
 - clearly show the current stage
 - show the useful output
 - state that it is ready for review
-- wait for approval before continuing
+- automatically continue when dependencies are satisfied
 - keep technical runtime state hidden unless requested
 
 The user should feel like they are approving a production, not operating a software build system.
 
 ## Dependency Rules
 
-The existing dependency rules in `ENGINE/WORKFLOW.md` remain authoritative. This contract adds a user-approval gate on top of those dependencies.
+The existing dependency rules in `ENGINE/WORKFLOW.md` remain authoritative. This contract adds a automatic progression on top of those dependencies.
 
 A stage cannot be considered production-current merely because its upstream data exists. Its own approval state must also be current.
 
 ## Completion
 
 The run is complete only when:
-- all required stages are `APPROVED` or `SKIPPED`
+- all required stages are current and validated, with APPROVED or SKIPPED used as internal lifecycle states
 - QC is `PASS`
 - no required downstream asset is `STALE`
 - requested, creative, and final duration are aligned unless an explicit approved exception exists
