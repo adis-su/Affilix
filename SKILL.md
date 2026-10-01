@@ -10,7 +10,11 @@ This file is the runtime entry point. Detailed rules, schemas, context definitio
 
 The primary user-facing command is `/Affilix`.
 
-When `/Affilix` is invoked, start a new isolated production run and follow `ENGINE/AFFILIX_ENTRY_POINT/README.md`. The canonical first response is a warm welcome followed by:
+When `/Affilix` is invoked, start a new isolated production run and follow `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
+
+Repository resolution, commit pinning, source loading, and runtime bootstrap are internal operations. Do not expose commit SHAs, repository resolution details, internal source-of-truth mechanics, or bootstrap diagnostics in the user-facing opening response unless the user explicitly asks for runtime/debug information.
+
+The canonical first response is a warm welcome followed by:
 
 - Nama Produk:
 - Link Produk:
