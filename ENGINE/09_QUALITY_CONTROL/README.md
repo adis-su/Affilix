@@ -4,11 +4,12 @@
 
 The Quality Control Engine validates the complete UGC package before delivery or generation.
 
-It does not create new creative direction unless a revision is required. Its job is to detect factual, structural, identity, continuity, visual, motion, voice, and campaign-compliance problems.
+It does not create new creative direction unless a revision is required. Its job is to detect factual, structural, identity, continuity, visual, motion, voice, campaign-compliance, and runtime-context problems.
 
 ## Input
 
 - Normalized brief
+- Canonical Niche Context from Niche Context Loader
 - Selected creator
 - Creator identity/profile
 - Creator visual references
@@ -73,6 +74,8 @@ Examples:
 - Required deliverable is absent
 - Safety or compliance requirement is violated
 - Storyboard contains impossible or contradictory required actions
+- Canonical runtime context is missing when context-dependent validation is required
+- Cross-run context leakage materially changes the current package
 
 ### Major
 
@@ -89,6 +92,8 @@ Examples:
 - Required CTA is missing or materially incorrect
 - Outfit changes without narrative justification
 - Creator pose or expression conflicts with the intended action
+- Downstream asset uses stale context after reclassification
+- Resolved context differs between downstream assets without an approved reclassification
 
 ### Minor
 
@@ -102,6 +107,7 @@ Examples:
 - Minor timing imbalance
 - Overly repetitive expression direction
 - Small formatting inconsistency
+- Non-material context wording drift that does not change creative or factual meaning
 
 ## QC Categories
 
@@ -307,24 +313,68 @@ Flag:
 - Conflicting references
 - Missing critical assets
 
+### 13. Runtime Context Integrity
+
+Validate the canonical Niche Context as a first-class source of truth.
+
+Check:
+
+- Canonical context exists when required.
+- Niche, Sub-Niche, Product Type, Use Case, Style/Aesthetic, and Audience Context are synchronized with the loader output.
+- UNKNOWN values remain UNKNOWN unless authoritative evidence resolves them.
+- Every resolved non-UNKNOWN context dimension has traceable evidence.
+- Context labels are not used as evidence for material, quality, performance, value, certification, popularity, or other unsupported product claims.
+- Product identity and creator identity are not modified by context.
+- Downstream assets consume the same canonical context.
+- No downstream engine silently reclassifies the run.
+- Conflict flags are preserved and surfaced.
+- Context from another run is not present.
+- Planned/undefined rules are not presented as authoritative active rules.
+
+### 14. Reclassification Integrity
+
+If the loader reclassifies niche, sub-niche, product type, use case, or style:
+
+- Previous dependent outputs are treated as stale.
+- Strategy, hook, storyboard, visual, video, voice, and QC are revalidated as applicable.
+- No stale context remains in active assets.
+- The current canonical context replaces the previous context.
+- Product identity is preserved unless product identity itself was explicitly changed.
+
+A stale downstream asset after material reclassification is a Major issue. If stale context causes material product, claim, creator, or compliance corruption, escalate according to the resulting impact.
+
+### 15. Cross-Run Isolation
+
+Check that:
+
+- Current package contains only current-run context.
+- Previous run's niche, sub-niche, use case, style, audience context, claims, or scene assumptions are not reused without evidence.
+- Creator identity may persist only when explicitly selected for the current run, not merely because it existed in a previous run.
+- Product identity must come from the current run's approved product source.
+
+Material context leakage is Critical because it compromises the package's source of truth.
+
 ## Validation Logic
 
 Use this sequence:
 
 1. Validate brief requirements.
-2. Validate creator identity.
-3. Validate product identity.
-4. Validate claims and evidence.
-5. Validate content strategy.
-6. Validate hook.
-7. Validate storyboard.
-8. Validate visual prompts.
-9. Validate video prompts.
-10. Validate voice script.
-11. Validate CTA.
-12. Validate production feasibility.
-13. Aggregate issues.
-14. Determine final QC status.
+2. Validate canonical runtime context.
+3. Validate creator identity.
+4. Validate product identity.
+5. Validate claims and evidence.
+6. Validate content strategy.
+7. Validate hook.
+8. Validate storyboard.
+9. Validate visual prompts.
+10. Validate video prompts.
+11. Validate voice script.
+12. Validate CTA.
+13. Validate production feasibility.
+14. Validate reclassification integrity when applicable.
+15. Validate cross-run isolation when applicable.
+16. Aggregate issues.
+17. Determine final QC status.
 
 ## Cross-Asset Consistency
 
@@ -335,6 +385,7 @@ Compare downstream assets against their upstream source of truth.
 - Brief → campaign requirements
 - Creator Library → creator identity
 - Product Library → product facts and claims
+- Niche Context Loader → canonical runtime context
 - Content Strategy → creative direction
 - Hook Engine → approved hook
 - Storyboard → scene sequence
@@ -354,6 +405,7 @@ Use when:
 - No Major issues exist
 - All mandatory requirements are satisfied
 - Minor issues do not materially affect production
+- Canonical runtime context is synchronized across applicable assets
 
 ### REVISION REQUIRED
 
@@ -386,7 +438,7 @@ Do not rewrite the entire package when only one component is wrong.
 
 Example:
 
-`Scene 04 visual prompt → product color conflicts with Product Identity → replace color description → revalidate Scene 04 visual and video prompts.`
+Scene 04 visual prompt → product color conflicts with Product Identity → replace color description → revalidate Scene 04 visual and video prompts.
 
 ## QC Principles
 
@@ -396,7 +448,8 @@ Example:
 - Never replace factual validation with aesthetic preference.
 - Do not penalize creative variation that is explicitly allowed.
 - Prefer precise, actionable issue descriptions.
-- Preserve user intent while enforcing factual and continuity constraints.
+- Preserve user intent while enforcing factual, runtime-context, and continuity constraints.
+- Treat canonical runtime context as state, not as decoration.
 
 ## Final QC Package
 
@@ -432,7 +485,6 @@ When status is BLOCKED:
 
 The Quality Control Engine is the final validation gate of the Affilix production pipeline.
 
-
 ## Niche and Product-Type Validation
 
 When a niche context is loaded, validate:
@@ -449,7 +501,6 @@ If niche or product type is materially ambiguous, flag the issue according to se
 
 Niche context is subordinate to explicit campaign/product/creator source-of-truth data.
 
-
 ## Layered Niche Context Integration
 
-QC now validates the full layered context: Niche, Sub-Niche, Product Type, Use Case, Style/Aesthetic, and Audience Context. It checks context consistency across strategy, hook, storyboard, visual, video, and voice assets and rejects unsupported claims derived from context labels.
+QC validates the full layered context: Niche, Sub-Niche, Product Type, Use Case, Style/Aesthetic, and Audience Context. It checks context consistency across strategy, hook, storyboard, visual, video, and voice assets and rejects unsupported claims derived from context labels.
