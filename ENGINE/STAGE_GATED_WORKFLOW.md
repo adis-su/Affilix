@@ -157,3 +157,12 @@ Do not rebuild unrelated completed stages.
 The run is complete when all required stages are current and validated, with `COMPLETED` or `SKIPPED` used as internal lifecycle states, and the final Production Output is generated.
 
 There is no QC stage and no Final UGC Package stage.
+
+
+## Action-Choreography Stage Contract
+
+Stage 06 Storyboard now produces three canonical layers: action choreography, reference graph, and creative timing.
+
+Stage 07 renders reference states. Stage 08 converts reference-to-reference transitions into provider-compatible generation segments.
+
+A stage is processed, validated, marked `COMPLETED`, then paused for `/next`. No approval gate is implied.
