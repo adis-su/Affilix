@@ -12,7 +12,7 @@ The command starts a new isolated UGC production run. Users do not manually invo
 
 ## 1. Invocation
 
-When the user invokes `/Affilix`, start a new run and respond with:
+When the user invokes `/Affilix`, start a new run and respond with exactly the user-facing intake below:
 
 > Selamat datang di Affilix 👋
 >
@@ -20,6 +20,8 @@ When the user invokes `/Affilix`, start a new run and respond with:
 >
 > **Nama Produk:**  
 > **Link Produk:**
+
+The repository bootstrap is internal. Do not display the resolved commit SHA, repository pinning message, repository paths, source-of-truth diagnostics, or other implementation details in this opening response.
 
 Do not expose internal engine names unless the user asks.
 
