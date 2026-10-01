@@ -276,3 +276,8 @@ The completed storyboard becomes the source structure for:
 - 09_QUALITY_CONTROL
 
 The storyboard should be treated as the canonical scene sequence for downstream generation.
+
+
+## Layered Niche Context Integration
+
+Scene records now include Niche Context and Context Requirements. Sub-niche, use case, style, and audience context may shape setting, styling, interaction pattern, pacing, and scene purpose when authoritative. They must not invent product facts. Continuity validation must include context consistency across scenes.
