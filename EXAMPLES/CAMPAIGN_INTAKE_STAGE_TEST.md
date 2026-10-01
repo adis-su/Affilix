@@ -1,0 +1,52 @@
+# Affilix Campaign Intake Stage Regression Test
+
+## Test ID
+INTAKE-002
+
+## Purpose
+Validate that /Affilix opens at Stage 01 and /next after Product Intake exposes Campaign Intake as the explicit Stage 02.
+
+## Stage 01
+Expected opening:
+
+STAGE 01 — Product Intake
+Silakan isi:
+Nama Produk:
+Link Produk:
+
+No bootstrap diagnostics, commit SHA, or internal runtime text may appear.
+
+## Stage 02
+After Stage 01 is completed and the user sends /next, expected intake:
+
+STAGE 02 — Campaign Intake
+
+Silakan isi:
+Platform:
+Durasi video:
+Tujuan konten:
+Target audience:
+Creator:
+CTA:
+
+## Validation
+Stage 02 must persist:
+- platform
+- requested video duration
+- content objective
+- target audience
+- requested creator
+- CTA
+
+The requested creator is campaign input. Canonical creator identity is resolved and validated later by Stage 04 Creator.
+
+Requested duration is authoritative campaign input and must remain unchanged by downstream provider segmentation.
+
+## Acceptance
+PASS only when:
+1. Stage 01 remains the Product Intake entry.
+2. Stage 02 is Campaign Intake.
+3. All six Stage 02 fields are exposed exactly as specified.
+4. /next progresses from Stage 01 to Stage 02.
+5. Stage 02 completion progresses to Stage 03 Niche & Context.
+6. No approval gate, QC stage, or hidden bootstrap diagnostics are introduced.
