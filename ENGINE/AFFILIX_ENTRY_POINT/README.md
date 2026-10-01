@@ -228,3 +228,36 @@ Technical engine names and runtime state are implementation details unless the u
 The user should experience Affilix as a guided production review, not a one-shot generator.
 
 At every required stage, present the current output, mark it as ready for review, and wait for approval or revision instructions. Keep technical stage-state labels and engine names hidden unless the user asks for them.
+
+
+## 14. Runtime Bootstrap
+
+Before executing the intake contract, initialize the repository-backed runtime.
+
+```
+/Affilix
+→ resolve adis-su/Affilix
+→ resolve main HEAD
+→ record repository commit SHA
+→ pin repository version for this run
+→ load SKILL.md + WORKFLOW.md + entry contract from pinned commit
+→ initialize isolated campaign state
+→ begin product intake
+```
+
+The entry point must not rely on a copied Project Instruction, previous conversation state, or unpinned repository snapshot as the authoritative implementation.
+
+A repository update on `main` is automatically picked up by the next new `/Affilix` run. The current run remains pinned to its initialized commit.
+
+The runtime state must expose the repository identity and commit:
+
+```yaml
+repository:
+  repository: adis-su/Affilix
+  ref: main
+  commit_sha:
+  loaded_at:
+  access_status:
+```
+
+If repository freshness or required-file access cannot be established, do not claim the current repository was loaded. Follow `ENGINE/REPOSITORY_RUNTIME/README.md` and `ENGINE/REPOSITORY_RUNTIME/RUNTIME_CONTRACT.md` for failure behavior.
