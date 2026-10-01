@@ -1,4 +1,4 @@
-# UGC Production Output Template v1
+# Affilix — UGC Production Output Template v1
 
 ## Purpose
 
@@ -12,9 +12,14 @@ This template is an output contract, not a creative engine. It must assemble val
 - status:
 - platform:
 - format:
-- duration:
+- requested_duration:
+- creative_duration:
+- final_duration:
+- duration_status:
 - language:
 - production_readiness:
+
+When video generation is required, requested, creative, and final duration must remain aligned unless the user explicitly approves a change.
 
 Unknown values remain UNKNOWN.
 
@@ -122,7 +127,7 @@ Each scene contains:
 - reference_requirements
 - claim_dependencies
 
-Storyboard is the canonical temporal source for downstream production assets.
+Storyboard is the canonical creative temporal source for downstream production assets.
 
 ## 9. Visual Prompts
 
@@ -152,6 +157,13 @@ For every video asset:
 
 - asset_id:
 - source_scene:
+- creative_duration:
+- generation_segment_id:
+- generation_duration:
+- provider_id:
+- model_id:
+- final_start_time:
+- final_end_time:
 - start_state:
 - primary_action:
 - secondary_natural_motion:
@@ -161,6 +173,26 @@ For every video asset:
 - negative_motion_constraints:
 
 Video prompts must preserve identity, product geometry, wardrobe/hijab coherence, and physical plausibility.
+
+### Generation Segments
+
+When provider duration limits require multiple clips, list:
+
+- segment_id
+- source_scene_id
+- final_start_time
+- final_end_time
+- creative_duration
+- generation_duration
+- provider_id
+- model_id
+- assembly_order
+- start_visual_state
+- end_visual_state
+- continuity_anchor
+- status
+
+Generation durations must be supported by the active provider profile.
 
 ## 11. Voice Script
 
@@ -178,6 +210,8 @@ For every spoken line:
 - claim_dependencies:
 
 Voice must not fabricate personal experience or unsupported claims.
+
+Voice timing follows the approved creative/storyboard timeline, not arbitrary provider segment boundaries.
 
 ## 12. CTA
 
@@ -200,6 +234,8 @@ Unsupported offer, discount, scarcity, or urgency remains UNKNOWN or is excluded
 - product_identity_validation:
 - context_integrity:
 - continuity_validation:
+- duration_validation:
+- segment_compatibility_validation:
 - cross_run_isolation:
 - stale_state_check:
 - final_contract_check:
@@ -209,20 +245,26 @@ Unsupported offer, discount, scarcity, or urgency remains UNKNOWN or is excluded
 ### READY
 
 Only when:
+
 - QC = PASS
 - no blocking issue exists
 - canonical context is current
 - no dependent output is STALE
 - creator/product identity is valid
+- requested duration is preserved
+- final assembled duration matches requested duration
+- all provider generation durations are compatible
 - final package contract is satisfied
 
 ### NOT_READY
 
 Use when:
+
 - QC is REVISION or BLOCKED
 - required information is missing and materially blocks production
 - stale downstream state remains
 - identity or claim integrity fails
+- duration feasibility cannot be resolved without changing approved creative intent
 - final contract is incomplete
 
 ## Assembly Rules
@@ -235,5 +277,6 @@ Use when:
 6. Never upgrade UNKNOWN into a fact.
 7. Preserve QC status and issues.
 8. A NOT_READY package must not be presented as production-ready.
-9. The storyboard remains the temporal source of truth.
+9. The storyboard remains the creative temporal source of truth.
 10. All downstream assets must trace back to a storyboard scene.
+11. Provider constraints may change technical generation segmentation, not the approved campaign duration.
