@@ -239,9 +239,9 @@ The canonical workflow is:
 → /next
 → STAGE 08 VISUAL PROMPT
 → /next
-→ STAGE 09 VIDEO PROMPT when required
+→ STAGE 09 VOICE SCRIPT when required
 → /next
-→ STAGE 10 VOICE SCRIPT when required
+→ STAGE 10 VIDEO PROMPT when required
 → /next
 → STAGE 11 PRODUCTION OUTPUT
 ```
