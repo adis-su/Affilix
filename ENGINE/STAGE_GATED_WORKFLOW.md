@@ -11,15 +11,16 @@ Each stage follows:
 ## Canonical Stages
 
 1. Brief & Product
-2. Niche & Context
-3. Creator
-4. Content Strategy
-5. Hook
-6. Storyboard
-7. Visual Prompt
-8. Video Prompt
-9. Voice Script
-10. Production Output
+2. Campaign Intake
+3. Niche & Context
+4. Creator
+5. Content Strategy
+6. Hook
+7. Storyboard
+8. Visual Prompt
+9. Video Prompt
+10. Voice Script
+11. Production Output
 
 A stage may be skipped only when its output is genuinely not required for the requested deliverable.
 
@@ -73,6 +74,8 @@ generation_segments: []
 stages:
   brief_product:
     status: COMPLETED
+  campaign_intake:
+    status: NOT_STARTED
   niche_context:
     status: NOT_STARTED
   creator:
@@ -121,19 +124,19 @@ Output: canonical scene sequence, creative timing, and duration/segment planning
 
 The storyboard is the source of truth for the requested creative duration. Provider limits are technical constraints and must not silently redefine campaign duration.
 
-### 07 — Visual Prompt
+### 08 — Visual Prompt
 Input: validated Storyboard and upstream completed state.
 Output: one production-ready image prompt per required visual scene.
 
-### 08 — Video Prompt
+### 09 — Video Prompt
 Input: validated Storyboard, completed Visual Prompt where relevant, and provider capability profile when video generation is required.
 Output: motion specification plus provider-compatible generation segment mapping.
 
-### 09 — Voice Script
+### 10 — Voice Script
 Input: validated Storyboard and declared dependencies.
 Output: scene-by-scene dialogue and delivery instructions.
 
-### 10 — Production Output
+### 11 — Production Output
 Input: all required current upstream production assets.
 Output: consolidated production output containing the current campaign brief, creator, product, niche context, strategy, hook, storyboard, and applicable visual/video/voice specifications.
 
@@ -161,8 +164,8 @@ There is no QC stage and no Final UGC Package stage.
 
 ## Action-Choreography Stage Contract
 
-Stage 06 Storyboard now produces three canonical layers: action choreography, reference graph, and creative timing.
+Stage 07 Storyboard now produces three canonical layers: action choreography, reference graph, and creative timing.
 
-Stage 07 renders reference states. Stage 08 converts reference-to-reference transitions into provider-compatible generation segments.
+Stage 08 renders reference states. Stage 09 converts reference-to-reference transitions into provider-compatible generation segments.
 
 A stage is processed, validated, marked `COMPLETED`, then paused for `/next`. No approval gate is implied.
