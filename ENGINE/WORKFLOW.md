@@ -8,13 +8,13 @@ The runtime should behave as one coherent system rather than exposing independen
 
 ## Entry Point
 
-The user-facing entry command is `/Affilix`.
+The user-facing entry command is /Affilix.
 
-`/Affilix` starts a **stage-gated production run**. The user reviews and approves each required stage before Affilix proceeds to the next stage.
+ /Affilix starts a stage-gated production run. The user reviews and approves each required stage before Affilix proceeds to the next stage.
 
-The stage-gating contract is defined in `ENGINE/STAGE_GATED_WORKFLOW.md`. The entry contract is defined in `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
+The stage-gating contract is defined in ENGINE/STAGE_GATED_WORKFLOW.md. The entry contract is defined in ENGINE/AFFILIX_ENTRY_POINT/README.md.
 
-The initial product intake requests only `Nama Produk` and `Link Produk`. After product intake, request only the minimum additional campaign information needed to continue.
+The initial product intake requests only Nama Produk and Link Produk. After product intake, request only the minimum additional campaign information needed to continue.
 
 ## Pipeline
 
@@ -44,9 +44,11 @@ Engines execute internally within their corresponding stage. Do not silently run
 
 ## Phase 1 — Intake
 
-Accept the user's brief and extract product, creator, campaign objective, audience, platform, format, duration, aspect ratio, key message, talking points, CTA, references, restrictions, and brand requirements.
+Accept the user's brief and extract product, creator, campaign objective, audience, platform, format, requested final duration, aspect ratio, key message, talking points, CTA, references, restrictions, and brand requirements.
 
 Do not invent missing requirements.
+
+The requested final duration is a campaign requirement. It is distinct from the technical duration of an individual video-generation request.
 
 ## Phase 2 — Brief Analysis
 
@@ -127,11 +129,13 @@ Run 05_STORYBOARD_ENGINE.
 
 Create the canonical scene sequence.
 
-Every scene must have purpose, timing, action, creator state, product state, camera, environment, dialogue intent, context requirements, and continuity requirements.
+Every scene must have purpose, creative timing, action, creator state, product state, camera, environment, dialogue intent, context requirements, and continuity requirements.
 
 Apply relevant niche, sub-niche, use-case, style, audience, and product-type rules.
 
-Scene durations must fit the requested total duration.
+Creative scene durations must add up to the requested final duration.
+
+Provider limitations must not silently change the requested final duration. If technical segmentation is needed, the storyboard should preserve natural creative beat boundaries that can later map to provider-supported generation segments.
 
 The storyboard becomes the canonical temporal source for Visual, Video, and Voice.
 
@@ -151,6 +155,8 @@ These are parallel downstream specifications, but all remain subordinate to:
 4. Creator identity
 5. Canonical niche context
 6. Storyboard
+
+Video Prompt additionally uses the active provider capability profile to translate approved creative timing into technical generation segments. Provider duration constraints may change segmentation, not the approved campaign duration.
 
 No parallel engine may silently reclassify context or change a canonical fact.
 
@@ -173,6 +179,10 @@ Validate:
 - voice script
 - CTA
 - production feasibility
+- requested vs creative vs final duration
+- provider generation-duration compatibility
+- segment duration arithmetic
+- segment continuity
 - reclassification integrity
 - cross-run isolation
 
@@ -273,17 +283,35 @@ Hook change:
 Storyboard change:
 - re-run affected Visual, Video, Voice, and QC
 
+Requested final duration change:
+- re-run Storyboard timing and affected Visual, Video, Voice, and QC outputs
+- invalidate existing generation segment plans
+
+Provider capability change:
+- re-evaluate Video Prompt generation segmentation and Video QC
+- do not automatically change approved storyboard or campaign duration
+- Voice Script remains current unless creative timing changes
+
 Visual-only change:
 - re-run Visual, Video when motion or state changes, and QC
 
 Voice-only change:
 - re-run Voice and QC
 
+Video-only segment plan change:
+- re-run Video and QC
+- do not mark Voice STALE unless creative timing or storyboard meaning changes
+
 ## Runtime State Rules
 
 Each run must maintain:
 
 - current normalized brief
+- requested final duration
+- current creative duration
+- current final duration when assembled
+- active provider capability profile when video generation is required
+- current generation segment plan
 - current canonical creator
 - current canonical product
 - current canonical niche context
@@ -303,17 +331,17 @@ When a canonical state changes, dependent state becomes STALE until regenerated 
 
 A production-ready package should contain:
 
-1. Creative Brief: objective, audience, platform, format, duration, aspect ratio, product, creator, angle, core message.
+1. Creative Brief: objective, audience, platform, format, requested duration, creative duration, final duration, aspect ratio, product, creator, angle, core message.
 2. Creator: identity, relevant wardrobe, expression, pose, reference assets.
 3. Product: identity, niche, product type, supported features, benefits, evidence, approved selling points, claim boundaries.
 4. Niche Context: niche, sub-niche, product type, use case, style/aesthetic, audience context, confidence, evidence, unresolved fields.
 5. Content Strategy: angle, story arc, proof strategy, CTA strategy.
 6. Hook: hook concept, spoken hook, visual hook, delivery direction.
-7. Storyboard: complete scene-by-scene production plan.
+7. Storyboard: complete scene-by-scene production plan with creative timing.
 8. Visual Prompts: one production-ready prompt per required visual scene.
-9. Video Prompts: one motion specification per required video scene.
+9. Video Prompts: motion specifications and provider-compatible generation segment mapping.
 10. Voice Script: scene-by-scene dialogue and delivery instructions.
-11. QC Report: status, issues, corrections, and revalidation result.
+11. QC Report: status, issues, corrections, duration validation, and revalidation result.
 
 ## Runtime Behavior
 
@@ -324,6 +352,8 @@ When sufficient information exists:
 - resolve and preserve canonical niche context
 - keep unsupported fields UNKNOWN
 - propagate one context object downstream
+- preserve requested final duration
+- adapt technical video segmentation to provider capabilities
 - invalidate stale dependent outputs after material state changes
 - produce structured outputs
 - run QC before presenting the final package
@@ -343,14 +373,15 @@ Affilix is complete for a campaign only when:
 - claims are supported
 - storyboard is coherent
 - visual/video/voice specifications are synchronized
+- requested, creative, and final durations match unless an explicit approved exception exists
+- all video generation segments are provider-compatible when video generation is required
 - no stale context remains
 - cross-run isolation passes
 - QC status is PASS
 
-
 ## Repository Runtime Contract
 
-Repository loading is governed by `ENGINE/REPOSITORY_RUNTIME/README.md`.
+Repository loading is governed by ENGINE/REPOSITORY_RUNTIME/README.md.
 
 At runtime, load the current repository specification relevant to each stage. Use progressive loading rather than reading the entire repository. Repository state and production-run state are separate.
 
@@ -358,11 +389,11 @@ If a material repository rule changes, affected downstream assets become STALE a
 
 ## Stage-Gated Execution
 
-The canonical stage-gating contract is `ENGINE/STAGE_GATED_WORKFLOW.md`.
+The canonical stage-gating contract is ENGINE/STAGE_GATED_WORKFLOW.md.
 
 For every required stage, execute: INPUT → PROCESS → OUTPUT → REVIEW → APPROVAL → NEXT STAGE.
 
-After presenting a stage output, stop and wait for an unambiguous user approval or revision instruction. Natural approvals such as `approve`, `approved`, `lanjut`, `lanjutkan`, or equivalent confirmation are valid.
+After presenting a stage output, stop and wait for an unambiguous user approval or revision instruction. Natural approvals such as approve, approved, lanjut, lanjutkan, or equivalent confirmation are valid.
 
 If the user requests a revision, revise the smallest affected component and keep unrelated approved stages intact. When an upstream approved stage changes, mark all dependent downstream assets STALE and regenerate them only after the revised upstream stage is approved.
 
