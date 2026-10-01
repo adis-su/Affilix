@@ -31,7 +31,7 @@ For each video segment:
 
 Image prompts and video prompts are user-facing generation artifacts and must each be delivered in a single standalone Markdown code block. Metadata remains outside the code block.
 
-The remaining production output follows the current campaign, creator, product, niche context, strategy, hook, storyboard, visual prompt, video prompt, and voice script state.
+The remaining production output follows the current campaign, creator, product, niche context, strategy, hook, storyboard, visual prompt, voice script, and video prompt state.
 
 ## Action and Reference Traceability
 
