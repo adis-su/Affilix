@@ -2,43 +2,34 @@
 
 ## Purpose
 
-This contract defines the state boundary between Affilix interfaces (ChatGPT Project) and the canonical Affilix production runtime.
-
-Interfaces are adapters. They must not become independent sources of workflow logic, production state, or repository rules.
+This contract defines the state boundary between the ChatGPT Project interface and the canonical Affilix production runtime.
 
 ## Runtime Architecture
 
-```
-Client Interface
+```text
+ChatGPT Project
     ↓
-Affilix Runtime
+Affilix Skill
     ├── Repository Runtime
     ├── Campaign State
     ├── Stage Manager
-    ├── `/next` Progression / Revision Manager
+    ├── /next Progression / Revision Manager
     └── Production Artifacts
 ```
-
-This runtime contract is designed for the ChatGPT Project Affilix Skill.
 
 ## Run Initialization
 
 Every new production run must:
-
-1. Resolve canonical repository `adis-su/Affilix`.
-2. Resolve canonical branch `main`.
-3. Read the current branch head.
-4. Record the resolved commit SHA as `repository.commit_sha`.
-5. Pin that commit for the lifetime of the production run.
-6. Load repository rules from the pinned commit.
-7. Create isolated campaign state.
-8. Start Stage 01 and wait for `/next` after each completed stage.
-
-A new run uses the latest available `main` commit at initialization.
+1. resolve `adis-su/Affilix`,
+2. resolve `main`,
+3. read the current branch head,
+4. record `repository.commit_sha`,
+5. pin that commit for the run,
+6. load repository rules from the pinned commit,
+7. create isolated campaign state,
+8. start Stage 01 and wait for `/next` after each completed stage.
 
 ## Runtime State Contract
-
-The runtime state must distinguish the user-facing current stage from readiness of independent downstream branches.
 
 ```yaml
 run:
@@ -60,7 +51,6 @@ campaign:
   format:
   requested_duration:
   creative_duration:
-  final_duration:
   aspect_ratio:
   objective:
   audience:
@@ -102,15 +92,7 @@ stages:
   visual_prompt: { status:, output: }
   video_prompt: { status:, output: }
   voice_script: { status:, output: }
-  quality_control: { status:, output: }
-  final_package: { status:, output: }
-
-decision_queue:
-  - id:
-    field:
-    reason:
-    blocking_stage:
-    status:
+  production_output: { status:, output: }
 
 artifacts:
   - id:
@@ -123,34 +105,27 @@ artifacts:
 
 ## Stage Orchestration
 
-`current_stage` is a user-facing pointer, not a database lock.
+Stages 01 through 06 execute in sequence. After each stage is validated and completed, wait for `/next`.
 
-Stages 01 through 06 execute in sequence. After each stage is validated and completed, the run waits for `/next` before starting the next stage.
+After Storyboard, downstream stages execute according to deliverable requirements:
+- Visual Prompt when visual output is required.
+- Video Prompt when video output is required.
+- Voice Script when spoken content is required.
 
-After Storyboard is completed and the user sends `/next`, the runtime may activate the independent downstream branches concurrently:
+These are dependency-driven stages, not approval branches.
 
-- `visual_prompt`
-- `video_prompt`, when video generation is required
-- `voice_script`, when voice is required
-
-Each branch has its own stage status. Completion of one branch must not prevent another active branch from executing.
-
-The runtime must never use a single `current_stage` value as the prerequisite for all three branches. Branch prerequisites are evaluated from the relevant stage statuses and artifact freshness.
-
-Canonical branch prerequisites:
+## Canonical Stage Prerequisites
 
 - Visual Prompt: Storyboard COMPLETED.
 - Video Prompt: Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + provider capability profile when video is required.
-- Voice Script: Storyboard COMPLETED. Additional visual/video completion is required only when the voice contract explicitly declares a dependency.
-- Quality Control: all required branches COMPLETED or explicitly SKIPPED.
-- Final Package: QC PASS + all required assets current and non-STALE.
+- Voice Script: Storyboard COMPLETED.
+- Production Output: all required downstream specifications current and non-STALE.
 
-If a required branch is skipped, the skip must be explicit and recorded in runtime state.
+There is no QC prerequisite and no Final UGC Package prerequisite.
 
 ## Stage State
 
-Each stage has one of:
-
+Each stage uses:
 - `NOT_STARTED`
 - `DRAFT`
 - `REVIEW`
@@ -159,18 +134,13 @@ Each stage has one of:
 - `SKIPPED`
 - `COMPLETED`
 
-QC additionally uses `PASS`, `REVISION REQUIRED`, and `BLOCKED`.
-
-A stage output is current only when its own status, upstream dependencies, and repository commit are current.
-
 ## Progression Contract
 
-The runtime does not require or track user approval between stages. `/next` only advances the active run after the current stage has completed validation. Revision instructions are handled separately and invalidate affected downstream assets.
+`/next` advances the active run after the current stage completes validation. It does not represent approval or endorsement.
 
 ## Dependency and Stale-State Rules
 
 When a completed upstream canonical input changes:
-
 1. identify affected dependents,
 2. mark them STALE,
 3. preserve unaffected branches,
@@ -178,60 +148,44 @@ When a completed upstream canonical input changes:
 5. wait for `/next` before continuing the affected chain.
 
 Examples:
-
-- Storyboard revision → Visual, Video, and Voice become STALE.
-- Visual-only revision → Visual becomes REVISION/REVIEW; Video becomes STALE only if visual motion/state continuity is affected; Voice remains current.
+- Creator revision → Strategy, Hook, Storyboard, Visual, Video, Voice become STALE.
+- Product or niche revision → all dependent creative stages become STALE.
+- Strategy revision → Hook, Storyboard, Visual, Video, Voice become STALE.
+- Hook revision → affected Storyboard and downstream assets become STALE.
+- Storyboard revision → Visual, Video, Voice become STALE.
+- Visual-only revision → Video becomes STALE only when motion/state continuity is affected.
 - Voice-only revision → Voice becomes REVISION/REVIEW; other branches remain current.
-- Provider capability change → Video becomes STALE/re-evaluated; completed creative duration remains unchanged.
+- Provider capability change → Video becomes STALE/re-evaluated without changing creative duration.
 - Requested duration change → Storyboard and all duration-sensitive downstream assets become STALE.
 
-A stale asset must never be presented as current or included in a production-ready package.
+A stale artifact must never be presented as current.
 
 ## Evidence and Unknowns
 
-Use:
-
-- EXPLICIT
-- REFERENCE
-- SUPPORTED
-- INFERRED
-- UNKNOWN
-
-Only EXPLICIT, REFERENCE, and SUPPORTED information may become authoritative campaign or product requirements. INFERRED information may guide reasoning but must not silently become authoritative. UNKNOWN remains UNKNOWN until supported.
-
-## Decision Queue
-
-Create a decision-queue item only when missing information materially affects a required stage.
-
-Each item records the missing field, why it matters, first blocked stage, whether a safe default exists, and resolution status.
-
-Interfaces should present only decisions relevant to the current interaction.
+Use EXPLICIT, REFERENCE, SUPPORTED, INFERRED, and UNKNOWN. Only EXPLICIT, REFERENCE, and SUPPORTED information may become authoritative requirements. UNKNOWN remains UNKNOWN until supported.
 
 ## Interface Rules
 
-ChatGPT Project must present runtime outputs, accept `/next` progression commands and revision instructions, and never maintain competing canonical workflow logic.
-
-## Repository Access Failure
-
-If the canonical repository cannot be accessed, do not claim it was loaded. Preserve affected fields as UNKNOWN and continue only where higher-level rules are sufficient.
+ChatGPT Project presents runtime outputs, accepts `/next` and revision instructions, and never maintains competing workflow logic.
 
 ## Runtime Traceability
 
 Every material artifact should record:
-
-- run ID
-- stage
-- source repository commit SHA
-- relevant upstream artifact IDs
-- relevant creator/product/niche sources
-- generation status
+- run ID,
+- stage,
+- source repository commit SHA,
+- relevant upstream artifact IDs,
+- relevant creator/product/niche sources,
+- generation status.
 
 ## Completion
 
-A production run is complete only when:
-
+A run is complete when:
 - one repository commit is pinned,
-- all required stages are current and completed or explicitly skipped,
+- all required stages are current and COMPLETED or SKIPPED,
 - no required artifact is STALE,
-- QC is PASS,
-- the final package is traceable to the run and pinned repository commit.
+- requested duration is preserved exactly,
+- applicable video segmentation is provider-compatible,
+- the final Production Output is generated.
+
+No separate QC or Final UGC Package stage exists.
