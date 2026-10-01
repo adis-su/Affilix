@@ -50,3 +50,24 @@ PASS only when:
 4. /next progresses from Stage 01 to Stage 02.
 5. Stage 02 completion progresses to Stage 03 Niche & Context.
 6. No approval gate, QC stage, or hidden bootstrap diagnostics are introduced.
+
+
+## Stage 01 Output Isolation Regression
+
+Stage 01 must not render Campaign Intake fields before Stage 02 is active.
+
+The Stage 01 user-facing response/output must NOT contain:
+- Platform
+- Durasi video
+- Tujuan konten
+- Objective
+- Target audience
+- Creator
+- CTA
+- campaign status summaries showing these fields as UNKNOWN or "Belum diberikan"
+
+It is valid for these fields to exist internally as UNKNOWN in isolated runtime state. Internal state initialization must not leak into the Stage 01 user-facing output.
+
+## Renderer Contract
+
+Any generic runtime/status renderer must apply the active-stage output scope before presentation. Stage 01 scope is Product Intake only. Stage 02 scope is Campaign Intake only. A regression passes only when later-stage fields remain hidden until their owning stage becomes active.
