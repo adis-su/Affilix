@@ -36,7 +36,6 @@ Input may be incomplete, informal, mixed-language, or poorly structured.
 The analyzer should normalize the brief into:
 
 ### Campaign
-
 - Campaign ID: [GENERATE OR DEFINE]
 - Campaign objective: [DEFINE]
 - Platform: [DEFINE]
@@ -45,41 +44,38 @@ The analyzer should normalize the brief into:
 - Aspect ratio: [DEFINE]
 
 ### Product
-
 - Product ID: [DEFINE]
 - Product name: [DEFINE]
 - Brand: [DEFINE]
 - Category: [DEFINE]
 - Product information status: Complete / Partial / Missing
+- Niche: [DETECT / DEFINE / UNKNOWN]
+- Product type: [DETECT / DEFINE / UNKNOWN]
+- Niche classification confidence: High / Medium / Low / Unknown
 
 ### Audience
-
 - Target audience: [DEFINE]
 - Audience problem/need: [DEFINE]
 - Audience context: [DEFINE]
 
 ### Messaging
-
 - Primary message: [DEFINE]
 - Secondary messages: [DEFINE]
 - Required talking points: [DEFINE]
 - CTA: [DEFINE]
 
 ### Creator
-
 - Creator ID: [DEFINE]
 - Creator requirements: [DEFINE]
 - Creator reference: [DEFINE]
 
 ### Creative Direction
-
 - Content angle: [DEFINE]
 - Desired tone: [DEFINE]
 - Visual direction: [DEFINE]
 - Story direction: [DEFINE]
 
 ### Constraints
-
 - Mandatory requirements: [DEFINE]
 - Prohibited elements: [DEFINE]
 - Brand restrictions: [DEFINE]
@@ -87,14 +83,12 @@ The analyzer should normalize the brief into:
 - Platform restrictions: [DEFINE]
 
 ### References
-
 - Product references: [DEFINE]
 - Creator references: [DEFINE]
 - Style references: [DEFINE]
 - Example content: [DEFINE]
 
 ### Missing Information
-
 List only information that is genuinely required for the next production stage.
 
 ## Normalization Rules
@@ -109,6 +103,27 @@ List only information that is genuinely required for the next production stage.
 8. Normalize terminology where possible.
 9. Keep uncertain information explicitly marked as unknown.
 10. Do not ask for information that downstream production does not actually need.
+11. Detect niche and product type when the product information supports a reliable classification.
+12. Keep niche classification separate from product claims. A classification is not evidence for a product attribute.
+
+## Niche Detection
+
+Use this order:
+
+1. Explicit category/product type in the user brief.
+2. Approved Product Library category/type.
+3. Supplied product reference or structured product metadata.
+4. Clear terminology that reliably identifies the category.
+
+Do not classify from visual aesthetics alone when the classification is materially uncertain.
+
+Return:
+- niche
+- product type
+- confidence
+- evidence/source
+
+If confidence is low or the product could reasonably belong to multiple materially different types, mark UNKNOWN and defer to the Niche Context Loader.
 
 ## Requirement Classification
 
@@ -137,6 +152,7 @@ Ask for clarification only when missing information would materially affect:
 - Safety/compliance
 - A mandatory brand constraint
 - A required factual claim
+- Niche/product-type behavior that cannot be safely determined
 
 Otherwise continue with the available information and mark the uncertainty.
 
@@ -157,6 +173,7 @@ Do not silently override an explicit user instruction.
 
 The normalized brief becomes the input for:
 
+- NICHE_CONTEXT_LOADER
 - 02_CREATOR_SELECTOR
 - 03_CONTENT_STRATEGY
 - 04_HOOK_ENGINE
@@ -180,6 +197,8 @@ Normalized interpretation:
 - Creator requirement: Young female creator
 - Style: Clean
 - Product: Hijab, identity details still require product data/reference
+- Niche: Fashion
+- Product type: Hijab
 - Primary message: Comfort, but exact comfort claim requires product evidence
 - CTA: Affiliate-oriented CTA, exact wording to be determined later
 - Missing: Product identity/reference and any required factual support for comfort claim
