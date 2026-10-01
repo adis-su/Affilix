@@ -12,7 +12,7 @@ The user-facing entry command is /Affilix.
 
  /Affilix starts a continuous production run. Affilix automatically advances through dependency-satisfied stages without requiring user approval.
 
-The stage-gating contract is defined in ENGINE/STAGE_GATED_WORKFLOW.md. The entry contract is defined in ENGINE/AFFILIX_ENTRY_POINT/README.md.
+The stage progression contract is defined in ENGINE/STAGE_GATED_WORKFLOW.md. The entry contract is defined in ENGINE/AFFILIX_ENTRY_POINT/README.md.
 
 The initial product intake requests only Nama Produk and Link Produk. After product intake, request only the minimum additional campaign information needed to continue.
 
@@ -31,7 +31,7 @@ USER BRIEF
 → STAGE 10 QUALITY CONTROL
 → STAGE 11 FINAL UGC PACKAGE
 
-Engines execute internally within their corresponding stage. Automatically run the next dependency-satisfied stage; do not require user approval between stages.
+Engines execute internally within their corresponding stage. After a stage is validated and completed, wait for `/next` before running the next dependency-satisfied stage. `/next` is not an approval action.
 
 ## Phase 1 — Intake
 
@@ -108,9 +108,9 @@ Do not turn context labels into unsupported product facts or claims.
 
 Run 04_HOOK_ENGINE.
 
-Generate viable hook candidates based on the approved strategy and canonical niche context.
+Generate viable hook candidates based on the validated strategy and canonical niche context.
 
-Use the configured deterministic hook-selection behavior when multiple candidates exist. Do not block the pipeline for approval.
+Use the configured deterministic hook-selection behavior when multiple candidates exist.
 
 Never invent unsupported claims merely to make a hook stronger.
 
@@ -132,7 +132,7 @@ The storyboard becomes the canonical temporal source for Visual, Video, and Voic
 
 ## Phase 7 — Parallel Production Specifications
 
-Once the storyboard is validated, run:
+Once the storyboard is validated and the user sends `/next`, run:
 
 - 06_VISUAL_PROMPT_ENGINE
 - 07_VIDEO_PROMPT_ENGINE
@@ -378,14 +378,14 @@ At runtime, load the current repository specification relevant to each stage. Us
 
 If a material repository rule changes, affected downstream assets become STALE and must be regenerated according to the dependency rules below. Never invent missing repository rules or claim that a repository file was consulted when it was not accessible.
 
-## Stage-Gated Execution
+## Stage Progression Execution
 
 The canonical continuous-production contract is ENGINE/STAGE_GATED_WORKFLOW.md.
 
 For every required stage, execute: INPUT → PROCESS → OUTPUT → VALIDATE → NEXT STAGE.
 
-Automatically continue when dependencies are satisfied. Stop only for a material blocker, explicit revision, safety/compliance issue, or missing required information. /next is compatibility-only and is not required for progression.
+After each stage is validated, pause. Continue only when the user sends `/next`. Stop earlier for a material blocker, explicit revision, safety/compliance issue, or missing required information.
 
-If the user requests a revision, revise the smallest affected component and keep unrelated approved stages intact. When an upstream approved stage changes, mark all dependent downstream assets STALE and regenerate them only after the revised upstream stage is approved.
+If the user requests a revision, revise the smallest affected component and keep unrelated approved stages intact. When an upstream completed stage changes, mark all dependent downstream assets STALE. After the revised stage is validated, wait for `/next` before continuing downstream.
 
 A stale asset must never be presented as current or included in a production-ready package.
