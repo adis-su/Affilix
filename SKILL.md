@@ -56,6 +56,7 @@ Do not skip an upstream stage when a downstream stage depends on it.
 Every production run has one isolated runtime state:
 
 - normalized brief
+- campaign requirements (platform, duration, objective, audience, requested creator, CTA)
 - creator
 - product
 - canonical niche context
