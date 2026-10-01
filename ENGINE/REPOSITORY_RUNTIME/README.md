@@ -161,9 +161,9 @@ stages:
     status:
     output:
 
-approval:
-  required:
-  status:
+progression:
+  command: /next
+  required_between_completed_stages: true
 
 decision_queue:
   - field:
@@ -176,11 +176,11 @@ Every material production artifact should retain the run ID, source repository c
 
 ## Interface Boundary
 
-ChatGPT, Telegram, and future clients are interfaces to the same Affilix runtime.
+ChatGPT Project is the only interface/runtime host for the Affilix Skill.
 
-They must not maintain competing workflow logic or canonical production state. They send input to the runtime, display outputs, collect approvals/revisions, and present relevant decision-queue items.
+It must not maintain competing workflow logic. It displays outputs, accepts `/next` to advance after a completed stage, accepts revision instructions, and presents relevant decision-queue items.
 
-This keeps repository updates centralized: changing the repository changes the implementation used by subsequent runs without requiring interface-specific prompt copies.
+Changing the repository changes the implementation used by subsequent runs without requiring interface-specific prompt copies.
 
 ## Repository Freshness Failure
 
