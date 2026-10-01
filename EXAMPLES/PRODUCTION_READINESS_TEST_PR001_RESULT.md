@@ -1,12 +1,7 @@
-# Production Readiness Test Result — PR-001
+# Production Output Contract Test Result — PR-001
 
 ## Status
-
 **PASS**
-
-QC: PASS  
-Production readiness: PRODUCTION_READY  
-Delivery readiness: READY
 
 ## Runtime Trace
 
@@ -21,8 +16,7 @@ Delivery readiness: READY
 | Visual Prompt Engine | PASS |
 | Video Prompt Engine | PASS |
 | Voice Script Engine | PASS |
-| Quality Control | PASS |
-| Final Package Contract | PASS |
+| Production Output | PASS |
 
 ## Canonical Runtime Context
 
@@ -51,7 +45,7 @@ Product:
 
 ## Story Continuity
 
-The 30-second sequence maintains one coherent everyday styling flow:
+The sequence maintains one coherent everyday styling flow:
 
 1. Hook: outfit feels visually unfinished.
 2. Context: creator presents the base outfit.
@@ -61,7 +55,13 @@ The 30-second sequence maintains one coherent everyday styling flow:
 6. Reaction: creator presents the finished styling.
 7. CTA: directs attention to the product without unsupported urgency or offer claims.
 
-No scene requires an invented product property.
+## Action / Reference Integrity
+
+- Action beats are causal and time-ordered.
+- Product interaction produces the resulting visual state.
+- Reference states are stable across transitions.
+- Scene-boundary bridge references are reused rather than recreated.
+- No product drift, duplication, teleportation, or unexplained state change is introduced.
 
 ## Downstream Synchronization
 
@@ -79,16 +79,21 @@ No stale downstream state detected.
 ## Claims Audit
 
 Forbidden claims detected: 0
-
 Invented specifications detected: 0
-
 Invented personal experience detected: 0
-
 Invented offer/scarcity detected: 0
 
-## Final Package Contract
+## Duration
 
-Required package components are present:
+Requested duration: 30 seconds
+
+Provider generation segments must use only supported durations and compose exactly to the requested creative duration.
+
+Result: PASS
+
+## Production Output
+
+Required components are current and synchronized:
 - Creative Brief
 - Creator
 - Product
@@ -100,14 +105,9 @@ Required package components are present:
 - Video Prompts
 - Voice Script
 - CTA
-- QC Notes
-
-## Negative Test Coverage
-
-The fixture explicitly checks material, measurements, warmth, durability, comfort, price, discount, availability, testimonial, superiority, and branding fabrication.
-
-Expected behavior for all unsupported facts: preserve UNKNOWN or exclude the claim.
+- Action/Reference Traceability
+- Duration/Segment Records when video is required
 
 ## Conclusion
 
-PR-001 demonstrates that the current Affilix architecture can carry a realistic Fashion UGC run through the complete documented pipeline without breaking canonical context, creator identity, product identity, claim boundaries, continuity, or production-readiness gating.
+PR-001 demonstrates that the current Affilix architecture can carry a realistic Fashion UGC run through Production Output without breaking canonical context, creator identity, product identity, claims boundaries, continuity, or exact-duration constraints.
