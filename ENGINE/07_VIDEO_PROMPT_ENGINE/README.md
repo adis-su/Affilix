@@ -135,3 +135,22 @@ Before handoff verify:
 ## Handoff
 
 The Video Prompt becomes the technical motion specification for video generation. Storyboard remains the canonical source for scene intent and timing. Visual Prompt remains the canonical source for static appearance.
+
+
+## Reference Transition Architecture
+
+Video generation is modeled as transitions between reference states, not as independent scene animation.
+
+```text
+R01
+ ↓ action
+R02
+ ↓ action
+R03
+ ↓ action
+R04 [BRIDGE]
+```
+
+Each transition carries action beats, causality, product interaction, gaze, expression, camera behavior, bounded micro-motion, and exact duration. See `REFERENCE_TRANSITION_CONTRACT.md`.
+
+A generation segment is only the provider-sized technical container around one or more canonical transitions. It must preserve the reference graph rather than redefine it.
