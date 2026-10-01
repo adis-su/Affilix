@@ -44,6 +44,10 @@ Natural-language input is supported.
 
 ## 3. Product Intake State
 
+### User-Facing Stage Isolation
+
+Stage 01 user-facing output is restricted to Product Intake. Campaign fields may exist in isolated internal runtime state as UNKNOWN, but they must not be rendered, summarized, previewed, or exposed to the user before Stage 02 is active. A generic runtime-state renderer must be stage-aware and must never dump the full campaign state during Stage 01.
+
 Initialize isolated state:
 
 ```yaml
