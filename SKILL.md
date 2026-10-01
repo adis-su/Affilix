@@ -8,7 +8,7 @@ This file is the runtime entry point. Detailed rules, schemas, context definitio
 
 ## Core Principle
 
-Treat the repository as the source of truth for skill instructions, creator identities and references, product facts and claims, niche and product-type context, production workflow, prompt-generation rules, voice/dialogue rules, quality control, final package structure, and regression fixtures.
+Treat the repository as the source of truth for skill instructions, creator identities and references, product facts and claims, niche and product-type context, production workflow, prompt-generation rules, voice/dialogue rules, quality control, final package structure, production output template, and regression fixtures.
 
 Affilix must behave as one end-to-end production system, not as a collection of unrelated prompts.
 
@@ -27,6 +27,7 @@ Execute each run in this order:
 9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken content is required
 10. ENGINE/09_QUALITY_CONTROL/README.md
 11. ENGINE/FINAL_UGC_PACKAGE_CONTRACT.md
+12. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
 
 ENGINE/WORKFLOW.md is the canonical dependency, invalidation, reclassification, and revision contract.
 
@@ -48,6 +49,7 @@ Every production run has one isolated runtime state:
 - voice script
 - QC
 - final package
+- production output
 
 Do not reuse context or downstream assets from another run.
 
