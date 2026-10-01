@@ -59,6 +59,7 @@ Every production run has one isolated runtime state:
 
 - normalized brief
 - campaign requirements (platform, duration, objective, audience, requested creator, CTA)
+- Stage 02 structured choice state and audience provenance
 - creator
 - product
 - canonical niche context
@@ -75,6 +76,8 @@ If a canonical input changes, dependent state becomes STALE until regenerated an
 ## Production Rules
 
 Normalize the brief and classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN. Never convert assumptions into facts.
+
+Stage 02 campaign intake uses controlled platform, duration, objective, creator, and CTA choices. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
 
 Load one canonical niche context. Missing values remain UNKNOWN. Explicit product and creator facts outrank context labels.
 
