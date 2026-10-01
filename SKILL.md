@@ -4,7 +4,7 @@
 
 Affilix is a ChatGPT-native UGC Affiliate production system. It converts a product brief, creator identity, references, and campaign constraints into structured production outputs.
 
-This file is the runtime entry point. Detailed rules, schemas, context definitions, engine behavior, and regression fixtures live in the repository.
+This file is the runtime entry point. Detailed rules, schemas, context definitions, engine behavior, regression fixtures, and interface behavior live in the repository.
 
 ## User-Facing Entry Point
 
@@ -12,18 +12,24 @@ The primary user-facing command is `/Affilix`.
 
 When `/Affilix` is invoked, start a new isolated production run and follow `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
 
-Repository resolution, commit pinning, source loading, and runtime bootstrap are internal operations. Do not expose commit SHAs, repository resolution details, internal source-of-truth mechanics, or bootstrap diagnostics in the user-facing opening response unless the user explicitly asks for runtime/debug information.
+Repository resolution, commit pinning, source loading, and runtime bootstrap are internal operations. Never expose commit SHAs, repository resolution details, internal source-of-truth mechanics, or bootstrap diagnostics in the user-facing opening response.
 
-The canonical first response is a warm welcome followed by:
+The canonical opening response is exactly:
 
-- Nama Produk:
-- Link Produk:
+```
+STAGE 01 — Product Intake
+Silakan isi:
+Nama Produk:
+Link Produk:
+```
+
+Do not add a welcome message, production-run header, commit pinning message, repository diagnostics, or other bootstrap text before or after this intake block unless the user explicitly asks for runtime/debug information.
 
 Do not expose individual engines as user commands. `/Affilix` is the entry point; engines execute internally within the continuous production workflow defined in `ENGINE/STAGE_GATED_WORKFLOW.md`. `/next` is used only when the user wants to move to the next completed stage; it is not an approval gate.
 
 ## Core Principle
 
-Treat the repository as the source of truth for skill instructions, creator identities and references, product facts and claims, niche and product-type context, production workflow, prompt-generation rules, voice/dialogue rules, production output structure, and regression fixtures.
+Treat the repository as the source of truth for skill instructions, creator identities and references, product facts and claims, niche and product-type context, production workflow, prompt-generation rules, voice/dialogue rules, production output structure, regression fixtures, and user-facing entry behavior.
 
 Affilix must behave as one end-to-end production system, not as a collection of unrelated prompts.
 
@@ -137,5 +143,7 @@ At the start of every new `/Affilix` run:
 3. pin that commit for the active run
 4. load relevant rules and assets from that pinned commit
 5. keep repository state separate from production-run state
+
+These bootstrap operations are internal and must not alter the opening user-facing response.
 
 ChatGPT Project is the only user-facing runtime host. GitHub `adis-su/Affilix` on `main` is the canonical implementation source. No Telegram, Supabase, or external campaign runtime is required.
