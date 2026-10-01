@@ -175,6 +175,46 @@ Acceptance:
 - If dialogue crosses a generation segment boundary, the immutable bridge reference remains the continuity anchor.
 
 
+
+## Video Generation Segment Determinism Regression
+
+A production-ready generation segment must specify a deterministic reference-to-reference transition rather than relying on a compressed action summary.
+
+Required acceptance criteria:
+
+1. Segment duration is exact and is one of the provider-supported durations [4,6,8,10].
+2. Start reference state is explicitly described.
+3. Every material visual change is represented as an ordered action beat with a physical cause and resulting state.
+4. An immutable bridge reference has an explicit physical state contract when present.
+5. Product interaction identifies physical contact and state change, including hand ownership where relevant.
+6. Gaze changes are bounded to action beats or timing intervals.
+7. Camera behavior is tied to the active action and preserves required face/product visibility.
+8. Target/end state explicitly identifies posture, hand, product, gaze, expression, and framing state.
+9. Every dialogue/voice-over interval fits completely inside the exact segment duration.
+10. Voice-over explicitly defines mouth behavior when lip-sync is not required.
+11. Dialogue is synchronized to the visual action and does not introduce a competing wording version of the canonical Voice Script.
+12. Negative constraints cover skipped/reversed/duplicated beats, unexplained product state changes, hand swapping, and premature target-state matching.
+
+Example failure:
+
+    Duration: exactly 8 seconds
+    Voice-over: 00:04.2–00:08.2
+
+This fails because the dialogue exceeds the segment boundary.
+
+Example bridge requirement:
+
+    R02:
+    - container open
+    - supporting hand holds the product upright
+    - opposite fingertip carries a small visible amount of moisturizer
+    - label orientation remains unchanged
+    - gaze is directed toward the fingertip
+    - framing remains consistent with the canonical bridge state
+
+The bridge state must be reused exactly wherever R02 is the shared boundary between generation segments.
+
+
 ## Voice Script UGC Conversationality Regression
 
 A Voice Script must translate validated product facts into spoken creator language rather than reproducing product-page copy.
