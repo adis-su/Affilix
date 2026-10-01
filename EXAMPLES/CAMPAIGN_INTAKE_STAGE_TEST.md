@@ -29,6 +29,69 @@ Target audience:
 Creator:
 CTA:
 
+## Stage 02 Choice Contract
+
+Platform choices:
+- TikTok
+- Instagram Reels
+- Facebook
+- Shopee Video
+
+Duration choices:
+- 18 seconds
+- Custom exact duration
+
+Content objective choices include:
+- Product awareness
+- Product education
+- Problem-solution
+- Product demonstration
+- Benefit explanation
+- Feature highlight
+- Social proof
+- Trust building
+- Consideration
+- Conversion / sales
+- Direct response
+- Traffic / click-through
+- Engagement
+- Community building
+- Launch / new product
+- Promotion / offer
+- Retargeting
+
+Target audience:
+- must be derived from validated Stage 01 product research and product reference
+- must distinguish source-supported facts from inferred audience attributes
+- must allow user correction/replacement
+- must not invent sensitive personal attributes
+
+Creator:
+- must enumerate the current `CREATOR_LIBRARY/` records from the pinned repository
+- must not expose creator names that do not exist in the repository
+
+CTA choices include:
+- Shop now
+- Buy now
+- Add to cart
+- Check the product
+- Learn more
+- See details
+- Try it
+- Discover more
+- Visit the product page
+- Click the link
+- Tap the link
+- Follow for more
+- Save this video
+- Share this video
+- Comment your thoughts
+- Send this to someone
+- DM for details
+- Use the product
+- Consider it for your routine
+- Custom CTA
+
 ## Validation
 Stage 02 must persist:
 - platform
@@ -37,6 +100,14 @@ Stage 02 must persist:
 - target audience
 - requested creator
 - CTA
+
+The default 18-second duration must remain exact. Custom durations must remain exact and are feasible only when they can be composed from provider-supported durations `[4,6,8,10]`. If not feasible, mark `duration_feasibility: BLOCKED` rather than changing the requested duration.
+
+The target audience must carry provenance, distinguishing product-source facts from AI-inferred audience attributes.
+
+The requested creator must resolve to a creator present in the pinned repository's `CREATOR_LIBRARY/`.
+
+The requested creator is campaign input. Canonical creator identity is resolved and validated later by Stage 04 Creator.
 
 The requested creator is campaign input. Canonical creator identity is resolved and validated later by Stage 04 Creator.
 
