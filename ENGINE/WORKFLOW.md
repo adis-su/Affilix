@@ -10,26 +10,37 @@ The runtime should behave as one coherent system rather than exposing independen
 
 The user-facing entry command is `/Affilix`.
 
-`/Affilix` → Product Intake → Brief Analysis → Niche Context → Creator → Product → Strategy → Hook → Storyboard → Visual/Video/Voice → QC → Final Package.
+`/Affilix` starts a **stage-gated production run**. The user reviews and approves each required stage before Affilix proceeds to the next stage.
 
-The entry contract is defined in `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
+The stage-gating contract is defined in `ENGINE/STAGE_GATED_WORKFLOW.md`. The entry contract is defined in `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
 
 The initial product intake requests only `Nama Produk` and `Link Produk`. After product intake, request only the minimum additional campaign information needed to continue.
 
 ## Pipeline
 
 USER BRIEF
-→ 01 BRIEF ANALYZER
-→ NICHE CONTEXT LOADER
-→ 02 CREATOR SELECTOR
-→ 03 CONTENT STRATEGY
-→ 04 HOOK ENGINE
-→ 05 STORYBOARD ENGINE
-→ 06 VISUAL PROMPT ENGINE
-→ 07 VIDEO PROMPT ENGINE
-→ 08 VOICE SCRIPT ENGINE
-→ 09 QUALITY CONTROL
-→ FINAL UGC PACKAGE
+→ STAGE 01 BRIEF & PRODUCT
+→ APPROVAL
+→ STAGE 02 NICHE & CONTEXT
+→ APPROVAL
+→ STAGE 03 CREATOR
+→ APPROVAL
+→ STAGE 04 CONTENT STRATEGY
+→ APPROVAL
+→ STAGE 05 HOOK
+→ APPROVAL
+→ STAGE 06 STORYBOARD
+→ APPROVAL
+→ STAGE 07 VISUAL PROMPT
+→ APPROVAL
+→ STAGE 08 VIDEO PROMPT when required
+→ APPROVAL
+→ STAGE 09 VOICE SCRIPT when required
+→ APPROVAL
+→ STAGE 10 QUALITY CONTROL
+→ STAGE 11 FINAL UGC PACKAGE
+
+Engines execute internally within their corresponding stage. Do not silently run future gated stages before the current stage is approved.
 
 ## Phase 1 — Intake
 
@@ -344,3 +355,15 @@ Repository loading is governed by `ENGINE/REPOSITORY_RUNTIME/README.md`.
 At runtime, load the current repository specification relevant to each stage. Use progressive loading rather than reading the entire repository. Repository state and production-run state are separate.
 
 If a material repository rule changes, affected downstream assets become STALE and must be regenerated according to the dependency rules below. Never invent missing repository rules or claim that a repository file was consulted when it was not accessible.
+
+## Stage-Gated Execution
+
+The canonical stage-gating contract is `ENGINE/STAGE_GATED_WORKFLOW.md`.
+
+For every required stage, execute: INPUT → PROCESS → OUTPUT → REVIEW → APPROVAL → NEXT STAGE.
+
+After presenting a stage output, stop and wait for an unambiguous user approval or revision instruction. Natural approvals such as `approve`, `approved`, `lanjut`, `lanjutkan`, or equivalent confirmation are valid.
+
+If the user requests a revision, revise the smallest affected component and keep unrelated approved stages intact. When an upstream approved stage changes, mark all dependent downstream assets STALE and regenerate them only after the revised upstream stage is approved.
+
+A stale asset must never be presented as current or included in a production-ready package.
