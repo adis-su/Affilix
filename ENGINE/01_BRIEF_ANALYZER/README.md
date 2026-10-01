@@ -2,11 +2,13 @@
 
 ## Purpose
 
-The Brief Analyzer converts an unstructured user brief into a structured production brief that downstream Affilix engines can process.
+The Brief Analyzer converts an unstructured user brief and available product references into a structured production brief that downstream Affilix engines can process.
 
 It is the first normalization layer between human input and the UGC production pipeline.
 
 ## Input
+
+When the user provides a product link/reference, the analyzer must actively inspect and extract available product information from that reference before asking for additional product details. The link is an evidence source to investigate, not merely a field to acknowledge.
 
 The user may provide:
 
@@ -30,6 +32,29 @@ The user may provide:
 - Any other campaign context
 
 Input may be incomplete, informal, mixed-language, or poorly structured.
+
+## Product Reference Research
+
+For a supplied product URL or reference, Stage 01 should research the accessible source as deeply as reasonably possible and extract all materially useful product information available from it, including where present:
+
+- exact product name and brand
+- category and product type
+- size/variant/flavor/shade
+- stated ingredients/materials/components
+- stated product benefits and supported selling points
+- usage/how-to-use information
+- packaging/product form
+- official price or offer information when explicitly shown
+- manufacturer/brand information
+- warnings, restrictions, or usage notes
+- source URLs or reference locations
+- other factual product details relevant to downstream UGC production
+
+Classify each finding as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN. Preserve the source and distinguish sourced facts from marketing language. Never manufacture missing facts or convert an unsupported claim into a product fact.
+
+If the reference is inaccessible, incomplete, blocked, or ambiguous, record the limitation and continue with whatever evidence is available rather than pretending that the link was fully inspected.
+
+Stage 01 output should present a useful product research summary after processing, while keeping Campaign Intake fields hidden until Stage 02.
 
 ## Output
 
@@ -94,7 +119,9 @@ List only information that is genuinely required for the next production stage.
 ## Normalization Rules
 
 1. Preserve user intent.
-2. Separate explicit requirements from inferred context.
+2. Inspect supplied product references before declaring product information missing.
+3. Extract and normalize materially useful product facts from accessible references.
+4. Separate explicit requirements from inferred context.
 3. Never turn an assumption into a fact.
 4. Never invent product claims.
 5. Never invent creator attributes.
@@ -103,8 +130,9 @@ List only information that is genuinely required for the next production stage.
 8. Normalize terminology where possible.
 9. Keep uncertain information explicitly marked as unknown.
 10. Do not ask for information that downstream production does not actually need.
-11. Detect niche and product type when the product information supports a reliable classification.
-12. Keep niche classification separate from product claims. A classification is not evidence for a product attribute.
+11. Do not ask the user to repeat product facts that can be reliably obtained from the supplied product reference.
+12. Detect niche and product type when the product information supports a reliable classification.
+13. Keep niche classification separate from product claims. A classification is not evidence for a product attribute.
 
 ## Niche Detection
 
