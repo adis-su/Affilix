@@ -431,3 +431,20 @@ When status is BLOCKED:
 - Request only the minimum information needed to unblock production.
 
 The Quality Control Engine is the final validation gate of the Affilix production pipeline.
+
+
+## Niche and Product-Type Validation
+
+When a niche context is loaded, validate:
+
+- detected niche matches the normalized brief and approved Product Library data
+- product type is compatible with the detected niche
+- ACTIVE rules are loaded when available
+- PLANNED niches are not represented as having detailed authoritative rules
+- niche/product-type interaction requirements are reflected in storyboard and prompts when applicable
+- niche-specific claim restrictions are not bypassed by generic creative language
+- downstream assets do not contradict the resolved niche context
+
+If niche or product type is materially ambiguous, flag the issue according to severity and request only the minimum clarification required.
+
+Niche context is subordinate to explicit campaign/product/creator source-of-truth data.
