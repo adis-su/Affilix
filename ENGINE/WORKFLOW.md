@@ -6,6 +6,16 @@ This document is the canonical execution contract for the Affilix production run
 
 The runtime should behave as one coherent system rather than exposing independent prompt modules.
 
+## Entry Point
+
+The user-facing entry command is `/Affilix`.
+
+`/Affilix` → Product Intake → Brief Analysis → Niche Context → Creator → Product → Strategy → Hook → Storyboard → Visual/Video/Voice → QC → Final Package.
+
+The entry contract is defined in `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
+
+The initial product intake requests only `Nama Produk` and `Link Produk`. After product intake, request only the minimum additional campaign information needed to continue.
+
 ## Pipeline
 
 USER BRIEF
