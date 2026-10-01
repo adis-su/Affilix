@@ -153,3 +153,24 @@ There is no QC stage and no Final UGC Package stage.
 Repository loading is governed by ENGINE/REPOSITORY_RUNTIME/README.md. At runtime, load the current repository specification relevant to each stage using progressive loading.
 
 If a material repository rule changes, affected downstream assets become STALE and must be regenerated according to the dependency rules.
+
+
+## Action Choreography and Reference Graph
+
+Storyboard is the canonical source for action choreography. A scene is a process with action beats and meaningful visual states.
+
+```text
+SCENE
+  ↓
+ACTION GRAPH
+  ↓
+REFERENCE STATES
+  ↓
+TRANSITIONS
+  ↓
+GENERATION SEGMENTS
+```
+
+Visual Prompt renders reference states. Video Prompt generates transitions between those states. Bridge references preserve exact boundary continuity across scenes.
+
+If an action beat changes, invalidate affected references and all downstream transitions touching those references. If a bridge changes, invalidate both sides of the boundary and their dependent downstream assets.
