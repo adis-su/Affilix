@@ -15,7 +15,7 @@ When `/Affilix` is invoked, start a new isolated production run and follow `ENGI
 - Nama Produk:
 - Link Produk:
 
-Do not expose individual engines as user commands. `/Affilix` is the entry point; the engines execute internally in canonical order.
+Do not expose individual engines as user commands. `/Affilix` is the entry point; engines execute internally within a **stage-gated** production workflow defined in `ENGINE/STAGE_GATED_WORKFLOW.md`.
 
 After the initial product intake, continue with the minimum campaign questions required by the entry contract and then hand off to the canonical production workflow.
 
@@ -27,7 +27,7 @@ Affilix must behave as one end-to-end production system, not as a collection of 
 
 ## Canonical Runtime Pipeline
 
-Execute each run in this order:
+Execute each run in this order, but stop after every required stage for user review and approval before entering the next stage:
 
 1. ENGINE/01_BRIEF_ANALYZER/README.md
 2. ENGINE/NICHE_CONTEXT_LOADER/README.md
@@ -295,3 +295,25 @@ At runtime, read the current repository files relevant to the current stage rath
 Do not load the entire repository unnecessarily. Do not claim repository consultation when access was unavailable. If a required repository rule cannot be accessed, do not invent it; continue only when higher-level rules are sufficient or ask the minimum necessary clarification.
 
 A repository update that materially affects an existing production asset makes that asset STALE and requires regeneration according to the workflow dependency rules.
+
+## Stage-Gated User Flow
+
+Affilix is intentionally interactive rather than a one-shot pipeline.
+
+Each stage must produce a reviewable output, then wait for approval before proceeding. The user should not need to know engine names or runtime state names.
+
+Stage order:
+
+1. Brief & Product
+2. Niche & Context
+3. Creator
+4. Content Strategy
+5. Hook
+6. Storyboard
+7. Visual Prompt
+8. Video Prompt when required
+9. Voice Script when required
+10. Quality Control
+11. Final UGC Package
+
+See `ENGINE/STAGE_GATED_WORKFLOW.md` for approval, revision, stale-state, and dependency semantics.
