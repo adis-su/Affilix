@@ -35,7 +35,7 @@ Therefore:
 
 ## Input
 
-- Approved storyboard scene
+- Completed storyboard scene
 - Selected creator package
 - Canonical creator identity
 - Approved creator visual references
@@ -482,7 +482,7 @@ Visual prompts are passed to:
 
 - Image generation workflow
 - 07_VIDEO_PROMPT_ENGINE
-- 09_QUALITY_CONTROL
+- downstream production output
 
 The storyboard remains the canonical source for scene intent. The visual prompt is an implementation layer for a static frame and does not replace the storyboard.
 
@@ -509,3 +509,16 @@ Context labels must never become unsupported product attributes, origin claims, 
 - Image prompts do not contain video motion direction.
 - Image prompts do not contain temporal sequence instructions.
 - Downstream image generation can trace the prompt back to its storyboard scene.
+
+
+## Reference-State Architecture
+
+Visual prompts are generated from Storyboard reference states rather than from scenes as a whole. One scene may produce multiple static prompts because it contains multiple meaningful states.
+
+```text
+R01 → R02 → R03 → R04
+```
+
+Each prompt freezes exactly one state. It must preserve creator, product, wardrobe, camera, environment, lighting, and continuity-critical attributes from the reference contract. See `REFERENCE_STATE_CONTRACT.md`.
+
+A bridge reference is rendered as one canonical state and reused by both adjacent scenes. The Visual Prompt Engine must never invent a different boundary state.
