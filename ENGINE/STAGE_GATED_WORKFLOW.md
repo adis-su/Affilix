@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Affilix runs as a **continuous production workflow**. The runtime automatically advances through dependency-satisfied stages. User approval is not a progression requirement.
+Affilix runs as a **stage-by-stage production workflow**. Each stage is processed and validated, then the run pauses at the completed stage. The user advances with `/next`. `/next` is a progression command, not an approval action.
 
 Each stage follows:
 
-**INPUT → PROCESS → OUTPUT → VALIDATE → NEXT STAGE**
+**INPUT → PROCESS → OUTPUT → VALIDATE → WAIT FOR `/next` → NEXT STAGE**
 
 The user experiences one guided production assistant. Engine names remain implementation details.
 
@@ -32,37 +32,32 @@ Each stage has one of:
 - `NOT_STARTED`
 - `DRAFT`
 - `REVIEW`
-- `APPROVED`
 - `REVISION`
 - `STALE`
 - `SKIPPED`
 - `COMPLETED`
 
-`APPROVED` is an internal completion state for dependency tracking and audit. It is not a user-facing gate.
-
 QC additionally uses its existing validation statuses: `PASS`, `REVISION REQUIRED`, and `BLOCKED`.
 
-## Automatic Progression Contract
+## `/next` Progression Contract
 
 After producing a stage output:
 1. Persist the artifact.
 2. Validate the stage and its prerequisites.
-3. Automatically advance to the next dependency-satisfied stage.
-4. Stop only for a material blocker, explicit revision, safety/compliance issue, or missing required information.
+3. Mark the stage `COMPLETED` when validation passes.
+4. Present the completed stage output.
+5. Wait for the user to send `/next`.
+6. On `/next`, execute the next dependency-satisfied stage.
 
-The user-facing command /next is not required for normal progression.
+`/next` is the only progression command needed between completed stages. It does not mean approve, accept, or endorse the output.
 
-APPROVED may still be written internally when a stage has passed its required validation and is ready to satisfy downstream dependencies.
-
-REVISION returns control to the affected stage and automatically re-runs dependent stages after correction.
+`REVISION` returns to the affected stage. After the revision is validated, wait for `/next` again.
 
 STALE prevents stale artifacts from being consumed downstream.
 
 SKIPPED is explicit when a deliverable does not require a stage.
 
 QC PASS remains the final validation requirement before production packaging.
-
-/next may remain as a compatibility command, but it must not be presented as an approval requirement.
 
 ## Revision Contract
 
@@ -81,7 +76,7 @@ Do not rebuild unrelated approved stages.
 
 When an approved upstream stage changes, dependent stages become `STALE`.
 
-Example: `Storyboard v1 APPROVED` → user changes Storyboard → `Storyboard v2 REVIEW` → prior Visual/Video/Voice outputs become `STALE` → after Storyboard approval, regenerate affected downstream stages.
+Example: `Storyboard v1 COMPLETED` → user requests a Storyboard revision → `Storyboard v2 REVISION` → prior Visual/Video/Voice outputs become `STALE` → after Storyboard v2 is validated, wait for `/next` before continuing.
 
 A stale asset must never be presented as current or included in a production-ready package.
 
@@ -108,7 +103,7 @@ generation_segments: []
 
 stages:
   brief_product:
-    status: REVIEW
+    status: COMPLETED
   niche_context:
     status: NOT_STARTED
   creator:
@@ -163,24 +158,24 @@ Output: approved hook direction/copy and delivery direction.
 Progression: automatic after validation.
 
 ### 06 — Storyboard
-Input: validated Hook and all upstream approved state.
+Input: validated Hook and all upstream completed state.
 Output: canonical scene sequence, creative timing, and duration/segment planning intent.
 Progression: automatic after validation.
 
-The storyboard is the source of truth for the approved creative duration. It must preserve the requested final duration unless the user explicitly approves a change.
+The storyboard is the source of truth for the completed creative duration. It must preserve the requested final duration unless the user explicitly approves a change.
 
 Provider generation limits are technical constraints and must not silently redefine the storyboard duration.
 
 ### 07 — Visual Prompt
-Input: validated Storyboard and all upstream approved state.
+Input: validated Storyboard and all upstream completed state.
 Output: one production-ready image prompt per required visual scene.
 Progression: automatic after validation.
 
 ### 08 — Video Prompt
-Input: validated Storyboard, approved Visual Prompt where relevant, and active provider capability profile when video generation is required.
+Input: validated Storyboard, completed Visual Prompt where relevant, and active provider capability profile when video generation is required.
 Output: motion specification plus provider-compatible generation segment mapping.
 
-If the approved final duration exceeds a provider's single-generation limit, create multiple generation segments. Each segment must use a supported provider duration, and the segment durations must sum to the approved final duration.
+If the completed final duration exceeds a provider's single-generation limit, create multiple generation segments. Each segment must use a supported provider duration, and the segment durations must sum to the approved final duration.
 
 Progression: automatic after validation.
 
@@ -217,21 +212,21 @@ At each stage:
 - automatically continue when dependencies are satisfied
 - keep technical runtime state hidden unless requested
 
-The user should feel like they are approving a production, not operating a software build system.
+The user should feel like they are progressing through a production, not operating a software build system.
 
 ## Dependency Rules
 
-The existing dependency rules in `ENGINE/WORKFLOW.md` remain authoritative. This contract adds a automatic progression on top of those dependencies.
+The existing dependency rules in `ENGINE/WORKFLOW.md` remain authoritative. This contract adds `/next` progression on top of those dependencies.
 
-A stage cannot be considered production-current merely because its upstream data exists. Its own approval state must also be current.
+A stage cannot be considered production-current merely because its upstream data exists. Its own validation must also be current.
 
 ## Completion
 
 The run is complete only when:
-- all required stages are current and validated, with APPROVED or SKIPPED used as internal lifecycle states
+- all required stages are current and validated, with COMPLETED or SKIPPED used as internal lifecycle states
 - QC is `PASS`
 - no required downstream asset is `STALE`
-- requested, creative, and final duration are aligned unless an explicit approved exception exists
+- requested, creative, and final duration are aligned unless an explicit user-requested exception exists
 - provider generation segments are compatible when video generation is required
 - Final UGC Package is complete
 - delivery readiness is `READY`
