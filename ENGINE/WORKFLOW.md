@@ -10,7 +10,7 @@ The runtime should behave as one coherent system rather than exposing independen
 
 The user-facing entry command is /Affilix.
 
- /Affilix starts a continuous production run. Affilix automatically advances through dependency-satisfied stages without requiring user approval.
+ /Affilix starts a stage-by-stage production run. Affilix completes and validates one stage at a time, then waits for `/next` before advancing to the next dependency-satisfied stage.
 
 The stage progression contract is defined in ENGINE/STAGE_GATED_WORKFLOW.md. The entry contract is defined in ENGINE/AFFILIX_ENTRY_POINT/README.md.
 
@@ -128,7 +128,7 @@ Creative scene durations must add up to the requested final duration.
 
 Provider limitations must not silently change the requested final duration. If technical segmentation is needed, the storyboard should preserve natural creative beat boundaries that can later map to provider-supported generation segments.
 
-The storyboard becomes the canonical temporal source for Visual, Video, and Voice. These downstream specifications may execute independently as soon as their branch-specific prerequisites are satisfied.
+The storyboard becomes the canonical temporal source for Visual, Video, and Voice. After the user sends `/next` following a completed Storyboard, these downstream specifications may execute independently as soon as their branch-specific prerequisites are satisfied.
 
 ## Phase 7 — Parallel Production Specifications
 
@@ -338,7 +338,7 @@ A production-ready package should contain:
 
 When sufficient information exists:
 
-- process the full pipeline without unnecessary questions
+- process the current stage without unnecessary questions
 - preserve canonical creator and product identity
 - resolve and preserve canonical niche context
 - keep unsupported fields UNKNOWN
@@ -364,7 +364,7 @@ Affilix is complete for a campaign only when:
 - claims are supported
 - storyboard is coherent
 - visual/video/voice specifications are synchronized
-- requested, creative, and final durations match unless an explicit approved exception exists
+- requested, creative, and final durations match unless an explicit user-requested exception exists
 - all video generation segments are provider-compatible when video generation is required
 - no stale context remains
 - cross-run isolation passes
@@ -380,7 +380,7 @@ If a material repository rule changes, affected downstream assets become STALE a
 
 ## Stage Progression Execution
 
-The canonical continuous-production contract is ENGINE/STAGE_GATED_WORKFLOW.md.
+The canonical stage-progression contract is ENGINE/STAGE_GATED_WORKFLOW.md.
 
 For every required stage, execute: INPUT → PROCESS → OUTPUT → VALIDATE → NEXT STAGE.
 
