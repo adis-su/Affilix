@@ -99,8 +99,14 @@ stages:
 ## Stage Contracts
 
 ### 01 — Brief & Product
-Input: product name, product link/reference, campaign information available in the current run.
+Input: product name and product link/reference only.
 Output: normalized brief and canonical product facts.
+
+Stage 01 user-facing output isolation:
+- Render only Product Intake information.
+- Do not render Campaign Intake fields, campaign summaries, or campaign UNKNOWN placeholders.
+- Internal campaign state may be initialized as UNKNOWN, but remains non-user-facing until Stage 02 is active.
+- Any generic state/status renderer must filter fields by the active stage before presenting output.
 
 ### 02 — Campaign Intake
 Input: validated Brief & Product.
