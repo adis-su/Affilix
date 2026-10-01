@@ -19,6 +19,7 @@ An adapter must not:
 - maintain competing campaign state
 - turn `/next` into an approval decision
 - regenerate stale assets
+- expose internal bootstrap diagnostics
 - bypass QC or Final Package
 - treat transport metadata as product evidence
 
@@ -41,6 +42,7 @@ The interface must not:
 - interpret `/next` as approval
 - bypass QC or Final Package
 - invent missing repository rules
+- expose repository commit resolution or pinning diagnostics during normal `/Affilix` intake
 
 ## Repository Runtime
 
@@ -50,5 +52,7 @@ For a new `/Affilix` run:
 2. Record the current commit SHA.
 3. Load the relevant Skill, workflow, library, and engine files.
 4. Keep the active run tied to that repository version for traceability.
+
+The repository resolution and commit pinning steps are internal runtime behavior. They must not appear in the initial user-facing response.
 
 No Telegram adapter, Supabase lifecycle endpoint, or external campaign database is part of the canonical Affilix runtime.
