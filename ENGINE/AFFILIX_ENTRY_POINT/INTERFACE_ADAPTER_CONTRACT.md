@@ -2,7 +2,7 @@
 
 ## Purpose
 
-ChatGPT, Telegram, and future clients are interface adapters to the same Affilix runtime.
+ChatGPT Project is the Affilix interface and runtime host for this Skill.
 
 An adapter may:
 
@@ -10,77 +10,45 @@ An adapter may:
 - normalize transport-specific metadata
 - call the canonical runtime
 - present runtime output
-- collect approval or revision
-- preserve the runtime campaign ID
+- collect `/next` progression commands or revision instructions
+- preserve the active run state
 
 An adapter must not:
 
 - implement stage logic
 - maintain competing campaign state
-- decide approval independently
+- turn `/next` into an approval decision
 - regenerate stale assets
 - bypass QC or Final Package
 - treat transport metadata as product evidence
 
-## Canonical Runtime
+## Runtime Boundary
 
-The canonical lifecycle endpoint is the Supabase Edge Function:
+The ChatGPT Project hosts the Affilix Skill and executes the canonical workflow using the GitHub repository as source of truth.
 
-`affilix-runtime-lifecycle`
+The interface may:
 
-The adapter sends:
+- accept `/Affilix` and campaign input
+- present the current stage output
+- accept `/next` to advance the run
+- accept direct revision instructions
+- preserve the active run state within the current Project conversation
 
-- `user_id`
-- `campaign_id` when continuing a run
-- `command`
-- `stage` when explicitly targeting a stage
-- `input` or `message`
-- transport metadata only when useful for traceability
+The interface must not:
 
-The runtime remains the source of truth for:
+- implement competing stage logic
+- maintain a second canonical product or creator state
+- interpret `/next` as approval
+- bypass QC or Final Package
+- invent missing repository rules
 
-- repository commit pinning
-- campaign state
-- stage status
-- approvals
-- revisions
-- stale propagation
-- dependency rules
-- QC
-- final readiness
+## Repository Runtime
 
-## Telegram Mapping
+For a new `/Affilix` run:
 
-Telegram `chat.id` is the transport identity used as `user_id`.
+1. Resolve `adis-su/Affilix` on `main`.
+2. Record the current commit SHA.
+3. Load the relevant Skill, workflow, library, and engine files.
+4. Keep the active run tied to that repository version for traceability.
 
-A Telegram message containing `/Affilix` starts a new campaign.
-
-A subsequent message is routed to the current campaign for that Telegram chat.
-
-Approval phrases are passed through unchanged and normalized by the runtime.
-
-## Security
-
-The Telegram adapter must verify Telegram's webhook secret token when configured.
-
-The bot token is stored only as a server-side Supabase secret.
-
-The Telegram adapter must never expose:
-
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `TELEGRAM_BOT_TOKEN`
-
-No Telegram credential is stored in Git.
-
-## Activation
-
-Deployment of the adapter is separate from Telegram webhook registration.
-
-The adapter can be deployed without a live bot token, but webhook activation requires:
-
-1. `TELEGRAM_BOT_TOKEN` Supabase secret
-2. deployed adapter URL
-3. Telegram `setWebhook` configuration
-4. optional `TELEGRAM_WEBHOOK_SECRET`
-
-Until those are configured, Telegram integration remains `DEPLOYED_NOT_CONNECTED`.
+No Telegram adapter, Supabase lifecycle endpoint, or external campaign database is part of the canonical Affilix runtime.
