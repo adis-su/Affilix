@@ -15,7 +15,7 @@ When `/Affilix` is invoked, start a new isolated production run and follow `ENGI
 - Nama Produk:
 - Link Produk:
 
-Do not expose individual engines as user commands. `/Affilix` is the entry point; engines execute internally within a **stage-gated** production workflow defined in `ENGINE/STAGE_GATED_WORKFLOW.md`.
+Do not expose individual engines as user commands. `/Affilix` is the entry point; engines execute internally within the continuous production workflow defined in `ENGINE/STAGE_GATED_WORKFLOW.md`. `/next` is used only when the user wants to move to the next completed stage; it is not an approval gate.
 
 After the initial product intake, continue with the minimum campaign questions required by the entry contract and then hand off to the canonical production workflow.
 
@@ -316,7 +316,7 @@ Stage order:
 10. Quality Control
 11. Final UGC Package
 
-See `ENGINE/STAGE_GATED_WORKFLOW.md` for stage-state, dependency, revision, stale-state, and QC semantics.
+See `ENGINE/STAGE_GATED_WORKFLOW.md` for stage-state, dependency, revision, stale-state, `/next`, and QC semantics.
 
 
 ## Live Repository Runtime
@@ -337,4 +337,4 @@ A newer repository commit is used automatically by the next new run. The active 
 
 See `ENGINE/REPOSITORY_RUNTIME/README.md` and `ENGINE/REPOSITORY_RUNTIME/RUNTIME_CONTRACT.md`.
 
-Interfaces such as ChatGPT and Telegram are adapters to the same runtime. They must not maintain competing workflow logic or canonical campaign state.
+ChatGPT Project is the only user-facing runtime host. GitHub `adis-su/Affilix` on `main` is the canonical implementation source. Production state is kept in the active ChatGPT Project run; no Telegram, Supabase, or external campaign runtime is required.
