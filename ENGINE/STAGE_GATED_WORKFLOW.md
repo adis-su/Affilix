@@ -102,23 +102,27 @@ stages:
 Input: product name, product link/reference, campaign information available in the current run.
 Output: normalized brief and canonical product facts.
 
-### 02 — Niche & Context
+### 02 — Campaign Intake
 Input: validated Brief & Product.
+Output: platform, requested video duration, content objective, target audience, requested creator, and CTA.
+
+### 03 — Niche & Context
+Input: validated Brief & Product plus Campaign Intake.
 Output: one canonical niche context.
 
-### 03 — Creator
-Input: validated context plus creator requirements.
+### 04 — Creator
+Input: validated context plus the requested creator from Campaign Intake.
 Output: selected creator identity and relevant creator references.
 
-### 04 — Content Strategy
-Input: validated Brief, Context, Creator.
+### 05 — Content Strategy
+Input: validated Brief, Campaign Intake, Context, Creator.
 Output: objective, audience, angle, core message, story arc, proof strategy, CTA strategy.
 
-### 05 — Hook
+### 06 — Hook
 Input: validated Strategy.
 Output: validated hook direction/copy and delivery direction.
 
-### 06 — Storyboard
+### 07 — Storyboard
 Input: validated Hook and all upstream completed state.
 Output: canonical scene sequence, creative timing, and duration/segment planning intent.
 
