@@ -1,10 +1,10 @@
-# Affilix — UGC Production Output Template v1
+# Affilix — UGC Production Output Template v2
 
 ## Purpose
 
-Standardize the production-ready output emitted by Affilix after a run passes QC.
+Standardize the final production output emitted by Affilix after all required production stages are complete.
 
-This template is an output contract, not a creative engine. It must assemble validated runtime state without inventing facts, changing identity, or hiding uncertainty.
+This template is an output contract, not a creative engine. It assembles current runtime state without inventing facts, changing identity, or hiding uncertainty.
 
 ## 1. Run Metadata
 
@@ -14,12 +14,8 @@ This template is an output contract, not a creative engine. It must assemble val
 - format:
 - requested_duration:
 - creative_duration:
-- final_duration:
 - duration_status:
 - language:
-- production_readiness:
-
-When video generation is required, requested, creative, and final duration must remain aligned unless the user explicitly approves a change.
 
 Unknown values remain UNKNOWN.
 
@@ -44,7 +40,7 @@ Unknown values remain UNKNOWN.
 - expression_direction:
 - continuity_constraints:
 
-Creator attributes must come from the Creator Library or explicit approved run input.
+Creator attributes must come from the Creator Library or explicit run input.
 
 ## 4. Product
 
@@ -211,7 +207,7 @@ For every spoken line:
 
 Voice must not fabricate personal experience or unsupported claims.
 
-Voice timing follows the approved creative/storyboard timeline, not arbitrary provider segment boundaries.
+Voice timing follows the creative/storyboard timeline, not arbitrary provider segment boundaries.
 
 ## 12. CTA
 
@@ -223,50 +219,6 @@ Voice timing follows the approved creative/storyboard timeline, not arbitrary pr
 
 Unsupported offer, discount, scarcity, or urgency remains UNKNOWN or is excluded.
 
-## 13. QC
-
-- overall_status:
-- critical_issues:
-- major_issues:
-- minor_issues:
-- claim_validation:
-- creator_identity_validation:
-- product_identity_validation:
-- context_integrity:
-- continuity_validation:
-- duration_validation:
-- segment_compatibility_validation:
-- cross_run_isolation:
-- stale_state_check:
-- final_contract_check:
-
-## 14. Production Readiness Gate
-
-### READY
-
-Only when:
-
-- QC = PASS
-- no blocking issue exists
-- canonical context is current
-- no dependent output is STALE
-- creator/product identity is valid
-- requested duration is preserved
-- final assembled duration matches requested duration
-- all provider generation durations are compatible
-- final package contract is satisfied
-
-### NOT_READY
-
-Use when:
-
-- QC is REVISION or BLOCKED
-- required information is missing and materially blocks production
-- stale downstream state remains
-- identity or claim integrity fails
-- duration feasibility cannot be resolved without changing approved creative intent
-- final contract is incomplete
-
 ## Assembly Rules
 
 1. Assemble only from the current runtime state.
@@ -275,8 +227,11 @@ Use when:
 4. Never modify creator identity.
 5. Never modify product identity.
 6. Never upgrade UNKNOWN into a fact.
-7. Preserve QC status and issues.
-8. A NOT_READY package must not be presented as production-ready.
-9. The storyboard remains the creative temporal source of truth.
-10. All downstream assets must trace back to a storyboard scene.
-11. Provider constraints may change technical generation segmentation, not the approved campaign duration.
+7. Preserve source/provenance information where available.
+8. The storyboard remains the creative temporal source of truth.
+9. All downstream assets must trace back to a storyboard scene.
+10. Provider constraints may change technical generation segmentation, not campaign duration.
+
+## Completion
+
+This output is emitted when all required production stages are current and validated. It is the final user-facing production output for the run.
