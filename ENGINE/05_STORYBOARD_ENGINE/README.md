@@ -25,3 +25,38 @@ Examples:
 ```
 
 A creative scene may contain multiple generation segments. The technical segment plan belongs to Video Prompt; the storyboard remains responsible for narrative timing.
+
+
+## Action Choreography Architecture
+
+A scene is a process of action over time, not a single pose. The canonical structure is:
+
+```text
+SCENE
+  ↓
+ACTION GRAPH
+  ↓
+ACTION BEATS
+  ↓
+REFERENCE STATES
+  ↓
+TRANSITIONS
+  ↓
+GENERATION SEGMENTS
+```
+
+Major action beats should capture trigger, intention, action, resulting state, body/hand motion, product interaction, gaze, expression, camera behavior, and bounded human micro-motion. See `ACTION_CHOREOGRAPHY_CONTRACT.md` for the canonical contract.
+
+### Reference Graph
+
+A scene may contain multiple visual states:
+
+```text
+SCENE 01
+R01 → R02 → R03 → R04 [BRIDGE]
+                         ↓
+SCENE 02
+                    R04 → R05 → R06
+```
+
+A bridge reference is the shared, immutable boundary state. Reference states and provider generation segments are separate concepts.
