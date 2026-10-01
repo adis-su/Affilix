@@ -8,7 +8,7 @@ Affilix is invoked with the user command:
 
 `/Affilix`
 
-The command starts a new isolated UGC production run. Users do not manually invoke individual engines. The entry point routes the session into the canonical **stage-gated** production workflow.
+The command starts a new isolated UGC production run. Users do not manually invoke individual engines. The entry point routes the session into the canonical continuous production workflow. Each stage completes and is validated before the next stage is available; `/next` is the only user command needed to advance.
 
 ## 1. Invocation
 
@@ -165,24 +165,33 @@ Otherwise:
 
 ## 9. Runtime Handoff
 
-After intake, hand off to the canonical stage-gated workflow:
+After intake, hand off to the canonical continuous workflow:
 
 USER /Affilix
-→ STAGE 01 BRIEF & PRODUCT → APPROVAL
-→ STAGE 02 NICHE & CONTEXT → APPROVAL
-→ STAGE 03 CREATOR → APPROVAL
-→ STAGE 04 CONTENT STRATEGY → APPROVAL
-→ STAGE 05 HOOK → APPROVAL
-→ STAGE 06 STORYBOARD → APPROVAL
-→ STAGE 07 VISUAL PROMPT → APPROVAL
-→ STAGE 08 VIDEO PROMPT when required → APPROVAL
-→ STAGE 09 VOICE SCRIPT when required → APPROVAL
+→ STAGE 01 BRIEF & PRODUCT
+→ `/next`
+→ STAGE 02 NICHE & CONTEXT
+→ `/next`
+→ STAGE 03 CREATOR
+→ `/next`
+→ STAGE 04 CONTENT STRATEGY
+→ `/next`
+→ STAGE 05 HOOK
+→ `/next`
+→ STAGE 06 STORYBOARD
+→ `/next`
+→ STAGE 07 VISUAL PROMPT
+→ `/next`
+→ STAGE 08 VIDEO PROMPT when required
+→ `/next`
+→ STAGE 09 VOICE SCRIPT when required
+→ `/next`
 → STAGE 10 QC
 → STAGE 11 FINAL UGC PACKAGE
 
-After each stage output, stop for user review. Do not execute the next gated stage until the current stage is approved. Revisions invalidate only affected downstream assets according to the canonical dependency rules.
+A completed stage is not an approval request. `/next` simply advances the active run to the next dependency-satisfied stage. Revisions invalidate only affected downstream assets according to the canonical dependency rules.
 
-The entry point does not replace any production engine. It defines how the user enters the stage-gated system.
+The entry point does not replace any production engine. It defines how the user enters the continuous production system.
 
 ## 10. State and Re-entry
 
@@ -223,11 +232,11 @@ User-facing language should remain simple:
 
 Technical engine names and runtime state are implementation details unless the user asks for them.
 
-## 13. Stage-Gated UX
+## 13. Stage UX
 
-The user should experience Affilix as a guided production review, not a one-shot generator.
+The user should experience Affilix as a guided production flow, not an approval wizard.
 
-At every required stage, present the current output, mark it as ready for review, and wait for approval or revision instructions. Keep technical stage-state labels and engine names hidden unless the user asks for them.
+At each stage, present the current output. When the stage is complete, wait for `/next` to advance. `/next` is a progression command only, not an approval signal. Revisions may be provided directly and invalidate only affected downstream assets.
 
 
 ## 14. Runtime Bootstrap
@@ -245,7 +254,7 @@ Before executing the intake contract, initialize the repository-backed runtime.
 → begin product intake
 ```
 
-The entry point must not rely on a copied Project Instruction, previous conversation state, or unpinned repository snapshot as the authoritative implementation.
+The entry point must use the current GitHub repository content as the authoritative implementation. The active ChatGPT Project run may hold production state, but repository rules must come from the pinned repository commit.
 
 A repository update on `main` is automatically picked up by the next new `/Affilix` run. The current run remains pinned to its initialized commit.
 
