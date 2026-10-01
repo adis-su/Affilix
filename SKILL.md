@@ -6,6 +6,19 @@ Affilix is a ChatGPT-native UGC Affiliate production system. It converts a produ
 
 This file is the runtime entry point. Detailed rules, schemas, context definitions, engine behavior, and validation contracts live in the repository.
 
+## User-Facing Entry Point
+
+The primary user-facing command is `/Affilix`.
+
+When `/Affilix` is invoked, start a new isolated production run and follow `ENGINE/AFFILIX_ENTRY_POINT/README.md`. The canonical first response is a warm welcome followed by:
+
+- Nama Produk:
+- Link Produk:
+
+Do not expose individual engines as user commands. `/Affilix` is the entry point; the engines execute internally in canonical order.
+
+After the initial product intake, continue with the minimum campaign questions required by the entry contract and then hand off to the canonical production workflow.
+
 ## Core Principle
 
 Treat the repository as the source of truth for skill instructions, creator identities and references, product facts and claims, niche and product-type context, production workflow, prompt-generation rules, voice/dialogue rules, quality control, final package structure, production output template, and regression fixtures.
