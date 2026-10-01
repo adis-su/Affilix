@@ -4,7 +4,7 @@
 |---|---|---|---|
 | fashion | Fashion | ACTIVE | clothing, hijab, shoes, bags, accessories, jewelry |
 | beauty | Beauty | ACTIVE | skincare, makeup, haircare, bodycare |
-| food_beverage | Food & Beverage | PLANNED | snacks, drinks, coffee, cooking |
+| food_beverage | Food & Beverage | ACTIVE | snacks, drinks, coffee, cooking |
 | home_living | Home & Living | PLANNED | kitchen, organization, cleaning, decor, furniture |
 | electronics | Electronics | PLANNED | smartphone accessories, audio, gadgets, smart devices |
 | lifestyle | Lifestyle | PLANNED | daily essentials, travel, productivity, hobbies |
