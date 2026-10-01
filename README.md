@@ -30,6 +30,7 @@ Affilix turns a product brief, creator identity, references, and campaign constr
 | ENGINE/08_VOICE_SCRIPT_ENGINE/ | Build spoken dialogue and delivery specs |
 | ENGINE/09_QUALITY_CONTROL/ | Validate production readiness |
 | ENGINE/WORKFLOW.md | Canonical dependency and state-transition contract |
+| ENGINE/AFFILIX_ENTRY_POINT/ | User-facing `/Affilix` entry command and intake contract |
 | ENGINE/FINAL_UGC_PACKAGE_CONTRACT.md | Defines the final UGC package and readiness states |
 | CREATOR_LIBRARY/ | Persistent creator identities and references |
 | PRODUCT_LIBRARY/ | Product facts, claims, niche context, and product-type rules |
@@ -43,7 +44,7 @@ Affilix turns a product brief, creator identity, references, and campaign constr
 
 Affilix executes one isolated production run:
 
-Brief → Brief Analysis → Niche Context → Creator → Product → Strategy → Hook → Storyboard → Visual/Video/Voice → QC → Final Package
+`/Affilix` → Product Intake → Brief Analysis → Niche Context → Creator → Product → Strategy → Hook → Storyboard → Visual/Video/Voice → QC → Final Package
 
 The canonical context is created before creative decisions. A material upstream change invalidates dependent downstream state. A final package is production-ready only after QC passes.
 
