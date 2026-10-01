@@ -64,6 +64,8 @@ For every detected issue:
 
 Blocks production or delivery.
 
+Incomplete visual product detail is not Critical by itself. Preserve unavailable attributes as UNKNOWN and continue when the requested output can be produced safely from available references.
+
 Examples:
 
 - Creator identity materially changes
@@ -421,8 +423,9 @@ Use when:
 
 - Any Critical issue exists
 - Required factual evidence is missing for a mandatory claim
-- Required creator/product identity information is unavailable
 - A mandatory campaign constraint cannot be satisfied
+
+Do not use BLOCKED merely because some product appearance details are unavailable. Preserve those details as UNKNOWN and continue when the requested production output can be created without inventing them.
 
 ## Revision Loop
 
