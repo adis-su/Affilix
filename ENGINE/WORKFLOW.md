@@ -10,7 +10,7 @@ The runtime should behave as one coherent system rather than exposing independen
 
 The user-facing entry command is /Affilix.
 
- /Affilix starts a stage-gated production run. The user reviews and approves each required stage before Affilix proceeds to the next stage.
+ /Affilix starts a continuous production run. Affilix automatically advances through dependency-satisfied stages without requiring user approval.
 
 The stage-gating contract is defined in ENGINE/STAGE_GATED_WORKFLOW.md. The entry contract is defined in ENGINE/AFFILIX_ENTRY_POINT/README.md.
 
@@ -20,27 +20,18 @@ The initial product intake requests only Nama Produk and Link Produk. After prod
 
 USER BRIEF
 → STAGE 01 BRIEF & PRODUCT
-→ APPROVAL
 → STAGE 02 NICHE & CONTEXT
-→ APPROVAL
 → STAGE 03 CREATOR
-→ APPROVAL
 → STAGE 04 CONTENT STRATEGY
-→ APPROVAL
 → STAGE 05 HOOK
-→ APPROVAL
 → STAGE 06 STORYBOARD
-→ APPROVAL
 → STAGE 07 VISUAL PROMPT
-→ APPROVAL
 → STAGE 08 VIDEO PROMPT when required
-→ APPROVAL
 → STAGE 09 VOICE SCRIPT when required
-→ APPROVAL
 → STAGE 10 QUALITY CONTROL
 → STAGE 11 FINAL UGC PACKAGE
 
-Engines execute internally within their corresponding stage. Do not silently run future gated stages before the current stage is approved.
+Engines execute internally within their corresponding stage. Automatically run the next dependency-satisfied stage; do not require user approval between stages.
 
 ## Phase 1 — Intake
 
@@ -119,7 +110,7 @@ Run 04_HOOK_ENGINE.
 
 Generate viable hook candidates based on the approved strategy and canonical niche context.
 
-Select or request approval for a hook when the campaign workflow requires explicit user selection.
+Use the configured deterministic hook-selection behavior when multiple candidates exist. Do not block the pipeline for approval.
 
 Never invent unsupported claims merely to make a hook stronger.
 
@@ -137,11 +128,11 @@ Creative scene durations must add up to the requested final duration.
 
 Provider limitations must not silently change the requested final duration. If technical segmentation is needed, the storyboard should preserve natural creative beat boundaries that can later map to provider-supported generation segments.
 
-The storyboard becomes the canonical temporal source for Visual, Video, and Voice. After approval, these downstream specifications may execute independently, subject to their branch-specific prerequisites.
+The storyboard becomes the canonical temporal source for Visual, Video, and Voice. These downstream specifications may execute independently as soon as their branch-specific prerequisites are satisfied.
 
 ## Phase 7 — Parallel Production Specifications
 
-Once the storyboard is approved, run:
+Once the storyboard is validated, run:
 
 - 06_VISUAL_PROMPT_ENGINE
 - 07_VIDEO_PROMPT_ENGINE
@@ -389,11 +380,11 @@ If a material repository rule changes, affected downstream assets become STALE a
 
 ## Stage-Gated Execution
 
-The canonical stage-gating contract is ENGINE/STAGE_GATED_WORKFLOW.md.
+The canonical continuous-production contract is ENGINE/STAGE_GATED_WORKFLOW.md.
 
-For every required stage, execute: INPUT → PROCESS → OUTPUT → REVIEW → APPROVAL → NEXT STAGE.
+For every required stage, execute: INPUT → PROCESS → OUTPUT → VALIDATE → NEXT STAGE.
 
-After presenting a stage output, stop and wait for an unambiguous user approval or revision instruction. Natural approvals such as approve, approved, lanjut, lanjutkan, or equivalent confirmation are valid.
+Automatically continue when dependencies are satisfied. Stop only for a material blocker, explicit revision, safety/compliance issue, or missing required information. /next is compatibility-only and is not required for progression.
 
 If the user requests a revision, revise the smallest affected component and keep unrelated approved stages intact. When an upstream approved stage changes, mark all dependent downstream assets STALE and regenerate them only after the revised upstream stage is approved.
 
