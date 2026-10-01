@@ -2,9 +2,9 @@
 
 ## Purpose
 
-The Video Prompt Engine converts the approved storyboard and visual scene specification into production-ready motion instructions for video generation.
+The Video Prompt Engine converts the completed storyboard and visual scene specification into production-ready motion instructions for video generation.
 
-It defines how the approved visual state moves through time.
+It defines how the completed visual state moves through time.
 
 The engine must preserve creator identity, product identity, physical plausibility, and scene continuity.
 
@@ -29,7 +29,7 @@ The engine must preserve creator identity, product identity, physical plausibili
 
 Video duration has two distinct layers:
 
-1. **Creative duration**: how long the approved storyboard beat should exist in the final video.
+1. **Creative duration**: how long the completed storyboard beat should exist in the final video.
 2. **Generation duration**: the technical duration requested from the selected video provider for one generated clip.
 
 The provider capability profile defines supported generation durations. It may contain discrete values such as [4, 6, 8, 10] seconds, but Affilix must never assume those values are universal.
@@ -40,7 +40,7 @@ The provider capability profile defines supported generation durations. It may c
 - Do not silently replace an 18-second request with a 10-second output because a provider has a 10-second maximum.
 - When one generation cannot cover a required duration, create multiple generation segments.
 - Each generation segment must use a provider-supported duration.
-- Segment durations must sum to the approved final duration.
+- Segment durations must sum to the requested final duration.
 - Segment boundaries should align with natural visual beats.
 - If a scene's creative duration does not map cleanly to provider durations, restructure or redistribute the creative beat intentionally before generation.
 - Never add meaningless filler merely to consume provider duration.
@@ -200,7 +200,7 @@ Select intensity based on:
 
 ## Timing
 
-Creative scene timing must match the approved storyboard.
+Creative scene timing must match the completed storyboard.
 
 For segmented generation:
 
@@ -265,37 +265,15 @@ Use only relevant constraints, such as:
 - No impossible body movement
 - No arbitrary filler motion to consume provider duration
 
-## Video QC
+## Output Formatting Rule
 
-Before handoff, verify:
+The final video-generation prompt is always emitted as one standalone Markdown code block:
 
-### Identity
+```text
+[complete video prompt]
+```
 
-- Creator remains consistent from start to end.
-- Hijab remains consistent when applicable.
-
-### Product
-
-- Product remains the same object.
-- Product interaction is physically plausible.
-- No visual morphing.
-
-### Motion
-
-- Primary action is clear.
-- Motion intensity fits the scene.
-- Camera movement supports the story.
-- End state can connect to the next scene.
-- Segment boundaries are coherent when segmentation is used.
-
-### Timing
-
-- Creative actions fit within the approved scene duration.
-- Generation durations are supported by the selected provider.
-- Generation segment durations sum to the approved final duration.
-- Dialogue timing is plausible.
-- No important action is compressed unrealistically.
-- No filler is used solely because of provider duration constraints.
+Do not split one video prompt across multiple code blocks. Metadata and generation-segment tables stay outside the code block.
 
 ## Handoff
 
