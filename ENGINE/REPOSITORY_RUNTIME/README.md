@@ -117,3 +117,79 @@ If a required repository file cannot be accessed:
 ## Completion
 
 A run is repository-compliant when relevant current rules were loaded, required library/context data was loaded, downstream assets follow current engine specifications, no unsupported facts were introduced, cross-run state remained isolated, material source changes triggered regeneration, and QC passes.
+
+
+## Live Repository Runtime
+
+The repository is a live runtime dependency, not a static prompt source.
+
+For every new `/Affilix` run:
+
+1. Resolve `adis-su/Affilix` on canonical branch `main`.
+2. Read the current branch head.
+3. Record the commit SHA as the run's `repository.commit_sha`.
+4. Pin that commit for the entire run.
+5. Load relevant repository files from the pinned commit.
+6. Record repository access status and load time.
+
+A run must never silently mix files from different repository commits.
+
+A repository update after run initialization applies automatically to the next new run. The active run remains pinned to its initialized commit unless the user explicitly requests a repository-version change and the workflow revalidates affected state.
+
+See `ENGINE/REPOSITORY_RUNTIME/RUNTIME_CONTRACT.md` for the canonical runtime state and interface contract.
+
+## Runtime State
+
+Repository state and production state must remain separate.
+
+At minimum, the runtime tracks:
+
+```yaml
+repository:
+  repository: adis-su/Affilix
+  ref: main
+  commit_sha:
+  loaded_at:
+  access_status:
+
+run:
+  id:
+  status:
+
+stages:
+  <stage>:
+    status:
+    output:
+
+approval:
+  required:
+  status:
+
+decision_queue:
+  - field:
+    reason:
+    blocking_stage:
+    status:
+```
+
+Every material production artifact should retain the run ID, source repository commit SHA, stage, and relevant upstream dependencies.
+
+## Interface Boundary
+
+ChatGPT, Telegram, and future clients are interfaces to the same Affilix runtime.
+
+They must not maintain competing workflow logic or canonical production state. They send input to the runtime, display outputs, collect approvals/revisions, and present relevant decision-queue items.
+
+This keeps repository updates centralized: changing the repository changes the implementation used by subsequent runs without requiring interface-specific prompt copies.
+
+## Repository Freshness Failure
+
+If the current repository head cannot be resolved or required files cannot be loaded:
+
+- do not claim the latest repository was loaded,
+- do not invent missing rules,
+- preserve affected values as UNKNOWN,
+- continue only when available rules are sufficient,
+- otherwise block the affected operation.
+
+A cached snapshot must never be presented as the current `main` branch.
