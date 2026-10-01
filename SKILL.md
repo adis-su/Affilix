@@ -136,6 +136,8 @@ Use product schema, product identity, selling points, claims rules, canonical ni
 
 Separate product facts, supported benefits, evidence, and creative interpretation.
 
+If some visual product attributes are unavailable, preserve them as UNKNOWN and continue using the available product references. Do not turn incomplete visual detail into a user-facing block by default.
+
 Never invent specifications, performance, reviews, testimonials, discounts, scarcity, guarantees, certifications, or personal experience.
 
 ## Phase 5 — Content Strategy
