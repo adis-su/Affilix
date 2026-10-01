@@ -220,6 +220,171 @@ The Voice Script remains the wording authority. If wording changes, the Video Pr
 
 If dialogue timing changes but visual action does not, revalidate the affected Video Prompt timing before production.
 
+
+## Generation Segment Motion Contract
+
+When the Video Prompt is materialized into a technical generation segment, the segment must describe a deterministic state transition rather than a compressed scene summary.
+
+Each segment must explicitly define:
+
+- exact segment duration
+- start reference and its observable physical state
+- ordered action beats with enough detail to establish causality
+- immutable bridge reference when the segment participates in a multi-segment transition
+- target/end reference and its observable physical state
+- product interaction as a physical action chain
+- gaze timing tied to action beats
+- expression behavior tied to action beats
+- camera behavior tied to the active action, not as an independent generic movement
+- dialogue timing that fits entirely inside the segment
+- action/dialogue synchronization
+- off-camera voice behavior when voice-over is used
+- negative constraints for state-transition failures
+
+### Reference State Contract
+
+A reference identifier alone is not sufficient.
+
+For every start, bridge, and target reference used by a generation segment, define the state variables that must remain stable or change:
+
+- creator body orientation and posture
+- hand positions and which hand holds the product
+- product position, orientation, open/closed state, and visible label
+- fingertip/product contact state
+- gaze target
+- facial expression
+- camera framing and spatial relationship
+- relevant environment and lighting continuity
+
+An immutable bridge reference is a physical state contract. It must not be treated as a loose visual suggestion.
+
+### Action Beat Contract
+
+Write action as an ordered causal sequence:
+
+    TRIGGER / INTENTION
+        ↓
+    ACTION
+        ↓
+    PHYSICAL RESULT
+        ↓
+    NEXT ACTION
+
+Avoid compressed instructions such as “then opens the product and takes some moisturizer” when multiple visually important transitions occur. Split them into explicit beats.
+
+Example:
+
+    BEAT 01
+    Product is held beside the face with the container closed.
+
+    BEAT 02
+    Creator moves the product slightly toward camera while maintaining label visibility.
+
+    BEAT 03
+    Creator opens the container with the other hand; lid movement is caused by visible hand contact.
+
+    BEAT 04
+    Creator brings fingertip to the moisturizer and collects a small visible amount.
+
+    BEAT 05
+    Fingertip separates from the product with the sampled moisturizer visible, matching the bridge reference.
+
+Every beat must have a plausible resulting state. The generator must not skip, reverse, or invent intermediate states.
+
+### Product Causality Contract
+
+Product interaction must explicitly define:
+
+- acting hand
+- supporting hand when applicable
+- contact point
+- direction of movement
+- object state before action
+- object state after action
+- visible label/orientation constraint
+- quantity/state changes caused by the action
+
+Disallow unexplained product rotation, hand swapping, lid-state changes, texture appearing before contact, duplicated product instances, or state changes without physical cause.
+
+### Gaze & Expression Timeline
+
+Gaze is a motion channel and must be tied to the action timeline.
+
+When gaze changes materially, provide bounded timing or beat ownership, for example:
+
+    00:00–02.4  camera
+    02.4–04.2   product
+    04.2–06.2   fingertip / product
+    06.2–08.0   camera
+
+Expression changes should remain restrained and action-related. Do not leave gaze as an unconstrained list such as “camera → product → fingertip” without indicating when the changes occur.
+
+### Camera-Action Relationship
+
+Camera behavior must explain how framing responds to the active action:
+
+- opening framing
+- controlled reframing or product-following when required
+- preservation of face/product readability
+- visibility of the relevant hand/product interaction
+- final framing matching the target reference
+- no digital zoom, random shake, abrupt perspective change, or unexplained camera movement
+
+Camera motion must support the action rather than create an independent motion track.
+
+### Dialogue Timing & Sync
+
+All dialogue or voice-over intervals must fit completely inside the exact segment duration.
+
+For an 8-second segment, an interval ending at 08.2 is invalid.
+
+When multiple dialogue lines exist, each line must specify:
+
+- exact canonical wording
+- speaker or voice-over status
+- start and end timing
+- delivery
+- lip-sync requirement
+- action being performed while the line is spoken
+- whether the mouth must remain naturally inactive for voice-over
+
+Do not claim that dialogue “continues across a segment boundary” unless the same canonical utterance actually crosses that boundary. Separate adjacent lines should instead preserve conversational flow without restart, duplication, or paraphrase.
+
+### End-State Contract
+
+Do not rely only on “finish in R03.”
+
+Explicitly state the required end state for:
+
+- creator posture
+- hand positions
+- product state
+- product orientation/label visibility
+- fingertip state
+- gaze
+- expression
+- camera framing
+
+The segment is valid only when the resulting state matches the canonical target reference.
+
+### Segment Validation
+
+Before a generation segment is accepted, verify:
+
+- duration is exactly 4, 6, 8, or 10 seconds
+- all dialogue intervals are within segment bounds
+- action beats are ordered and causally connected
+- start/bridge/target references are canonical
+- bridge states are explicitly defined when present
+- product state changes have physical causes
+- gaze changes are tied to action beats
+- camera behavior responds to the action
+- end state is explicitly specified
+- voice-over mouth behavior is defined when applicable
+- negative constraints cover state-transition failures
+- no beat is skipped, reversed, duplicated, or invented
+- no upstream dependency is stale
+
 ## Continuity
 
 Across adjacent scenes and technical segments preserve:
