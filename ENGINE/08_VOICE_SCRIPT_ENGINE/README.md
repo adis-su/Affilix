@@ -252,3 +252,8 @@ The final voice package is passed to:
 - 09_QUALITY_CONTROL
 
 The storyboard remains the canonical scene sequence. The Voice Script Engine owns spoken language and delivery direction.
+
+
+## Layered Niche Context Integration
+
+Voice scripts now receive Loaded Niche Context. Context may influence vocabulary, scenario framing, pacing, and delivery intent. It must not be converted into unsupported product claims or personal experience.
