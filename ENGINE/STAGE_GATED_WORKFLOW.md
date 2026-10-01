@@ -116,7 +116,76 @@ Stage 01 user-facing output isolation:
 
 ### 02 — Campaign Intake
 Input: validated Brief & Product.
-Output: platform, requested video duration, content objective, target audience, requested creator, and CTA.
+Output: structured platform, exact requested video duration, content objective, AI-derived or user-corrected target audience, requested creator from the current Creator Library, and CTA.
+
+Stage 02 controlled choices:
+
+**Platform**
+- TikTok
+- Instagram Reels
+- Facebook
+- Shopee Video
+
+**Duration**
+- 18 seconds by default
+- Custom exact duration
+
+The requested duration is authoritative. Provider generation durations remain technical constraints and must be handled later by exact segment composition. The default 18-second duration is provider-feasible as `8 + 10`. A Custom duration that cannot be composed exactly must be marked `duration_feasibility: BLOCKED`; never silently round, truncate, extend, or replace it.
+
+**Content objective**
+Available objectives include:
+- Product awareness
+- Product education
+- Problem-solution
+- Product demonstration
+- Benefit explanation
+- Feature highlight
+- Social proof
+- Trust building
+- Consideration
+- Conversion / sales
+- Direct response
+- Traffic / click-through
+- Engagement
+- Community building
+- Launch / new product
+- Promotion / offer
+- Retargeting
+
+Persist a primary objective and any explicitly requested secondary objectives.
+
+**Target audience**
+Derive the initial target audience from validated Stage 01 product research and the supplied product reference. Use source-supported product category, benefits, use cases, positioning, and purchase signals. Mark derived attributes as `INFERRED`. Do not invent sensitive personal attributes or unsupported demographic facts. Allow the user to correct or replace the AI-derived audience before completion.
+
+**Creator**
+Enumerate the current pinned repository's `CREATOR_LIBRARY/` records dynamically. Stage 02 must show only creators that actually exist in that library. Do not hard-code creator names into the campaign contract. The selected creator is a requested campaign input; Stage 04 resolves and validates the canonical creator identity.
+
+**CTA**
+Available CTA options include:
+- Shop now
+- Buy now
+- Add to cart
+- Check the product
+- Learn more
+- See details
+- Try it
+- Discover more
+- Visit the product page
+- Click the link
+- Tap the link
+- Follow for more
+- Save this video
+- Share this video
+- Comment your thoughts
+- Send this to someone
+- DM for details
+- Use the product
+- Consider it for your routine
+- Custom CTA
+
+When `Custom CTA` is selected, require the user-provided CTA text.
+
+Stage 02 validation requires one supported platform, one exact duration, one primary objective, one resolved audience profile, one current-library creator selection, and one CTA. Do not use `UNKNOWN` to bypass a choice that can be safely derived or presented.
 
 ### 03 — Niche & Context
 Input: validated Brief & Product plus Campaign Intake.
