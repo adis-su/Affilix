@@ -77,10 +77,12 @@ Do not inherit product, creator, niche, claims, storyboard, prompts, or producti
 ## 4. Stage 01 Completion
 
 1. Normalize through `ENGINE/01_BRIEF_ANALYZER/README.md`.
-2. Treat a product link as a reference source, not proof of every marketing statement.
-3. Load and validate Product Library facts.
-4. Preserve unsupported fields as UNKNOWN.
-5. Validate Product Intake and mark Stage 01 COMPLETED.
+2. Actively inspect the supplied product link/reference and extract all accessible, materially useful product information.
+3. Treat the product link as evidence to research, while distinguishing sourced facts from unsupported marketing claims.
+4. Load and validate Product Library facts and reconcile them with the supplied reference.
+5. Preserve genuinely unavailable fields as UNKNOWN.
+6. Present the resulting product research summary as the Stage 01 output.
+7. Validate Product Intake and mark Stage 01 COMPLETED.
 6. Wait for `/next`.
 
 ## 5. Stage 02 — Campaign Intake
