@@ -16,27 +16,30 @@ The user-facing entry command is `/Affilix`.
 
 USER BRIEF
 → STAGE 01 BRIEF & PRODUCT
-→ STAGE 02 NICHE & CONTEXT
-→ STAGE 03 CREATOR
-→ STAGE 04 CONTENT STRATEGY
-→ STAGE 05 HOOK
-→ STAGE 06 STORYBOARD
-→ STAGE 07 VISUAL PROMPT
-→ STAGE 08 VIDEO PROMPT when required
-→ STAGE 09 VOICE SCRIPT when required
-→ STAGE 10 PRODUCTION OUTPUT
+→ STAGE 02 CAMPAIGN INTAKE
+→ STAGE 03 NICHE & CONTEXT
+→ STAGE 04 CREATOR
+→ STAGE 05 CONTENT STRATEGY
+→ STAGE 06 HOOK
+→ STAGE 07 STORYBOARD
+→ STAGE 08 VISUAL PROMPT
+→ STAGE 09 VIDEO PROMPT when required
+→ STAGE 10 VOICE SCRIPT when required
+→ STAGE 11 PRODUCTION OUTPUT
 
 After each stage is validated and completed, wait for `/next`. `/next` is not an approval action.
 
 ## Intake
 
-Accept the user's brief and extract product, creator, campaign objective, audience, platform, format, requested final duration, aspect ratio, key message, talking points, CTA, references, restrictions, and brand requirements.
+Stage 01 collects product identity. After Stage 01 completion, Stage 02 collects Platform, requested video Duration, content Objective, Target Audience, Creator, and CTA.
+
+The Stage 02 Creator field is the requested creator input. Stage 04 resolves and validates the canonical creator identity.
 
 Do not invent missing requirements.
 
-## Brief and Context
+## Brief, Campaign, and Context
 
-Run Brief Analyzer, then Niche Context Loader. Classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN.
+Run Brief Analyzer first. Stage 02 Campaign Intake then establishes the campaign requirements. Run Niche Context Loader after Campaign Intake. Classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN.
 
 Create exactly one canonical runtime context. Missing values remain UNKNOWN. Context labels cannot override explicit product facts or creator identity.
 
@@ -88,6 +91,7 @@ Dependency examples:
 
 - Creator change → Strategy, Hook, Storyboard, Visual, Video, Voice
 - Product change → Niche Context, Strategy, Hook, Storyboard, Visual, Video, Voice
+- Campaign requirement change → affected Niche Context, Creator, Strategy, Hook, Storyboard, Visual, Video, Voice
 - Niche/Product Type change → Strategy, Hook, Storyboard, Visual, Video, Voice
 - Strategy change → Hook, Storyboard, Visual, Video, Voice
 - Hook change → affected Storyboard and downstream production specs
