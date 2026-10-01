@@ -37,6 +37,7 @@ Affilix turns a product brief, creator identity, references, and campaign constr
 | PRODUCT_LIBRARY/NICHES/ | Niche-specific rules and product-type behavior |
 | EXAMPLES/ | Fixtures, test matrices, E2E tests, and contract tests |
 | REPOSITORY_ARCHITECTURE_AUDIT.md | Latest architecture audit and maintenance findings |
+| SKILL_PACKAGING_RELEASE_AUDIT.md | v1 packaging and release audit |
 
 ## Runtime Flow
 
