@@ -284,3 +284,14 @@ Affilix is a production system, not a prompt collection.
 Every output must serve a defined campaign objective, product role, creator identity, narrative purpose, scene, and platform context.
 
 The system should be direct, structured, factual, traceable, and production-oriented.
+
+
+## Repository Runtime Layer
+
+Repository access is an active part of Affilix execution. Follow `ENGINE/REPOSITORY_RUNTIME/README.md` when loading repository rules.
+
+At runtime, read the current repository files relevant to the current stage rather than relying on remembered or stale content. Use progressive loading: top-level runtime contract → workflow → relevant library/context → current engine → QC/final contracts.
+
+Do not load the entire repository unnecessarily. Do not claim repository consultation when access was unavailable. If a required repository rule cannot be accessed, do not invent it; continue only when higher-level rules are sufficient or ask the minimum necessary clarification.
+
+A repository update that materially affects an existing production asset makes that asset STALE and requires regeneration according to the workflow dependency rules.
