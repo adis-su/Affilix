@@ -2,11 +2,11 @@
 
 ## Purpose
 
-The Visual Prompt Engine converts each approved storyboard scene into a production-ready **static image-generation prompt**.
+The Visual Prompt Engine converts each completed storyboard scene into a production-ready **static image-generation prompt**.
 
 Its job is to describe **what must be visible in one generated frame**. It is not a video prompt, motion specification, or temporal scene description.
 
-The engine must preserve creator identity, product identity, wardrobe, pose, expression, environment, composition, visual style, and other visual requirements from the approved storyboard without inventing unsupported facts.
+The engine must preserve creator identity, product identity, wardrobe, pose, expression, environment, composition, visual style, and other visual requirements from the completed storyboard without inventing unsupported facts.
 
 The storyboard remains the canonical source of scene intent and temporal context. The image prompt is a visual implementation layer for **one frame** of that scene.
 
@@ -466,51 +466,15 @@ Keep reference roles distinct:
 
 One reference must not silently override unrelated attributes.
 
-## Visual QC
+## Output Formatting Rule
 
-Before handoff, verify:
+The final image-generation prompt is always emitted as one standalone Markdown code block:
 
-### Static Image Integrity
+```text
+[complete image prompt]
+```
 
-- Final prompt describes one frozen visual state.
-- No temporal sequence is embedded.
-- No video camera movement is included.
-- No duration is used as a visual generation instruction.
-- No "next scene" instruction appears in the final visual description.
-- No ambiguous generation-critical alternatives remain.
-
-### Creator
-
-- Identity matches canonical reference.
-- Apparent age is consistent.
-- Hijab identity is preserved.
-- Body proportions remain consistent.
-- Pose, expression, gaze, and visible gesture match the storyboard.
-
-### Product
-
-- Product matches approved reference.
-- Color and shape are correct when supplied.
-- Branding/labels are not invented.
-- Product state matches the storyboard.
-- Product interaction is visually plausible.
-- Product visibility is deterministic.
-
-### Scene
-
-- Composition matches the storyboard.
-- Pose matches the intended frame.
-- Expression matches the emotional beat.
-- Environment matches approved references.
-- Lighting is coherent.
-- Negative space does not create contradictory cropping.
-
-### Continuity
-
-- Creator and product identity remain locked.
-- Outfit and hijab remain consistent unless a change is explicitly scripted.
-- No unexplained visual changes occur.
-- Environment and lighting remain visually coherent.
+Do not split one image prompt across multiple code blocks. Metadata stays outside the code block.
 
 ## Handoff
 
