@@ -1,118 +1,106 @@
-# Affilix — Duration & Segment Management Contract v1
+# Affilix — Duration & Segment Management Contract v2
 
 ## Purpose
 
-Define how Affilix preserves a user's requested final video duration while adapting generation requests to the discrete duration capabilities of a selected video provider.
+Define how Affilix maps creative video duration to the selected AI video provider's supported generation durations.
 
-This is a production capability layer, not a creative replacement for the storyboard.
+## Canonical Provider Durations
+
+For the current Affilix video provider configuration, the supported generation durations are:
+
+`4s`, `6s`, `8s`, and `10s`.
+
+These are the only valid generation durations unless the active provider capability profile is explicitly changed.
 
 ## Core Principle
 
-**User duration is a campaign requirement. Provider duration is a generation constraint.**
+**Creative duration is the story. Provider duration is the technical clip size.**
 
-Affilix must never silently change the requested final duration because a provider cannot generate that duration in one request.
+Affilix must never silently change the requested final duration.
 
-## Duration Layers
+### Duration Layers
 
-### Requested Duration
+- **Requested duration**: explicit final duration requested by the user.
+- **Creative duration**: duration of the complete narrative. Normally equals requested duration.
+- **Generation duration**: duration of one provider generation request. Must be 4, 6, 8, or 10 seconds under the current provider profile.
+- **Final duration**: duration after generated clips are assembled. Must equal requested duration.
 
-The explicit final video duration supplied by the user or campaign.
+## Valid Segment Combinations
 
-Example:
+Because all supported durations are even numbers, the current provider can exactly compose any even final duration of at least 4 seconds.
 
-`requested_duration = 18s`
+Examples:
 
-### Creative Duration
+```text
+8s  → 8
+10s → 10
+12s → 6 + 6
+14s → 6 + 8
+16s → 8 + 8
+18s → 8 + 10
+20s → 10 + 10
+22s → 10 + 6 + 6
+24s → 8 + 8 + 8
+```
 
-The duration of the approved narrative sequence.
+Choose the combination that best matches natural storyboard beats, not merely the mathematically shortest combination.
 
-Unless explicitly changed and approved, it must equal the requested duration.
+## Unsupported Durations
 
-### Generation Duration
+If the requested final duration cannot be represented exactly using 4/6/8/10-second generations:
 
-The technical duration of an individual video-generation request.
+- do not silently round up or down
+- do not silently change the campaign duration
+- do not add filler
+- mark the duration as infeasible
+- request a revised final duration or an explicitly supplied provider capability
 
-It must be selected from the active provider's supported durations.
+For example, 5s, 7s, 9s, and 11s cannot be assembled exactly from the current duration set.
 
-### Final Duration
+## Storyboard Integration
 
-The duration after generated segments are assembled.
+Storyboard creative timing remains the source of truth.
 
-It must equal the approved requested duration.
+When provider segmentation is required:
+
+1. design the narrative beats first
+2. identify natural segment boundaries
+3. assign each generation segment one of 4/6/8/10 seconds
+4. preserve the requested final duration exactly
+5. preserve dialogue and product-action timing
+6. preserve continuity across segment boundaries
+
+A single creative scene may use multiple technical generation segments when necessary.
+
+## Segment Selection Priority
+
+When multiple combinations are mathematically valid:
+
+1. preserve natural scene/story beats
+2. avoid splitting a critical action
+3. avoid splitting a sentence when possible
+4. minimize unnecessary segment count
+5. preserve visual continuity
+6. use longer segments when the scene benefits from uninterrupted motion
+7. use shorter segments when a clean beat or transition exists
 
 ## Provider Capability Profile
 
-Provider capabilities must be represented separately from creative logic.
-
-Example:
+Represent the active provider as:
 
 ```yaml
 provider:
-  id: PROVIDER_A
-  supported_durations: [4, 6, 8, 10]
+  provider_id: CURRENT_VIDEO_PROVIDER
+  model_id:
+  supported_generation_durations: [4, 6, 8, 10]
+  duration_policy: EXACT_SEGMENT_COMPOSITION
 ```
 
-Do not treat [4, 6, 8, 10] as a universal provider standard. Capabilities belong to the selected provider/model and may change.
-
-Minimum required capability data:
-
-- provider_id
-- model_id when relevant
-- supported_durations
-- duration_limit_status
-- capability_source
-- capability_version or last_verified value when available
-
-Unknown provider capabilities remain UNKNOWN.
-
-## Segmentation Rules
-
-If one generation cannot cover the required creative duration:
-
-1. Preserve the approved final duration.
-2. Identify natural creative beat boundaries.
-3. Divide the storyboard into scenes or generation segments.
-4. Assign each segment a provider-supported generation duration.
-5. Ensure the sum of generation segment durations equals the approved final duration.
-6. Preserve visual and narrative continuity between segments.
-7. Record the mapping between creative scenes and technical segments.
-
-Example:
-
-```text
-Requested final duration: 18s
-Provider durations: 4s, 6s, 8s, 10s
-
-Valid plan:
-4s + 6s + 8s = 18s
-```
-
-Another valid plan:
-
-```text
-8s + 10s = 18s
-```
-
-The second plan is valid only when the storyboard contains two coherent beats that can support those segment boundaries.
-
-## Duration Fitting
-
-When a creative beat does not map exactly to provider durations:
-
-- Prefer restructuring the beat at a natural narrative boundary.
-- Redistribute time across adjacent scenes when this preserves the approved story.
-- Preserve important dialogue timing.
-- Preserve important product actions.
-- Do not add meaningless filler.
-- Do not silently remove meaningful actions.
-- Do not silently shorten the final video.
-- Do not silently lengthen the final video.
-
-If no provider-compatible plan can preserve the approved creative sequence, the production state must indicate a duration feasibility issue and route the smallest affected stage for revision.
+The values are provider capability data, not creative defaults. If the provider changes, update the capability profile before generating Video Prompts.
 
 ## Segment Record
 
-Each technical segment should track:
+Each technical segment tracks:
 
 - segment_id
 - source_scene_id
@@ -121,65 +109,29 @@ Each technical segment should track:
 - creative_duration
 - generation_duration
 - provider_id
-- model_id when relevant
+- model_id
 - start_visual_state
 - end_visual_state
 - continuity_anchor
 - assembly_order
 - status
 
-## Continuity Requirements
-
-Across segments preserve when applicable:
-
-- Creator identity
-- Face identity
-- Body proportions
-- Outfit
-- Hijab styling
-- Product identity
-- Product state
-- Environment
-- Lighting
-- Spatial direction
-- Camera logic
-- Narrative time
-
-A segment boundary should ideally occur after a completed gesture, completed product interaction, or stable visual state.
-
-## Voice and Audio Interaction
-
-Voice Script timing is based on the creative/storyboard timeline, not on arbitrary provider segment boundaries.
-
-A spoken line may span multiple technical video segments when the final assembled timing requires it.
-
-Video Prompt controls visual synchronization. Voice Script controls wording and delivery.
-
-## Revision and Stale-State Behavior
-
-- Requested duration change → Storyboard and all dependent timing-sensitive assets become STALE.
-- Storyboard timing change → affected Visual, Video, Voice, and QC outputs become STALE as applicable.
-- Provider capability change → re-evaluate Video Prompt segmentation and dependent production/QC outputs; do not automatically change the approved storyboard duration.
-- Video-only segment plan change → revise Video Prompt and revalidate assembly/QC; Voice Script does not become STALE unless creative timing changes.
-- Voice-only change → visual assets do not become STALE.
-
 ## Validation
 
-Before video generation, verify:
+Before video generation:
 
 - requested duration is explicit
-- creative duration equals approved requested duration
-- provider capabilities are known when generation is required
-- every generation duration is provider-supported
-- segment durations sum to the final duration
-- segment boundaries are coherent
-- continuity anchors are defined
-- no filler or silent duration changes were introduced
+- requested duration is exactly representable
+- every generation duration is 4, 6, 8, or 10 seconds
+- segment durations sum exactly to requested duration
+- boundaries are coherent
+- dialogue fits creative timing
+- product actions remain executable
+- no filler or silent duration changes exist
 
-Before final packaging, verify:
+## Revision
 
-- assembled final duration equals approved requested duration
-- all required segments exist
-- segment order is correct
-- no segment is STALE
-- QC passes timing and continuity validation
+- Duration change → Storyboard and all timing-sensitive downstream assets become STALE.
+- Provider capability change → re-evaluate Video Prompt segmentation.
+- Video-only segment change → revise Video Prompt only unless creative timing changes.
+- Never silently alter the requested duration because of provider limits.
