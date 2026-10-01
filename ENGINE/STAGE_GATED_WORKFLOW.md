@@ -100,7 +100,13 @@ stages:
 
 ### 01 — Brief & Product
 Input: product name and product link/reference only.
-Output: normalized brief and canonical product facts.
+Output: researched, normalized brief and canonical product facts from the supplied product reference when accessible.
+
+Stage 01 product-research rule:
+- A supplied product link/reference is an evidence source that must be actively inspected.
+- Extract materially useful product facts before declaring them UNKNOWN.
+- Preserve source provenance and distinguish factual product data from unsupported marketing claims.
+- Stage 01 may present the resulting product research summary to the user.
 
 Stage 01 user-facing output isolation:
 - Render only Product Intake information.
