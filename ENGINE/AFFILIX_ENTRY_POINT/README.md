@@ -87,23 +87,133 @@ Do not inherit product, creator, niche, claims, storyboard, prompts, or producti
 
 ## 5. Stage 02 — Campaign Intake
 
-After `/next`, request exactly this campaign intake:
+After `/next`, expose structured campaign choices:
 
 ```
 STAGE 02 — Campaign Intake
 
-Silakan isi:
+Silakan pilih:
+
 Platform:
+- TikTok
+- Instagram Reels
+- Facebook
+- Shopee Video
+
 Durasi video:
+- 18 detik
+- Custom
+
 Tujuan konten:
+- Product awareness
+- Product education
+- Problem-solution
+- Product demonstration
+- Benefit explanation
+- Feature highlight
+- Social proof
+- Trust building
+- Consideration
+- Conversion / sales
+- Direct response
+- Traffic / click-through
+- Engagement
+- Community building
+- Launch / new product
+- Promotion / offer
+- Retargeting
+
 Target audience:
+- AI mengidentifikasi berdasarkan hasil riset Stage 01
+- User dapat mengoreksi atau mengganti hasil AI
+
 Creator:
+- Pilih dari Creator Library yang tersedia di repository
+- Creator yang tampil harus berasal dari canonical CREATOR_LIBRARY
+- Jangan menampilkan creator yang tidak tersedia di repository
+
 CTA:
+- Shop now
+- Buy now
+- Add to cart
+- Check the product
+- Learn more
+- See details
+- Try it
+- Discover more
+- Visit the product page
+- Click the link
+- Tap the link
+- Follow for more
+- Save this video
+- Share this video
+- Comment your thoughts
+- Send this to someone
+- DM for details
+- Use the product
+- Consider it for your routine
+- Custom CTA
+
+Custom CTA:
+[isi jika memilih Custom CTA]
 ```
 
-Stage 02 collects campaign requirements only. The Creator field is the requested creator input and is later resolved/validated by Stage 04 Creator. Duration becomes the canonical requested creative duration and must be preserved exactly downstream.
+### Platform
 
-Stage 02 validation requires all six fields to be present or explicitly `UNKNOWN` when safely unresolved. After validation, mark Stage 02 COMPLETED and wait for `/next`.
+Platform is a controlled choice. Persist the selected platform as one of:
+- `TIKTOK`
+- `INSTAGRAM_REELS`
+- `FACEBOOK`
+- `SHOPEE_VIDEO`
+
+### Duration
+
+The default campaign duration is 18 seconds. A `Custom` duration requires an explicit duration value.
+
+The requested duration is the canonical creative duration and must be preserved exactly downstream. Duration feasibility is validated separately against provider-supported generation durations `[4, 6, 8, 10]` using exact segment composition. For example, 18 seconds is feasible as `8 + 10`. If a custom duration cannot be composed exactly, set `duration_feasibility: BLOCKED` and do not silently change, round, truncate, or extend it.
+
+### Content Objective
+
+The selected objective must be persisted as a structured campaign objective. Multiple objectives may be selected when the user explicitly requests them, but the primary objective must remain identifiable for downstream strategy.
+
+### Target Audience
+
+Target audience is AI-derived from the validated Stage 01 product research and supplied product reference. The system should infer an audience profile using only source-supported product/category/use-case signals and clearly label inferred attributes as `INFERRED`.
+
+The audience result should include, when supportable:
+- demographic range
+- relevant gender positioning when the product is explicitly gendered
+- needs/problems
+- interests/category affinity
+- use context
+- purchase intent level
+- relevant exclusions or non-target signals
+
+Do not invent sensitive personal attributes or unsupported demographic facts. The user may correct or replace the AI-derived audience before Stage 02 is completed.
+
+### Creator
+
+Creator selection is dynamic. Enumerate the available creator records under `CREATOR_LIBRARY/` in the pinned repository version and display their canonical creator names/IDs as choices. Do not hard-code a creator list in the Stage 02 contract.
+
+The selected value is the requested creator input and is later resolved/validated by Stage 04 Creator.
+
+### CTA
+
+CTA is a controlled choice with a `Custom CTA` escape hatch. Persist the selected CTA exactly enough for downstream strategy and voice/script generation.
+
+### Validation
+
+Stage 02 must have:
+- one supported platform
+- one exact requested duration, either the default 18 seconds or an explicit Custom value
+- one primary content objective
+- one AI-derived or user-corrected target audience
+- one requested creator selected from the current repository Creator Library
+- one CTA, including Custom CTA text when selected
+
+Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
+
+After validation, mark Stage 02 COMPLETED and wait for `/next`.
 
 Additional fields such as aspect ratio, key message, talking points, references, brand requirements, restrictions, and script requirements are collected only when materially relevant.
 
