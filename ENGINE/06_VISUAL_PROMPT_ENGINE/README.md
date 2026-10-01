@@ -268,3 +268,8 @@ Visual prompts are passed to:
 - 09_QUALITY_CONTROL
 
 The storyboard remains the canonical source for scene intent. The visual prompt is an implementation layer, not a replacement for the storyboard.
+
+
+## Layered Niche Context Integration
+
+Visual prompts now receive Loaded Niche Context. Sub-niche, use case, and style may control setting, styling, composition, and visual language. Product and creator identity remain higher-priority source-of-truth layers. Context labels must never become unsupported product attributes.
