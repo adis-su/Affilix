@@ -2,14 +2,12 @@
 
 ## Purpose
 
-The Hook Engine generates opening concepts that capture attention while remaining faithful to the approved content strategy, creator identity, product facts, and campaign constraints.
-
-A hook is the entry point to the story. It must create a reason to continue watching without relying on unsupported claims, fake urgency, or misleading framing.
+Generate opening concepts that capture attention while remaining faithful to approved strategy, creator identity, product facts, campaign constraints, and loaded niche context.
 
 ## Input
 
-- Content strategy from 03_CONTENT_STRATEGY
-- Normalized campaign brief
+- Content strategy
+- Normalized brief
 - Selected creator
 - Product identity
 - Verified product facts
@@ -17,103 +15,74 @@ A hook is the entry point to the story. It must create a reason to continue watc
 - Available evidence
 - Platform requirements
 - Campaign constraints
+- Loaded Niche Context
+
+## Context-Aware Hooking
+
+Use authoritative:
+
+- Sub-Niche
+- Product Type
+- Use Case
+- Style / Aesthetic
+- Audience Context
+
+to shape the opening situation, language, visual trigger, and product connection.
+
+Example:
+
+`Fashion + Workwear + Dress + Minimalist`
+
+may produce a hook around getting ready for a simple work outfit.
+
+It must not produce unsupported claims such as comfort, premium material, perfect fit, or suitability for every workplace.
 
 ## Output
 
-Each hook candidate should contain:
+Each candidate contains:
 
 - Hook ID
 - Hook type
 - Hook text or visual concept
-- Delivery mode: Spoken / On-screen text / Visual / Hybrid
+- Delivery mode
 - Audience trigger
 - Product connection
+- Context connection
 - Strategy connection
 - Required visual action
 - Required proof
-- Claim risk: Low / Medium / High
-- Status: Draft / Approved / Rejected
+- Claim risk
+- Status
 
 ## Hook Types
 
-### Problem Hook
-
-Starts from a recognizable audience problem.
-
-Use only when the problem is relevant to the target audience and product.
-
-### Curiosity Hook
-
-Creates an information gap that the content can actually resolve.
-
-Do not create fake mystery or promise information that the video does not provide.
-
-### Relatable Hook
-
-Uses a familiar situation, behavior, or frustration.
-
-The situation must be plausible for the target audience.
-
-### Demonstration Hook
-
-Opens with the product being used or a feature being demonstrated.
-
-Useful when the product benefit is visually demonstrable.
-
-### Product Hook
-
-Introduces the product immediately.
-
-Useful when product recognition is more important than narrative setup.
-
-### Pattern Interrupt
-
-Uses an unexpected but relevant visual, movement, framing, or statement.
-
-The interruption must remain connected to the product or story.
-
-### Question Hook
-
-Opens with a question the audience is likely to care about.
-
-The content must answer or meaningfully address the question.
-
-### Story Hook
-
-Starts in the middle of a relatable situation, action, or mini-story.
-
-### Objection Hook
-
-Addresses a known audience concern before presenting the product solution.
-
-The objection must be grounded in the brief or known audience context.
-
-## Hook Construction
-
-A hook can be constructed from:
-
-Audience Trigger + Context + Product Relevance + Open Loop
-
-Not every hook requires all four components.
+- Problem
+- Curiosity
+- Relatable
+- Demonstration
+- Product
+- Pattern Interrupt
+- Question
+- Story
+- Objection
 
 ## Hook Selection Logic
 
-Evaluate candidates against:
+Evaluate:
 
-1. Alignment with campaign objective
+1. Campaign objective
 2. Audience relevance
-3. Content-angle alignment
-4. Product relevance
-5. Evidence availability
-6. Creator fit
-7. Platform suitability
-8. Clarity
-9. Claim safety
-10. Ease of visual execution
+3. Sub-niche/context relevance
+4. Content-angle alignment
+5. Product relevance
+6. Evidence availability
+7. Creator fit
+8. Platform suitability
+9. Clarity
+10. Claim safety
+11. Visual execution feasibility
 
-Do not rank hooks as objectively best or worst.
-
-Instead, return viable candidates with factual rationale describing what each candidate emphasizes.
+Do not rank hooks as objectively best or worst. Return viable candidates with factual rationale.
 
 ## Hook Truth Rules
 
@@ -130,11 +99,9 @@ Never use unsupported:
 - False comparisons
 - False personal experience
 
-Avoid clickbait that creates an expectation the rest of the content cannot fulfill.
+Context labels are not product evidence.
 
 ## Creator Fit
-
-Hooks must sound and look compatible with the selected creator.
 
 Respect:
 
@@ -149,53 +116,23 @@ Do not invent signature phrases or personal experiences.
 
 ## Visual Hook
 
-When the hook is visual, specify:
+Specify:
 
 - Initial frame
 - Creator action
 - Product visibility
 - Camera framing
 - Viewer-facing action
-- Transition into the next beat
+- Context cues
+- Transition into next beat
 
 The hook must be physically and visually executable.
 
-## Hook Variants
-
-For a normal concept, generate a small set of meaningfully different candidates rather than many superficial rewrites.
-
-Suggested default:
-
-- 3 to 5 hook candidates
-- At least 2 different hook types when the brief allows it
-
 ## Handoff
 
-The approved hook becomes the opening beat for:
+Approved hook becomes the opening beat for:
 
 - 05_STORYBOARD_ENGINE
 - 06_VISUAL_PROMPT_ENGINE
 - 07_VIDEO_PROMPT_ENGINE
 - 08_VOICE_SCRIPT_ENGINE
-
-## Example
-
-Strategy:
-
-- Audience: viewers looking for a modest fashion product
-- Objective: product discovery
-- Angle: demonstration
-- Verified product fact: product has a specified construction detail
-- Evidence: product reference
-
-Possible hook:
-
-"Kalau kamu sering memperhatikan bagian ini saat pilih hijab, lihat yang ini."
-
-This creates curiosity while leaving the actual product feature to the demonstration.
-
-Avoid:
-
-"Ini hijab paling nyaman yang pernah ada."
-
-unless such a claim is explicitly supported.
