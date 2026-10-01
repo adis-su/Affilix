@@ -5,7 +5,7 @@ E2E-001
 
 ## Purpose
 
-Validate the complete Affilix runtime from normalized brief through final QC, including canonical context propagation and mid-run reclassification.
+Validate the complete current Affilix runtime from normalized brief through Production Output, including canonical context propagation, stale-state invalidation, action/reference continuity, and exact-duration handling.
 
 ## Input
 
@@ -21,22 +21,18 @@ Validate the complete Affilix runtime from normalized brief through final QC, in
 - Objective: Product showcase + styling
 - CTA: View product details
 
-Product:
-- Minimal Modest Dress - E2E Fixture
-- Black
-- Long sleeves
-- Ankle-length silhouette
-- Material, dimensions, branding: not supplied
-
 ## Execution A
 
-Brief Analyzer → Context Loader → Creator Selector → Strategy → Hook → Storyboard → Visual → Video → Voice → QC
+Brief Analyzer → Context Loader → Creator Selector → Strategy → Hook → Storyboard → Visual → Video → Voice → Production Output
 
 Expected:
-- One canonical Fashion context is propagated to every downstream stage.
+- One canonical Fashion context is propagated downstream.
 - Product and creator identity remain stable.
 - Unsupported attributes remain UNKNOWN.
-- QC status: PASS.
+- Storyboard owns temporal/action continuity.
+- Visual and Video preserve reference-state continuity.
+- Video segments sum exactly to 20 seconds.
+- Production Output assembles current state without introducing new facts.
 
 ## Mid-Run Change
 
@@ -48,17 +44,19 @@ Change:
 - Style: Natural Look
 
 Expected:
-- Existing Fashion-dependent downstream outputs become STALE.
+- Existing Fashion-dependent outputs become STALE.
 - Canonical context is replaced.
-- Dependent Strategy, Hook, Storyboard, Visual, Video, Voice, and QC are regenerated as applicable.
-- No Fashion context survives into the active Beauty run.
-- QC validates the new context.
+- Dependent Strategy, Hook, Storyboard, Visual, Video, and Voice are regenerated as applicable.
+- No Fashion context survives in the active Beauty state.
+- Production Output is regenerated from the current state.
 
 ## Acceptance
 
 PASS only when:
 1. Initial run passes.
-2. Reclassification invalidates dependent state.
+2. Reclassification invalidates affected dependents.
 3. New canonical context is propagated.
 4. No stale Fashion context remains.
-5. Final QC passes.
+5. Action/reference continuity remains valid.
+6. Requested duration remains exact.
+7. Final Production Output contains only current required artifacts.
