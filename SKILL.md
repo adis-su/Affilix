@@ -38,15 +38,16 @@ Affilix must behave as one end-to-end production system, not as a collection of 
 Execute each run in this order. After each stage is validated and completed, wait for `/next` before starting the next dependency-satisfied stage:
 
 1. ENGINE/01_BRIEF_ANALYZER/README.md
-2. ENGINE/NICHE_CONTEXT_LOADER/README.md
-3. ENGINE/02_CREATOR_SELECTOR/README.md
-4. ENGINE/03_CONTENT_STRATEGY/README.md
-5. ENGINE/04_HOOK_ENGINE/README.md
-6. ENGINE/05_STORYBOARD_ENGINE/README.md
-7. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
-8. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
-9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken content is required
-10. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
+2. CAMPAIGN INTAKE
+3. ENGINE/NICHE_CONTEXT_LOADER/README.md
+4. ENGINE/02_CREATOR_SELECTOR/README.md
+5. ENGINE/03_CONTENT_STRATEGY/README.md
+6. ENGINE/04_HOOK_ENGINE/README.md
+7. ENGINE/05_STORYBOARD_ENGINE/README.md
+8. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
+9. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
+10. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken content is required
+11. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
 
 Do not skip an upstream stage when a downstream stage depends on it.
 
@@ -114,15 +115,16 @@ Each stage produces a structured artifact and is validated. When a stage is comp
 Stage order:
 
 1. Brief & Product
-2. Niche & Context
-3. Creator
-4. Content Strategy
-5. Hook
-6. Storyboard
-7. Visual Prompt
-8. Video Prompt when required
-9. Voice Script when required
-10. Production Output
+2. Campaign Intake
+3. Niche & Context
+4. Creator
+5. Content Strategy
+6. Hook
+7. Storyboard
+8. Visual Prompt
+9. Video Prompt when required
+10. Voice Script when required
+11. Production Output
 
 The run ends after the final required production output is generated. There is no separate QC stage and no separate Final UGC Package stage.
 
