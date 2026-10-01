@@ -70,27 +70,36 @@ niche_context:
 
 Do not inherit product, creator, niche, claims, storyboard, prompts, or production state from another run.
 
-## 4. After Product Input
+## 4. Stage 01 Completion
 
 1. Normalize through `ENGINE/01_BRIEF_ANALYZER/README.md`.
 2. Treat a product link as a reference source, not proof of every marketing statement.
 3. Load and validate Product Library facts.
-4. Run `ENGINE/NICHE_CONTEXT_LOADER/README.md`.
-5. Resolve one canonical niche context.
-6. Preserve unsupported fields as UNKNOWN.
-7. Ask only for information that materially blocks the next stage.
+4. Preserve unsupported fields as UNKNOWN.
+5. Validate Product Intake and mark Stage 01 COMPLETED.
+6. Wait for `/next`.
 
-## 5. Campaign Intake
+## 5. Stage 02 — Campaign Intake
 
-Request the smallest useful missing set, typically:
-- Platform
-- Durasi
-- Tujuan Konten
-- Target Audience
-- Creator
-- CTA
+After `/next`, request exactly this campaign intake:
 
-Ask for aspect ratio, key message, talking points, references, brand requirements, restrictions, and script requirements only when relevant.
+```
+STAGE 02 — Campaign Intake
+
+Silakan isi:
+Platform:
+Durasi video:
+Tujuan konten:
+Target audience:
+Creator:
+CTA:
+```
+
+Stage 02 collects campaign requirements only. The Creator field is the requested creator input and is later resolved/validated by Stage 04 Creator. Duration becomes the canonical requested creative duration and must be preserved exactly downstream.
+
+Stage 02 validation requires all six fields to be present or explicitly `UNKNOWN` when safely unresolved. After validation, mark Stage 02 COMPLETED and wait for `/next`.
+
+Additional fields such as aspect ratio, key message, talking points, references, brand requirements, restrictions, and script requirements are collected only when materially relevant.
 
 ## 6. Runtime Handoff
 
@@ -100,23 +109,25 @@ The canonical workflow is:
 /Affilix
 → STAGE 01 BRIEF & PRODUCT
 → /next
-→ STAGE 02 NICHE & CONTEXT
+→ STAGE 02 CAMPAIGN INTAKE
 → /next
-→ STAGE 03 CREATOR
+→ STAGE 03 NICHE & CONTEXT
 → /next
-→ STAGE 04 CONTENT STRATEGY
+→ STAGE 04 CREATOR
 → /next
-→ STAGE 05 HOOK
+→ STAGE 05 CONTENT STRATEGY
 → /next
-→ STAGE 06 STORYBOARD
+→ STAGE 06 HOOK
 → /next
-→ STAGE 07 VISUAL PROMPT
+→ STAGE 07 STORYBOARD
 → /next
-→ STAGE 08 VIDEO PROMPT when required
+→ STAGE 08 VISUAL PROMPT
 → /next
-→ STAGE 09 VOICE SCRIPT when required
+→ STAGE 09 VIDEO PROMPT when required
 → /next
-→ STAGE 10 PRODUCTION OUTPUT
+→ STAGE 10 VOICE SCRIPT when required
+→ /next
+→ STAGE 11 PRODUCTION OUTPUT
 ```
 
 There is no QC stage, Final UGC Package stage, or approval gate in the canonical workflow. Validation occurs inside each stage.
