@@ -154,3 +154,22 @@ When Stage 01 receives a product link, it must attempt active product-reference 
 - explicit UNKNOWN only for information that remains genuinely unavailable
 
 The output must not merely state that the link was received or is a reference source.
+
+
+## Downstream Prompt Dependency Regression
+
+Expected downstream order after Stage 07 Storyboard:
+
+1. Stage 08 Visual Prompt
+2. Stage 09 Voice Script when spoken content is required
+3. Stage 10 Video Prompt when video output is required
+4. Stage 11 Production Output
+
+Acceptance:
+- Video Prompt must not execute before a current Voice Script when spoken content exists.
+- Voice Script is the canonical source of exact spoken wording.
+- Video Prompt must include DIALOGUE SYNC when spoken content exists.
+- DIALOGUE SYNC exact dialogue must match the current Voice Script.
+- If Voice Script changes, affected Video Prompt becomes STALE and must be revalidated.
+- A dialogue-only revision must not automatically invalidate Visual Prompt unless visual or action timing is affected.
+- If dialogue crosses a generation segment boundary, the immutable bridge reference remains the continuity anchor.
