@@ -1,9 +1,5 @@
 # Affilix — Storyboard Runtime Output Contract
 
-## Stage Gate
-
-Stage 06 executes only after current Stage 05 Hook is APPROVED.
-
 ## Output
 
 ```yaml
@@ -22,7 +18,7 @@ metadata:
   scene_count:
   primary_content_angle:
   primary_message:
-  approved_hook_id:
+  hook_id:
 scenes: []
 validation:
   narrative: PASS | REVIEW
@@ -30,6 +26,7 @@ validation:
   product: PASS | REVIEW
   timing: PASS | REVIEW
   production: PASS | REVIEW
+  duration_feasibility: PASS | BLOCKED
 unresolved_requirements: []
 decision_queue: []
 provenance: []
@@ -39,16 +36,10 @@ source_commit_sha:
 
 ## Timing Invariant
 
-Creative scene durations must sum exactly to requested_duration. Provider generation durations are technical metadata and cannot change the approved creative duration.
+Creative scene durations must sum exactly to requested_duration.
 
-## Rules
+When video generation is required, generation segments must use only 4s, 6s, 8s, or 10s and must sum exactly to requested_duration.
 
-Storyboard is the canonical scene sequence for downstream Visual Prompt, Video Prompt, and Voice Script. Every scene has one primary purpose and physically executable actions. Creator and product identity remain locked.
+If exact composition is impossible, duration_feasibility is BLOCKED and the requested duration is not changed silently.
 
-No unsupported claims, personal experience, guarantees, discounts, scarcity, or promotional terms may be introduced.
-
-The artifact enters REVIEW and waits for approval before downstream production specifications execute.
-
-## Invalidation
-
-Changes to Hook, Strategy, Creator, Context, Product, requested duration, aspect ratio, or other material campaign constraints mark the Storyboard and all dependent production artifacts as STALE.
+Storyboard remains the canonical scene sequence for downstream Visual Prompt, Video Prompt, and Voice Script.
