@@ -106,6 +106,86 @@ Do not invent:
 - Promotional terms
 - Comparative superiority
 
+
+
+## UGC Conversationality Rules
+
+The Voice Script is spoken creator content, not a product-page rewrite or a feature-to-benefit advertisement.
+
+Convert supported product facts into natural spoken language without weakening factual accuracy:
+
+**PRODUCT FACT → CONVERSATIONAL INTERPRETATION → SPOKEN LINE**
+
+Prefer a human conversational progression such as:
+
+**PERSONAL/RELATABLE CONTEXT → PRODUCT OBSERVATION → REASON/BENEFIT → NATURAL CTA**
+
+Do not default to:
+
+**FEATURE STACK → BENEFIT STACK → PROMOTIONAL CLAIM → HARD CTA**
+
+### Conversational Language
+
+Prefer:
+- short spoken sentences
+- contractions or everyday Indonesian phrasing when consistent with the creator profile
+- specific observations grounded in available product facts
+- natural transitions between context, product, and CTA
+- restrained repetition and emphasis
+- wording that sounds plausible when spoken aloud
+
+Avoid by default:
+- brochure-like feature lists
+- stacked benefit clauses
+- formal product-page phrasing
+- generic marketing filler
+- exaggerated superlatives
+- forced English marketing phrases when they are not part of the creator profile or campaign requirement
+
+A hard CTA such as "Buy now" is allowed when explicitly selected or required by the campaign. It must not be inserted merely because the script contains a product benefit. When a softer delivery is compatible with the selected CTA, preserve the CTA intent while making the spoken transition natural.
+
+Examples:
+
+Less conversational:
+"Memiliki ceramide complex untuk membantu hidrasi dan mendukung skin barrier dengan sensasi ringan untuk rutinitas skincare. Buy now."
+
+More conversational:
+"Yang aku suka dari ini, ada ceramide complex-nya dan teksturnya juga ringan. Jadi enak dipakai sehari-hari."
+
+The example demonstrates style only. Product facts must still come from validated evidence, and first-person product experience may only be used when explicitly supplied.
+
+### Conversationality Boundaries
+
+Natural UGC language must never become a license to invent experience.
+
+Do not generate unsupported statements such as:
+- "Aku sudah pakai ini seminggu."
+- "Kulitku langsung jauh lebih lembap."
+- "Ini paling cocok buat aku."
+
+unless the underlying experience or claim is explicitly supported.
+
+Likewise, do not convert a verified product fact into a stronger efficacy claim merely to make the line sound conversational.
+
+## CTA Delivery Rules
+
+CTA selection comes from Campaign Intake and CTA strategy. Voice Script owns how that CTA is spoken.
+
+The script should distinguish:
+- **CTA intent**: the action requested by the campaign
+- **CTA wording**: the exact spoken wording
+- **CTA delivery**: how naturally the creator says it
+
+Examples of natural delivery:
+- Buy now → "Kalau memang cocok, langsung cek produknya."
+- Check the product → "Kalau penasaran, coba cek produknya."
+- Learn more → "Kalau mau lihat detailnya, bisa cek produknya."
+- Add to cart → "Kalau lagi cari yang seperti ini, bisa masukin ke keranjang."
+
+These are delivery examples, not mandatory rewrites. If the campaign explicitly requires the exact CTA text, preserve that wording.
+
+Never fabricate urgency, scarcity, discount, or promotional pressure.
+
 ## Personal Experience
 
 A creator may speak in first person only when the underlying experience is explicitly provided.
