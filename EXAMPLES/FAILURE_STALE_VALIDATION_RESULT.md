@@ -23,9 +23,9 @@ Source-level validation of the stage lifecycle and dependency rules.
 
 ## Result
 
-F001–F011: validated against the current lifecycle and downstream contracts.
+F001–F012: validated against the current lifecycle and downstream contracts.
 
-F012: requires explicit skip semantics in the runtime lifecycle and is tracked as a hardening item.
+The lifecycle explicitly supports independent branch states and stale propagation. Final Package and QC contracts reject stale or incomplete required assets.
 
 ## Live Test Limitation
 
