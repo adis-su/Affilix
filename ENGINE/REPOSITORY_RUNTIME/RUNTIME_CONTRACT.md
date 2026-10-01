@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This contract defines the state boundary between Affilix interfaces (ChatGPT, Telegram, or future clients) and the canonical Affilix production runtime.
+This contract defines the state boundary between Affilix interfaces (ChatGPT Project) and the canonical Affilix production runtime.
 
 Interfaces are adapters. They must not become independent sources of workflow logic, production state, or repository rules.
 
@@ -15,11 +15,11 @@ Affilix Runtime
     ├── Repository Runtime
     ├── Campaign State
     ├── Stage Manager
-    ├── Approval / Revision Manager
+    ├── `/next` Progression / Revision Manager
     └── Production Artifacts
 ```
 
-The same runtime contract must be usable by ChatGPT, Telegram, and future interfaces.
+This runtime contract is designed for the ChatGPT Project Affilix Skill.
 
 ## Run Initialization
 
@@ -32,7 +32,7 @@ Every new production run must:
 5. Pin that commit for the lifetime of the production run.
 6. Load repository rules from the pinned commit.
 7. Create isolated campaign state.
-8. Start the stage-gated workflow.
+8. Start Stage 01 and wait for `/next` after each completed stage.
 
 A new run uses the latest available `main` commit at initialization.
 
@@ -105,13 +105,6 @@ stages:
   quality_control: { status:, output: }
   final_package: { status:, output: }
 
-approval:
-  required:
-  status:
-  requested_at:
-  resolved_at:
-  revision_request:
-
 decision_queue:
   - id:
     field:
@@ -132,24 +125,24 @@ artifacts:
 
 `current_stage` is a user-facing pointer, not a database lock.
 
-Stages 01 through 06 remain strictly gated in sequence.
+Stages 01 through 06 execute in sequence. After each stage is validated and completed, the run waits for `/next` before starting the next stage.
 
-After Storyboard is approved, the runtime may activate the independent downstream branches concurrently:
+After Storyboard is completed and the user sends `/next`, the runtime may activate the independent downstream branches concurrently:
 
 - `visual_prompt`
 - `video_prompt`, when video generation is required
 - `voice_script`, when voice is required
 
-Each branch has its own stage status and approval state. Approval of one branch must not prevent another active branch from executing.
+Each branch has its own stage status. Completion of one branch must not prevent another active branch from executing.
 
 The runtime must never use a single `current_stage` value as the prerequisite for all three branches. Branch prerequisites are evaluated from the relevant stage statuses and artifact freshness.
 
 Canonical branch prerequisites:
 
-- Visual Prompt: Storyboard APPROVED.
-- Video Prompt: Storyboard APPROVED + current Visual Prompt APPROVED when visual continuity is required + provider capability profile when video is required.
-- Voice Script: Storyboard APPROVED. Additional visual/video approval is required only when the voice contract explicitly declares a dependency.
-- Quality Control: all required branches APPROVED or explicitly SKIPPED.
+- Visual Prompt: Storyboard COMPLETED.
+- Video Prompt: Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + provider capability profile when video is required.
+- Voice Script: Storyboard COMPLETED. Additional visual/video completion is required only when the voice contract explicitly declares a dependency.
+- Quality Control: all required branches COMPLETED or explicitly SKIPPED.
 - Final Package: QC PASS + all required assets current and non-STALE.
 
 If a required branch is skipped, the skip must be explicit and recorded in runtime state.
@@ -169,21 +162,11 @@ Each stage has one of:
 
 QC additionally uses `PASS`, `REVISION REQUIRED`, and `BLOCKED`.
 
-A stage output is current only when its own status, upstream dependencies, repository commit, and approval state are current.
+A stage output is current only when its own status, upstream dependencies, and repository commit are current.
 
-## Approval Contract
+## Progression Contract
 
-The runtime owns approval state.
-
-An interface may express approval or revision in natural language or UI controls, but the runtime normalizes it into:
-
-- APPROVED
-- REVISION_REQUESTED
-- WAITING_FOR_APPROVAL
-
-Approval applies to the specific stage output version and pinned repository commit. A branch approval does not approve sibling branches.
-
-## Dependency and Stale-State Rules
+The runtime does not require or track user approval between stages. `/next` only advances the active run after the current stage has completed validation. Revision instructions are handled separately and invalidate affected downstream assets.## Dependency and Stale-State Rules
 
 When an approved upstream canonical input changes:
 
@@ -191,7 +174,7 @@ When an approved upstream canonical input changes:
 2. mark them STALE,
 3. preserve unaffected branches,
 4. regenerate the smallest affected dependency chain,
-5. require approval again where required.
+5. wait for `/next` before continuing the affected chain.
 
 Examples:
 
@@ -225,7 +208,7 @@ Interfaces should present only decisions relevant to the current interaction.
 
 ## Interface Rules
 
-ChatGPT, Telegram, and future interfaces must send input to the runtime, display runtime outputs, collect approval/revision, and never maintain competing canonical state or engine logic.
+ChatGPT Project must present runtime outputs, accept `/next` progression commands and revision instructions, and never maintain competing canonical workflow logic.
 
 ## Repository Access Failure
 
@@ -247,7 +230,7 @@ Every material artifact should record:
 A production run is complete only when:
 
 - one repository commit is pinned,
-- all required stages are current and approved or explicitly skipped,
+- all required stages are current and completed or explicitly skipped,
 - no required artifact is STALE,
 - QC is PASS,
 - the final package is traceable to the run and pinned repository commit.
