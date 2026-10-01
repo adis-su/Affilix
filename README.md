@@ -12,6 +12,7 @@ Affilix turns a product brief, creator identity, references, and campaign constr
 4. [ENGINE/FINAL_UGC_PACKAGE_CONTRACT.md](ENGINE/FINAL_UGC_PACKAGE_CONTRACT.md) — final delivery contract
 5. [ENGINE/09_QUALITY_CONTROL/README.md](ENGINE/09_QUALITY_CONTROL/README.md) — production-readiness gate
 6. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
+7. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT/Telegram adapter boundary
 
 ## Repository Map
 
@@ -30,7 +31,7 @@ Affilix turns a product brief, creator identity, references, and campaign constr
 | ENGINE/08_VOICE_SCRIPT_ENGINE/ | Build spoken dialogue and delivery specs |
 | ENGINE/09_QUALITY_CONTROL/ | Validate production readiness |
 | ENGINE/WORKFLOW.md | Canonical dependency and state-transition contract |
-| ENGINE/AFFILIX_ENTRY_POINT/ | User-facing `/Affilix` entry command and intake contract |
+| ENGINE/AFFILIX_ENTRY_POINT/ | User-facing `/Affilix` entry command and interface contracts |
 | ENGINE/FINAL_UGC_PACKAGE_CONTRACT.md | Defines the final UGC package and readiness states |
 | CREATOR_LIBRARY/ | Persistent creator identities and references |
 | PRODUCT_LIBRARY/ | Product facts, claims, niche context, and product-type rules |
@@ -124,6 +125,18 @@ Niche and product-type rules are runtime context. They influence applicable hook
 
 This separation prevents the repository from becoming a graveyard of nearly identical prompt engines with slightly different nouns.
 
+## Interface Adapters
+
+Interfaces are thin adapters to the canonical runtime.
+
+- ChatGPT: user-facing `/Affilix` entry
+- Telegram: `affilix-telegram-adapter` Edge Function
+- Canonical lifecycle: `affilix-runtime-lifecycle`
+
+Telegram maps a Telegram chat to an isolated runtime `user_id` and forwards messages/approvals to the lifecycle. Telegram credentials remain server-side. See `ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md`.
+
+The Telegram adapter is deployed but remains **DEPLOYED_NOT_CONNECTED** until a bot token, webhook secret, and Telegram webhook are configured.
+
 ## Regression and Testing
 
 EXAMPLES/ contains validation at several scopes:
@@ -132,6 +145,8 @@ EXAMPLES/ contains validation at several scopes:
 - universal runtime matrices
 - E2E runtime tests
 - skill runtime regression matrix
+- failure/stale validation
+- live smoke-test plan/result
 - niche/product-type fixtures
 - final package golden fixture
 - final package contract test
