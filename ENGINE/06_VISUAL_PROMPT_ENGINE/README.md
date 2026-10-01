@@ -2,15 +2,40 @@
 
 ## Purpose
 
-The Visual Prompt Engine converts each approved storyboard scene into a production-ready image generation prompt while preserving creator identity, product identity, scene continuity, and visual intent.
+The Visual Prompt Engine converts each approved storyboard scene into a production-ready **static image-generation prompt**.
 
-It generates prompts from structured data. It must not replace missing facts with creative guesses.
+Its job is to describe **what must be visible in one generated frame**. It is not a video prompt, motion specification, or temporal scene description.
 
-The storyboard is the canonical temporal source of truth. The final image prompt is a structured implementation of one storyboard scene and must carry all relevant scene data forward.
+The engine must preserve creator identity, product identity, wardrobe, pose, expression, environment, composition, visual style, and other visual requirements from the approved storyboard without inventing unsupported facts.
+
+The storyboard remains the canonical source of scene intent and temporal context. The image prompt is a visual implementation layer for **one frame** of that scene.
+
+## Core Principle
+
+An image prompt answers:
+
+> **What should the generated frame look like?**
+
+It does not answer:
+
+> How does the subject move over time?
+
+Temporal behavior belongs to `07_VIDEO_PROMPT_ENGINE`.
+
+Therefore:
+
+- Describe a **single visual state**, not a sequence of actions.
+- Convert storyboard actions into the **resulting visible pose/state**.
+- Do not describe start state → motion → end state.
+- Do not include camera movement.
+- Do not include duration as a generation instruction.
+- Do not describe what happens before or after the frame.
+- Do not use ambiguous alternatives such as "pointing or presenting".
+- Do not turn narrative metadata into visual instructions unless it materially affects the frame.
 
 ## Input
 
-- Approved storyboard
+- Approved storyboard scene
 - Selected creator package
 - Canonical creator identity
 - Approved creator visual references
@@ -20,6 +45,7 @@ The storyboard is the canonical temporal source of truth. The final image prompt
 - Expression selection
 - Pose selection
 - Scene environment
+- Composition requirements
 - Camera requirements
 - Lighting requirements
 - Platform/aspect-ratio requirements
@@ -30,6 +56,8 @@ The storyboard is the canonical temporal source of truth. The final image prompt
 For every visual scene, return:
 
 ### Prompt Metadata
+
+Metadata may contain:
 
 - Scene ID
 - Timecode
@@ -46,222 +74,158 @@ For every visual scene, return:
 - Environment references
 - Style references
 
-### Final Prompt Format
+Metadata is for traceability. It must not make the final image-generation prompt behave like a video prompt.
 
-The final image-generation prompt must be delivered as a single structured prompt inside a code block.
+### Final Prompt
+
+The final image-generation prompt must be delivered as **one coherent structured prompt inside a single code block**.
 
 Use this canonical order:
 
 ```text
 IMAGE PROMPT
 
-SCENE
-Scene ID: [scene_id]
-Timecode: [start - end]
-Duration: [duration]
-Story Purpose: [story_purpose]
-Narrative Beat: [narrative_beat]
+SUBJECT
+[who/what is visibly present]
 
 CREATOR
-Identity: [canonical creator identity]
-Age: [age if available]
-Gender: [gender if available]
-Appearance: [approved physical appearance]
-Face: [canonical face details]
-Body / Build: [approved body identity]
-Hijab: [canonical hijab requirements]
-Expression: [expression]
-Gaze: [gaze direction]
-Pose: [pose]
-Gesture: [gesture]
-Orientation: [body orientation]
+[canonical identity and visible appearance]
 
 WARDROBE
-Outfit: [exact approved outfit]
-Color: [color if available]
-Material: [material if available]
-Accessories: [approved accessories only]
-Wardrobe Continuity: [continuity requirement]
+[visible outfit and hijab]
 
 PRODUCT
-Product Name: [product name]
-Product Type: [product type]
-Appearance: [available product appearance]
-Color: [available color]
-Material: [available material]
-Shape / Form: [available shape/form]
-Size / Proportion: [available information]
-Branding / Label: [available branding]
-Configuration: [available configuration]
-Product State: [state in this scene]
-Product Visibility: [how product must appear]
-Product Interaction: [how creator interacts with product]
+[visible product identity, state, and appearance]
 
-ACTION
-Primary Action: [primary creator action]
-Secondary Action: [secondary natural action]
-Interaction Details: [specific interaction]
-Physical Logic: [physically plausible interaction]
+POSE & EXPRESSION
+[one deterministic visible pose, gesture, gaze, and expression]
 
 ENVIRONMENT
-Location / Setting: [approved setting]
-Background: [background]
-Objects / Props: [approved objects only]
-Spatial Placement: [creator/product/object placement]
-Environment Continuity: [continuity requirement]
+[visible setting, background, and supported props]
 
 COMPOSITION
-Shot Type: [shot type]
-Framing: [framing]
-Camera Angle: [angle]
-Subject Position: [position in frame]
-Product Position: [product position]
-Visual Focus: [primary visual focus]
-Depth: [depth/composition information]
+[shot size, framing, subject placement, product placement, negative space]
 
 CAMERA
-Camera Behavior: [camera behavior]
-Lens / Focal Character: [if specified]
-Perspective: [perspective]
-Image Orientation: [portrait/landscape if specified]
-Aspect Ratio: [aspect ratio if specified]
+[static image perspective, angle, orientation, and only specified lens characteristics]
 
 LIGHTING
-Lighting Type: [lighting]
-Light Direction: [direction]
-Light Quality: [soft/hard/etc.]
-Shadow Behavior: [shadow]
-Exposure: [exposure requirement]
-Color Temperature: [if specified]
+[visible lighting characteristics]
 
 VISUAL STYLE
-Style: [approved visual style]
-Aesthetic: [approved aesthetic]
-Realism Level: [realistic/stylized if specified]
-Texture: [visual texture]
-Color Treatment: [approved color treatment]
+[approved visual aesthetic and realism]
 
 NICHE CONTEXT
-Niche: [loaded niche]
-Sub-Niche: [loaded sub-niche if available]
-Use Case: [loaded use case if available]
-Style / Aesthetic Context: [loaded style if available]
-Audience Context: [loaded audience context if available]
-Context Constraints: [scene-relevant constraints only]
+[only scene-relevant visual context]
 
 CONTINUITY
-Previous Scene Continuity: [what must remain consistent]
-Current Scene Continuity: [identity/product/environment continuity]
-Next Scene Continuity: [what must remain ready for next scene]
-Creator Consistency: [identity lock]
-Product Consistency: [product identity lock]
+[visual attributes that must match approved references]
 
 NEGATIVE CONSTRAINTS
-Do not change creator identity.
-Do not change facial features.
-Do not change hijab coverage or canonical hijab requirements.
-Do not change product identity.
-Do not alter product color, shape, material, branding, or configuration when supplied.
-Do not add unsupported product features.
-Do not add unsupported accessories or props.
-Do not invent text, labels, logos, or packaging details.
-Do not create anatomically incorrect hands or body proportions.
-Do not create physically impossible product interactions.
-Do not introduce objects that are not specified or supported.
-Do not create visual inconsistencies with previous or following scenes.
-
-REFERENCE PRIORITY
-1. Latest explicit user instruction
-2. Approved canonical creator identity
-3. Approved canonical product reference
-4. Dedicated creator/product attribute reference
-5. Approved wardrobe/pose/expression reference
-6. Scene-specific visual reference
-7. Loaded niche context
-8. General aesthetic direction
+[image-specific visual risks to avoid]
 
 FINAL IMAGE GENERATION INSTRUCTION
-Generate one coherent image for this scene.
-Follow the storyboard exactly.
-Preserve creator identity, product identity, wardrobe continuity, spatial continuity, and scene continuity.
-Use only supplied or approved information.
-Where information is unavailable, preserve it as UNKNOWN internally and do not invent additional defining details.
+[generate one coherent static frame]
 ```
 
-The code-block structure is mandatory for the final prompt output. Do not split one scene's final prompt into unrelated prose sections outside the code block.
+## Static Frame Rule
 
-## Prompt Data Completeness
+Every final prompt must represent **one moment frozen in time**.
 
-The final prompt must carry forward all storyboard information that materially affects image generation.
+### Correct
 
-At minimum, preserve:
+```text
+Rositasari faces the camera with a subtle friendly smile and points naturally downward with her right index finger toward the lower portion of the frame.
+```
 
-- Scene identity and timing
-- Story purpose and narrative beat
-- Creator identity
-- Creator action
-- Orientation
-- Pose
-- Gesture
-- Expression
-- Gaze
-- Outfit and hijab
-- Product identity
-- Product state
-- Product visibility
-- Product interaction
-- Environment
-- Object/prop placement
-- Shot type
-- Framing
-- Camera angle
-- Camera behavior
-- Lighting
-- Visual style
-- Relevant niche context
-- Continuity constraints
-- Reference requirements
-- Negative constraints
+### Incorrect
 
-Do not silently drop a storyboard field that materially changes the generated image.
+```text
+Rositasari raises her hand, looks at the camera, points downward, then maintains the gesture.
+```
 
-Fields that are not available must not be replaced with invented specifics. Preserve the unavailable information as UNKNOWN internally and continue when the image can still be generated safely.
+The second version describes a sequence and belongs to video direction.
 
-## Prompt Assembly
+## Deterministic Visual State
 
-Build prompts in this conceptual order:
+Generation-critical visual fields must have one clear interpretation.
 
-Scene Metadata
-+
-Creator Identity
-+
-Wardrobe
-+
-Product Identity
-+
-Action
-+
-Environment
-+
-Composition
-+
-Camera
-+
-Lighting
-+
-Visual Style
-+
-Niche Context
-+
-Continuity
-+
-Negative Constraints
-+
-Reference Priority
-+
-Final Generation Instruction
+Do not write:
 
-Do not let aesthetic language override identity, product facts, storyboard intent, or explicit user requirements.
+- "pointing or presenting"
+- "standing or slightly leaning"
+- "smiling or neutral"
+- "looking at camera or slightly off-camera"
+
+Choose the approved visual state.
+
+If the storyboard itself is ambiguous, resolve it from approved references or mark it UNKNOWN rather than silently inventing a second option.
+
+## Storyboard Translation
+
+Storyboard action must be translated into a **visible final pose/state**.
+
+Examples:
+
+| Storyboard intent | Image prompt translation |
+|---|---|
+| Creator points toward CTA | Creator is posed facing camera with one hand clearly pointing downward toward the lower frame |
+| Creator holds product | Creator visibly holds the product in the specified hand and position |
+| Creator looks at product | Creator's gaze is directed toward the visible product |
+| Creator walks into frame | Do not depict walking motion; depict the approved still pose/state if a keyframe is required |
+| Creator turns toward camera | Show the creator already facing the camera in the resulting frame |
+
+Do not carry temporal verbs into the image prompt when they imply motion.
+
+## CTA and Overlay Rule
+
+When a scene requires CTA text or UI to be added later:
+
+- Describe only the physical pose and composition needed to support the CTA.
+- Reserve clean negative space where the overlay will be composited.
+- Do not bake CTA text into the generated image unless explicitly requested.
+- Do not generate shopping-cart icons, yellow basket graphics, badges, prices, discounts, or interface elements unless they are explicitly part of the physical visual reference.
+
+Example:
+
+```text
+Leave clean lower-frame negative space for a separately composited CTA overlay.
+```
+
+## Timecode and Duration
+
+Timecode and duration may remain in prompt metadata for traceability.
+
+They are **not generation instructions**.
+
+Do not write:
+
+- "for 6 seconds"
+- "during 00:24–00:30"
+- "before the next scene"
+- "at the end of the video"
+
+inside the visual description unless required solely as metadata.
+
+## Output Specificity
+
+The final prompt should be detailed enough to produce the intended frame, but only with information relevant to visual generation.
+
+Prioritize:
+
+1. Creator identity
+2. Product identity
+3. Visible wardrobe
+4. Pose and expression
+5. Environment
+6. Composition
+7. Camera perspective
+8. Lighting
+9. Visual style
+10. Scene-relevant niche context
+11. Continuity constraints
+
+Do not duplicate the entire storyboard merely to make the prompt look comprehensive.
 
 ## Creator Identity Lock
 
@@ -277,7 +241,7 @@ Preserve:
 - Canonical hijab identity
 - Other approved identity locks
 
-Controlled variations may include:
+Allowed visual variation may include:
 
 - Expression
 - Eye direction
@@ -291,12 +255,14 @@ Controlled variations may include:
 - Hijab drape
 - Makeup intensity when approved
 
+Audience context must never change the creator's canonical age, identity, or physical characteristics.
+
 ## Hijab Rules
 
 When the selected creator has a canonical hijab identity:
 
 - Keep hair covered in standard scenes.
-- Keep neck coverage consistent with the approved styling.
+- Keep neck coverage consistent with approved styling.
 - Preserve realistic hijab construction and fabric behavior.
 - Treat color, fabric, folds, and draping as controlled style variables.
 - Do not convert a hijabi creator into an uncovered hairstyle unless explicitly requested.
@@ -314,13 +280,166 @@ Preserve:
 - Labels
 - Key physical details
 - Configuration
-- Product state when specified by the storyboard
+- Product state when visually specified
 
 Use the approved product reference as the visual authority.
 
 Do not add decorative details that could be mistaken for actual product features.
 
-Incomplete visual product detail is not, by itself, a reason to block prompt generation. Use available references and preserve unavailable attributes internally as UNKNOWN.
+Incomplete visual product detail is not, by itself, a reason to block prompt generation. Preserve unavailable attributes as UNKNOWN internally.
+
+## Product Visibility
+
+Avoid vague instructions such as:
+
+- "product sufficiently visible"
+- "product visible alongside creator"
+
+Instead specify the actual visual requirement, for example:
+
+- "the complete cardigan and culotte pants are clearly visible"
+- "the product is held at chest height with the front face visible"
+- "the product occupies the right side of the frame"
+
+Only use details supported by the storyboard or approved references.
+
+## Environment and Props
+
+Describe only visible, supported scene elements.
+
+Do not invent:
+
+- Decorative props
+- Furniture
+- Brand signage
+- Product packaging
+- UI elements
+- Additional people
+
+If the setting is inherited from a previous approved scene, state that the frame must visually match the established environment without inventing new objects.
+
+## Composition
+
+Translate storyboard composition into deterministic visual framing.
+
+Specify when relevant:
+
+- Shot size
+- Framing
+- Subject position
+- Product position
+- Negative space
+- Camera angle
+- Orientation
+- Perspective
+
+When both a complete outfit and lower-frame negative space are required, resolve the composition explicitly. For example:
+
+```text
+Medium-full portrait framing, showing the complete outfit from head to below the knees, with the creator positioned slightly above vertical center and clean negative space preserved in the lower frame.
+```
+
+Do not create contradictory framing requirements.
+
+## Camera
+
+Camera instructions describe the **static image perspective** only.
+
+Allowed:
+
+- Eye-level perspective
+- Low/high angle
+- Portrait orientation
+- Natural smartphone perspective
+- Specified lens/focal character
+
+Do not use video instructions such as:
+
+- Camera pans
+- Camera pushes in
+- Camera follows subject
+- Camera tracks movement
+- Camera rotates
+
+Those belong to the Video Prompt Engine.
+
+## Lighting
+
+Describe only the visible lighting state:
+
+- Lighting type
+- Direction when known
+- Soft/hard quality
+- Shadow behavior
+- Exposure
+- Color temperature when known
+
+When lighting continuity matters, instruct the image to visually match the established approved lighting. Do not invent a new lighting setup.
+
+## Visual Style
+
+Style language must describe observable visual treatment.
+
+"Korean-style" or similar style labels may describe aesthetic direction only. They must not imply unsupported product origin, manufacturing origin, branding, certification, or cultural provenance.
+
+Avoid unsupported evaluative claims such as "premium", "luxury", or "high quality" unless they are explicitly part of the approved visual direction.
+
+## Niche Context
+
+Only scene-relevant niche context belongs in the final image prompt.
+
+Niche context may influence:
+
+- Styling
+- Setting
+- Composition
+- Visual language
+- Audience-appropriate presentation
+
+It must not override creator identity or product facts.
+
+## Continuity
+
+Continuity in an image prompt is **visual continuity**, not temporal narration.
+
+Use continuity to preserve:
+
+- Creator identity
+- Product identity
+- Outfit
+- Hijab styling
+- Accessories
+- Environment
+- Lighting appearance
+- Product state
+- Relevant spatial relationships
+
+Do not include "next scene" instructions.
+
+Do not describe what the creator will do afterward.
+
+## Negative Constraints
+
+Use image-specific constraints that prevent real generation failures.
+
+Examples:
+
+- No identity drift
+- No uncovered hair or neck when prohibited
+- No altered outfit configuration
+- No distorted hands
+- No extra fingers
+- No duplicated hands
+- No cropped pointing hand
+- No duplicate product
+- No unsupported accessories
+- No invented logos or text
+- No promotional UI
+- No baked-in CTA overlay
+- No additional people
+- No inconsistent environment
+
+Avoid generic negative keyword dumps.
 
 ## Reference Priority
 
@@ -343,119 +462,55 @@ Keep reference roles distinct:
 - Pose reference controls body positioning.
 - Expression reference controls facial expression.
 - Environment reference controls scene setting.
-- Style reference controls overall visual styling.
+- Style reference controls overall visual treatment.
 
 One reference must not silently override unrelated attributes.
-
-## Prompt Specificity
-
-Prompts should be specific enough to preserve required details but not overloaded with unsupported information.
-
-Prefer observable descriptions over vague adjectives.
-
-Weak:
-
-"beautiful, perfect, stunning woman."
-
-Better:
-
-"young adult hijabi woman with the approved canonical facial structure, natural skin texture, calm approachable expression, wearing the approved outfit, holding the approved product in her right hand."
-
-## Camera and Composition
-
-Translate storyboard requirements into explicit visual instructions:
-
-- Shot size
-- Camera angle
-- Camera height when relevant
-- Subject placement
-- Product placement
-- Negative space
-- Orientation
-- Perspective
-- Depth of field
-- Lens characteristics when specified
-
-Do not invent camera specifications when they materially change the intended composition.
-
-## Continuity
-
-Visual prompts for sequential scenes must preserve:
-
-- Creator identity
-- Product identity
-- Outfit unless a change is scripted
-- Hijab styling unless a change is scripted
-- Accessories
-- Environment when unchanged
-- Lighting continuity when appropriate
-- Product state
-- Spatial relationships
-- Relevant visual state from the preceding scene
-
-The prompt must explicitly carry continuity requirements from the storyboard rather than relying on the image model to infer them.
-
-## Negative Constraints
-
-Use negative constraints only when they protect an important requirement.
-
-Examples:
-
-- No uncovered hair
-- No altered product shape
-- No extra product components
-- No incorrect logo
-- No additional people
-- No inconsistent outfit
-- No distorted hands
-- No duplicate product
-- No identity drift
-
-Do not fill prompts with generic negative keywords that do not address an actual production risk.
 
 ## Visual QC
 
 Before handoff, verify:
 
-### Prompt Structure
+### Static Image Integrity
 
-- Final prompt is inside a code block.
-- Scene metadata is present.
-- All materially relevant storyboard data is represented.
-- Product and creator references are included.
-- Continuity constraints are explicit.
-- Negative constraints address real risks.
+- Final prompt describes one frozen visual state.
+- No temporal sequence is embedded.
+- No video camera movement is included.
+- No duration is used as a visual generation instruction.
+- No "next scene" instruction appears in the final visual description.
+- No ambiguous generation-critical alternatives remain.
 
 ### Creator
 
 - Identity matches canonical reference.
-- Age presentation is consistent.
+- Apparent age is consistent.
 - Hijab identity is preserved.
 - Body proportions remain consistent.
-- Pose, expression, gaze, and action match the storyboard.
+- Pose, expression, gaze, and visible gesture match the storyboard.
 
 ### Product
 
-- Product matches reference.
+- Product matches approved reference.
 - Color and shape are correct when supplied.
 - Branding/labels are not invented.
 - Product state matches the storyboard.
-- Interaction is physically plausible.
+- Product interaction is visually plausible.
+- Product visibility is deterministic.
 
 ### Scene
 
-- Composition matches storyboard.
-- Pose matches storyboard.
-- Expression matches intended emotional beat.
-- Environment matches storyboard.
+- Composition matches the storyboard.
+- Pose matches the intended frame.
+- Expression matches the emotional beat.
+- Environment matches approved references.
 - Lighting is coherent.
+- Negative space does not create contradictory cropping.
 
 ### Continuity
 
-- Scene connects logically to previous and next scene.
-- Outfit and product state are consistent.
-- No unexplained visual changes.
 - Creator and product identity remain locked.
+- Outfit and hijab remain consistent unless a change is explicitly scripted.
+- No unexplained visual changes occur.
+- Environment and lighting remain visually coherent.
 
 ## Handoff
 
@@ -465,18 +520,21 @@ Visual prompts are passed to:
 - 07_VIDEO_PROMPT_ENGINE
 - 09_QUALITY_CONTROL
 
-The storyboard remains the canonical source for scene intent. The visual prompt is an implementation layer, not a replacement for the storyboard.
+The storyboard remains the canonical source for scene intent. The visual prompt is an implementation layer for a static frame and does not replace the storyboard.
 
 ## Layered Niche Context Integration
 
-Visual prompts receive Loaded Niche Context. Sub-niche, use case, and style may control setting, styling, composition, and visual language. Product and creator identity remain higher-priority source-of-truth layers. Context labels must never become unsupported product attributes.
+Visual prompts receive Loaded Niche Context. Sub-niche, use case, and style may influence setting, styling, composition, and visual language.
 
-Only scene-relevant niche context should be carried into the final prompt. Context must not override explicit storyboard instructions.
+Product and creator identity remain higher-priority source-of-truth layers.
+
+Context labels must never become unsupported product attributes, origin claims, branding, or creator identity changes.
 
 ## Runtime Invariants
 
 - One final prompt per visual scene.
-- Final prompt is always delivered in a code block.
+- Final prompt is always delivered in one code block.
+- Final prompt describes one static visual state.
 - Storyboard remains the temporal source of truth.
 - Creator identity remains locked.
 - Product identity remains locked.
@@ -484,4 +542,6 @@ Only scene-relevant niche context should be carried into the final prompt. Conte
 - Unsupported facts are never invented.
 - UNKNOWN is preserved internally when information is unavailable.
 - Incomplete visual product detail alone does not block prompt generation.
-- Downstream image generation must be able to trace the prompt back to its storyboard scene.
+- Image prompts do not contain video motion direction.
+- Image prompts do not contain temporal sequence instructions.
+- Downstream image generation can trace the prompt back to its storyboard scene.
