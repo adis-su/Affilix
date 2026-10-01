@@ -335,3 +335,12 @@ Affilix is complete for a campaign only when:
 - no stale context remains
 - cross-run isolation passes
 - QC status is PASS
+
+
+## Repository Runtime Contract
+
+Repository loading is governed by `ENGINE/REPOSITORY_RUNTIME/README.md`.
+
+At runtime, load the current repository specification relevant to each stage. Use progressive loading rather than reading the entire repository. Repository state and production-run state are separate.
+
+If a material repository rule changes, affected downstream assets become STALE and must be regenerated according to the dependency rules below. Never invent missing repository rules or claim that a repository file was consulted when it was not accessible.
