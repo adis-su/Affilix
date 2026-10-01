@@ -18,8 +18,8 @@ Each stage follows:
 6. Hook
 7. Storyboard
 8. Visual Prompt
-9. Video Prompt
-10. Voice Script
+9. Voice Script
+10. Video Prompt
 11. Production Output
 
 A stage may be skipped only when its output is genuinely not required for the requested deliverable.
@@ -213,13 +213,17 @@ The storyboard is the source of truth for the requested creative duration. Provi
 Input: validated Storyboard and upstream completed state.
 Output: one production-ready image prompt per required visual scene.
 
-### 09 — Video Prompt
-Input: validated Storyboard, completed Visual Prompt where relevant, and provider capability profile when video generation is required.
-Output: motion specification plus provider-compatible generation segment mapping.
+### 09 — Voice Script
+Input: validated Storyboard, Content Strategy, Hook, Creator, Product facts, and declared platform/campaign constraints.
+Output: scene-by-scene canonical dialogue and delivery instructions.
 
-### 10 — Voice Script
-Input: validated Storyboard and declared dependencies.
-Output: scene-by-scene dialogue and delivery instructions.
+Voice Script is the canonical source of exact spoken wording, speaker, delivery, and speech timing. It must be completed before Video Prompt when spoken content is required.
+
+### 10 — Video Prompt
+Input: validated Storyboard, completed Visual Prompt where relevant, completed Voice Script when spoken content exists, and provider capability profile when video generation is required.
+Output: motion specification plus provider-compatible generation segment mapping, including synchronized dialogue instructions when applicable.
+
+Video Prompt must consume the current Voice Script rather than inventing or independently rewriting dialogue. If Voice Script changes, affected Video Prompt artifacts become STALE and must be revalidated.
 
 ### 11 — Production Output
 Input: all required current upstream production assets.
@@ -251,6 +255,6 @@ There is no QC stage and no Final UGC Package stage.
 
 Stage 07 Storyboard now produces three canonical layers: action choreography, reference graph, and creative timing.
 
-Stage 08 renders reference states. Stage 09 converts reference-to-reference transitions into provider-compatible generation segments.
+Stage 08 renders reference states. Stage 09 creates canonical spoken content. Stage 10 converts reference-to-reference transitions into provider-compatible generation segments and synchronizes the canonical Voice Script.
 
 A stage is processed, validated, marked `COMPLETED`, then paused for `/next`. No approval gate is implied.
