@@ -20,8 +20,44 @@ The engine must preserve creator identity, product identity, physical plausibili
 - Camera composition
 - Lighting
 - Dialogue timing when available
-- Scene duration
+- Creative scene duration
+- Provider capability profile
+- Generation segment plan when applicable
 - Previous and next scene continuity requirements
+
+## Duration and Provider Capability
+
+Video duration has two distinct layers:
+
+1. **Creative duration**: how long the approved storyboard beat should exist in the final video.
+2. **Generation duration**: the technical duration requested from the selected video provider for one generated clip.
+
+The provider capability profile defines supported generation durations. It may contain discrete values such as [4, 6, 8, 10] seconds, but Affilix must never assume those values are universal.
+
+### Duration Rules
+
+- Preserve the user's approved requested final duration.
+- Do not silently replace an 18-second request with a 10-second output because a provider has a 10-second maximum.
+- When one generation cannot cover a required duration, create multiple generation segments.
+- Each generation segment must use a provider-supported duration.
+- Segment durations must sum to the approved final duration.
+- Segment boundaries should align with natural visual beats.
+- If a scene's creative duration does not map cleanly to provider durations, restructure or redistribute the creative beat intentionally before generation.
+- Never add meaningless filler merely to consume provider duration.
+- Never compress a material action without checking narrative and dialogue timing.
+- Technical generation duration must be recorded separately from creative duration.
+
+### Example
+
+For an approved 18-second video and a provider supporting [4, 6, 8, 10] seconds:
+
+4s + 6s + 8s = 18s
+
+is a valid three-segment production plan.
+
+Another valid plan may be 8s + 10s = 18s when the storyboard contains two clean visual beats.
+
+The selected segmentation must follow the storyboard, not arithmetic convenience alone.
 
 ## Output
 
@@ -31,7 +67,11 @@ Each video scene should contain:
 
 - Scene ID
 - Video Prompt ID
-- Duration
+- Creative duration
+- Generation segment ID when applicable
+- Generation duration
+- Segment start/end time in final video
+- Provider ID
 - Start state
 - End state
 - Motion intensity
@@ -160,15 +200,15 @@ Select intensity based on:
 
 ## Timing
 
-The scene duration must match the storyboard.
+Creative scene timing must match the approved storyboard.
 
-Break complex actions into temporal stages when needed:
+For segmented generation:
 
-0–1s: preparation
-1–3s: primary action
-3–5s: reaction or product emphasis
-
-Use actual scene duration rather than assuming every scene has the same length.
+- Map each generation segment to a final-video time range.
+- Ensure the segment starts and ends in a visually coherent state.
+- Preserve continuity between adjacent generated clips.
+- Do not assume every generation segment has the same length.
+- Dialogue timing must remain compatible with the creative scene timing, regardless of provider segment boundaries.
 
 ## Dialogue Synchronization
 
@@ -183,7 +223,7 @@ The Voice Script Engine owns final wording. The Video Prompt Engine owns visual 
 
 ## Continuity
 
-Across adjacent scenes preserve:
+Across adjacent scenes and generation segments preserve:
 
 - Creator identity
 - Outfit
@@ -223,6 +263,7 @@ Use only relevant constraints, such as:
 - No uncovered hair
 - No unnatural hijab detachment
 - No impossible body movement
+- No arbitrary filler motion to consume provider duration
 
 ## Video QC
 
@@ -245,12 +286,16 @@ Before handoff, verify:
 - Motion intensity fits the scene.
 - Camera movement supports the story.
 - End state can connect to the next scene.
+- Segment boundaries are coherent when segmentation is used.
 
 ### Timing
 
-- Actions fit within the scene duration.
+- Creative actions fit within the approved scene duration.
+- Generation durations are supported by the selected provider.
+- Generation segment durations sum to the approved final duration.
 - Dialogue timing is plausible.
 - No important action is compressed unrealistically.
+- No filler is used solely because of provider duration constraints.
 
 ## Handoff
 
@@ -259,8 +304,7 @@ The video prompt is passed to:
 - Video generation workflow
 - 09_QUALITY_CONTROL
 
-The storyboard and visual prompt remain the source of truth for scene intent and appearance. The video prompt defines temporal behavior.
-
+The storyboard and visual prompt remain the source of truth for scene intent and appearance. The video prompt defines temporal behavior and provider-compatible generation segmentation.
 
 ## Layered Niche Context Integration
 
