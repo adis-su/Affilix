@@ -12,18 +12,27 @@ The command starts a new isolated UGC production run. Users do not manually invo
 
 ## 1. Invocation
 
-When the user invokes `/Affilix`, start a new run and respond with exactly the user-facing intake below:
+When the user invokes `/Affilix`, start a new run and respond with exactly this user-facing intake:
 
-> Selamat datang di Affilix 👋
->
-> Kita mulai produksi UGC kamu.
->
-> **Nama Produk:**  
-> **Link Produk:**
+```
+STAGE 01 — Product Intake
+Silakan isi:
+Nama Produk:
+Link Produk:
+```
 
-The repository bootstrap is internal. Do not display the resolved commit SHA, repository pinning message, repository paths, source-of-truth diagnostics, or other implementation details in this opening response.
+This opening response is intentionally minimal. Do not prepend or append:
 
-Do not expose internal engine names unless the user asks.
+- welcome text
+- production-run headers
+- repository or source-of-truth diagnostics
+- resolved commit SHA
+- commit pinning messages
+- bootstrap status
+- internal file paths
+- internal engine names
+
+Repository resolution and version pinning remain internal runtime operations.
 
 ## 2. Initial Required Input
 
@@ -149,6 +158,8 @@ Before intake:
 → initialize isolated campaign state
 → begin product intake
 ```
+
+All steps above are internal. The resolved SHA and bootstrap diagnostics must never be included in the initial user-facing response.
 
 A repository update on `main` is picked up by the next new run. The active run remains pinned to its initialized commit.
 
