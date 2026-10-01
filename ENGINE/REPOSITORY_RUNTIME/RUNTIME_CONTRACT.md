@@ -154,7 +154,6 @@ Each stage has one of:
 - `NOT_STARTED`
 - `DRAFT`
 - `REVIEW`
-- `APPROVED`
 - `REVISION`
 - `STALE`
 - `SKIPPED`
@@ -166,9 +165,11 @@ A stage output is current only when its own status, upstream dependencies, and r
 
 ## Progression Contract
 
-The runtime does not require or track user approval between stages. `/next` only advances the active run after the current stage has completed validation. Revision instructions are handled separately and invalidate affected downstream assets.## Dependency and Stale-State Rules
+The runtime does not require or track user approval between stages. `/next` only advances the active run after the current stage has completed validation. Revision instructions are handled separately and invalidate affected downstream assets.
 
-When an approved upstream canonical input changes:
+## Dependency and Stale-State Rules
+
+When a completed upstream canonical input changes:
 
 1. identify affected dependents,
 2. mark them STALE,
@@ -181,7 +182,7 @@ Examples:
 - Storyboard revision → Visual, Video, and Voice become STALE.
 - Visual-only revision → Visual becomes REVISION/REVIEW; Video becomes STALE only if visual motion/state continuity is affected; Voice remains current.
 - Voice-only revision → Voice becomes REVISION/REVIEW; other branches remain current.
-- Provider capability change → Video becomes STALE/re-evaluated; approved creative duration remains unchanged.
+- Provider capability change → Video becomes STALE/re-evaluated; completed creative duration remains unchanged.
 - Requested duration change → Storyboard and all duration-sensitive downstream assets become STALE.
 
 A stale asset must never be presented as current or included in a production-ready package.
