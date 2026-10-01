@@ -71,3 +71,15 @@ It is valid for these fields to exist internally as UNKNOWN in isolated runtime 
 ## Renderer Contract
 
 Any generic runtime/status renderer must apply the active-stage output scope before presentation. Stage 01 scope is Product Intake only. Stage 02 scope is Campaign Intake only. A regression passes only when later-stage fields remain hidden until their owning stage becomes active.
+
+
+## Stage 01 Product Research Regression
+
+When Stage 01 receives a product link, it must attempt active product-reference research before presenting the completed stage. A compliant Stage 01 result includes:
+- researched product identity
+- available brand/category/product-type information
+- materially useful product facts, variants, usage, ingredients/materials, benefits/selling points, or other source-supported details when present
+- source/provenance distinction
+- explicit UNKNOWN only for information that remains genuinely unavailable
+
+The output must not merely state that the link was received or is a reference source.
