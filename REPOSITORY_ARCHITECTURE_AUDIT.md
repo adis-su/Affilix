@@ -1,129 +1,118 @@
-# Affilix — Repository Architecture Audit v1
+# Affilix — Repository Architecture Audit v2
+
+## Audit Date
+2026-10-01
 
 ## Audit Scope
 
-Repository: adis-su/Affilix
+Repository: adis-su/Affilix  
+Canonical branch: main  
+Audited HEAD: 2e3d0e148efa853cacd0e40129dd40b3f477c8f4
 
-Snapshot:
-- 148 tracked tree entries
-- 5 top-level roots: SKILL.md, ENGINE, CREATOR_LIBRARY, PRODUCT_LIBRARY, EXAMPLES
-- 9 production/runtime engines plus niche context loader, workflow, and final package contract
-- 10 registered niches
-- 4 active niches: Fashion, Beauty, Food & Beverage, Home & Living
-- 6 planned niches: Electronics, Lifestyle, Baby & Kids, Pet, Sports & Outdoor, Automotive
+This audit validates the repository against the current canonical architecture:
+
+```text
+Brief & Product
+→ Niche & Context
+→ Creator
+→ Content Strategy
+→ Hook
+→ Storyboard
+→ Visual Prompt
+→ Video Prompt
+→ Voice Script
+→ Production Output
+```
 
 ## Findings
 
 ### A01 — Runtime entry point alignment
 Status: PASS
 
-SKILL.md follows the canonical runtime order: Brief → Niche Context → Creator → Strategy → Hook → Storyboard → Production Prompts → QC → Final Package.
+`SKILL.md`, `ENGINE/WORKFLOW.md`, and the entry-point contract use the same ten-stage pipeline. `/next` is progression only.
 
 ### A02 — Universal engine architecture
 Status: PASS
 
-Creative engines remain universal. Niche and product-type behavior is loaded as runtime context rather than duplicated into separate engines.
+Creative engines remain universal. Niche and product-type behavior is loaded as runtime context.
 
 ### A03 — Canonical context dependency
 Status: PASS
 
-NICHE_CONTEXT_LOADER is positioned before downstream creative decisions and is referenced by SKILL.md and WORKFLOW.md.
+Niche Context Loader remains upstream of downstream creative decisions.
 
 ### A04 — State invalidation
 Status: PASS
 
-WORKFLOW.md, QC, and SKILL.md agree that material upstream changes create STALE dependent state and require regeneration before delivery.
+Material upstream changes mark affected downstream assets STALE and require regeneration. No approval gate is required.
 
-### A05 — Final output contract
+### A05 — Action choreography and reference graph
 Status: PASS
 
-ENGINE/FINAL_UGC_PACKAGE_CONTRACT.md is part of the runtime pipeline and defines production-readiness behavior.
+Storyboard owns action choreography, reference sequencing, bridge references, and creative timing. Visual Prompt renders reference states. Video Prompt generates reference-to-reference transitions.
 
-### A06 — Regression coverage
+### A06 — Duration integrity
 Status: PASS
 
-Regression artifacts cover niche context, cross-run isolation, reclassification, UNKNOWN preservation, final package contract, and runtime entry point behavior.
+Video generation durations are constrained to `[4, 6, 8, 10]` and final composition must equal requested duration exactly. Provider limits cannot silently redefine campaign duration.
 
-### A07 — Niche registry coverage
+### A07 — Production output contract
 Status: PASS
 
-The repository contains ten registered niche directories. Active/planned separation is preserved. Planned niches do not receive fabricated detailed runtime rules.
+`ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` is the final assembly contract. It assembles current upstream state and does not introduce a separate QC or Final UGC Package layer.
 
-### A08 — Creator library structure
+### A08 — Regression coverage
 Status: PASS
 
-Rositasari has separated identity, profile, visual references, wardrobe, expressions, and poses. This matches the creator loading contract.
+Regression coverage exists for active niches, UNKNOWN preservation, source conflicts, cross-run isolation, reclassification, action choreography, reference transitions, and duration segmentation.
 
-### A09 — Naming consistency
-Status: PASS WITH NOTES
+### A09 — Niche registry coverage
+Status: PASS
 
-The engine numbering is coherent for the nine production engines. Supporting runtime components are intentionally named by function rather than forced into the numeric sequence.
+Ten niches are registered. Four are active with detailed rules; six remain planned without fabricated detailed behavior.
 
-Examples contain broad matrix files and per-case fixtures. This is acceptable. Future regression artifacts should prefer:
-- MATRIX for matrices
-- FIXTURE for inputs
-- RESULT for results
-- CONTRACT_TEST for contract validation
+### A10 — Creator library structure
+Status: PASS
 
-Existing files should not be renamed merely for cosmetic consistency.
+Rositasari identity, profile, visual references, wardrobe, expressions, and poses remain separated.
 
-### A10 — Documentation completeness
-Status: PASS WITH NOTES
+### A11 — Repository runtime isolation
+Status: PASS
 
-Core runtime documentation exists for the current architecture.
+Each run pins one repository commit and keeps repository state separate from production-run state.
 
-One structural improvement remains: add a single repository map/index so a future maintainer can understand where to start without traversing the repository manually.
+### A12 — Documentation consistency
+Status: PASS
 
-## Redundancy Review
+Active runtime contracts no longer depend on QC, Final UGC Package, Stage 11, Telegram, or Supabase runtime concepts. Legacy audit/test artifacts are treated as historical only where retained.
 
-No deletion is justified by this audit.
+## Legacy Artifact Policy
 
-The apparent duplication between universal runtime matrices, niche test matrices, E2E tests, and golden package tests serves different validation scopes and should remain.
+Historical artifacts may preserve evidence of previous architecture, but they must not be cited as active runtime contracts.
 
-## Dependency Review
-
-Canonical dependency chain:
-
-SKILL.md
-→ BRIEF ANALYZER
-→ NICHE CONTEXT LOADER
-→ CREATOR SELECTOR
-→ CONTENT STRATEGY
-→ HOOK
-→ STORYBOARD
-→ VISUAL / VIDEO / VOICE
-→ QC
-→ FINAL PACKAGE CONTRACT
-
-This matches the current documented workflow.
+The following concepts are not part of the canonical runtime:
+- Quality Control stage
+- Final UGC Package stage
+- Approval Gate
+- Stage 11
+- Telegram runtime
+- Supabase runtime
 
 ## Risk Register
 
 | Risk | Severity | Current State |
 |---|---|---|
-| Cross-run context leakage | Critical | Covered by tests |
-| Stale output after reclassification | Critical | Covered by workflow + tests |
-| Product/creator identity drift | Critical | Covered by library + QC |
-| Unsupported claims | Major | Covered by Product Library + QC |
-| UNKNOWN becoming invented fact | Major | Covered by runtime tests |
-| Inconsistent regression naming | Minor | Documented convention |
-| Maintainer navigation cost | Minor | Repository map recommended |
+| Cross-run context leakage | Critical | Covered |
+| Stale output after upstream change | Critical | Covered |
+| Product/creator identity drift | Critical | Covered |
+| Unsupported claims | Major | Covered |
+| UNKNOWN becoming invented fact | Major | Covered |
+| Reference boundary drift | Major | Covered |
+| Duration mismatch | Major | Covered |
+| Maintainer navigation cost | Minor | Repository map exists in README |
 
 ## Audit Conclusion
 
 Architecture status: PASS
 
-No destructive cleanup is recommended.
-
-The repository is structurally aligned with the current Affilix architecture. The remaining improvement is navigational rather than architectural: provide one concise repository map/index and use the documented regression naming convention for future additions.
-
-## Next Maintenance Rule
-
-Before adding a new engine, niche, product type, or major runtime rule:
-
-1. identify its source of truth
-2. update the relevant schema/registry
-3. update runtime dependencies
-4. add or update a regression fixture
-5. validate final package compatibility
-6. update the repository map when structure changes
+The repository is aligned with the current Affilix architecture. The main remaining maintenance task is to keep future regression artifacts and audit snapshots aligned with the canonical ten-stage workflow.
