@@ -448,3 +448,8 @@ When a niche context is loaded, validate:
 If niche or product type is materially ambiguous, flag the issue according to severity and request only the minimum clarification required.
 
 Niche context is subordinate to explicit campaign/product/creator source-of-truth data.
+
+
+## Layered Niche Context Integration
+
+QC now validates the full layered context: Niche, Sub-Niche, Product Type, Use Case, Style/Aesthetic, and Audience Context. It checks context consistency across strategy, hook, storyboard, visual, video, and voice assets and rejects unsupported claims derived from context labels.
