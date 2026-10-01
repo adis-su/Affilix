@@ -294,6 +294,30 @@ Coordinate dialogue with:
 
 When a scene contains important product interaction, dialogue should not obscure the visual proof.
 
+## Conversationality Validation
+
+In addition to factual and timing validation, inspect the spoken script for UGC naturalness.
+
+Flag `NEEDS_REFINEMENT` when the dialogue shows one or more of these patterns without a clear campaign reason:
+- stacked feature and benefit clauses
+- brochure-like product description
+- repeated marketing terminology
+- abrupt hard CTA after a dense product-information sentence
+- promotional phrasing that does not match the selected creator voice
+- dialogue that reads naturally as written copy but awkwardly when spoken aloud
+
+Conversationality validation must be advisory rather than a blanket ban. A hard CTA, technical terminology, or concise product claim may remain when required by the campaign, platform, creator profile, or approved wording.
+
+A refinement should preserve:
+- supported product facts
+- approved claims
+- creator constraints
+- campaign objective
+- selected CTA intent
+- storyboard timing
+
+Do not "humanize" a script by inventing personal experience, unsupported outcomes, or unverified claims.
+
 ## Script Validation
 
 Before handoff, verify:
