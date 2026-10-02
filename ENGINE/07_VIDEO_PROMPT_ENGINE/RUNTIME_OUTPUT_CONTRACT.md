@@ -36,11 +36,11 @@ scenes:
     motion_intensity:
     dialogue_sync: []
 validation:
-  identity: PASS | REVIEW
-  product: PASS | REVIEW
-  motion: PASS | REVIEW
-  timing: PASS | REVIEW
-  continuity: PASS | REVIEW
+  identity: PASS | NEEDS_REFINEMENT
+  product: PASS | NEEDS_REFINEMENT
+  motion: PASS | NEEDS_REFINEMENT
+  timing: PASS | NEEDS_REFINEMENT
+  continuity: PASS | NEEDS_REFINEMENT
   duration_feasibility: PASS | BLOCKED
 unresolved_requirements: []
 provenance: []
