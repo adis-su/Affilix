@@ -9,7 +9,7 @@
 
 ## Runtime Output Contract
 
-Stage 02 consumes the approved Stage 01 artifact and produces exactly one canonical context object. It must not silently invent unresolved dimensions.
+Stage 03 consumes the approved Stage 01 artifact and produces exactly one canonical context object. It must not silently invent unresolved dimensions.
 
 Recommended persisted shape:
 
@@ -36,4 +36,4 @@ source_commit_sha:
 
 ### Gate
 
-Stage 02 may run only from an current and validated Stage 01 artifact. Its output must enter `REVIEW` and wait for approval then continue according to the canonical /next progression.
+Stage 03 may run only from an current and validated Stage 01 artifact. Its output must enter `REVIEW` and wait for approval then continue according to the canonical /next progression.
