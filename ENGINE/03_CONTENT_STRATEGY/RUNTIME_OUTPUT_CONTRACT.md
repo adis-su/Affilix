@@ -1,14 +1,21 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 05
+- Engine implementation path: `ENGINE/03_CONTENT_STRATEGY/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 # Affilix — Content Strategy Runtime Output Contract
 
 ## Stage Gate
 
-Stage 04 executes only from current APPROVED artifacts for Stage 01 Brief & Product, Stage 02 Niche Context, and Stage 03 Creator.
+Stage 04 executes only from current current, validated artifacts for Stage 01 Brief & Product, Stage 02 Niche Context, and Stage 03 Creator.
 
 ## Output
 
 ```yaml
-stage: 04_CONTENT_STRATEGY
-status: REVIEW
+stage: 05_CONTENT_STRATEGY
+status: COMPLETED
 campaign_objective:
   primary:
   secondary:
@@ -46,7 +53,7 @@ One primary message only. All product facts and benefits require traceable evide
 
 UNKNOWN is preserved when evidence is absent. A missing non-critical field does not automatically block strategy.
 
-The artifact enters REVIEW and waits for approval before Hook execution.
+The artifact is validated, marked COMPLETED, and waits for `/next` then continue according to the canonical /next progression.
 
 ## Invalidation
 
