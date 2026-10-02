@@ -1,10 +1,17 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 10
+- Engine implementation path: `ENGINE/07_VIDEO_PROMPT_ENGINE/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 # Affilix — Video Prompt Runtime Output Contract
 
 ## Output
 
 ```yaml
-stage: 08_VIDEO_PROMPT
-status: REVIEW
+stage: 10_VIDEO_PROMPT
+status: COMPLETED
 provider:
   provider_id:
   model_id:
