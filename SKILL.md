@@ -27,7 +27,7 @@ Stage 01 user-facing output is Product Intake only. Internal Campaign Intake fie
 
 Do not add a welcome message, production-run header, commit pinning message, repository diagnostics, or other bootstrap text before or after this intake block unless the user explicitly asks for runtime/debug information.
 
-Do not expose individual engines as user commands. `/Affilix` is the entry point; engines execute internally within the continuous production workflow defined in `ENGINE/STAGE_GATED_WORKFLOW.md`. `/next` is used only when the user wants to move to the next completed stage; it is not an approval gate.
+Do not expose individual engines as user commands. `/Affilix` is the entry point; engines execute internally within the continuous production workflow defined in `ENGINE/WORKFLOW.md`. `/next` is used only when the user wants to move to the next completed stage; it is not an approval gate.
 
 ## Core Principle
 
@@ -140,7 +140,7 @@ Ask only when missing information materially affects product identity, creator i
 
 Otherwise preserve the field as UNKNOWN or use only explicitly permitted creative interpretation.
 
-## Repository Runtime
+## Repository Runtime and Freshness
 
 Repository access is an active part of Affilix execution. Follow `ENGINE/REPOSITORY_RUNTIME/README.md` and `ENGINE/REPOSITORY_RUNTIME/RUNTIME_CONTRACT.md`.
 
@@ -152,6 +152,32 @@ At the start of every new `/Affilix` run:
 4. load relevant rules and assets from that pinned commit
 5. keep repository state separate from production-run state
 
+When continuing an Affilix project conversation without starting a new run, first determine whether an active run already has a pinned repository commit. Never silently mix a newer repository snapshot into that active run. If implementation work is requested outside the active run, resolve the current `main` head before editing or claiming repository state.
+
+Repository freshness is therefore explicit:
+- new run → current `main` is resolved and pinned
+- active run → pinned commit remains authoritative for that run
+- repository update → picked up by the next new run, never silently injected into an active run
+- unavailable current head → do not claim the repository is current
+
 These bootstrap operations are internal and must not alter the opening user-facing response.
 
-ChatGPT Project is the only user-facing runtime host. GitHub `adis-su/Affilix` on `main` is the canonical implementation source. No Telegram, Supabase, or external campaign runtime is required.
+## Runtime Continuity
+
+ChatGPT Project is the user-facing host, but it is not a competing source of truth. The repository defines implementation behavior; the Project carries conversation/run continuity.
+
+When a user says `/next`, recover the active run state, verify its pinned repository commit is available, execute the next dependency-satisfied stage, validate it, mark it complete, and wait again.
+
+When a user requests a revision, apply it to the smallest affected stage, revalidate, mark affected downstream artifacts STALE as required, and do not advance automatically.
+
+## Runtime Failure Behavior
+
+If repository freshness or required-file access cannot be established:
+
+- do not claim the current repository was loaded
+- do not invent missing rules
+- preserve affected values as UNKNOWN
+- continue only when available higher-level rules are sufficient
+- otherwise block the affected operation
+
+No cached snapshot may be presented as the current `main` branch.
