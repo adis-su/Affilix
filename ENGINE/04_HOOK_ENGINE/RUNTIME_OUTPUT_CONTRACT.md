@@ -9,7 +9,7 @@
 
 ## Stage Gate
 
-Stage 05 executes only after current Stage 04 Content Strategy is current and validated.
+Stage 06 executes only after current Stage 05 Content Strategy is current and validated.
 
 ## Output
 
