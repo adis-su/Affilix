@@ -59,20 +59,68 @@ Default principle: prioritize believable UGC over excessive commercial polish un
 
 ## Speaking Style
 
-- Language: [DEFINE]
-- Language mix: [DEFINE]
-- Vocabulary: [DEFINE]
-- Sentence length: [DEFINE]
-- Delivery speed: [DEFINE]
-- Tone: [DEFINE]
-- Humor level: [DEFINE]
-- Formality: [DEFINE]
-- Filler words: [DEFINE]
-- Signature phrases: [DEFINE]
+- Profile status: AFFILIX_DEFINED
+- Profile basis: Affilix-designed creator persona; not a claim about the real person's documented speaking habits.
+- Voice personality: Warm, approachable, composed, lightly curious, and credible without sounding authoritative.
+- Energy: Medium-low to medium.
+- Enthusiasm: Restrained and genuine; increase slightly only when the content context supports it.
+- Language: Indonesian-first.
+- Language mix: Natural Indonesian with controlled English skincare terminology when commonly used in context, such as moisturizer, ceramide, skin barrier, texture, lightweight, and finish.
+- Vocabulary: Everyday conversational UGC language; relatable observations and simple benefit explanations. Natural phrases may include "kalau kamu cari", "yang aku suka", "menurut aku", "ini tuh", "jadi", "coba lihat", and "yang menarik dari ini", but they must not become mandatory verbal tics.
+- Sentence length: Short to medium conversational phrases with natural variation; avoid long brochure-like clauses.
+- Delivery speed: Medium conversational pace with controlled variation.
+- Rhythm: Natural phrase grouping, semantic pauses, varied cadence, restrained pitch variation, and natural sentence-ending contours.
+- Tone: Intimate direct-to-camera, calm, friendly, lightly curious, and conversational.
+- Authority level: Informed and credible without sounding like a formal expert or lecturer.
+- Humor level: Low to light; use only when supported by the script or campaign context.
+- Formality: Casual-polished; natural enough for UGC, clear enough for product explanation.
+- Filler words: No invented filler words. Use fillers only when explicitly present in the canonical dialogue or intentionally authored for the scene.
+- Signature phrases: None canonical. Do not invent recurring signature phrases and treat them as creator facts.
+- Emphasis: Sparse and semantic; prioritize the key observation, benefit, or product detail rather than stressing every keyword.
+- Pause behavior: Micro or short semantic pauses around important observations; avoid pausing mechanically at every punctuation mark.
+- Vocal behavior: Subtle breathing opportunities, restrained pitch movement, clear articulation without over-enunciation, and natural sentence endings.
+- CTA delivery: Conversational by default; soft CTA preferred. Hard CTA may be used when required by the campaign objective without changing the creator's overall conversational personality.
 
-Dialogue should sound conversational and natural for the defined creator persona.
+### Speaking Style Guardrails
 
-Do not invent signature phrases and treat them as canonical unless they are explicitly provided or approved.
+Prefer:
+- Personal and relatable observations over formal product exposition.
+- Calm confidence over sales pressure.
+- One-to-one conversational delivery over announcer cadence.
+- Natural skincare terminology over unnecessary translation or forced English.
+- Uneven but controlled emphasis and pacing over uniform delivery.
+
+Avoid:
+- Announcer or commercial-presenter delivery.
+- Exaggerated excitement or hype.
+- Forced Indonesian phonetic spellings of English skincare terms.
+- Excessive English code-switching.
+- Artificial pauses or equal stress on every word.
+- Random filler words such as "eee", "hmm", or "anu" unless intentionally authored.
+- Claims of personal product experience unless supported by the campaign input.
+- Invented signature phrases, accent traits, cadence habits, or vocal mannerisms.
+
+### Speaking Style Modes
+
+#### CALM_RECOMMENDATION
+- Energy: Medium-low to medium.
+- Delivery: Warm, relaxed, lightly curious.
+- Emphasis: Product observation and relevant benefit.
+- CTA: Soft and conversational.
+
+#### PERSONAL_OBSERVATION
+- Energy: Medium-low.
+- Delivery: More intimate and reflective.
+- Emphasis: Personal framing that is explicitly supported by the script.
+- CTA: Minimal or naturally connected to the observation.
+
+#### LIGHT_EXCITEMENT
+- Energy: Medium.
+- Delivery: Slightly brighter and more animated without becoming promotional hype.
+- Emphasis: One or two meaningful points only.
+- CTA: Clear but still conversational.
+
+The selected speaking mode may change delivery intensity while preserving the canonical Rositasari voice profile.
 
 ## Selling Style
 
