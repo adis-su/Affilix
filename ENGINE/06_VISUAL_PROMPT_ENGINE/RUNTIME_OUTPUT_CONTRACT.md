@@ -1,3 +1,10 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 08
+- Engine implementation path: `ENGINE/06_VISUAL_PROMPT_ENGINE/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 # Affilix — Visual Prompt Runtime Output Contract
 
 ## Stage Gate
@@ -7,8 +14,8 @@ Stage 07 executes only after current Stage 06 Storyboard is COMPLETED and valid.
 ## Output
 
 ```yaml
-stage: 07_VISUAL_PROMPT
-status: REVIEW
+stage: 08_VISUAL_PROMPT
+status: COMPLETED
 prompts:
   - prompt_id:
     scene_id:
