@@ -1,5 +1,13 @@
 # Affilix — Brief Analyzer
 
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 01 — Brief & Product
+- Implementation path: `ENGINE/01_BRIEF_ANALYZER/`
+- The numeric prefix in the implementation directory is NOT a workflow stage ID.
+- Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
+- Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
+
 ## Purpose
 
 The Brief Analyzer converts an unstructured user brief and available product references into a structured production brief that downstream Affilix engines can process.
