@@ -1,50 +1,50 @@
-# Affilix Campaign State Persistence
+# Affilix Campaign State Model
 
 ## Purpose
 
-Affilix needs durable campaign state so ChatGPT, Telegram, and future interfaces can operate on the same production run without maintaining separate copies of state.
+This document defines the logical runtime-state model for an Affilix production run. It is a state contract, not a requirement for an external campaign database.
 
-The persistence layer stores runtime state only. GitHub remains the source of truth for Affilix rules, engines, schemas, and libraries.
-
-## Responsibilities
-
-The persistence layer stores:
-
-- campaign/run identity
-- interface user identity
-- run status
-- current stage and stage status
-- pinned repository commit
-- repository access metadata
-- normalized campaign/product/niche state
-- approval state
-- decision queue
-- references to production artifacts
-
-It does not store an alternative copy of engine rules.
+GitHub `adis-su/Affilix` remains the implementation source of truth. The ChatGPT Project hosts the active conversational run state.
 
 ## Canonical Separation
 
-```
+```text
 GitHub
-  = implementation + rules + libraries
+  = implementation rules + engines + schemas + libraries
 
-Persistence
-  = runtime state + campaign progress + approvals
+ChatGPT Project runtime
+  = isolated run state + stage progress + production artifacts
 
-Interface
-  = input/output adapter
+External database / Telegram / Edge Functions
+  = NOT part of the canonical runtime
 ```
 
-## Campaign Record
+## Responsibilities
 
-Minimum persisted record:
+The runtime state may preserve:
+
+- campaign/run identity
+- current canonical stage and stage status
+- pinned repository commit
+- normalized campaign/product/niche state
+- decision queue
+- production artifacts
+- provenance and upstream artifact references
+
+There is no approval state. Validation is performed inside each stage, and `/next` is progression only.
+
+## Canonical Stage Identity
+
+Stage order and dependencies MUST come from `ENGINE/WORKFLOW.md`. Engine directory numbers are implementation identifiers only and MUST NOT be interpreted as workflow stage IDs.
+
+## Runtime State Shape
 
 ```yaml
-id:
-user_id:
-status:
-entry_command: /Affilix
+run:
+  id:
+  status:
+  entry_command: /Affilix
+  current_stage:
 
 repository:
   repository: adis-su/Affilix
@@ -53,62 +53,81 @@ repository:
   loaded_at:
   access_status:
 
-campaign_state:
-  brief:
-  product:
-  niche_context:
+campaign:
+  platform:
+  requested_duration:
+  creative_duration:
+  objective:
+  audience:
   creator:
-  strategy:
-  hook:
-  storyboard:
-  visual_prompt:
-  video_prompt:
-  voice_script:
-  qc:
-  final_package:
+  cta:
+  key_message:
+  talking_points:
+  references:
+  restrictions:
 
-current_stage:
-current_stage_status:
+product:
+  identity:
+  facts:
+  selling_points:
+  claims:
+  evidence:
+  unknowns:
 
-approval_state:
-decision_queue:
+niche_context:
+  status:
+  niche:
+  sub_niche:
+  product_type:
+  use_case:
+  style:
+  audience_context:
+  confidence:
+  evidence:
+  unresolved_fields:
+  conflict_flags:
 
-created_at:
-updated_at:
+stages:
+  brief_product: { status:, output: }
+  campaign_intake: { status:, output: }
+  niche_context: { status:, output: }
+  creator: { status:, output: }
+  content_strategy: { status:, output: }
+  hook: { status:, output: }
+  storyboard: { status:, output: }
+  visual_prompt: { status:, output: }
+  voice_script: { status:, output: }
+  video_prompt: { status:, output: }
+  production_output: { status:, output: }
+
+artifacts:
+  - id:
+    type:
+    stage:
+    status:
+    source_commit_sha:
+    source_inputs:
 ```
 
 ## Repository Pinning
 
-At run initialization, the runtime resolves the current `main` commit and persists the SHA.
+At run initialization:
 
-All repository-backed reads for that run must use the pinned commit.
+1. resolve current `main`
+2. record its commit SHA
+3. pin that commit for the active run
+4. load all relevant repository contracts from that snapshot
 
-A new run resolves the current `main` head again.
+Never silently mix repository commits inside one active run.
 
-Repository updates therefore affect subsequent runs without requiring changes to interface prompts.
+## Progression
 
-## Interface Independence
+Each stage follows:
 
-Telegram and ChatGPT must address campaigns through the same persisted campaign ID.
+`INPUT → PROCESS → OUTPUT → VALIDATE → MARK COMPLETED → WAIT FOR /next`
 
-Neither interface may assume that conversation history is the authoritative campaign state.
+A revision keeps the current stage active, revalidates it, invalidates affected downstream artifacts, and waits for `/next`.
 
-A reconnect, device change, or interface change must not lose the campaign.
+## Completion
 
-## Security Boundary
-
-Campaign ownership must be enforced by the persistence layer.
-
-The client must never receive database service credentials.
-
-Any exposed table must use RLS appropriate to the actual authentication model. Do not rely on an authenticated role alone as an ownership check.
-
-## Current Implementation Target
-
-The first persistence table is:
-
-`public.affilix_campaigns`
-
-The initial implementation uses JSONB for evolving campaign state while the runtime contract stabilizes. Frequently queried identity/status fields remain typed columns.
-
-As the contract stabilizes, high-value entities can be normalized into dedicated tables without changing the external runtime contract.
+A run is complete only when every required canonical stage is `COMPLETED` or `SKIPPED`, no required artifact is `STALE`, and all required production outputs are current.
