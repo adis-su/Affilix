@@ -20,7 +20,7 @@ An adapter must not:
 - turn `/next` into an approval decision
 - regenerate stale assets
 - expose internal bootstrap diagnostics
-- bypass QC or Final Package
+- bypass any canonical stage or validation
 - treat transport metadata as product evidence
 
 ## Runtime Boundary
@@ -43,7 +43,7 @@ The interface must not:
 - expose fields owned by a later stage before that stage is active
 - render the full campaign state as a generic Stage 01 summary
 - interpret `/next` as approval
-- bypass QC or Final Package
+- bypass any canonical stage or validation
 - invent missing repository rules
 - expose repository commit resolution or pinning diagnostics during normal `/Affilix` intake
 
