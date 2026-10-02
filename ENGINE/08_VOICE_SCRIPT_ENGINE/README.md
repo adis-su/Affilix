@@ -279,6 +279,149 @@ When needed, each scene may include:
 
 Do not generate pronunciation notes for every ordinary word. Add them only when pronunciation, language mixing, or TTS handling could materially affect natural delivery.
 
+## Voice Performance Plan
+
+The Voice Script Engine owns not only the canonical words that are spoken, but also a structured performance plan describing how those words should be delivered by a human-like voice generator.
+
+The Voice Performance Plan is downstream of canonical dialogue and must never rewrite the spoken wording.
+
+Use the following transformation:
+
+**CANONICAL DIALOGUE → VOICE PERFORMANCE PLAN → VOICE GENERATION**
+
+### Performance Dimensions
+
+When material to the scene, define:
+
+- speaking rate
+- phrase grouping
+- pause type and placement
+- emphasis hierarchy
+- pitch variation
+- rhythm
+- breath opportunities
+- emotional intensity
+- warmth / intimacy
+- articulation clarity
+- sentence-ending contour
+- on-camera vs voice-over delivery
+
+Do not specify every dimension for every line. Only add direction that materially improves natural delivery or is required by the selected voice system.
+
+### Human Conversational Delivery
+
+Default UGC delivery should sound like a person speaking to another person, not an announcer reading copy.
+
+Prefer:
+- conversational pacing
+- uneven but controlled emphasis
+- natural phrase grouping
+- restrained pitch variation
+- subtle pauses at semantic boundaries
+- natural sentence endings
+- clear articulation without over-enunciation
+- restrained enthusiasm appropriate to the creator and scene
+
+Avoid:
+- equal stress on every word
+- perfectly uniform pacing
+- constant pitch
+- exaggerated commercial-announcer delivery
+- excessive pauses after every punctuation mark
+- artificial excitement
+- theatrical acting unless explicitly required by the scene
+
+### Emphasis Hierarchy
+
+Emphasis should be sparse and intentional.
+
+Use at most a small number of materially important emphasis targets per sentence. Technical terms such as "ceramide complex" or "skin barrier" may receive restrained emphasis when they are the intended information focus, but must not be delivered like advertising keywords.
+
+### Pause Design
+
+Pause metadata must distinguish at least when needed:
+
+- micro pause: brief phrase boundary
+- short pause: semantic transition
+- breath pause: natural respiratory opportunity
+- sentence pause: completed thought
+
+Do not insert a pause mechanically at every comma. Pauses must support meaning, action timing, and natural breathing.
+
+### Breathing
+
+Breathing is a physiological realism cue, not a sound effect.
+
+Use subtle breath opportunities at natural phrase boundaries when the spoken duration or sentence length warrants them.
+
+Avoid exaggerated audible breathing, repeated artificial inhales, or breaths inserted inside a semantic phrase.
+
+### Emotional Intensity
+
+Emotion must be bounded by creator profile, scene objective, and campaign context.
+
+For standard beauty UGC, default toward conversational warmth and restrained enthusiasm rather than maximum excitement.
+
+Do not encode vague instructions such as "sound human" as the sole performance direction. Convert them into observable delivery constraints.
+
+### Voice Profile vs Voice Performance
+
+Separate persistent voice characteristics from per-line performance direction.
+
+**VOICE PROFILE** describes the selected voice identity characteristics, such as:
+- language / locale
+- vocal warmth
+- brightness
+- softness
+- clarity
+- breathiness
+- resonance
+- baseline energy
+
+**VOICE PERFORMANCE** describes how the current line is delivered, such as:
+- pace
+- emphasis
+- pauses
+- pitch movement
+- emotional intensity
+- phrase grouping
+- delivery context
+
+A voice profile must not be inferred from a real person's name or celebrity identity. Specific-person voice imitation is not a substitute for an authorized voice reference or an explicitly defined synthetic voice profile.
+
+### Voice Identity Safety Boundary
+
+Campaign data may reference an authorized voice asset or a repository-defined synthetic voice profile.
+
+Do not transform a celebrity or other real person's name into a voice-cloning instruction. If a voice reference is explicitly authorized, preserve the authorized reference as an identifier or asset reference and apply the provider's permitted voice controls.
+
+### Voice Performance and Video Synchronization
+
+Voice Performance must remain compatible with storyboard timing and Video Prompt dialogue synchronization.
+
+The plan must not:
+- change canonical dialogue
+- exceed the scene or generation-segment duration
+- introduce unsupported personal experience
+- conflict with product interaction timing
+- require visual mouth movement outside spoken intervals
+
+When dialogue is on-camera, the downstream Video Prompt must use the canonical dialogue and performance timing as its speech synchronization source.
+
+### Voice Performance Validation
+
+Flag NEEDS_REFINEMENT when the performance direction contains one or more of these patterns without a clear reason:
+- uniform emphasis across the whole sentence
+- monotone or fixed-pitch direction
+- unnaturally fast delivery required to fit the scene
+- excessive pause density
+- exaggerated enthusiasm for a low-energy UGC scene
+- announcer or commercial delivery inconsistent with the creator profile
+- breathing instructions that are repetitive or conspicuous
+- performance instructions that conflict with dialogue timing
+
+Validation is advisory unless the resulting delivery makes the exact dialogue impossible to fit inside the scene duration. Timing infeasibility remains a blocking condition.
+
 ## CTA Delivery Rules
 
 CTA selection comes from Campaign Intake and CTA strategy. Voice Script owns how that CTA is spoken.
