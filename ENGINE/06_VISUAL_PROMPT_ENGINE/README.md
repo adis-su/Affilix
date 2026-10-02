@@ -1,5 +1,13 @@
 # Affilix — Visual Prompt Engine
 
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 08 — Visual Prompt
+- Implementation path: `ENGINE/06_VISUAL_PROMPT_ENGINE/`
+- The numeric prefix in the implementation directory is NOT a workflow stage ID.
+- Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
+- Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
+
 ## Purpose
 
 The Visual Prompt Engine converts each completed storyboard scene into a production-ready **static image-generation prompt**.
