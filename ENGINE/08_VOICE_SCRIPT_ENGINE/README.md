@@ -167,6 +167,118 @@ unless the underlying experience or claim is explicitly supported.
 
 Likewise, do not convert a verified product fact into a stronger efficacy claim merely to make the line sound conversational.
 
+
+## Spoken Naturalization Rules
+
+Voice Script must distinguish canonical written dialogue from how that dialogue is naturally delivered by a human voice.
+
+Use the following transformation:
+
+**PRODUCT FACT → CONVERSATIONAL INTERPRETATION → SPOKEN LANGUAGE NORMALIZATION → CANONICAL DIALOGUE + DELIVERY NOTES**
+
+Spoken naturalization is a delivery layer, not a license to change factual meaning, invent experience, or rewrite the canonical dialogue downstream.
+
+### Spoken Term Handling
+
+For each non-trivial spoken term, determine when needed:
+
+- written term
+- spoken language
+- pronunciation note
+- emphasis level
+- delivery context
+
+Established niche terminology may remain in its original language when it is natural for the selected creator and audience.
+
+Examples in beauty/skincare include:
+- skin barrier
+- ceramide
+- ceramide complex
+- niacinamide
+- hyaluronic acid
+
+Do not automatically translate established niche terminology into formal Indonesian merely to avoid English words.
+
+### Natural Pronunciation
+
+Pronunciation guidance must:
+
+- preserve the intended lexical identity
+- use the natural pronunciation of the selected language
+- avoid letter-by-letter spelling unless the term is an acronym
+- avoid forced Indonesian phonetics for established English terminology
+- avoid exaggerated foreign accents
+- avoid over-emphasizing technical terminology
+- remain compatible with the available voice synthesis system
+
+Pronunciation notes are delivery instructions. They must not replace or mutate the canonical dialogue text.
+
+Example:
+
+Canonical dialogue:
+"Yang aku suka dari ini, ada ceramide complex-nya, jadi bantu jaga skin barrier."
+
+The words "ceramide complex" and "skin barrier" remain unchanged in the canonical dialogue. If needed, pronunciation guidance is attached as delivery metadata.
+
+### Spoken Naturalness
+
+Technical terms should normally appear inside a natural sentence rather than as isolated marketing keywords.
+
+Prefer:
+"Yang aku suka dari ini, ada ceramide complex-nya, jadi bantu jaga skin barrier."
+
+Avoid by default:
+"Ceramide complex. Skin barrier. Lightweight texture."
+
+unless the storyboard or creator delivery explicitly requires short fragmented speech.
+
+### Mixed-Language Delivery
+
+Indonesian-English mixing is allowed when:
+
+- the terminology is established in the selected niche
+- the creator profile supports the language mix
+- the audience/context makes the term natural
+- the campaign does not require strict single-language delivery
+
+Do not insert English terminology merely to make the script sound premium, modern, or persuasive.
+
+### Acronyms
+
+Acronyms such as SPF, PA++, and pH must receive explicit spoken treatment when pronunciation is ambiguous or likely to be mishandled by voice synthesis.
+
+Do not assume an acronym should always be spelled out or pronounced as a word.
+
+### Brand and Product Names
+
+Brand and product names must preserve their canonical written identity.
+
+If pronunciation is non-obvious, add a pronunciation note rather than changing the canonical name.
+
+### Spoken Naturalization Boundaries
+
+Spoken naturalization must not:
+
+- invent words that are not supported by the intended dialogue
+- strengthen or weaken a product claim
+- invent personal experience
+- change product or brand identity
+- silently translate or replace established technical terms
+- introduce unnecessary English marketing language
+- alter exact dialogue required by campaign constraints
+
+### Spoken Delivery Metadata
+
+When needed, each scene may include:
+
+- Written term
+- Spoken language
+- Pronunciation note
+- Emphasis
+- Delivery context
+
+Do not generate pronunciation notes for every ordinary word. Add them only when pronunciation, language mixing, or TTS handling could materially affect natural delivery.
+
 ## CTA Delivery Rules
 
 CTA selection comes from Campaign Intake and CTA strategy. Voice Script owns how that CTA is spoken.
