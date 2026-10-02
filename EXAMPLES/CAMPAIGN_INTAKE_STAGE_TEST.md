@@ -271,3 +271,50 @@ Acceptance:
 3. The CTA intent remains represented when a CTA is required.
 4. Conversationality validation is advisory and may return NEEDS_REFINEMENT.
 5. Voice Script remains canonical for exact spoken wording consumed by Video Prompt.
+
+
+## Voice Script Spoken Naturalization Regression
+
+Voice Script must preserve canonical dialogue while adding a separate spoken-delivery layer for technical terms, mixed-language terminology, acronyms, and non-obvious brand/product names.
+
+Example input:
+- Product fact: contains ceramide complex
+- Supported benefit: helps support the skin barrier
+- Audience/context: Indonesian beauty/skincare
+- Creator language: Indonesian with established beauty terminology
+
+Expected behavior:
+- Canonical dialogue may retain "ceramide complex" and "skin barrier" when natural for the selected creator and audience.
+- The engine must not silently replace established niche terminology with formal Indonesian solely to avoid English.
+- Pronunciation guidance, when needed, is stored as delivery metadata and does not mutate canonical dialogue.
+- Technical terms should normally appear inside a conversational sentence rather than as isolated marketing keywords.
+- Mixed Indonesian-English terminology must not be inserted merely to make the script sound premium or persuasive.
+- Ambiguous acronyms and non-obvious brand/product names require pronunciation treatment when needed.
+
+Example compliant pattern:
+
+    CANONICAL DIALOGUE:
+    "Yang aku suka dari ini, ada ceramide complex-nya,
+    jadi bantu jaga skin barrier."
+
+    SPOKEN DELIVERY:
+    - ceramide complex: natural English pronunciation
+    - skin barrier: natural English pronunciation
+    - emphasis: restrained
+    - context: embedded in Indonesian sentence
+
+Example failure:
+
+    CANONICAL DIALOGUE:
+    "Ceramide complex. Skin barrier. Lightweight texture."
+
+This should be flagged as NEEDS_REFINEMENT unless the storyboard explicitly calls for fragmented delivery.
+
+Acceptance:
+1. Canonical dialogue remains exact and factually supported.
+2. Pronunciation notes do not replace or alter canonical dialogue.
+3. Established niche terminology may remain in its original language when contextually natural.
+4. Forced Indonesian phonetics and exaggerated foreign accents are avoided.
+5. Unnecessary English marketing language is not introduced.
+6. Pronunciation review is triggered only when pronunciation, acronym treatment, brand/product naming, or TTS handling is materially ambiguous.
+7. Spoken naturalization does not invent personal experience, outcomes, or claims.
