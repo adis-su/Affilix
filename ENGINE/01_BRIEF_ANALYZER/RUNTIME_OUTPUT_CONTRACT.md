@@ -1,3 +1,10 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 01
+- Engine implementation path: `ENGINE/01_BRIEF_ANALYZER/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 
 
 ## Runtime Output Contract
@@ -8,7 +15,7 @@ Recommended shape:
 
 ```yaml
 stage: 01_BRIEF_PRODUCT
-status: REVIEW
+status: COMPLETED
 campaign: {}
 product: {}
 audience: {}
