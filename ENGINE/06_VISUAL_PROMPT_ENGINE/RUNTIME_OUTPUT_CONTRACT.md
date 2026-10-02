@@ -9,7 +9,7 @@
 
 ## Stage Gate
 
-Stage 07 executes only after current Stage 06 Storyboard is COMPLETED and valid.
+Stage 08 executes only after current Stage 07 Storyboard is COMPLETED and valid.
 
 ## Output
 
