@@ -215,6 +215,38 @@ Example bridge requirement:
 The bridge state must be reused exactly wherever R02 is the shared boundary between generation segments.
 
 
+## Video Generation Naturalization Regression
+
+Naturalization must function as a bounded realism layer over the canonical Action Graph and Reference Graph, not as an independent source of random movement.
+
+Required acceptance criteria:
+
+1. Baseline human micro-motion is restrained and subordinate to the primary action.
+2. Action-coupled naturalization identifies a physical cause for relevant wrist, finger, posture, gaze, or fabric/hijab adjustments.
+3. Naturalization does not introduce independent gestures, random gaze changes, unrelated hand movement, or independent camera motion.
+4. Naturalization does not alter hand ownership, product state, action timing, or immutable bridge references.
+5. Naturalization does not cause the target reference state to be reached prematurely.
+6. Naturalization preserves continuity across reference-state transitions.
+7. The prompt must not rely on generic wording such as “move naturally” as the sole naturalization instruction.
+
+Example compliant pattern:
+
+    PRIMARY ACTION:
+    Creator brings the moisturizer closer to camera.
+
+    ACTION-COUPLED NATURALIZATION:
+    Wrist rotates slightly to preserve label visibility, fingers adjust pressure to maintain grip, and the shoulder follows the reach subtly as a physical consequence of the movement.
+
+Example failure:
+
+    NATURALIZATION:
+    Move naturally, blink, look around, and make small random movements.
+
+This fails because it introduces unconstrained motion without causal ownership and may interfere with reference continuity.
+
+Naturalization validation must be performed together with action-beat, product-causality, gaze, camera, and reference-state validation.
+
+
 ## Voice Script UGC Conversationality Regression
 
 A Voice Script must translate validated product facts into spoken creator language rather than reproducing product-page copy.
