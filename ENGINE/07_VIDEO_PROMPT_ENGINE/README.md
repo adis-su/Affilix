@@ -100,6 +100,24 @@ Product interaction must preserve physical causality. The product must not drift
 
 Controlled micro-motion may include breathing, blinking, subtle weight shifting, posture adjustment, grip adjustment, small head movement, restrained expression changes, and realistic fabric/hijab response.
 
+Naturalization is a realism layer, not an independent action layer. It may add bounded micro-motion only when that motion supports the defined action or preserves continuity between canonical reference states.
+
+Action-coupled naturalization should explain the physical cause of relevant micro-motion, for example:
+
+    PRODUCT MOVES CLOSER
+        ↓
+    wrist rotation + finger pressure adjustment + subtle shoulder response
+
+    PRODUCT IS OPENED
+        ↓
+    grip correction + finger repositioning caused by lid manipulation
+
+    FINGERTIP CONTACTS PRODUCT
+        ↓
+    controlled fingertip movement + small wrist adjustment caused by contact
+
+Naturalization must never create a new action, alter an immutable reference state, change product state without physical cause, change hand ownership, invent a gaze target, or introduce unrelated camera movement.
+
 Do not use "move naturally" as the only motion instruction.
 
 ## Dialogue Synchronization
@@ -170,7 +188,10 @@ Use this canonical order:
     [main action causing the state change]
 
     SECONDARY NATURAL MOTION
-    [bounded micro-motion]
+    [bounded baseline human micro-motion]
+
+    ACTION-COUPLED NATURALIZATION
+    [micro-motion caused by or supporting the active physical action]
 
     PRODUCT INTERACTION
     [physically causal product interaction]
@@ -233,6 +254,8 @@ Each segment must explicitly define:
 - immutable bridge reference when the segment participates in a multi-segment transition
 - target/end reference and its observable physical state
 - product interaction as a physical action chain
+- baseline natural micro-motion
+- action-coupled naturalization with physical causes
 - gaze timing tied to action beats
 - expression behavior tied to action beats
 - camera behavior tied to the active action, not as an independent generic movement
@@ -290,6 +313,48 @@ Example:
     Fingertip separates from the product with the sampled moisturizer visible, matching the bridge reference.
 
 Every beat must have a plausible resulting state. The generator must not skip, reverse, or invent intermediate states.
+
+### Naturalization Contract
+
+Naturalization must operate as a bounded realism layer over the canonical Action Graph and Reference Graph.
+
+Define two classes of naturalization:
+
+1. **Baseline human micro-motion**
+   - breathing
+   - occasional blinking
+   - subtle posture settling
+   - restrained facial settling
+   - realistic fabric/hijab response
+
+2. **Action-coupled naturalization**
+   - wrist rotation caused by reaching or presenting a product
+   - finger repositioning caused by grip or lid manipulation
+   - small shoulder or torso response caused by an arm movement
+   - gaze adjustment caused by the active object of attention
+   - minor balance or weight shift caused by the body movement
+
+For action-coupled naturalization, preserve the causal chain:
+
+    PRIMARY ACTION
+        ↓
+    PHYSICAL CONSEQUENCE
+        ↓
+    NATURALIZATION
+
+Naturalization must remain subordinate to the primary action. It must not:
+
+- introduce independent gestures
+- create random head turns or gaze changes
+- add unrelated hand movement
+- change hand ownership
+- alter an immutable bridge state
+- change product state without physical cause
+- modify the intended action timing
+- create independent camera motion
+- make the creator reach a target reference prematurely
+
+A compliant prompt should describe naturalization specifically enough to be bounded, but must not prescribe excessive frame-by-frame randomness. The goal is controlled human realism, not stochastic motion.
 
 ### Product Causality Contract
 
@@ -377,6 +442,9 @@ Before a generation segment is accepted, verify:
 - start/bridge/target references are canonical
 - bridge states are explicitly defined when present
 - product state changes have physical causes
+- baseline naturalization remains bounded
+- action-coupled naturalization has an explicit physical cause and does not create new actions
+- naturalization does not alter bridge or target reference states
 - gaze changes are tied to action beats
 - camera behavior responds to the action
 - end state is explicitly specified
