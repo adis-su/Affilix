@@ -6,7 +6,7 @@ The Video Prompt Engine converts the completed storyboard, visual scene specific
 
 It is the final prompt-integration layer before video generation. It explains how reference states change through physical action and how spoken dialogue synchronizes with that action.
 
-The Video Prompt Engine does not own spoken wording. **Voice Script owns the exact spoken content and delivery direction.** Video Prompt owns the visual synchronization of that canonical voice content with action, gaze, expression, product interaction, and camera behavior.
+The Video Prompt Engine does not own spoken wording. **Voice Script owns the exact spoken content, pronunciation guidance, and Voice Performance Plan.** Video Prompt owns the visual synchronization of that canonical voice content with action, gaze, expression, product interaction, and camera behavior. When the downstream video provider can generate speech, Video Prompt carries a derived **VOICE GENERATION REFERENCE** inside DIALOGUE SYNC so the video generator receives the validated voice-generation inputs without creating a competing voice specification.
 
 ## Inputs
 
@@ -21,6 +21,8 @@ The Video Prompt Engine does not own spoken wording. **Voice Script owns the exa
 - Camera composition
 - Lighting
 - Dialogue timing and delivery from Voice Script
+- Voice Performance Plan from Voice Script
+- Pronunciation guidance from Voice Script
 - Creative scene duration
 - Provider capability profile
 - Generation segment plan
@@ -48,7 +50,7 @@ Visual Prompt provides the canonical frozen visual state/reference for the appli
 
 Voice Script provides the canonical spoken wording, speaker, delivery, and speech timing.
 
-Video Prompt integrates these sources. It must not create an independent competing version of the dialogue.
+Video Prompt integrates these sources. It must not create an independent competing version of the dialogue or voice performance. When native voice generation is part of the video provider, the Video Prompt exposes these validated Voice Script fields through DIALOGUE SYNC → VOICE GENERATION REFERENCE.
 
 ## Provider Duration Policy
 
@@ -155,6 +157,22 @@ Example structure:
     Emotional intent:
     [canonical emotional intent]
 
+    VOICE GENERATION REFERENCE
+    - Voice profile: [authorized voice profile/reference only]
+    - Delivery: [canonical Voice Performance delivery]
+    - Pace: [canonical pace]
+    - Phrase grouping: [canonical phrase grouping when defined]
+    - Emphasis: [canonical emphasis]
+    - Pitch/rhythm: [canonical pitch and rhythm direction when defined]
+    - Pause/breathing: [canonical pause and breathing direction when defined]
+    - Pronunciation: [canonical pronunciation notes when defined]
+    - Context: [on-camera / voice-over / scene context]
+
+    Audio generation rule:
+    Use the current validated Voice Script and Voice Performance Plan as the sole source for spoken audio.
+    Do not rewrite, paraphrase, translate, shorten, expand, or independently reinterpret the dialogue or delivery.
+    If the provider does not generate audio, use the same reference to synchronize the external voice-generation asset.
+
     Action/dialogue relationship:
     [how speech aligns with the storyboard action and product interaction]
 
@@ -227,6 +245,8 @@ Do not split one Video Prompt across multiple code blocks. Generation-segment me
 The Video Prompt must synchronize:
 
 - exact canonical dialogue
+- canonical Voice Performance timing/delivery
+- pronunciation guidance when defined
 - mouth visibility and lip movement
 - creator gaze
 - facial expression
@@ -237,7 +257,7 @@ The Video Prompt must synchronize:
 
 Dialogue should not be scheduled over an action that materially obscures the mouth or makes the spoken content visually implausible unless the storyboard intentionally requires that behavior.
 
-The Voice Script remains the wording authority. If wording changes, the Video Prompt becomes STALE and must be regenerated or revalidated.
+The Voice Script remains the wording, pronunciation, and delivery authority. If wording changes, the Video Prompt becomes STALE and must be regenerated or revalidated.
 
 If dialogue timing changes but visual action does not, revalidate the affected Video Prompt timing before production.
 
@@ -480,6 +500,8 @@ Before handoff verify:
 - applicable Visual Prompt is current
 - Voice Script is current when spoken content exists
 - every spoken dialogue string exactly matches the canonical Voice Script
+- Voice Generation Reference matches the current Voice Script Performance Plan when speech generation is required
+- pronunciation guidance is preserved when defined
 - dialogue timing fits the storyboard and scene duration
 - lip-sync requirements are present when dialogue exists
 - every generation duration is 4/6/8/10 seconds
