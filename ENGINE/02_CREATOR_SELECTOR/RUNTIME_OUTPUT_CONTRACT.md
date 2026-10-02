@@ -1,14 +1,21 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 04
+- Engine implementation path: `ENGINE/02_CREATOR_SELECTOR/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 # Affilix — Creator Selector Runtime Output Contract
 
 ## Stage Gate
 
-Stage 03 may execute only after current Stage 02 Niche Context is APPROVED.
+Stage 03 may execute only after current Stage 02 Niche Context is current and validated.
 
 ## Output
 
 ```yaml
-stage: 03_CREATOR
-status: REVIEW
+stage: 04_CREATOR
+status: COMPLETED
 selected_creator:
   creator_id:
   creator_name:
