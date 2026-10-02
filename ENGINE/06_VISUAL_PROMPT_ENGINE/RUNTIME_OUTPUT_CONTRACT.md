@@ -29,11 +29,11 @@ prompts:
     environment_references: []
     style_references: []
     static_qc:
-      single_frame: PASS | REVIEW
-      no_motion: PASS | REVIEW
-      no_temporal_instruction: PASS | REVIEW
-      identity_lock: PASS | REVIEW
-      product_lock: PASS | REVIEW
+      single_frame: PASS | NEEDS_REFINEMENT
+      no_motion: PASS | NEEDS_REFINEMENT
+      no_temporal_instruction: PASS | NEEDS_REFINEMENT
+      identity_lock: PASS | NEEDS_REFINEMENT
+      product_lock: PASS | NEEDS_REFINEMENT
 unresolved_requirements: []
 decision_queue: []
 provenance: []
@@ -64,7 +64,7 @@ Each prompt must map to exactly one Storyboard reference:
 reference_id:
 reference_role: START | INTERMEDIATE | END | BRIDGE
 reference_version:
-continuity_lock: PASS | REVIEW
+continuity_lock: PASS | NEEDS_REFINEMENT
 ```
 
 A scene may therefore contain multiple prompts. A bridge prompt must use the same reference version used by both adjacent scenes.
