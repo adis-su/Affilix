@@ -8,7 +8,7 @@ Affilix is invoked with:
 
 `/Affilix`
 
-The command starts a new isolated UGC production run. Users do not manually invoke individual engines. The entry point routes the session into the canonical continuous production workflow. Each stage completes and is validated before the next stage is available; `/next` is the progression command.
+The command starts a new isolated UGC production run. Users do not manually invoke individual engines. The entry point routes the session into the canonical continuous production workflow defined in `ENGINE/WORKFLOW.md`. Each stage completes and is validated before the next stage is available; `/next` is the progression command.
 
 ## 1. Invocation
 
@@ -37,6 +37,7 @@ Repository resolution and version pinning remain internal runtime operations.
 ## 2. Initial Required Input
 
 Request only:
+
 - Nama Produk
 - Link Produk
 
@@ -83,7 +84,7 @@ Do not inherit product, creator, niche, claims, storyboard, prompts, or producti
 5. Preserve genuinely unavailable fields as UNKNOWN.
 6. Present the resulting product research summary as the Stage 01 output.
 7. Validate Product Intake and mark Stage 01 COMPLETED.
-6. Wait for `/next`.
+8. Wait for `/next`.
 
 ## 5. Stage 02 — Campaign Intake
 
@@ -161,6 +162,7 @@ Custom CTA:
 ### Platform
 
 Platform is a controlled choice. Persist the selected platform as one of:
+
 - `TIKTOK`
 - `INSTAGRAM_REELS`
 - `FACEBOOK`
@@ -180,15 +182,6 @@ The selected objective must be persisted as a structured campaign objective. Mul
 
 Target audience is AI-derived from the validated Stage 01 product research and supplied product reference. The system should infer an audience profile using only source-supported product/category/use-case signals and clearly label inferred attributes as `INFERRED`.
 
-The audience result should include, when supportable:
-- demographic range
-- relevant gender positioning when the product is explicitly gendered
-- needs/problems
-- interests/category affinity
-- use context
-- purchase intent level
-- relevant exclusions or non-target signals
-
 Do not invent sensitive personal attributes or unsupported demographic facts. The user may correct or replace the AI-derived audience before Stage 02 is completed.
 
 ### Creator
@@ -204,6 +197,7 @@ CTA is a controlled choice with a `Custom CTA` escape hatch. Persist the selecte
 ### Validation
 
 Stage 02 must have:
+
 - one supported platform
 - one exact requested duration, either the default 18 seconds or an explicit Custom value
 - one primary content objective
@@ -219,7 +213,7 @@ Additional fields such as aspect ratio, key message, talking points, references,
 
 ## 6. Runtime Handoff
 
-The canonical workflow is:
+The canonical workflow is defined only by `ENGINE/WORKFLOW.md`:
 
 ```text
 /Affilix
@@ -251,10 +245,11 @@ There is no QC stage, Final UGC Package stage, or approval gate in the canonical
 ## 7. Stage UX
 
 At each stage:
-- present the current output,
-- validate it,
-- mark it COMPLETED when validation passes,
-- wait for `/next`.
+
+- present the current output
+- validate it
+- mark it COMPLETED when validation passes
+- wait for `/next`
 
 `/next` advances the run. It does not mean approve, accept, or endorse.
 
@@ -263,13 +258,14 @@ Revisions are applied to the affected stage, revalidated, marked current, and th
 ## 8. Guardrails
 
 The entry point must never:
-- invent a product or product facts,
-- treat a product URL as proof of unsupported claims,
-- silently change creator identity,
-- invent discounts, scarcity, reviews, guarantees, certifications, or personal experience,
-- bypass Brief Analyzer or Niche Context Loader,
-- expose stale downstream assets as current,
-- introduce a separate approval or QC gate.
+
+- invent a product or product facts
+- treat a product URL as proof of unsupported claims
+- silently change creator identity
+- invent discounts, scarcity, reviews, guarantees, certifications, or personal experience
+- bypass Brief Analyzer or Niche Context Loader
+- expose stale downstream assets as current
+- introduce a separate approval or QC gate
 
 ## 9. Runtime Bootstrap
 
