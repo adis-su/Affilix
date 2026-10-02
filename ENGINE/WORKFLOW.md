@@ -1,183 +1,335 @@
-# Affilix — End-to-End Production Workflow v2
+# Affilix — End-to-End Production Workflow v3
 
 ## Purpose
 
-This document is the canonical execution contract for the Affilix production runtime.
+This is the **single canonical execution contract** for the Affilix production runtime.
 
-The runtime behaves as one coherent system rather than exposing independent prompt modules.
+Affilix runs as one continuous, dependency-aware production workflow. Engines are internal implementation components, not separate user-facing commands.
 
 ## Entry Point
 
-The user-facing entry command is `/Affilix`.
+The user-facing command is `/Affilix`.
 
-`/Affilix` starts a stage-by-stage production run. Affilix completes and validates one stage at a time, then waits for `/next` before advancing to the next dependency-satisfied stage.
+A new `/Affilix` run must resolve the current `main` branch head, pin that commit for the run, load the relevant repository contracts, initialize isolated run state, and begin Stage 01.
 
-## Pipeline
+Repository resolution, commit pinning, source loading, and diagnostics are internal. They must never appear in the canonical Stage 01 opening.
 
-USER BRIEF
-→ STAGE 01 BRIEF & PRODUCT
-→ STAGE 02 CAMPAIGN INTAKE
-→ STAGE 03 NICHE & CONTEXT
-→ STAGE 04 CREATOR
-→ STAGE 05 CONTENT STRATEGY
-→ STAGE 06 HOOK
-→ STAGE 07 STORYBOARD
-→ STAGE 08 VISUAL PROMPT
-→ STAGE 09 VOICE SCRIPT when required
-→ STAGE 10 VIDEO PROMPT when required
-→ STAGE 11 PRODUCTION OUTPUT
+## Canonical Pipeline
 
-After each stage is validated and completed, wait for `/next`. `/next` is not an approval action.
+```text
+/Affilix
+  ↓
+01 BRIEF & PRODUCT
+  ↓ /next
+02 CAMPAIGN INTAKE
+  ↓ /next
+03 NICHE & CONTEXT
+  ↓ /next
+04 CREATOR
+  ↓ /next
+05 CONTENT STRATEGY
+  ↓ /next
+06 HOOK
+  ↓ /next
+07 STORYBOARD
+  ↓ /next
+08 VISUAL PROMPT
+  ↓ /next
+09 VOICE SCRIPT       [when spoken content is required]
+  ↓ /next
+10 VIDEO PROMPT       [when video output is required]
+  ↓ /next
+11 PRODUCTION OUTPUT
+```
 
-## Intake
+No QC stage, Final UGC Package stage, or approval gate exists.
 
-Stage 01 collects product identity. After Stage 01 completion, Stage 02 collects Platform, requested video Duration, content Objective, Target Audience, Creator, and CTA.
+A stage may be skipped only when its output is genuinely not required by the requested deliverable. Skipping is a dependency decision, not an approval decision.
 
-The Stage 02 Creator field is the requested creator input. Stage 04 resolves and validates the canonical creator identity.
+## Stage Execution Contract
 
-Do not invent missing requirements.
+Every active stage follows:
 
-## Brief, Campaign, and Context
+```text
+INPUT
+ ↓
+PROCESS
+ ↓
+OUTPUT
+ ↓
+VALIDATE
+ ↓
+MARK COMPLETED
+ ↓
+WAIT FOR /next
+```
 
-Run Brief Analyzer first. Stage 02 Campaign Intake then establishes the campaign requirements. Run Niche Context Loader after Campaign Intake. Classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN.
+`/next` means **progress to the next dependency-satisfied stage**. It never means approve, accept, endorse, or waive validation.
 
-Create exactly one canonical runtime context. Missing values remain UNKNOWN. Context labels cannot override explicit product facts or creator identity.
+After a revision:
 
-## Creator and Product
+```text
+CURRENT STAGE
+ ↓
+APPLY REVISION
+ ↓
+REVALIDATE
+ ↓
+MARK COMPLETED
+ ↓
+WAIT FOR /next
+```
 
-Run Creator Selector and load the applicable Creator Library records. Load Product Library identity, selling points, claims rules, niche context, and product-type rules.
+Never advance automatically after a revision.
 
-Preserve creator and product identity across all downstream assets. Never invent unsupported facts, performance, reviews, testimonials, discounts, scarcity, guarantees, certifications, or personal experience.
+## Stage State
 
-## Strategy and Hook
+Use only:
 
-Run Content Strategy before scenes or prompts. Define objective, audience, product role, angle, core message, story arc, proof strategy, and CTA strategy.
+- `NOT_STARTED`
+- `DRAFT`
+- `REVISION`
+- `STALE`
+- `SKIPPED`
+- `COMPLETED`
 
-Generate hooks from the validated strategy and canonical context. Do not invent unsupported claims or urgency.
+There is no `REVIEW` state because Affilix has no approval workflow.
 
-## Storyboard
+## Canonical Stage Contracts
 
-Run Storyboard Engine and create the canonical scene sequence. Scene durations must add up to the requested creative duration.
+### 01 — Brief & Product
 
-Provider limitations must not silently change campaign duration. Technical generation segmentation belongs to Video Prompt and remains subordinate to storyboard timing.
+Input: product name and product link/reference.
 
-## Downstream Production Specifications
+Output: normalized product brief plus researched product facts, evidence/provenance, supported claims, and genuine unknowns.
 
-After Storyboard is completed and the user sends /next, run the applicable downstream engines in dependency order:
+The supplied product link/reference must be actively inspected when accessible. Unsupported marketing language must not be promoted to fact.
 
-- Visual Prompt
-- Voice Script when spoken content is required
-- Video Prompt when video output is required
+### 02 — Campaign Intake
 
-Video Prompt must not execute before the current Voice Script when spoken content exists.
+Input: completed Stage 01.
 
-These outputs remain subordinate to the Storyboard and all upstream source-of-truth rules.
+Output: platform, exact requested video duration, primary objective, target audience, requested creator from the current Creator Library, and CTA.
 
-## Production Output
+The default duration is 18 seconds. Provider generation limits are technical constraints only. Exact duration feasibility is handled by Video Prompt segmentation.
 
-After all required downstream production specifications are complete, the user sends `/next` and Affilix generates the final Production Output.
+### 03 — Niche & Context
 
-The Production Output is a direct assembly of current runtime state. It is not a separate QC report or Final UGC Package.
+Input: completed Brief & Product and Campaign Intake.
 
-## Revision and Invalidation
+Output: exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
 
-When an upstream source changes:
+### 04 — Creator
 
-1. identify the changed source
-2. mark dependent downstream assets STALE
-3. rerun affected engines
-4. validate the revised assets
-5. wait for `/next` before continuing
+Input: completed Niche & Context and Campaign Intake.
 
-Dependency examples:
+Output: resolved canonical creator identity and applicable Creator Library references.
 
-- Creator change → Strategy, Hook, Storyboard, Visual, Video, Voice
-- Product change → Niche Context, Strategy, Hook, Storyboard, Visual, Video, Voice
-- Campaign requirement change → affected Niche Context, Creator, Strategy, Hook, Storyboard, Visual, Video, Voice
-- Niche/Product Type change → Strategy, Hook, Storyboard, Visual, Video, Voice
-- Strategy change → Hook, Storyboard, Visual, Video, Voice
-- Hook change → affected Storyboard and downstream production specs
-- Storyboard change → Visual, Voice, Video
-- Duration change → Storyboard and duration-sensitive Visual, Voice, and Video specs
-- Visual change → Video when motion/state is affected
-- Voice change → affected Voice and Video
-- Voice timing change → Video when dialogue synchronization is affected
-- Video segment-plan change → Video only unless creative timing changes
+Creator selection must come from the current pinned repository. Identity is locked downstream.
 
-## Runtime State
+### 05 — Content Strategy
 
-Each run maintains:
+Input: completed Brief, Campaign Intake, Context, and Creator.
 
-- current normalized brief
-- requested final duration
-- current creative duration
-- active provider capability profile when video generation is required
-- current generation segment plan
-- current canonical creator
-- current canonical product
-- current canonical niche context
-- current strategy
-- current hook
-- current storyboard
-- current downstream production specifications
-- current production output
+Output: objective, audience, product role, angle, core message, story arc, proof strategy, and CTA strategy.
 
-State is isolated per run.
+### 06 — Hook
 
-## Source-of-Truth Hierarchy
+Input: completed Strategy.
 
-1. Latest explicit user instruction
-2. Campaign requirements
-3. Product Library data
-4. Creator Library data
-5. Canonical Niche Context
-6. Platform requirements
-7. Strategy
-8. Creative interpretation
+Output: validated hook direction/copy and delivery direction.
 
-Downstream prompts cannot silently override upstream canonical information.
+### 07 — Storyboard
 
-## Completion Rule
+Input: completed Hook and all required upstream state.
 
-Affilix is complete when:
+Output: the canonical temporal scene sequence, action choreography, reference graph, creative timing, and generation-segmentation intent.
 
-- mandatory requirements are satisfied
-- creator identity is current
-- product identity is current
-- canonical niche context is sufficiently resolved
-- claims are supported
-- storyboard is coherent
-- applicable visual/video/voice specifications are synchronized
-- requested creative duration is preserved
-- provider generation segments are compatible when video generation is required
-- no stale context or downstream asset remains
-- final Production Output is generated
+Storyboard is the creative source of truth for duration and temporal action.
 
-There is no QC stage and no Final UGC Package stage.
-
-## Repository Runtime
-
-Repository loading is governed by ENGINE/REPOSITORY_RUNTIME/README.md. At runtime, load the current repository specification relevant to each stage using progressive loading.
-
-If a material repository rule changes, affected downstream assets become STALE and must be regenerated according to the dependency rules.
-
-
-## Action Choreography and Reference Graph
-
-Storyboard is the canonical source for action choreography. A scene is a process with action beats and meaningful visual states.
+Scene contract:
 
 ```text
 SCENE
-  ↓
+ ↓
 ACTION GRAPH
-  ↓
+ ↓
+ACTION BEATS
+ ├─ Body Motion
+ ├─ Hand Motion
+ ├─ Product Interaction
+ ├─ Gaze
+ ├─ Expression
+ └─ Camera Behavior
+ ↓
 REFERENCE STATES
-  ↓
+ ↓
 TRANSITIONS
-  ↓
-GENERATION SEGMENTS
 ```
 
-Visual Prompt renders reference states. Video Prompt generates transitions between those states. Bridge references preserve exact boundary continuity across scenes.
+Use causal action:
 
-If an action beat changes, invalidate affected references and all downstream transitions touching those references. If a bridge changes, invalidate both sides of the boundary and their dependent downstream assets.
+```text
+TRIGGER
+ ↓
+INTENTION
+ ↓
+ACTION
+ ↓
+PHYSICAL CONSEQUENCE
+ ↓
+RESULTING STATE
+```
+
+Human-looking motion must be controlled, action-coupled, and physically plausible. Do not use random gestures, gaze, product movement, or camera movement.
+
+### 08 — Visual Prompt
+
+Input: completed Storyboard and required reference states.
+
+Output: **one static image prompt per required visual reference state**.
+
+A reference state is a frozen visual state, not a generation segment. Bridge references are immutable. If a bridge changes, both adjacent scene boundaries and dependent downstream transitions become stale.
+
+### 09 — Voice Script
+
+Input: completed Storyboard, Strategy, Hook, Creator, Product facts, and campaign constraints.
+
+Output: canonical scene-by-scene spoken dialogue plus Voice Performance Plan.
+
+Voice Script is the sole source of truth for:
+
+- exact spoken wording
+- speaker
+- pronunciation guidance
+- speech timing
+- delivery
+- pace
+- phrase grouping
+- emphasis
+- pitch/rhythm
+- pause/breathing behavior
+
+Spoken naturalization must preserve factual meaning and campaign intent.
+
+### 10 — Video Prompt
+
+Input: completed Storyboard, current Visual Prompt when visual continuity is required, current Voice Script when spoken content exists, and provider capability profile when generation is required.
+
+Output: provider-compatible motion specifications and exact generation segment mapping.
+
+Video Prompt consumes, but does not rewrite, canonical Voice Script dialogue. When speech generation is applicable, include a derived Voice Generation Reference inside Dialogue Sync. The Video Prompt must not become a competing voice specification.
+
+Generation durations are limited to `[4, 6, 8, 10]` seconds. Final campaign duration is authoritative and must be composed exactly from supported segments. Never round, truncate, extend, or silently replace duration. If exact composition is impossible:
+
+`duration_feasibility: BLOCKED`
+
+### 11 — Production Output
+
+Input: all required current, non-STALE upstream artifacts.
+
+Output: consolidated production output assembled from current runtime state.
+
+This is the final assembly step, not a separate QC or approval gate.
+
+## Dependency Graph
+
+```text
+01 Brief & Product
+        ↓
+02 Campaign Intake
+        ↓
+03 Niche & Context
+        ↓
+04 Creator
+        ↓
+05 Content Strategy
+        ↓
+06 Hook
+        ↓
+07 Storyboard
+   ┌────┼─────┐
+   ↓    ↓     ↓
+08     09     10
+Visual Voice  Video
+       ↓       ↑
+       └───────┘
+          Voice
+        Sync Data
+   \\________________/
+            ↓
+      11 Production
+```
+
+Stage 10 requires current Voice Script when spoken content exists. Stage 10 also consumes current visual/reference information when visual continuity is required.
+
+## Revision and Invalidation
+
+When a canonical upstream input changes:
+
+1. identify the changed source
+2. mark every affected dependent artifact `STALE`
+3. preserve unaffected branches
+4. rerun the smallest affected dependency chain
+5. validate regenerated outputs
+6. stop and wait for `/next`
+
+Examples:
+
+- Product change → Context, Creator when affected, Strategy, Hook, Storyboard, Visual, Voice, Video.
+- Campaign requirement change → affected Context, Creator, Strategy, Hook, Storyboard, Visual, Voice, Video.
+- Creator change → Strategy, Hook, Storyboard, Visual, Voice, Video.
+- Strategy change → Hook, Storyboard, Visual, Voice, Video.
+- Hook change → affected Storyboard and downstream assets.
+- Storyboard change → Visual, Voice, Video.
+- Reference-state change → affected Visual and Video transitions.
+- Visual-only change → Video only when motion/state continuity is affected.
+- Voice dialogue/performance/timing change → Video when synchronization is affected.
+- Provider capability change → re-evaluate Video segmentation without changing creative duration.
+
+A stale artifact must never be presented as current.
+
+## Repository Freshness Contract
+
+GitHub `adis-su/Affilix` on `main` is the implementation source of truth.
+
+For every new `/Affilix` run:
+
+1. resolve the current `main` HEAD
+2. record `repository.commit_sha`
+3. pin that commit for the run
+4. load `SKILL.md`, this workflow, the entry contract, and only the relevant current engine/library files
+5. execute the run against that pinned snapshot
+
+Never silently mix files from different commits.
+
+If `main` changes after a run is pinned, the active run remains on its pinned commit. The newer repository state is picked up by the next new run.
+
+For implementation work outside a production run, resolve the current `main` HEAD immediately before editing or reporting repository status.
+
+If current HEAD or a required file cannot be resolved, do not claim the repository is current. Continue only when available rules are sufficient; otherwise block the affected operation.
+
+## Runtime State
+
+Each run must preserve isolated state for:
+
+- repository and pinned commit
+- run ID and status
+- campaign requirements
+- product facts and evidence
+- canonical niche context
+- creator identity
+- strategy
+- hook
+- storyboard and reference graph
+- visual prompts
+- voice script and performance plan
+- video prompts and generation segments
+- production output
+
+Material artifacts should record their source commit SHA and relevant upstream artifact IDs.
+
+## Completion
+
+A run is complete only when all required stages are `COMPLETED` or `SKIPPED`, no required artifact is `STALE`, claims are supported, creator/product identity is current, storyboard and downstream specifications are synchronized, requested duration is preserved exactly, provider segmentation is compatible when required, and the final Production Output is generated.
+
