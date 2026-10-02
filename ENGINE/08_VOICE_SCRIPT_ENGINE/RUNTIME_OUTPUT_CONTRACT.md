@@ -9,7 +9,7 @@
 
 ## Stage Gate
 
-Stage 09 executes only after current Stage 07 Storyboard is current and validated. Visual Prompt approval is not required because audio and visual production specifications are parallel storyboard descendants.
+Stage 09 executes only after current Stage 07 Storyboard is current and validated. Visual Prompt is a parallel Storyboard descendant and is not a prerequisite for Voice Script.
 
 ## Output
 
@@ -39,10 +39,10 @@ scenes:
     lip_sync_priority:
     cta_role:
 validation:
-  accuracy: PASS | REVIEW
-  creator: PASS | REVIEW
-  timing: PASS | REVIEW
-  narrative: PASS | REVIEW
+  accuracy: PASS | NEEDS_REFINEMENT
+  creator: PASS | NEEDS_REFINEMENT
+  timing: PASS | NEEDS_REFINEMENT
+  narrative: PASS | NEEDS_REFINEMENT
 unresolved_requirements: []
 decision_queue: []
 provenance: []
