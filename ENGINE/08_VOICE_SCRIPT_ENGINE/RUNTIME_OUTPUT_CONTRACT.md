@@ -1,14 +1,21 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 09
+- Engine implementation path: `ENGINE/08_VOICE_SCRIPT_ENGINE/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 # Affilix — Voice Script Runtime Output Contract
 
 ## Stage Gate
 
-Stage 08 executes only after current Stage 06 Storyboard is APPROVED. Visual Prompt approval is not required because audio and visual production specifications are parallel storyboard descendants.
+Stage 08 executes only after current Stage 06 Storyboard is current and validated. Visual Prompt approval is not required because audio and visual production specifications are parallel storyboard descendants.
 
 ## Output
 
 ```yaml
-stage: 08_VOICE_SCRIPT
-status: REVIEW
+stage: 09_VOICE_SCRIPT
+status: COMPLETED
 metadata:
   script_id:
   creator_id:
@@ -51,7 +58,7 @@ Dialogue must fit the approved scene duration. When timing is uncertain, shorten
 
 The storyboard remains the canonical scene sequence. Voice Script owns spoken language and delivery direction only.
 
-The artifact enters REVIEW and waits for approval before video/audio production handoff.
+The artifact is validated, marked COMPLETED, and waits for `/next` then continue according to the canonical /next progression.
 
 ## Invalidation
 
