@@ -47,7 +47,7 @@ Use Needs Clarification when mandatory requirements leave multiple valid creator
 
 Every selected identity constraint must remain traceable to loaded creator assets. [DEFINE], missing, or unknown attributes remain UNKNOWN.
 
-The artifact enters REVIEW and downstream creative stages remain blocked until approval.
+The artifact is validated, marked COMPLETED when valid, and downstream progression follows the canonical `/next` contract.
 
 ## Invalidation
 
