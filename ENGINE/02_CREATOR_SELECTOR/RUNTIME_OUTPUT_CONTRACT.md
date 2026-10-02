@@ -9,7 +9,7 @@
 
 ## Stage Gate
 
-Stage 03 may execute only after current Stage 02 Niche Context is current and validated.
+Stage 04 may execute only after current Stage 03 Niche & Context is current and validated.
 
 ## Output
 
@@ -51,4 +51,4 @@ The artifact enters REVIEW and downstream creative stages remain blocked until a
 
 ## Invalidation
 
-Changes to Stage 01 product identity, Stage 02 context, or Stage 03 creator selection invalidate dependent Content Strategy, Hook, Storyboard, Visual Prompt, Video Prompt, Voice Script, and Final UGC artifacts as STALE.
+Changes to Stage 01 product identity, Stage 02 context, or Stage 04 creator selection invalidate dependent Content Strategy, Hook, Storyboard, Visual Prompt, Video Prompt, Voice Script, and Final UGC artifacts as STALE.
