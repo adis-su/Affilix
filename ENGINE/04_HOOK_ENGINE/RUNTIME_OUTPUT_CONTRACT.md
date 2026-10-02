@@ -1,14 +1,21 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 06
+- Engine implementation path: `ENGINE/04_HOOK_ENGINE/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 # Affilix — Hook Runtime Output Contract
 
 ## Stage Gate
 
-Stage 05 executes only after current Stage 04 Content Strategy is APPROVED.
+Stage 05 executes only after current Stage 04 Content Strategy is current and validated.
 
 ## Output
 
 ```yaml
-stage: 05_HOOK
-status: REVIEW
+stage: 06_HOOK
+status: COMPLETED
 candidates:
   - hook_id:
     hook_type:
@@ -40,7 +47,7 @@ Hooks must align with approved strategy, creator, product facts, niche context, 
 
 The selected hook must be physically executable and specify the opening visual state, creator action, product visibility, framing, viewer-facing action, context cues, and transition.
 
-The artifact enters REVIEW and waits for approval before Storyboard execution.
+The artifact is validated, marked COMPLETED, and waits for `/next` then continue according to the canonical /next progression.
 
 ## Invalidation
 
