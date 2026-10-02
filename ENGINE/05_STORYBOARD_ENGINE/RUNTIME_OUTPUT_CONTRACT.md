@@ -1,10 +1,17 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 07
+- Engine implementation path: `ENGINE/05_STORYBOARD_ENGINE/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 # Affilix — Storyboard Runtime Output Contract
 
 ## Output
 
 ```yaml
-stage: 06_STORYBOARD
-status: REVIEW
+stage: 07_STORYBOARD
+status: COMPLETED
 metadata:
   storyboard_id:
   campaign_id:
