@@ -1,5 +1,13 @@
 # Affilix — Voice Script Engine
 
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 09 — Voice Script
+- Implementation path: `ENGINE/08_VOICE_SCRIPT_ENGINE/`
+- The numeric prefix in the implementation directory is NOT a workflow stage ID.
+- Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
+- Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
+
 ## Purpose
 
 The Voice Script Engine converts the validated content strategy and storyboard into spoken dialogue, voice-over, and delivery instructions.
