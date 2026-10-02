@@ -1,5 +1,13 @@
 # Affilix — Creator Selector
 
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 04 — Creator
+- Implementation path: `ENGINE/02_CREATOR_SELECTOR/`
+- The numeric prefix in the implementation directory is NOT a workflow stage ID.
+- Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
+- Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
+
 ## Purpose
 
 The Creator Selector chooses and loads the appropriate creator identity from CREATOR_LIBRARY based on the normalized campaign brief.
