@@ -1,3 +1,10 @@
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 03
+- Engine implementation path: `ENGINE/NICHE_CONTEXT_LOADER/`
+- Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
+- Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
+
 
 
 ## Runtime Output Contract
@@ -7,8 +14,8 @@ Stage 02 consumes the approved Stage 01 artifact and produces exactly one canoni
 Recommended persisted shape:
 
 ```yaml
-stage: 02_NICHE_CONTEXT
-status: REVIEW
+stage: 03_NICHE_CONTEXT
+status: COMPLETED
 context:
   niche:
   sub_niche:
@@ -29,4 +36,4 @@ source_commit_sha:
 
 ### Gate
 
-Stage 02 may run only from an approved, current Stage 01 artifact. Its output must enter `REVIEW` and wait for approval before Creator selection begins.
+Stage 02 may run only from an current and validated Stage 01 artifact. Its output must enter `REVIEW` and wait for approval then continue according to the canonical /next progression.
