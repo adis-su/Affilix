@@ -29,6 +29,19 @@ Do not add a welcome message, production-run header, commit pinning message, rep
 
 Do not expose individual engines as user commands. `/Affilix` is the entry point; engines execute internally within the continuous production workflow defined in `ENGINE/WORKFLOW.md`. `/next` is used only when the user wants to move to the next completed stage; it is not an approval gate.
 
+## Canonical Stage Identity Rule
+
+Workflow stage numbers and engine directory numbers are separate namespaces.
+
+The canonical stage registry in `ENGINE/WORKFLOW.md` is the only source for stage order and dependency resolution. Engine directory prefixes are implementation identifiers only and MUST NOT be interpreted as stage IDs.
+
+Canonical mappings include:
+- Stage 08 Visual Prompt → `ENGINE/06_VISUAL_PROMPT_ENGINE/`
+- Stage 09 Voice Script → `ENGINE/08_VOICE_SCRIPT_ENGINE/`
+- Stage 10 Video Prompt → `ENGINE/07_VIDEO_PROMPT_ENGINE/`
+
+If any engine message, artifact, or runtime state conflicts with the canonical registry, treat it as a contract error and stop the affected handoff. Never guess or derive stage order from folder numbers.
+
 ## Core Principle
 
 Treat the repository as the source of truth for skill instructions, creator identities and references, product facts and claims, niche and product-type context, production workflow, prompt-generation rules, voice/dialogue rules, production output structure, regression fixtures, and user-facing entry behavior.
