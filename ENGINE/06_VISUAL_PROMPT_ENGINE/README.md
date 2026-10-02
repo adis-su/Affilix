@@ -53,6 +53,10 @@ Therefore:
 
 ## Output Contract
 
+For every required visual reference state in every visual scene, return one prompt artifact per reference state. A scene is not automatically one prompt.
+
+For example, if Scene 01 contains R01, R02, and R03 as required static reference states, Stage 08 must produce three image prompts: one for R01, one for R02, and one for R03.
+
 For every visual scene, return:
 
 ### Prompt Metadata
@@ -496,7 +500,9 @@ Context labels must never become unsupported product attributes, origin claims, 
 
 ## Runtime Invariants
 
-- One final prompt per visual scene.
+- One final prompt per required visual reference state.
+- A scene containing N required reference states produces N static image prompts.
+- Prompt count must equal the number of required reference states, not the number of scenes.
 - Final prompt is always delivered in one code block.
 - Final prompt describes one static visual state.
 - Storyboard remains the temporal source of truth.
@@ -522,3 +528,33 @@ R01 → R02 → R03 → R04
 Each prompt freezes exactly one state. It must preserve creator, product, wardrobe, camera, environment, lighting, and continuity-critical attributes from the reference contract. See `REFERENCE_STATE_CONTRACT.md`.
 
 A bridge reference is rendered as one canonical state and reused by both adjacent scenes. The Visual Prompt Engine must never invent a different boundary state.
+
+## Prompt Cardinality Contract
+
+Reference-state cardinality is authoritative for Visual Prompt generation.
+
+    SCENE 01
+    R01 → R02 → R03
+
+    ↓
+
+    PROMPT 01 → R01
+    PROMPT 02 → R02
+    PROMPT 03 → R03
+
+Rules:
+
+1. Every required reference state produces exactly one static image prompt.
+2. A single prompt must never represent multiple reference states.
+3. `Reference: R01/R02/R03` is invalid as a final prompt target because it collapses three distinct frozen states into one artifact.
+4. Each prompt must carry exactly one `reference_id` in its metadata.
+5. Bridge references are not exceptions. If a bridge reference is required as a renderable state, it receives its own canonical image prompt.
+6. Prompt numbering is per generated prompt artifact, not per scene.
+7. The engine must not silently collapse multiple reference states into one prompt to satisfy a one-prompt-per-scene rule.
+
+Validation:
+
+    required_reference_states = [R01, R02, R03]
+    generated_prompts = [P01, P02, P03]
+    assert len(generated_prompts) == len(required_reference_states)
+    assert generated_prompts[i].reference_id == required_reference_states[i]
