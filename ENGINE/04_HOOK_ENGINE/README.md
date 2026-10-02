@@ -1,5 +1,13 @@
 # Affilix — Hook Engine
 
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 06 — Hook
+- Implementation path: `ENGINE/04_HOOK_ENGINE/`
+- The numeric prefix in the implementation directory is NOT a workflow stage ID.
+- Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
+- Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
+
 ## Purpose
 
 Generate opening concepts that capture attention while remaining faithful to approved strategy, creator identity, product facts, campaign constraints, and loaded niche context.
