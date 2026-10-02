@@ -1,5 +1,13 @@
 # Affilix — Storyboard Engine
 
+## Canonical Stage Identity
+
+- Canonical workflow stage: Stage 07 — Storyboard
+- Implementation path: `ENGINE/05_STORYBOARD_ENGINE/`
+- The numeric prefix in the implementation directory is NOT a workflow stage ID.
+- Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
+- Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
+
 ## Provider-Aware Duration Planning
 
 The storyboard owns creative duration, while the current video provider accepts generation clips of exactly 4s, 6s, 8s, or 10s.
