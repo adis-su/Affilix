@@ -36,4 +36,4 @@ source_commit_sha:
 
 ### Gate
 
-Stage 03 may run only from an current and validated Stage 01 artifact. Its output must enter `REVIEW` and wait for approval then continue according to the canonical /next progression.
+Stage 03 may run only from an current and validated Stage 01 artifact. Its output is validated, marked COMPLETED when valid, then continues according to the canonical `/next` progression.
