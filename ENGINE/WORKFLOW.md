@@ -14,6 +14,32 @@ A new `/Affilix` run must resolve the current `main` branch head, pin that commi
 
 Repository resolution, commit pinning, source loading, and diagnostics are internal. They must never appear in the canonical Stage 01 opening.
 
+## Canonical Stage Registry
+
+The numeric stage ID in this registry is the ONLY workflow ordering and dependency identifier.
+
+| Canonical Stage | Stage Name | Runtime Contract | Implementation Path |
+|---|---|---|---|
+| 01 | Brief & Product | 01_BRIEF_PRODUCT | `ENGINE/01_BRIEF_ANALYZER/` |
+| 02 | Campaign Intake | 02_CAMPAIGN_INTAKE | Project/entry contract |
+| 03 | Niche & Context | 03_NICHE_CONTEXT | `ENGINE/NICHE_CONTEXT_LOADER/` |
+| 04 | Creator | 04_CREATOR | `ENGINE/02_CREATOR_SELECTOR/` |
+| 05 | Content Strategy | 05_CONTENT_STRATEGY | `ENGINE/03_CONTENT_STRATEGY/` |
+| 06 | Hook | 06_HOOK | `ENGINE/04_HOOK_ENGINE/` |
+| 07 | Storyboard | 07_STORYBOARD | `ENGINE/05_STORYBOARD_ENGINE/` |
+| 08 | Visual Prompt | 08_VISUAL_PROMPT | `ENGINE/06_VISUAL_PROMPT_ENGINE/` |
+| 09 | Voice Script | 09_VOICE_SCRIPT | `ENGINE/08_VOICE_SCRIPT_ENGINE/` |
+| 10 | Video Prompt | 10_VIDEO_PROMPT | `ENGINE/07_VIDEO_PROMPT_ENGINE/` |
+| 11 | Production Output | 11_PRODUCTION_OUTPUT | `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` |
+
+### Stage/Engine Numbering Invariant
+
+Engine directory prefixes are legacy implementation identifiers, not workflow stage IDs. They MUST NOT be used to infer stage order, prerequisites, handoffs, or progression.
+
+The mapping above is authoritative. Any engine contract, runtime state, parser, resolver, or prompt that attempts to derive workflow order from a directory prefix is invalid and must fail validation rather than guessing.
+
+Never interpret `ENGINE/08_VOICE_SCRIPT_ENGINE` as Stage 08 or `ENGINE/07_VIDEO_PROMPT_ENGINE` as Stage 07. They are respectively canonical Stage 09 and Stage 10.
+
 ## Canonical Pipeline
 
 ```text
@@ -288,6 +314,12 @@ Examples:
 - Provider capability change → re-evaluate Video segmentation without changing creative duration.
 
 A stale artifact must never be presented as current.
+
+## Stage Resolution Guard
+
+At runtime, resolve every stage by canonical stage ID/name from this document. Engine paths are lookup targets only. A stage artifact is valid only when its declared canonical stage matches the registry and its engine path matches the registry mapping.
+
+If a dependency message, artifact, or runtime state reports a stage relationship that conflicts with this registry, stop the affected operation and correct the contract. Do not infer intent from numeric folder names.
 
 ## Repository Freshness Contract
 
