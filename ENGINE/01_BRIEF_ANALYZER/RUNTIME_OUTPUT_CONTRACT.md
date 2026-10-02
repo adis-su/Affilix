@@ -37,4 +37,4 @@ provenance:
 
 Do not require every schema field before producing Stage 01. Normalize what is known, retain UNKNOWN values, and create decision-queue items only for missing information that materially blocks the next stage.
 
-A Stage 01 artifact is ready for review when product identity is sufficiently clear for downstream handling and no unresolved blocker prevents safe progression.
+A Stage 01 artifact is ready for validation when product identity is sufficiently clear for downstream handling and no unresolved blocker prevents safe progression.
