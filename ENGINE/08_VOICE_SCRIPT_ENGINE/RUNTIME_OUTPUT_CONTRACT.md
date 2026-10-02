@@ -9,7 +9,7 @@
 
 ## Stage Gate
 
-Stage 08 executes only after current Stage 06 Storyboard is current and validated. Visual Prompt approval is not required because audio and visual production specifications are parallel storyboard descendants.
+Stage 09 executes only after current Stage 07 Storyboard is current and validated. Visual Prompt approval is not required because audio and visual production specifications are parallel storyboard descendants.
 
 ## Output
 
