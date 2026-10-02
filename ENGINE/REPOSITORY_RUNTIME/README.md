@@ -8,16 +8,20 @@ This layer defines how Affilix uses `adis-su/Affilix` as its canonical implement
 
 1. Latest explicit user instruction
 2. Campaign requirements
-3. Current approved Product Library facts and constraints
-4. Current approved Creator Library identity constraints
+3. Current Product Library facts and constraints
+4. Current Creator Library identity constraints
 5. Current canonical Niche Context
 6. Current product-type rules
 7. Current repository engine specifications
 8. Platform requirements
-9. Approved content strategy
+9. Current validated Content Strategy
 10. Creative interpretation
 
 Repository rules never authorize invention.
+
+## Canonical Stage Resolution
+
+Use `ENGINE/WORKFLOW.md` as the sole stage registry. The registry maps canonical Stage IDs to implementation paths. Engine directory prefixes are not stage IDs and MUST NOT be used for ordering or dependency inference. If a runtime artifact conflicts with the registry, reject the conflicting stage resolution instead of guessing.
 
 ## Repository Loading Contract
 
