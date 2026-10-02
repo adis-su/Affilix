@@ -318,3 +318,47 @@ Acceptance:
 5. Unnecessary English marketing language is not introduced.
 6. Pronunciation review is triggered only when pronunciation, acronym treatment, brand/product naming, or TTS handling is materially ambiguous.
 7. Spoken naturalization does not invent personal experience, outcomes, or claims.
+
+
+## Voice Performance Plan Regression
+
+The Voice Script Engine must produce a structured performance layer without mutating canonical dialogue.
+
+Acceptance:
+1. Canonical dialogue remains byte-for-byte equivalent to the approved spoken wording unless the campaign explicitly revises the script.
+2. Performance metadata may define pace, phrase grouping, pauses, emphasis, pitch variation, breath opportunities, emotional intensity, articulation, and delivery context when materially useful.
+3. Performance direction must not rely on "sound human" as the sole instruction.
+4. Emphasis must be sparse and intentional rather than equal across all words.
+5. Pause and breathing instructions must support semantic boundaries and timing rather than occur mechanically at every punctuation mark.
+6. Standard beauty UGC defaults toward conversational warmth and restrained enthusiasm unless creator or scene direction requires otherwise.
+7. Voice Profile characteristics are kept separate from per-line Voice Performance instructions.
+8. A real person's or celebrity's name must not be converted into a voice-cloning instruction; authorized voice assets are represented by their permitted reference/identifier.
+9. Performance timing must fit the owning scene and must remain compatible with Video Prompt dialogue synchronization.
+10. NEEDS_REFINEMENT is advisory for monotone, uniform emphasis, excessive pauses, exaggerated enthusiasm, announcer delivery, conspicuous breathing, or other unnatural performance direction.
+
+Example compliant pattern:
+
+    CANONICAL DIALOGUE:
+    "Yang aku suka dari ini, ada ceramide complex-nya, jadi bantu jaga skin barrier."
+
+    VOICE PERFORMANCE:
+    - delivery: conversational UGC
+    - pace: conversational, slightly relaxed
+    - phrase grouping: three semantic phrases
+    - emphasis: restrained emphasis on "ceramide complex" and "skin barrier"
+    - pauses: short semantic pauses, not every comma
+    - pitch: moderate natural variation
+    - warmth: medium
+    - enthusiasm: restrained
+    - breath: subtle opportunity at a natural phrase boundary
+
+Example failure:
+
+    VOICE PERFORMANCE:
+    - every word equally emphasized
+    - fixed pitch
+    - maximum excitement
+    - audible inhale after every phrase
+    - "sound human"
+
+This should be flagged as NEEDS_REFINEMENT.
