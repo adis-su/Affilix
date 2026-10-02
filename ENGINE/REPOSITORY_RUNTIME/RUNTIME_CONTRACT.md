@@ -19,6 +19,22 @@ Affilix Skill
 
 The Project is the user-facing host. GitHub `adis-su/Affilix` on `main` is the implementation source of truth. The Project must not maintain a competing workflow contract.
 
+## Canonical Stage Resolution
+
+`ENGINE/WORKFLOW.md` is the sole authority for canonical stage IDs, names, order, prerequisites, and dependencies.
+
+Runtime MUST resolve:
+
+`canonical_stage_id → canonical_stage_name → implementation_path`
+
+It MUST NOT resolve:
+
+`engine_directory_number → stage_id`
+
+Engine directory numbers are implementation identifiers only. In particular, `ENGINE/08_VOICE_SCRIPT_ENGINE/` maps to canonical Stage 09 and `ENGINE/07_VIDEO_PROMPT_ENGINE/` maps to canonical Stage 10.
+
+Every material artifact must carry a canonical `stage` value. Runtime validation must reject an artifact when its declared stage conflicts with the canonical registry or when a dependency is inferred from an engine directory number.
+
 ## Run Initialization
 
 Every new `/Affilix` production run must:
