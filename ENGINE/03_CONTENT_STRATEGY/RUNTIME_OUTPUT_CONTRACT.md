@@ -9,7 +9,7 @@
 
 ## Stage Gate
 
-Stage 05 executes only from current current, validated artifacts for Stage 01 Brief & Product, Stage 03 Niche & Context, and Stage 04 Creator.
+Stage 05 executes only from current, validated artifacts for Stage 01 Brief & Product, Stage 03 Niche & Context, and Stage 04 Creator.
 
 ## Output
 
