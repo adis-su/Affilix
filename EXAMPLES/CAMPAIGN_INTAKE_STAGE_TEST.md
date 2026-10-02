@@ -362,3 +362,45 @@ Example failure:
     - "sound human"
 
 This should be flagged as NEEDS_REFINEMENT.
+
+## Voice Generation Integration Regression
+
+When Video Prompt contains spoken content, it must carry the validated Voice Script into video execution without making Video Prompt its own source of truth.
+
+Acceptance:
+1. DIALOGUE SYNC contains the exact canonical dialogue from Voice Script.
+2. DIALOGUE SYNC contains a VOICE GENERATION REFERENCE when the provider can generate speech or when voice-generation timing must be synchronized.
+3. VOICE GENERATION REFERENCE includes the applicable authorized voice profile/reference, delivery, pace, phrase grouping when defined, emphasis, pitch/rhythm when defined, pause/breathing when defined, pronunciation when defined, and on-camera/voice-over context.
+4. Voice Generation Reference is derived from the current validated Voice Script and Voice Performance Plan, not independently invented by Video Prompt.
+5. Video Prompt does not rewrite, paraphrase, translate, shorten, expand, or alter canonical dialogue.
+6. If audio is generated externally, the same Voice Generation Reference remains the synchronization contract for the audio asset.
+7. If Voice Script or Voice Performance changes, affected Video Prompt artifacts become STALE and must be revalidated.
+8. Voice identity uses only an authorized voice profile/reference; a real person's or celebrity's name must not become a cloning instruction.
+9. Voice-generation timing must fit the exact generation segment and remain synchronized with mouth visibility, action, gaze, expression, and camera behavior.
+
+Example compliant pattern:
+
+    DIALOGUE SYNC
+    Exact dialogue:
+    "Kalau penasaran, cek di keranjang kuning."
+
+    Timing:
+    26.0–29.4
+
+    VOICE GENERATION REFERENCE
+    - authorized voice profile/reference
+    - warm, clear conversational UGC delivery
+    - natural conversational pace
+    - restrained emphasis on "keranjang kuning"
+    - natural Indonesian pronunciation
+    - subtle semantic pauses
+    - friendly, non-aggressive closing delivery
+    - on-camera context
+
+Example failure:
+
+    DIALOGUE SYNC
+    Exact dialogue: "Kalau penasaran, cek di keranjang kuning."
+    Delivery: sound human
+
+This fails because the Video Prompt lacks the structured Voice Generation Reference required to carry the validated voice performance into generation.
