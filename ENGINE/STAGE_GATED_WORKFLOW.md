@@ -211,7 +211,7 @@ The storyboard is the source of truth for the requested creative duration. Provi
 
 ### 08 — Visual Prompt
 Input: validated Storyboard and upstream completed state.
-Output: one production-ready image prompt per required visual scene.
+Output: one production-ready static image prompt per required visual reference state. A scene with N required reference states produces N prompts.
 
 ### 09 — Voice Script
 Input: validated Storyboard, Content Strategy, Hook, Creator, Product facts, and declared platform/campaign constraints.
