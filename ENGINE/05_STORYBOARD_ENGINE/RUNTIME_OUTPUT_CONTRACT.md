@@ -28,11 +28,11 @@ metadata:
   hook_id:
 scenes: []
 validation:
-  narrative: PASS | REVIEW
-  identity: PASS | REVIEW
-  product: PASS | REVIEW
-  timing: PASS | REVIEW
-  production: PASS | REVIEW
+  narrative: PASS | NEEDS_REFINEMENT
+  identity: PASS | NEEDS_REFINEMENT
+  product: PASS | NEEDS_REFINEMENT
+  timing: PASS | NEEDS_REFINEMENT
+  production: PASS | NEEDS_REFINEMENT
   duration_feasibility: PASS | BLOCKED
 unresolved_requirements: []
 decision_queue: []
