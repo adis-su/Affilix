@@ -68,7 +68,7 @@ Provider adapters must declare their actual capability. The semantic transition 
 
 ## Validation
 
-Reject or mark REVIEW when:
+Reject when:
 
 - start or target reference is missing
 - bridge versions differ
