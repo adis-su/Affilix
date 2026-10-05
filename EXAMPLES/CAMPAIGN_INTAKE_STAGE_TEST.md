@@ -27,6 +27,7 @@ Durasi video:
 Tujuan konten:
 Target audience:
 Creator:
+Audio / Voice Mode:
 CTA:
 
 ## Stage 02 Choice Contract
@@ -92,6 +93,15 @@ CTA choices include:
 - Consider it for your routine
 - Custom CTA
 
+## Audio / Voice Mode Contract
+
+Stage 02 must require exactly one:
+- `SPOKEN_ON_CAMERA`
+- `VOICE_OVER`
+- `NO_SPOKEN_VOICE`
+
+The selected mode must be persisted before Stage 02 is marked `COMPLETED`.
+
 ## Validation
 Stage 02 must persist:
 - platform
@@ -99,6 +109,7 @@ Stage 02 must persist:
 - content objective
 - target audience
 - requested creator
+- audio mode
 - CTA
 
 The default 18-second duration must remain exact. Custom durations must remain exact and are feasible only when they can be composed from provider-supported durations `[4,6,8,10]`. If not feasible, mark `duration_feasibility: BLOCKED` rather than changing the requested duration.
@@ -117,7 +128,7 @@ Requested duration is authoritative campaign input and must remain unchanged by 
 PASS only when:
 1. Stage 01 remains the Product Intake entry.
 2. Stage 02 is Campaign Intake.
-3. All six Stage 02 fields are exposed exactly as specified.
+3. All seven Stage 02 fields are exposed exactly as specified, including Audio / Voice Mode.
 4. /next progresses from Stage 01 to Stage 02.
 5. Stage 02 completion progresses to Stage 03 Niche & Context.
 6. No approval gate, QC stage, or hidden bootstrap diagnostics are introduced.
@@ -166,7 +177,8 @@ Expected downstream order after Stage 07 Storyboard:
 4. Stage 11 Production Output
 
 Acceptance:
-- Video Prompt must not execute before a current Voice Script when spoken content exists.
+- Video Prompt must not execute before a current Voice Script when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`.
+- When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE` and Video Prompt must not require or invent Voice Script content.
 - Voice Script is the canonical source of exact spoken wording.
 - Video Prompt must include DIALOGUE SYNC when spoken content exists.
 - DIALOGUE SYNC exact dialogue must match the current Voice Script.
@@ -192,8 +204,10 @@ Required acceptance criteria:
 8. Target/end state explicitly identifies posture, hand, product, gaze, expression, and framing state.
 9. Every dialogue/voice-over interval fits completely inside the exact segment duration.
 10. Voice-over explicitly defines mouth behavior when lip-sync is not required.
-11. Dialogue is synchronized to the visual action and does not introduce a competing wording version of the canonical Voice Script.
-12. Negative constraints cover skipped/reversed/duplicated beats, unexplained product state changes, hand swapping, and premature target-state matching.
+11. `NO_SPOKEN_VOICE` explicitly disables spoken dialogue, lip-sync, and voice-generation requirements.
+12. Audio mode changes trigger Stage 09/10 dependency re-evaluation.
+13. Dialogue is synchronized to the visual action and does not introduce a competing wording version of the canonical Voice Script.
+14. Negative constraints cover skipped/reversed/duplicated beats, unexplained product state changes, hand swapping, and premature target-state matching.
 
 Example failure:
 
