@@ -93,28 +93,22 @@ Before Stage 01 is marked complete, collect the structured campaign requirements
 
 ### Copyable Campaign Template
 
-Provide this template so the user can copy it, fill only what they know, and send it back in one message. Do not require the user to preserve the formatting exactly.
+Provide this minimal template so the user can copy it, fill it, and send it back in one message. Do not require the user to preserve the formatting exactly.
 
 ```text
 AFFILIX CAMPAIGN
 
-Platform: [TikTok / Instagram Reels / Facebook / Shopee Video]
-Durasi video: [18 detik / Custom: __ detik]
-Tujuan konten: [pilih satu utama, boleh tambah tujuan sekunder]
-Target audience: [boleh kosong, AI akan mengidentifikasi]
-Creator: [nama Creator Library / boleh kosong jika ingin dipilih nanti]
-Audio / Voice Mode: [Spoken on camera / Voice-over / No spoken voice]
-CTA: [pilih / Custom: __]
-
-Key message: [opsional]
-Talking points: [opsional]
-Brand requirements: [opsional]
-Restrictions: [opsional]
-Visual reference: [opsional]
-Script requirements: [opsional]
+Platform:
+Durasi:
+Tujuan:
+Creator:
+Audio/Voice Mode:
+CTA:
 ```
 
-The template is a convenience layer, not a new workflow stage. If the user sends the template partially completed, normalize the supplied values, derive safe values from Stage 01 product research where permitted, and ask only for required fields that cannot be resolved safely.
+These six fields are the primary campaign controls. Do not add optional campaign fields to the copyable template. Additional information may be collected separately only when materially relevant.
+
+If the user sends the template partially completed, normalize the supplied values, derive safe values from Stage 01 product research where permitted, and ask only for required fields that cannot be resolved safely.
 
 ```
 STAGE 01 — Campaign Requirements
@@ -257,7 +251,7 @@ Do not use `UNKNOWN` as a substitute for a required user choice when the choice 
 
 After validation, mark Stage 01 COMPLETED and wait for `/next`.
 
-Additional fields such as aspect ratio, key message, talking points, references, brand requirements, restrictions, and script requirements are collected only when materially relevant.
+Additional fields such as target audience corrections, aspect ratio, key message, talking points, references, brand requirements, restrictions, and script requirements are collected only when materially relevant and are not part of the copyable campaign template.
 
 ## 6. Runtime Handoff
 
