@@ -136,13 +136,13 @@ Output: exactly one canonical niche/product context. Missing values remain `UNKN
 
 ### 02 — Niche & Context
 
-Input: completed Brief & Product and Campaign Intake.
+Input: completed Brief & Product.
 
 Output: exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
 
 ### 03 — Creator
 
-Input: completed Niche & Context and Campaign Intake.
+Input: completed Niche & Context and Brief & Product.
 
 Output: resolved canonical creator identity and applicable Creator Library references.
 
@@ -150,7 +150,7 @@ Creator selection must come from the current pinned repository. Identity is lock
 
 ### 04 — Content Strategy
 
-Input: completed Brief, Campaign Intake, Context, and Creator.
+Input: completed Brief & Product, Niche & Context, and Creator.
 
 Output: objective, audience, product role, angle, core message, story arc, proof strategy, and CTA strategy.
 
@@ -214,7 +214,7 @@ A reference state is a frozen visual state, not a generation segment. Bridge ref
 
 ### 09 — Voice Script
 
-Execution condition: required only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE` and produces no spoken-content artifact.
+Execution condition: required only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE` and produces no spoken-content artifact.
 
 Input: completed Storyboard, Strategy, Hook, Creator, Product facts, and campaign constraints.
 
