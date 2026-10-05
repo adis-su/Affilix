@@ -23,7 +23,7 @@ Nama Produk:
 Link Produk:
 ```
 
-Stage 01 user-facing output is Product Intake only. Internal Campaign Intake fields may be initialized as UNKNOWN, but must not be rendered, summarized, or exposed until Stage 02 is active.
+Stage 01 user-facing output is Product Intake only. Internal Campaign Intake fields may be initialized as UNKNOWN, but must not be rendered, summarized, or exposed until Stage 01 is active.
 
 Do not add a welcome message, production-run header, commit pinning message, repository diagnostics, or other bootstrap text before or after this intake block unless the user explicitly asks for runtime/debug information.
 
@@ -38,7 +38,7 @@ The canonical stage registry in `ENGINE/WORKFLOW.md` is the only source for stag
 Canonical mappings include:
 - Stage 08 Visual Prompt → `ENGINE/06_VISUAL_PROMPT_ENGINE/`
 - Stage 09 Voice Script → `ENGINE/08_VOICE_SCRIPT_ENGINE/`
-- Stage 10 Video Prompt → `ENGINE/07_VIDEO_PROMPT_ENGINE/`
+- Stage 08 Video Prompt → `ENGINE/07_VIDEO_PROMPT_ENGINE/`
 
 If any engine message, artifact, or runtime state conflicts with the canonical registry, treat it as a contract error and stop the affected handoff. Never guess or derive stage order from folder numbers.
 
@@ -53,16 +53,15 @@ Affilix must behave as one end-to-end production system, not as a collection of 
 Execute each run in this order. After each stage is validated and completed, wait for `/next` before starting the next dependency-satisfied stage:
 
 1. ENGINE/01_BRIEF_ANALYZER/README.md
-2. CAMPAIGN INTAKE
-3. ENGINE/NICHE_CONTEXT_LOADER/README.md
-4. ENGINE/02_CREATOR_SELECTOR/README.md
-5. ENGINE/03_CONTENT_STRATEGY/README.md
-6. ENGINE/04_HOOK_ENGINE/README.md
-7. ENGINE/05_STORYBOARD_ENGINE/README.md
-8. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
+2. ENGINE/NICHE_CONTEXT_LOADER/README.md
+3. ENGINE/02_CREATOR_SELECTOR/README.md
+4. ENGINE/03_CONTENT_STRATEGY/README.md
+5. ENGINE/04_HOOK_ENGINE/README.md
+6. ENGINE/05_STORYBOARD_ENGINE/README.md
+7. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
+8. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
 9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise mark Stage 09 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
-10. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required; Voice Script is a dependency only for spoken audio modes
-11. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
+10. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
 
 Do not skip an upstream stage when a downstream stage depends on it.
 
@@ -72,7 +71,7 @@ Every production run has one isolated runtime state:
 
 - normalized brief
 - campaign requirements (platform, duration, objective, audience, requested creator, Audio / Voice Mode, CTA)
-- Stage 02 structured choice state, audio mode, and audience provenance
+- Stage 01 structured campaign choice state, audio mode, and audience provenance
 - creator
 - product
 - canonical niche context
@@ -90,7 +89,7 @@ If a canonical input changes, dependent state becomes STALE until regenerated an
 
 Normalize the brief and classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN. Never convert assumptions into facts.
 
-Stage 02 campaign intake uses controlled platform, duration, objective, creator, CTA, and required Audio / Voice Mode choices. Audio / Voice Mode is persisted as `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE` before downstream dependency planning. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
+Stage 01 Brief & Product resolves the product brief and campaign requirements, including platform, exact requested duration, objective, audience, requested creator, CTA, and Audio / Voice Mode, before downstream dependency planning. Audio / Voice Mode is persisted as `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE` before downstream dependency planning. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
 
 Load one canonical niche context. Missing values remain UNKNOWN. Explicit product and creator facts outrank context labels.
 
@@ -134,16 +133,15 @@ Each stage produces a structured artifact and is validated. When a stage is comp
 Stage order:
 
 1. Brief & Product
-2. Campaign Intake
-3. Niche & Context
-4. Creator
-5. Content Strategy
-6. Hook
-7. Storyboard
-8. Visual Prompt
+2. Niche & Context
+3. Creator
+4. Content Strategy
+5. Hook
+6. Storyboard
+7. Visual Prompt
+8. Video Prompt when required
 9. Voice Script when required
-10. Video Prompt when required
-11. Production Output
+10. Production Output
 
 The run ends after the final required production output is generated. There is no separate QC stage and no separate Final UGC Package stage.
 
