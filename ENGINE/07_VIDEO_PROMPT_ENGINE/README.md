@@ -2,7 +2,7 @@
 
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 10 — Video Prompt
+- Canonical workflow stage: Stage 08 — Video Prompt
 - Implementation path: `ENGINE/07_VIDEO_PROMPT_ENGINE/`
 - The numeric prefix in the implementation directory is NOT a workflow stage ID.
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
