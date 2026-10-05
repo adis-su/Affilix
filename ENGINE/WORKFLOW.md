@@ -278,20 +278,18 @@ This is the final assembly step, not a separate QC or approval gate.
 06 Hook
         ↓
 07 Storyboard
-   ┌────┼─────┐
-   ↓    ↓     ↓
-08     09     10
-Visual Voice  Video
-       ↓       ↑
-       └───────┘
-          Voice
-        Sync Data
-   \\________________/
-            ↓
-      11 Production
+   ┌──────────┐
+   ↓          ↓
+08 Visual   09 Voice [spoken modes only]
+   │          │
+   └────┬─────┘
+        ↓
+   10 Video Prompt
+        ↓
+   11 Production
 ```
 
-Stage 10 requires current Voice Script only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. For `NO_SPOKEN_VOICE`, Stage 10 must explicitly declare dialogue/voice generation as not applicable and must not invent spoken content. Stage 10 also consumes current visual/reference information when visual continuity is required.
+Stage 10 requires current Voice Script only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. For `NO_SPOKEN_VOICE`, Stage 10 has no Voice Script dependency and must explicitly declare dialogue/voice generation as not applicable and must not invent spoken content. Stage 10 also consumes current visual/reference information when visual continuity is required.
 
 ## Revision and Invalidation
 
