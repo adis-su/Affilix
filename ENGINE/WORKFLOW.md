@@ -135,9 +135,11 @@ The supplied product link/reference must be actively inspected when accessible. 
 
 Input: completed Stage 01.
 
-Output: platform, exact requested video duration, primary objective, target audience, requested creator from the current Creator Library, and CTA.
+Output: platform, exact requested video duration, primary objective, target audience, requested creator from the current Creator Library, Audio / Voice Mode, and CTA.
 
 The default duration is 18 seconds. Provider generation limits are technical constraints only. Exact duration feasibility is handled by Video Prompt segmentation.
+
+Audio / Voice Mode is required and must be one of `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE`. This decision is made before downstream dependency resolution and controls whether Stage 09 is required.
 
 ### 03 — Niche & Context
 
@@ -219,9 +221,11 @@ A reference state is a frozen visual state, not a generation segment. Bridge ref
 
 ### 09 — Voice Script
 
+Execution condition: required only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE` and produces no spoken-content artifact.
+
 Input: completed Storyboard, Strategy, Hook, Creator, Product facts, and campaign constraints.
 
-Output: canonical scene-by-scene spoken dialogue plus Voice Performance Plan.
+Output: canonical scene-by-scene spoken dialogue plus Voice Performance Plan when spoken content is required.
 
 Voice Script is the sole source of truth for:
 
@@ -240,7 +244,7 @@ Spoken naturalization must preserve factual meaning and campaign intent.
 
 ### 10 — Video Prompt
 
-Input: completed Storyboard, current Visual Prompt when visual continuity is required, current Voice Script when spoken content exists, and provider capability profile when generation is required.
+Input: completed Storyboard, current Visual Prompt when visual continuity is required, current Voice Script only when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and provider capability profile when generation is required.
 
 Output: provider-compatible motion specifications and exact generation segment mapping.
 
@@ -287,7 +291,7 @@ Visual Voice  Video
       11 Production
 ```
 
-Stage 10 requires current Voice Script when spoken content exists. Stage 10 also consumes current visual/reference information when visual continuity is required.
+Stage 10 requires current Voice Script only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. For `NO_SPOKEN_VOICE`, Stage 10 must explicitly declare dialogue/voice generation as not applicable and must not invent spoken content. Stage 10 also consumes current visual/reference information when visual continuity is required.
 
 ## Revision and Invalidation
 
@@ -304,6 +308,7 @@ Examples:
 
 - Product change → Context, Creator when affected, Strategy, Hook, Storyboard, Visual, Voice, Video.
 - Campaign requirement change → affected Context, Creator, Strategy, Hook, Storyboard, Visual, Voice, Video.
+- Audio / Voice Mode change → re-evaluate Stage 09 and Stage 10. `NO_SPOKEN_VOICE` invalidates any existing Voice Script as STALE/SKIPPED and removes voice dependencies from Video; either spoken mode makes Stage 09 required and Video dependent on its current output.
 - Creator change → Strategy, Hook, Storyboard, Visual, Voice, Video.
 - Strategy change → Hook, Storyboard, Visual, Voice, Video.
 - Hook change → affected Storyboard and downstream assets.
@@ -355,7 +360,7 @@ Each run must preserve isolated state for:
 - hook
 - storyboard and reference graph
 - visual prompts
-- voice script and performance plan
+- voice script and performance plan when applicable
 - video prompts and generation segments
 - production output
 
