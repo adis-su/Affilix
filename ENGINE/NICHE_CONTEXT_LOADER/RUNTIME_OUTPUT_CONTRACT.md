@@ -1,6 +1,6 @@
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 03
+- Canonical workflow stage: Stage 02
 - Engine implementation path: `ENGINE/NICHE_CONTEXT_LOADER/`
 - Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
 - Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
