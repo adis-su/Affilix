@@ -28,9 +28,15 @@ scenes:
         final_end:
         generation_duration:
         start_state:
+        start_state_invariants: []
         primary_action:
         secondary_motion:
+        action_causality:
+        temporal_priority:
+          critical_beats: []
+          timing_guidance: []
         camera_behavior:
+        target_state_invariants: []
         end_state:
         continuity_requirements: []
         negative_motion_constraints: []
@@ -91,8 +97,15 @@ Every transition must declare:
 from_reference_id:
 to_reference_id:
 action_beats: []
+action_causality:
+  trigger:
+  intention:
+  physical_result:
 primary_action:
 secondary_motion: []
+temporal_priority:
+  critical_beats: []
+  timing_guidance: []
 product_interaction:
 gaze_path:
 expression_behavior:
