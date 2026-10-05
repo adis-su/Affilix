@@ -23,7 +23,7 @@ Nama Produk:
 Link Produk:
 ```
 
-Stage 01 user-facing output starts with Product Intake and collects the required campaign requirements before completion. Campaign requirements are part of Stage 01 and there is no separate Campaign Intake stage.
+Stage 01 user-facing output starts with Product Intake and collects the required campaign requirements before completion. Campaign requirements are part of Stage 01 and there is no separate Campaign Intake stage. A copyable campaign template is defined in `ENGINE/AFFILIX_ENTRY_POINT/README.md` and may be presented after Product Intake when campaign requirements are collected.
 
 Do not add a welcome message, production-run header, commit pinning message, repository diagnostics, or other bootstrap text before or after this intake block unless the user explicitly asks for runtime/debug information.
 
