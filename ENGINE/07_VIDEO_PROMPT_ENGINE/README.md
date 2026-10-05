@@ -95,6 +95,77 @@ Build each transition from:
 
     START REFERENCE
     +
+    START STATE INVARIANTS
+    +
+    TRIGGER / INTENTION
+    +
+    ACTION BEATS
+    +
+    ACTION CAUSALITY
+    +
+    TEMPORAL PRIORITY
+    +
+    DIALOGUE SYNC when applicable
+    +
+    SECONDARY NATURAL MOTION
+    +
+    CAMERA BEHAVIOR
+    +
+    TARGET STATE INVARIANTS
+    +
+    END REFERENCE
+
+Every visible state change must have a physically plausible cause. A reference ID alone is not sufficient: the prompt must preserve the observable state variables that make the transition physically reachable.
+
+### State Invariants
+
+For every start, bridge, and target reference, define the minimum observable state required for continuity:
+
+- creator posture and body orientation
+- acting hand and supporting hand ownership
+- product position and orientation
+- product open/closed state
+- visible label orientation
+- fingertip/product contact state
+- gaze target
+- facial expression
+- camera framing and spatial relationship
+- relevant environment and lighting continuity
+
+State invariants are constraints, not suggestions. A state variable must not change unless an action explicitly causes that change. A target-state variable must not appear prematurely.
+
+### Temporal Priority
+
+When a scene contains multiple visually material actions, identify the critical beats that must visibly occur inside the exact segment duration.
+
+Use:
+
+- **Critical beats:** non-skippable state-changing actions.
+- **Timing guidance:** bounded timing or relative pacing for actions whose density could otherwise cause the generator to rush, anticipate, or skip a transition.
+
+Temporal priority never overrides storyboard creative timing or the exact requested duration. It exists to protect action ordering and state transitions within that duration.
+
+### State Transition Constraints
+
+The transition must obey:
+
+    START STATE
+        ↓
+    CAUSAL ACTION
+        ↓
+    PHYSICAL RESULT
+        ↓
+    NEXT ACTION
+        ↓
+    TARGET STATE
+
+Do not reach the target state before the actions that produce it. Do not regress to an earlier state after a completed transition. Do not change hand ownership, product state, gaze target, or camera relationship without a defined cause.
+
+
+Build each transition from:
+
+    START REFERENCE
+    +
     TRIGGER / INTENTION
     +
     ACTION BEATS
@@ -242,6 +313,9 @@ Use this canonical order:
     CAMERA BEHAVIOR
     [controlled camera behavior]
 
+    TARGET STATE INVARIANTS
+    [observable target-state variables that must be reached]
+
     TARGET REFERENCE
     [canonical target reference state]
 
@@ -255,7 +329,7 @@ Use this canonical order:
     [video-specific failure constraints]
 
     FINAL VIDEO GENERATION INSTRUCTION
-    [generate the continuous physically plausible transition]
+    [generate the exact-duration physically plausible state transition; do not skip, anticipate, duplicate, or regress critical states]
 
 Do not split one Video Prompt across multiple code blocks. Generation-segment metadata stays outside the code block.
 
@@ -479,6 +553,11 @@ Before a generation segment is accepted, verify:
 - all dialogue intervals are within segment bounds
 - action beats are ordered and causally connected
 - start/bridge/target references are canonical
+- start and target state invariants are explicit for all material state variables
+- critical beats are identified for high-density transitions
+- temporal guidance is present when action density requires pacing protection
+- target state is not reached prematurely
+- no state regression occurs
 - bridge states are explicitly defined when present
 - product state changes have physical causes
 - baseline naturalization remains bounded
