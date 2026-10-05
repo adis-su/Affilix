@@ -23,7 +23,7 @@ Nama Produk:
 Link Produk:
 ```
 
-Stage 01 user-facing output is Product Intake only. Internal Campaign Intake fields may be initialized as UNKNOWN, but must not be rendered, summarized, or exposed until Stage 01 is active.
+Stage 01 user-facing output starts with Product Intake and collects the required campaign requirements before completion. Campaign requirements are part of Stage 01 and there is no separate Campaign Intake stage.
 
 Do not add a welcome message, production-run header, commit pinning message, repository diagnostics, or other bootstrap text before or after this intake block unless the user explicitly asks for runtime/debug information.
 
