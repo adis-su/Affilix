@@ -2,7 +2,7 @@
 
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 08 — Visual Prompt
+- Canonical workflow stage: Stage 07 — Visual Prompt
 - Implementation path: `ENGINE/06_VISUAL_PROMPT_ENGINE/`
 - The numeric prefix in the implementation directory is NOT a workflow stage ID.
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
