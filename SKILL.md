@@ -60,7 +60,7 @@ Execute each run in this order. After each stage is validated and completed, wai
 6. ENGINE/04_HOOK_ENGINE/README.md
 7. ENGINE/05_STORYBOARD_ENGINE/README.md
 8. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
-9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`
+9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise mark Stage 09 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
 10. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required; Voice Script is a dependency only for spoken audio modes
 11. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
 
@@ -71,7 +71,7 @@ Do not skip an upstream stage when a downstream stage depends on it.
 Every production run has one isolated runtime state:
 
 - normalized brief
-- campaign requirements (platform, duration, objective, audience, requested creator, CTA)
+- campaign requirements (platform, duration, objective, audience, requested creator, Audio / Voice Mode, CTA)
 - Stage 02 structured choice state, audio mode, and audience provenance
 - creator
 - product
@@ -81,7 +81,7 @@ Every production run has one isolated runtime state:
 - storyboard
 - visual specifications
 - video specifications
-- voice script
+- voice script when required by Audio / Voice Mode
 - production output
 
 If a canonical input changes, dependent state becomes STALE until regenerated and revalidated.
