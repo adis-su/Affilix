@@ -92,7 +92,7 @@ Do not inherit product, creator, niche, claims, storyboard, prompts, or producti
 Before Stage 01 is marked complete, collect the structured campaign requirements:
 
 ```
-STAGE 02 — Campaign Intake
+STAGE 01 — Campaign Requirements
 
 Silakan pilih:
 
