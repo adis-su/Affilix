@@ -20,7 +20,7 @@ The Video Prompt Engine does not own spoken wording. **Voice Script owns the exa
 
 - Completed storyboard
 - Completed Visual Prompt for the applicable scene
-- Completed Voice Script when spoken content exists
+- Completed Voice Script when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`
 - Creator identity
 - Product identity
 - Pose and expression
@@ -29,8 +29,9 @@ The Video Prompt Engine does not own spoken wording. **Voice Script owns the exa
 - Camera composition
 - Lighting
 - Dialogue timing and delivery from Voice Script
-- Voice Performance Plan from Voice Script
-- Pronunciation guidance from Voice Script
+- Voice Performance Plan from Voice Script when spoken content exists
+- Pronunciation guidance from Voice Script when spoken content exists
+- Campaign `audio_mode`
 - Creative scene duration
 - Provider capability profile
 - Generation segment plan
@@ -39,7 +40,7 @@ The Video Prompt Engine does not own spoken wording. **Voice Script owns the exa
 
 ## Canonical Dependency
 
-For video output, the downstream dependency is:
+For video output, the downstream dependency is conditional on Campaign Intake `audio_mode`:
 
     STORYBOARD
         │
@@ -51,6 +52,8 @@ For video output, the downstream dependency is:
             VIDEO PROMPT
                   ↓
            VIDEO GENERATION
+
+If `audio_mode` is `NO_SPOKEN_VOICE`, omit the Voice Script branch entirely. Stage 10 must not invent dialogue, lip-sync, or voice-generation requirements.
 
 Storyboard remains the canonical source for scene intent, action choreography, and creative timing.
 
@@ -132,7 +135,7 @@ Do not use "move naturally" as the only motion instruction.
 
 ## Dialogue Synchronization
 
-When the Voice Script contains spoken content, every affected Video Prompt must include a dedicated DIALOGUE SYNC section.
+When `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and the Voice Script contains spoken content, every affected Video Prompt must include a dedicated DIALOGUE SYNC section.
 
 The section must identify:
 
@@ -178,6 +181,14 @@ Example structure:
 
     Audio generation rule:
     Use the current validated Voice Script and Voice Performance Plan as the sole source for spoken audio.
+
+When `audio_mode` is `NO_SPOKEN_VOICE`, emit:
+
+    DIALOGUE SYNC
+    Voice mode: NO_SPOKEN_VOICE
+    Dialogue: NONE
+    Lip-sync: NOT_REQUIRED
+    Voice generation: NOT_REQUIRED
     Do not rewrite, paraphrase, translate, shorten, expand, or independently reinterpret the dialogue or delivery.
     If the provider does not generate audio, use the same reference to synchronize the external voice-generation asset.
 
