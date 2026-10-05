@@ -1,7 +1,7 @@
 # Affilix — Production Release Audit v2
 
 ## Audit Date
-2026-10-01
+2026-10-05
 
 ## Scope
 
@@ -36,6 +36,7 @@ No Telegram, Supabase, QC, or Final UGC Package component is required by the can
 - Voice Script remains subordinate to storyboard timing/content.
 - Upstream revisions propagate STALE state through declared dependents.
 - Requested duration is preserved exactly.
+- Canonical workflow is the ten-stage Affilix project pipeline.
 - Provider capability changes cannot silently alter creative duration.
 - Repository commit pinning is part of run initialization.
 - UNKNOWN is preserved when evidence is unavailable.
