@@ -217,7 +217,6 @@ The normalized brief becomes the input for:
 - 06_VISUAL_PROMPT_ENGINE
 - 07_VIDEO_PROMPT_ENGINE
 - 08_VOICE_SCRIPT_ENGINE
-- 09_QUALITY_CONTROL
 
 ## Example
 
