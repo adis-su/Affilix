@@ -2,7 +2,7 @@
 
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 04 — Creator
+- Canonical workflow stage: Stage 03 — Creator
 - Implementation path: `ENGINE/02_CREATOR_SELECTOR/`
 - The numeric prefix in the implementation directory is NOT a workflow stage ID.
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
