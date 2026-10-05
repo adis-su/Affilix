@@ -60,8 +60,8 @@ Execute each run in this order. After each stage is validated and completed, wai
 6. ENGINE/04_HOOK_ENGINE/README.md
 7. ENGINE/05_STORYBOARD_ENGINE/README.md
 8. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
-9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken content is required
-10. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
+9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`
+10. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required; Voice Script is a dependency only for spoken audio modes
 11. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
 
 Do not skip an upstream stage when a downstream stage depends on it.
@@ -72,7 +72,7 @@ Every production run has one isolated runtime state:
 
 - normalized brief
 - campaign requirements (platform, duration, objective, audience, requested creator, CTA)
-- Stage 02 structured choice state and audience provenance
+- Stage 02 structured choice state, audio mode, and audience provenance
 - creator
 - product
 - canonical niche context
@@ -90,7 +90,7 @@ If a canonical input changes, dependent state becomes STALE until regenerated an
 
 Normalize the brief and classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN. Never convert assumptions into facts.
 
-Stage 02 campaign intake uses controlled platform, duration, objective, creator, and CTA choices. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
+Stage 02 campaign intake uses controlled platform, duration, objective, creator, CTA, and required Audio / Voice Mode choices. Audio / Voice Mode is persisted as `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE` before downstream dependency planning. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
 
 Load one canonical niche context. Missing values remain UNKNOWN. Explicit product and creator facts outrank context labels.
 
