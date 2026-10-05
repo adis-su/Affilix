@@ -9,7 +9,9 @@
 
 ## Stage Gate
 
-Stage 09 executes only after current Stage 07 Storyboard is current and validated. Visual Prompt is a parallel Storyboard descendant and is not a prerequisite for Voice Script.
+Stage 09 executes only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and only after current Stage 07 Storyboard is current and validated.
+
+When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 must not generate a placeholder or invented script. Its valid runtime state is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`. Visual Prompt is a parallel Storyboard descendant and is not a prerequisite for Voice Script.
 
 ## Output
 
@@ -17,6 +19,7 @@ Stage 09 executes only after current Stage 07 Storyboard is current and validate
 stage: 09_VOICE_SCRIPT
 status: COMPLETED
 metadata:
+  audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER
   script_id:
   creator_id:
   campaign_id:
