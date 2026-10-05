@@ -166,8 +166,8 @@ These are dependency-driven stages, not approval branches.
 - Hook: Content Strategy COMPLETED.
 - Storyboard: Hook + all required upstream state COMPLETED.
 - Visual Prompt: Storyboard COMPLETED.
-- Voice Script: Storyboard COMPLETED when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`.
-- Video Prompt: Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + current Voice Script COMPLETED only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER` + provider capability profile when video generation is required.
+- Voice Script: Storyboard COMPLETED when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`.
+- Video Prompt: Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + current Voice Script COMPLETED only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER` + provider capability profile when video generation is required.
 - Production Output: all required downstream specifications current and non-STALE.
 
 There is no QC prerequisite, Final UGC Package prerequisite, or approval prerequisite.
