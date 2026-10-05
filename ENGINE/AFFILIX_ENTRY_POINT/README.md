@@ -89,7 +89,32 @@ Do not inherit product, creator, niche, claims, storyboard, prompts, or producti
 
 ## 5. Stage 01 — Campaign Requirements
 
-Before Stage 01 is marked complete, collect the structured campaign requirements:
+Before Stage 01 is marked complete, collect the structured campaign requirements.
+
+### Copyable Campaign Template
+
+Provide this template so the user can copy it, fill only what they know, and send it back in one message. Do not require the user to preserve the formatting exactly.
+
+```text
+AFFILIX CAMPAIGN
+
+Platform: [TikTok / Instagram Reels / Facebook / Shopee Video]
+Durasi video: [18 detik / Custom: __ detik]
+Tujuan konten: [pilih satu utama, boleh tambah tujuan sekunder]
+Target audience: [boleh kosong, AI akan mengidentifikasi]
+Creator: [nama Creator Library / boleh kosong jika ingin dipilih nanti]
+Audio / Voice Mode: [Spoken on camera / Voice-over / No spoken voice]
+CTA: [pilih / Custom: __]
+
+Key message: [opsional]
+Talking points: [opsional]
+Brand requirements: [opsional]
+Restrictions: [opsional]
+Visual reference: [opsional]
+Script requirements: [opsional]
+```
+
+The template is a convenience layer, not a new workflow stage. If the user sends the template partially completed, normalize the supplied values, derive safe values from Stage 01 product research where permitted, and ask only for required fields that cannot be resolved safely.
 
 ```
 STAGE 01 — Campaign Requirements
