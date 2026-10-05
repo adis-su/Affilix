@@ -2,7 +2,7 @@
 
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 03 — Niche & Context
+- Canonical workflow stage: Stage 02 — Niche & Context
 - Implementation path: `ENGINE/NICHE_CONTEXT_LOADER/`
 - The numeric prefix in the implementation directory is NOT a workflow stage ID.
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
