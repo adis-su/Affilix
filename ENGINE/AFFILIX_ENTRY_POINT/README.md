@@ -68,6 +68,7 @@ campaign:
   audience: UNKNOWN
   creator: UNKNOWN
   cta: UNKNOWN
+  audio_mode: UNKNOWN
 
 niche_context:
   status: NOT_LOADED
@@ -133,6 +134,18 @@ Creator:
 - Creator yang tampil harus berasal dari canonical CREATOR_LIBRARY
 - Jangan menampilkan creator yang tidak tersedia di repository
 
+Audio / Voice Mode:
+- Spoken on camera
+- Voice-over
+- No spoken voice
+
+Persist the selected value as one of:
+- `SPOKEN_ON_CAMERA`
+- `VOICE_OVER`
+- `NO_SPOKEN_VOICE`
+
+This choice is a campaign-level creative mode and must be resolved before downstream dependency planning. It determines whether Stage 09 Voice Script is required and what kind of dialogue synchronization Stage 10 Video Prompt may use.
+
 CTA:
 - Shop now
 - Buy now
@@ -190,6 +203,16 @@ Creator selection is dynamic. Enumerate the available creator records under `CRE
 
 The selected value is the requested creator input and is later resolved/validated by Stage 04 Creator.
 
+### Audio / Voice Mode
+
+Audio / Voice Mode is a required Stage 02 campaign choice.
+
+- `SPOKEN_ON_CAMERA`: creator speaks on camera; Stage 09 Voice Script is required and Stage 10 must synchronize canonical dialogue with visible creator speech.
+- `VOICE_OVER`: narration exists without requiring the creator to speak on camera; Stage 09 Voice Script is required and Stage 10 must synchronize the canonical voice-over with the visual action.
+- `NO_SPOKEN_VOICE`: no spoken dialogue or voice-over; Stage 09 is validly `SKIPPED`, and Stage 10 must not invent dialogue, lip-sync, or voice-generation requirements. Music, sound effects, or on-screen text remain optional independent layers.
+
+The selected mode must be persisted in campaign state before Stage 02 can be marked `COMPLETED`.
+
 ### CTA
 
 CTA is a controlled choice with a `Custom CTA` escape hatch. Persist the selected CTA exactly enough for downstream strategy and voice/script generation.
@@ -233,9 +256,9 @@ The canonical workflow is defined only by `ENGINE/WORKFLOW.md`:
 → /next
 → STAGE 08 VISUAL PROMPT
 → /next
-→ STAGE 09 VOICE SCRIPT when required
+→ STAGE 09 VOICE SCRIPT when `SPOKEN_ON_CAMERA` or `VOICE_OVER`
 → /next
-→ STAGE 10 VIDEO PROMPT when required
+→ STAGE 10 VIDEO PROMPT when video output is required
 → /next
 → STAGE 11 PRODUCTION OUTPUT
 ```
