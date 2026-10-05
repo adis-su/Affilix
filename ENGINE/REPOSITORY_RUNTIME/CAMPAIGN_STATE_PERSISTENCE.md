@@ -35,7 +35,7 @@ There is no approval state. Validation is performed inside each stage, and `/nex
 
 ## Canonical Stage Identity
 
-Stage order and dependencies MUST come from `ENGINE/WORKFLOW.md`. Campaign `audio_mode` is a required Stage 02 decision that controls spoken-content dependencies. Engine directory numbers are implementation identifiers only and MUST NOT be interpreted as workflow stage IDs.
+Stage order and dependencies MUST come from `ENGINE/WORKFLOW.md`. Campaign `audio_mode` is a required Stage 01 decision that controls spoken-content dependencies. Engine directory numbers are implementation identifiers only and MUST NOT be interpreted as workflow stage IDs.
 
 ## Runtime State Shape
 
@@ -90,7 +90,6 @@ niche_context:
 
 stages:
   brief_product: { status:, output: }
-  campaign_intake: { status:, output: }
   niche_context: { status:, output: }
   creator: { status:, output: }
   content_strategy: { status:, output: }
@@ -136,10 +135,10 @@ A run is complete only when every required canonical stage is `COMPLETED` or `SK
 
 ## Audio Mode Dependency Contract
 
-Stage 02 must persist exactly one `campaign.audio_mode` value:
+Stage 01 must persist exactly one `campaign.audio_mode` value:
 
 - `SPOKEN_ON_CAMERA` → Stage 09 required; Stage 10 consumes canonical spoken dialogue and lip-sync requirements.
 - `VOICE_OVER` → Stage 09 required; Stage 10 consumes canonical voice-over timing and voice-generation reference without requiring visible creator speech.
 - `NO_SPOKEN_VOICE` → Stage 09 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`; Stage 10 has no Voice Script dependency and must declare spoken audio/lip-sync as not applicable.
 
-Changing `audio_mode` is a campaign revision. Recompute Stage 09/10 dependency state and invalidate affected artifacts rather than silently carrying the previous mode forward.
+Changing `audio_mode` is a campaign revision. Recompute Stage 08/09 dependency state and invalidate affected artifacts rather than silently carrying the previous mode forward.
