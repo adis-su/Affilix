@@ -21,16 +21,15 @@ The numeric stage ID in this registry is the ONLY workflow ordering and dependen
 | Canonical Stage | Stage Name | Runtime Contract | Implementation Path |
 |---|---|---|---|
 | 01 | Brief & Product | 01_BRIEF_PRODUCT | `ENGINE/01_BRIEF_ANALYZER/` |
-| 02 | Campaign Intake | 02_CAMPAIGN_INTAKE | Project/entry contract |
-| 03 | Niche & Context | 03_NICHE_CONTEXT | `ENGINE/NICHE_CONTEXT_LOADER/` |
-| 04 | Creator | 04_CREATOR | `ENGINE/02_CREATOR_SELECTOR/` |
-| 05 | Content Strategy | 05_CONTENT_STRATEGY | `ENGINE/03_CONTENT_STRATEGY/` |
-| 06 | Hook | 06_HOOK | `ENGINE/04_HOOK_ENGINE/` |
-| 07 | Storyboard | 07_STORYBOARD | `ENGINE/05_STORYBOARD_ENGINE/` |
-| 08 | Visual Prompt | 08_VISUAL_PROMPT | `ENGINE/06_VISUAL_PROMPT_ENGINE/` |
+| 02 | Niche & Context | 02_NICHE_CONTEXT | `ENGINE/NICHE_CONTEXT_LOADER/` |
+| 03 | Creator | 03_CREATOR | `ENGINE/02_CREATOR_SELECTOR/` |
+| 04 | Content Strategy | 04_CONTENT_STRATEGY | `ENGINE/03_CONTENT_STRATEGY/` |
+| 05 | Hook | 05_HOOK | `ENGINE/04_HOOK_ENGINE/` |
+| 06 | Storyboard | 06_STORYBOARD | `ENGINE/05_STORYBOARD_ENGINE/` |
+| 07 | Visual Prompt | 07_VISUAL_PROMPT | `ENGINE/06_VISUAL_PROMPT_ENGINE/` |
+| 08 | Video Prompt | 08_VIDEO_PROMPT | `ENGINE/07_VIDEO_PROMPT_ENGINE/` |
 | 09 | Voice Script | 09_VOICE_SCRIPT | `ENGINE/08_VOICE_SCRIPT_ENGINE/` |
-| 10 | Video Prompt | 10_VIDEO_PROMPT | `ENGINE/07_VIDEO_PROMPT_ENGINE/` |
-| 11 | Production Output | 11_PRODUCTION_OUTPUT | `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` |
+| 10 | Production Output | 10_PRODUCTION_OUTPUT | `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` |
 
 ### Stage/Engine Numbering Invariant
 
@@ -47,25 +46,23 @@ Never interpret `ENGINE/08_VOICE_SCRIPT_ENGINE` as Stage 08 or `ENGINE/07_VIDEO_
   ↓
 01 BRIEF & PRODUCT
   ↓ /next
-02 CAMPAIGN INTAKE
+02 NICHE & CONTEXT
   ↓ /next
-03 NICHE & CONTEXT
+03 CREATOR
   ↓ /next
-04 CREATOR
+04 CONTENT STRATEGY
   ↓ /next
-05 CONTENT STRATEGY
+05 HOOK
   ↓ /next
-06 HOOK
+06 STORYBOARD
   ↓ /next
-07 STORYBOARD
+07 VISUAL PROMPT
   ↓ /next
-08 VISUAL PROMPT
+08 VIDEO PROMPT       [when video output is required]
   ↓ /next
 09 VOICE SCRIPT       [when spoken content is required]
   ↓ /next
-10 VIDEO PROMPT       [when video output is required]
-  ↓ /next
-11 PRODUCTION OUTPUT
+10 PRODUCTION OUTPUT
 ```
 
 No QC stage, Final UGC Package stage, or approval gate exists.
@@ -131,23 +128,19 @@ Output: normalized product brief plus researched product facts, evidence/provena
 
 The supplied product link/reference must be actively inspected when accessible. Unsupported marketing language must not be promoted to fact.
 
-### 02 — Campaign Intake
+### 02 — Niche & Context
 
-Input: completed Stage 01.
+Input: completed Stage 01 Brief & Product.
 
-Output: platform, exact requested video duration, primary objective, target audience, requested creator from the current Creator Library, Audio / Voice Mode, and CTA.
+Output: exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
 
-The default duration is 18 seconds. Provider generation limits are technical constraints only. Exact duration feasibility is handled by Video Prompt segmentation.
-
-Audio / Voice Mode is required and must be one of `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE`. This decision is made before downstream dependency resolution and controls whether Stage 09 is required.
-
-### 03 — Niche & Context
+### 02 — Niche & Context
 
 Input: completed Brief & Product and Campaign Intake.
 
 Output: exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
 
-### 04 — Creator
+### 03 — Creator
 
 Input: completed Niche & Context and Campaign Intake.
 
@@ -155,19 +148,19 @@ Output: resolved canonical creator identity and applicable Creator Library refer
 
 Creator selection must come from the current pinned repository. Identity is locked downstream.
 
-### 05 — Content Strategy
+### 04 — Content Strategy
 
 Input: completed Brief, Campaign Intake, Context, and Creator.
 
 Output: objective, audience, product role, angle, core message, story arc, proof strategy, and CTA strategy.
 
-### 06 — Hook
+### 05 — Hook
 
 Input: completed Strategy.
 
 Output: validated hook direction/copy and delivery direction.
 
-### 07 — Storyboard
+### 06 — Storyboard
 
 Input: completed Hook and all required upstream state.
 
@@ -211,7 +204,7 @@ RESULTING STATE
 
 Human-looking motion must be controlled, action-coupled, and physically plausible. Do not use random gestures, gaze, product movement, or camera movement.
 
-### 08 — Visual Prompt
+### 07 — Visual Prompt
 
 Input: completed Storyboard and required reference states.
 
@@ -242,7 +235,7 @@ Voice Script is the sole source of truth for:
 
 Spoken naturalization must preserve factual meaning and campaign intent.
 
-### 10 — Video Prompt
+### 08 — Video Prompt
 
 Input: completed Storyboard, current Visual Prompt when visual continuity is required, current Voice Script only when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and provider capability profile when generation is required.
 
@@ -254,7 +247,7 @@ Generation durations are limited to `[4, 6, 8, 10]` seconds. Final campaign dura
 
 `duration_feasibility: BLOCKED`
 
-### 11 — Production Output
+### 10 — Production Output
 
 Input: all required current, non-STALE upstream artifacts.
 
@@ -267,29 +260,25 @@ This is the final assembly step, not a separate QC or approval gate.
 ```text
 01 Brief & Product
         ↓
-02 Campaign Intake
+02 Niche & Context
         ↓
-03 Niche & Context
+03 Creator
         ↓
-04 Creator
+04 Content Strategy
         ↓
-05 Content Strategy
+05 Hook
         ↓
-06 Hook
-        ↓
-07 Storyboard
-   ┌──────────┐
-   ↓          ↓
-08 Visual   09 Voice [spoken modes only]
-   │          │
-   └────┬─────┘
-        ↓
-   10 Video Prompt
-        ↓
-   11 Production
+06 Storyboard
+   ┌──────────┬──────────┐
+   ↓          ↓          ↓
+07 Visual   08 Video   09 Voice [spoken modes only]
+   │          │          │
+   └──────────┴────┬─────┘
+                  ↓
+            10 Production
 ```
 
-Stage 10 requires current Voice Script only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. For `NO_SPOKEN_VOICE`, Stage 10 has no Voice Script dependency and must explicitly declare dialogue/voice generation as not applicable and must not invent spoken content. Stage 10 also consumes current visual/reference information when visual continuity is required.
+Stage 08 consumes the current Visual Prompt when visual continuity is required. When spoken audio is required, it may reference the campaign audio mode and storyboard timing, but it must not invent or rewrite canonical spoken wording. Stage 09 remains the canonical spoken-content artifact and must be current for final Production Output.
 
 ## Revision and Invalidation
 
