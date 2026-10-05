@@ -2,7 +2,7 @@
 
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 07 — Storyboard
+- Canonical workflow stage: Stage 06 — Storyboard
 - Implementation path: `ENGINE/05_STORYBOARD_ENGINE/`
 - The numeric prefix in the implementation directory is NOT a workflow stage ID.
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
