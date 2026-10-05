@@ -12,6 +12,7 @@
 ```yaml
 stage: 10_VIDEO_PROMPT
 status: COMPLETED
+audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER | NO_SPOKEN_VOICE
 provider:
   provider_id:
   model_id:
@@ -48,6 +49,14 @@ source_artifacts: []
 source_commit_sha:
 ```
 
+## Audio Mode Invariant
+
+`audio_mode` is inherited from Campaign Intake and is authoritative.
+
+- `SPOKEN_ON_CAMERA`: Dialogue Sync may include exact creator dialogue, lip-sync, and Voice Generation Reference.
+- `VOICE_OVER`: Dialogue Sync may include canonical voice-over timing and Voice Generation Reference; do not require visible creator lip-sync.
+- `NO_SPOKEN_VOICE`: Dialogue Sync must contain no spoken dialogue, no lip-sync requirement, and no Voice Generation Reference. Video Prompt must not invent or rewrite spoken content.
+
 ## Duration Invariant
 
 Every generation segment must use exactly one of:
@@ -71,7 +80,7 @@ The user-facing video prompt itself must be one standalone Markdown code block. 
 
 ## Invalidation
 
-Changes to Storyboard, Visual Prompt, Creator, Product, Context, provider capability profile, or requested duration invalidate Video Prompt as STALE.
+Changes to Storyboard, Visual Prompt, Creator, Product, Context, Campaign `audio_mode`, provider capability profile, or requested duration invalidate Video Prompt as STALE.
 
 
 ## Reference Transition Output
