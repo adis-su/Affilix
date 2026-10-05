@@ -13,7 +13,6 @@ This audit validates the repository against the current canonical architecture:
 
 ```text
 Brief & Product
-→ Campaign Intake
 → Niche & Context
 → Creator
 → Content Strategy
@@ -30,7 +29,7 @@ Brief & Product
 ### A01 — Runtime entry point alignment
 Status: PASS
 
-`SKILL.md`, `ENGINE/WORKFLOW.md`, and the entry-point contract use the same eleven-stage pipeline. `/next` is progression only.
+`SKILL.md`, `ENGINE/WORKFLOW.md`, and the entry-point contract use the same ten-stage pipeline. `/next` is progression only.
 
 ### A02 — Universal engine architecture
 Status: PASS
@@ -116,4 +115,4 @@ The following concepts are not part of the canonical runtime:
 
 Architecture status: PASS
 
-The repository is aligned with the current Affilix architecture. The main remaining maintenance task is to keep future regression artifacts and audit snapshots aligned with the canonical eleven-stage workflow.
+The repository is aligned with the current Affilix architecture. The main remaining maintenance task is to keep future regression artifacts and audit snapshots aligned with the canonical ten-stage workflow.
