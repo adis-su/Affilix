@@ -1,6 +1,6 @@
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 04
+- Canonical workflow stage: Stage 03
 - Engine implementation path: `ENGINE/02_CREATOR_SELECTOR/`
 - Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
 - Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
