@@ -31,7 +31,7 @@ It MUST NOT resolve:
 
 `engine_directory_number → stage_id`
 
-Engine directory numbers are implementation identifiers only. In particular, `ENGINE/08_VOICE_SCRIPT_ENGINE/` maps to canonical Stage 09 and `ENGINE/07_VIDEO_PROMPT_ENGINE/` maps to canonical Stage 10.
+Engine directory numbers are implementation identifiers only. In particular, `ENGINE/08_VOICE_SCRIPT_ENGINE/` maps to canonical Stage 09 and `ENGINE/07_VIDEO_PROMPT_ENGINE/` maps to canonical Stage 08.
 
 Every material artifact must carry a canonical `stage` value. Runtime validation must reject an artifact when its declared stage conflicts with the canonical registry or when a dependency is inferred from an engine directory number.
 
@@ -126,7 +126,6 @@ niche_context:
 
 stages:
   brief_product: { status:, output: }
-  campaign_intake: { status:, output: }
   niche_context: { status:, output: }
   creator: { status:, output: }
   content_strategy: { status:, output: }
@@ -148,12 +147,12 @@ artifacts:
 
 ## Stage Orchestration
 
-Stages 01 through 07 execute sequentially. Stage 02 must establish `campaign.audio_mode` before downstream dependency planning. After Stage 07, downstream stages are executed according to deliverable requirements and that audio mode while preserving their canonical numbering:
+Stages 01 through 06 execute sequentially. Stage 01 establishes campaign requirements, including `campaign.audio_mode`, before downstream dependency planning. After Stage 06, downstream branches execute according to deliverable requirements:
 
-- Stage 08 Visual Prompt when visual output is required
-- Stage 09 Voice Script when `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`
-- Stage 10 Video Prompt when video output is required; its Voice dependency exists only for those two spoken modes
-- Stage 11 Production Output
+- Stage 07 Visual Prompt when visual output is required
+- Stage 08 Video Prompt when video output is required
+- Stage 09 Voice Script when `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
+- Stage 08 Production Output
 
 After every completed stage, wait for `/next`.
 
@@ -161,10 +160,9 @@ These are dependency-driven stages, not approval branches.
 
 ## Canonical Stage Prerequisites
 
-- Campaign Intake: Brief & Product COMPLETED.
-- Niche Context: Brief & Product + Campaign Intake COMPLETED.
-- Creator: Niche Context + Campaign Intake COMPLETED.
-- Content Strategy: Brief & Product + Campaign Intake + Niche Context + Creator COMPLETED.
+- Niche Context: Brief & Product COMPLETED.
+- Creator: Niche Context + Brief & Product COMPLETED.
+- Content Strategy: Brief & Product + Niche Context + Creator COMPLETED.
 - Hook: Content Strategy COMPLETED.
 - Storyboard: Hook + all required upstream state COMPLETED.
 - Visual Prompt: Storyboard COMPLETED.
@@ -207,7 +205,7 @@ Examples:
 - Creator revision → Strategy, Hook, Storyboard, Visual, Voice, Video become STALE.
 - Product or niche revision → all dependent creative stages become STALE.
 - Campaign requirement revision → affected Context, Creator, Strategy, Hook, Storyboard, Visual, Voice, Video become STALE.
-- `campaign.audio_mode` revision → re-evaluate Stage 09 and Stage 10 dependency state; never leave a stale Voice Script as an implicit dependency when mode is `NO_SPOKEN_VOICE`.
+- `campaign.audio_mode` revision → re-evaluate Stage 09 and Stage 08 dependency state; never leave a stale Voice Script as an implicit dependency when mode is `NO_SPOKEN_VOICE`.
 - Strategy revision → Hook, Storyboard, Visual, Voice, Video become STALE.
 - Hook revision → affected Storyboard and downstream assets become STALE.
 - Storyboard revision → Visual, Voice, Video become STALE.
