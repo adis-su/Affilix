@@ -97,6 +97,7 @@ campaign:
   audience:
   creator:
   cta:
+  audio_mode:
   key_message:
   talking_points:
   references:
@@ -147,11 +148,11 @@ artifacts:
 
 ## Stage Orchestration
 
-Stages 01 through 07 execute sequentially. After Stage 07, downstream stages are executed according to deliverable requirements while preserving their canonical numbering:
+Stages 01 through 07 execute sequentially. Stage 02 must establish `campaign.audio_mode` before downstream dependency planning. After Stage 07, downstream stages are executed according to deliverable requirements and that audio mode while preserving their canonical numbering:
 
 - Stage 08 Visual Prompt when visual output is required
-- Stage 09 Voice Script when spoken content is required
-- Stage 10 Video Prompt when video output is required
+- Stage 09 Voice Script when `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`
+- Stage 10 Video Prompt when video output is required; its Voice dependency exists only for those two spoken modes
 - Stage 11 Production Output
 
 After every completed stage, wait for `/next`.
@@ -167,8 +168,8 @@ These are dependency-driven stages, not approval branches.
 - Hook: Content Strategy COMPLETED.
 - Storyboard: Hook + all required upstream state COMPLETED.
 - Visual Prompt: Storyboard COMPLETED.
-- Voice Script: Storyboard COMPLETED when spoken content is required.
-- Video Prompt: Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + current Voice Script COMPLETED when spoken content exists + provider capability profile when video generation is required.
+- Voice Script: Storyboard COMPLETED when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`.
+- Video Prompt: Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + current Voice Script COMPLETED only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER` + provider capability profile when video generation is required.
 - Production Output: all required downstream specifications current and non-STALE.
 
 There is no QC prerequisite, Final UGC Package prerequisite, or approval prerequisite.
@@ -206,6 +207,7 @@ Examples:
 - Creator revision → Strategy, Hook, Storyboard, Visual, Voice, Video become STALE.
 - Product or niche revision → all dependent creative stages become STALE.
 - Campaign requirement revision → affected Context, Creator, Strategy, Hook, Storyboard, Visual, Voice, Video become STALE.
+- `campaign.audio_mode` revision → re-evaluate Stage 09 and Stage 10 dependency state; never leave a stale Voice Script as an implicit dependency when mode is `NO_SPOKEN_VOICE`.
 - Strategy revision → Hook, Storyboard, Visual, Voice, Video become STALE.
 - Hook revision → affected Storyboard and downstream assets become STALE.
 - Storyboard revision → Visual, Voice, Video become STALE.
