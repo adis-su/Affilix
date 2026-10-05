@@ -47,7 +47,7 @@ Natural-language input is supported.
 
 ### User-Facing Stage Isolation
 
-Stage 01 user-facing output is restricted to Product Intake. Campaign fields may exist in isolated internal runtime state as UNKNOWN, but they must not be rendered, summarized, previewed, or exposed to the user before Stage 02 is active. A generic runtime-state renderer must be stage-aware and must never dump the full campaign state during Stage 01.
+Stage 01 user-facing output begins with Product Intake, then collects the required campaign requirements before Stage 01 is completed. There is no separate Campaign Intake stage. A generic runtime-state renderer must be stage-aware and must never dump the full campaign state during Stage 01.
 
 Initialize isolated state:
 
@@ -87,9 +87,9 @@ Do not inherit product, creator, niche, claims, storyboard, prompts, or producti
 7. Validate Product Intake and mark Stage 01 COMPLETED.
 8. Wait for `/next`.
 
-## 5. Stage 02 — Campaign Intake
+## 5. Stage 01 — Campaign Requirements
 
-After `/next`, expose structured campaign choices:
+Before Stage 01 is marked complete, collect the structured campaign requirements:
 
 ```
 STAGE 02 — Campaign Intake
@@ -144,7 +144,7 @@ Persist the selected value as one of:
 - `VOICE_OVER`
 - `NO_SPOKEN_VOICE`
 
-This choice is a campaign-level creative mode and must be resolved before downstream dependency planning. It determines whether Stage 09 Voice Script is required and what kind of dialogue synchronization Stage 10 Video Prompt may use.
+This choice is a campaign-level creative mode and must be resolved before downstream dependency planning. It determines whether Stage 09 Voice Script is required and what kind of dialogue synchronization Stage 08 Video Prompt may use.
 
 CTA:
 - Shop now
@@ -195,23 +195,23 @@ The selected objective must be persisted as a structured campaign objective. Mul
 
 Target audience is AI-derived from the validated Stage 01 product research and supplied product reference. The system should infer an audience profile using only source-supported product/category/use-case signals and clearly label inferred attributes as `INFERRED`.
 
-Do not invent sensitive personal attributes or unsupported demographic facts. The user may correct or replace the AI-derived audience before Stage 02 is completed.
+Do not invent sensitive personal attributes or unsupported demographic facts. The user may correct or replace the AI-derived audience before Stage 01 is completed.
 
 ### Creator
 
-Creator selection is dynamic. Enumerate the available creator records under `CREATOR_LIBRARY/` in the pinned repository version and display their canonical creator names/IDs as choices. Do not hard-code a creator list in the Stage 02 contract.
+Creator selection is dynamic. Enumerate the available creator records under `CREATOR_LIBRARY/` in the pinned repository version and display their canonical creator names/IDs as choices. Do not hard-code a creator list in the Stage 01 contract.
 
 The selected value is the requested creator input and is later resolved/validated by Stage 04 Creator.
 
 ### Audio / Voice Mode
 
-Audio / Voice Mode is a required Stage 02 campaign choice.
+Audio / Voice Mode is a required Stage 01 campaign choice.
 
-- `SPOKEN_ON_CAMERA`: creator speaks on camera; Stage 09 Voice Script is required and Stage 10 must synchronize canonical dialogue with visible creator speech.
-- `VOICE_OVER`: narration exists without requiring the creator to speak on camera; Stage 09 Voice Script is required and Stage 10 must synchronize the canonical voice-over with the visual action.
-- `NO_SPOKEN_VOICE`: no spoken dialogue or voice-over; Stage 09 is validly `SKIPPED`, and Stage 10 must not invent dialogue, lip-sync, or voice-generation requirements. Music, sound effects, or on-screen text remain optional independent layers.
+- `SPOKEN_ON_CAMERA`: creator speaks on camera; Stage 09 Voice Script is required and Stage 08 must synchronize canonical dialogue with visible creator speech.
+- `VOICE_OVER`: narration exists without requiring the creator to speak on camera; Stage 09 Voice Script is required and Stage 08 must synchronize the canonical voice-over with the visual action.
+- `NO_SPOKEN_VOICE`: no spoken dialogue or voice-over; Stage 09 is validly `SKIPPED`, and Stage 08 must not invent dialogue, lip-sync, or voice-generation requirements. Music, sound effects, or on-screen text remain optional independent layers.
 
-The selected mode must be persisted in campaign state before Stage 02 can be marked `COMPLETED`.
+The selected mode must be persisted in campaign state before Stage 01 can be marked `COMPLETED`.
 
 ### CTA
 
@@ -219,7 +219,7 @@ CTA is a controlled choice with a `Custom CTA` escape hatch. Persist the selecte
 
 ### Validation
 
-Stage 02 must have:
+Stage 01 must have:
 
 - one supported platform
 - one exact requested duration, either the default 18 seconds or an explicit Custom value
@@ -230,7 +230,7 @@ Stage 02 must have:
 
 Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
 
-After validation, mark Stage 02 COMPLETED and wait for `/next`.
+After validation, mark Stage 01 COMPLETED and wait for `/next`.
 
 Additional fields such as aspect ratio, key message, talking points, references, brand requirements, restrictions, and script requirements are collected only when materially relevant.
 
@@ -242,25 +242,23 @@ The canonical workflow is defined only by `ENGINE/WORKFLOW.md`:
 /Affilix
 → STAGE 01 BRIEF & PRODUCT
 → /next
-→ STAGE 02 CAMPAIGN INTAKE
+→ STAGE 02 NICHE & CONTEXT
 → /next
-→ STAGE 03 NICHE & CONTEXT
+→ STAGE 03 CREATOR
 → /next
-→ STAGE 04 CREATOR
+→ STAGE 04 CONTENT STRATEGY
 → /next
-→ STAGE 05 CONTENT STRATEGY
+→ STAGE 05 HOOK
 → /next
-→ STAGE 06 HOOK
+→ STAGE 06 STORYBOARD
 → /next
-→ STAGE 07 STORYBOARD
+→ STAGE 07 VISUAL PROMPT
 → /next
-→ STAGE 08 VISUAL PROMPT
+→ STAGE 08 VIDEO PROMPT when video output is required
 → /next
 → STAGE 09 VOICE SCRIPT when `SPOKEN_ON_CAMERA` or `VOICE_OVER`
 → /next
-→ STAGE 10 VIDEO PROMPT when video output is required
-→ /next
-→ STAGE 11 PRODUCTION OUTPUT
+→ STAGE 10 PRODUCTION OUTPUT
 ```
 
 There is no QC stage, Final UGC Package stage, or approval gate in the canonical workflow. Validation occurs inside each stage.
