@@ -172,12 +172,12 @@ At the start of every new `/Affilix` run:
 4. load relevant rules and assets from that pinned commit
 5. keep repository state separate from production-run state
 
-When continuing an Affilix project conversation without starting a new run, first determine whether an active run already has a pinned repository commit. Never silently mix a newer repository snapshot into that active run. If implementation work is requested outside the active run, resolve the current `main` head before editing or claiming repository state.
+When continuing an Affilix project conversation with `/next` or a stage revision, first determine whether an active run exists and resolve the current `main` head. If the current `main` SHA differs from the active run's pinned commit, synchronize the active run to the latest `main` snapshot before executing the requested progression or revision. Revalidate the active stage and invalidate only artifacts affected by repository contract changes. Never execute a stage against a stale repository contract when a newer `main` snapshot is available. If implementation work is requested outside the active run, resolve the current `main` head before editing or claiming repository state.
 
 Repository freshness is therefore explicit:
 - new run → current `main` is resolved and pinned
-- active run → pinned commit remains authoritative for that run
-- repository update → picked up by the next new run, never silently injected into an active run
+- active run + `/next` or revision → current `main` is checked; if changed, the active run is synchronized to the latest commit before execution
+- repository update during an active run → latest contract is adopted at the next explicit progression/revision boundary, with affected artifacts revalidated or invalidated
 - unavailable current head → do not claim the repository is current
 
 These bootstrap operations are internal and must not alter the opening user-facing response.
@@ -186,7 +186,7 @@ These bootstrap operations are internal and must not alter the opening user-faci
 
 ChatGPT Project is the user-facing host, but it is not a competing source of truth. The repository defines implementation behavior; the Project carries conversation/run continuity.
 
-When a user says `/next`, recover the active run state, verify its pinned repository commit is available, execute the next dependency-satisfied stage, validate it, mark it complete, and wait again.
+When a user says `/next`, recover the active run state, resolve the current `main` head, compare it with the active run's pinned commit, synchronize to the latest commit when they differ, revalidate or invalidate affected artifacts, then execute the next dependency-satisfied stage, validate it, mark it complete, and wait again.
 
 When a user requests a revision, apply it to the smallest affected stage, revalidate, mark affected downstream artifacts STALE as required, and do not advance automatically.
 
