@@ -245,24 +245,21 @@ Spoken naturalization must preserve factual meaning and campaign intent. Never r
 
 ### 09 — Video Prompt
 
-Execution condition: required only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE` and produces no spoken-content artifact.
+Execution condition: required when video output is part of the requested deliverable. It is independent of whether spoken audio exists.
 
-Input: completed Storyboard, Strategy, Hook, Creator, Product facts, and campaign constraints.
+- `SPOKEN_ON_CAMERA` or `VOICE_OVER`: consume the current validated Stage 08 Voice Script.
+- `NO_SPOKEN_VOICE`: Stage 08 is skipped, but Stage 09 still executes for video output. Do not invent dialogue, lip-sync, or voice-generation requirements.
 
-Output: canonical scene-by-scene spoken dialogue plus Voice Performance Plan when spoken content is required.
+Input: completed Storyboard, current Visual Prompt, current Voice Script when applicable, Strategy, Hook, Creator, Product facts, campaign constraints, provider capability profile, requested duration, and reference graph.
 
-Voice Script is the sole source of truth for:
+Output: exactly one user-facing Video Prompt per Storyboard scene, plus technical generation-segment metadata nested under each scene.
 
-- exact spoken wording
-- speaker
-- pronunciation guidance
-- speech timing
-- delivery
-- pace
-- phrase grouping
-- emphasis
-- pitch/rhythm
-- pause/breathing behavior
+Prompt-count invariant:
+`video_prompt_count == storyboard_scene_count`.
+
+Multiple 4/6/8/10-second generation segments within one scene do not create additional user-facing Video Prompts. Multiple scenes must not be merged into one Video Prompt.
+
+Storyboard remains the canonical source for scene intent, action choreography, narrative timing, product causality, resulting states, and reference transitions. Visual Prompt owns static appearance. Voice Script, when present, owns exact spoken wording and delivery. Video Prompt owns motion implementation and technical generation segmentation.
 
 Spoken naturalization must preserve factual meaning and campaign intent.
 
