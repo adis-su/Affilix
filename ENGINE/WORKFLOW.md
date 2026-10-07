@@ -27,8 +27,8 @@ The numeric stage ID in this registry is the ONLY workflow ordering and dependen
 | 05 | Hook | 05_HOOK | `ENGINE/04_HOOK_ENGINE/` |
 | 06 | Storyboard | 06_STORYBOARD | `ENGINE/05_STORYBOARD_ENGINE/` |
 | 07 | Visual Prompt | 07_VISUAL_PROMPT | `ENGINE/06_VISUAL_PROMPT_ENGINE/` |
-| 08 | Video Prompt | 08_VIDEO_PROMPT | `ENGINE/07_VIDEO_PROMPT_ENGINE/` |
-| 09 | Voice Script | 09_VOICE_SCRIPT | `ENGINE/08_VOICE_SCRIPT_ENGINE/` |
+| 08 | Voice Script | 08_VOICE_SCRIPT | `ENGINE/08_VOICE_SCRIPT_ENGINE/` |
+| 09 | Video Prompt | 09_VIDEO_PROMPT | `ENGINE/07_VIDEO_PROMPT_ENGINE/` |
 | 10 | Production Output | 10_PRODUCTION_OUTPUT | `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` |
 
 ### Stage/Engine Numbering Invariant
@@ -37,7 +37,7 @@ Engine directory prefixes are legacy implementation identifiers, not workflow st
 
 The mapping above is authoritative. Any engine contract, runtime state, parser, resolver, or prompt that attempts to derive workflow order from a directory prefix is invalid and must fail validation rather than guessing.
 
-Never interpret `ENGINE/08_VOICE_SCRIPT_ENGINE` as Stage 08 or `ENGINE/07_VIDEO_PROMPT_ENGINE` as Stage 07. They are respectively canonical Stage 09 and Stage 10.
+`ENGINE/08_VOICE_SCRIPT_ENGINE/` is the canonical Stage 08 implementation path, while `ENGINE/07_VIDEO_PROMPT_ENGINE/` is the canonical Stage 09 implementation path. Engine directory prefixes remain implementation identifiers and must not be used as a general rule for deriving workflow order.
 
 ## Cross-Stage UGC Naturalism
 
@@ -47,8 +47,8 @@ Naturalism is validated inside the existing stages:
 - Stage 04/05: the strategy and hook must be executable through believable human behavior.
 - Stage 06: action choreography must express motivated timing, physical plausibility, bounded micro-motion, gaze, expression, product causality, and camera motivation.
 - Stage 07: frozen reference states must preserve plausible posture, grip, gaze, expression, and continuity.
-- Stage 08: motion must express causal action, human timing, gaze behavior, restrained reaction, controlled camera response, and exact reference transitions.
-- Stage 09: spoken delivery must be conversational and physically/time aligned without inventing claims or experience.
+- Stage 08: spoken delivery must be conversational and physically/time aligned without inventing claims or experience.
+- Stage 09: motion must express causal action, human timing, gaze behavior, restrained reaction, controlled camera response, and exact reference transitions.
 - Stage 10: Production Output preserves naturalism traceability and never invents a missing naturalism correction.
 
 Naturalism validation failure is handled inside the affected stage. It never creates a QC, approval, or additional workflow stage.
@@ -72,9 +72,9 @@ Naturalism validation failure is handled inside the affected stage. It never cre
   ↓ /next
 07 VISUAL PROMPT
   ↓ /next
-08 VIDEO PROMPT       [when video output is required]
+08 VOICE SCRIPT       [when spoken content is required]
   ↓ /next
-09 VOICE SCRIPT       [when spoken content is required]
+09 VIDEO PROMPT       [when video output is required]
   ↓ /next
 10 PRODUCTION OUTPUT
 ```
@@ -220,19 +220,30 @@ Output: **one static image prompt per required visual reference state**.
 
 A reference state is a frozen visual state, not a generation segment. Bridge references are immutable. If a bridge changes, both adjacent scene boundaries and dependent downstream transitions become stale.
 
-### 08 — Video Prompt
+### 08 — Voice Script
 
-Input: completed Storyboard, current Visual Prompt when visual continuity is required, current Voice Script only when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and provider capability profile when generation is required.
+Input: completed Storyboard, Strategy, Hook, Creator, Product facts, and campaign constraints when spoken content is required.
 
-Output: provider-compatible motion specifications and exact generation segment mapping.
+Output: canonical scene-by-scene spoken dialogue plus Voice Performance Plan when spoken content is required.
 
-Video Prompt consumes, but does not rewrite, canonical Voice Script dialogue. When speech generation is applicable, include a derived Voice Generation Reference inside Dialogue Sync. The Video Prompt must not become a competing voice specification.
+Voice Script is the sole source of truth for:
 
-Generation durations are limited to `[4, 6, 8, 10]` seconds. Final campaign duration is authoritative and must be composed exactly from supported segments. Never round, truncate, extend, or silently replace duration. If exact composition is impossible:
+- exact spoken wording
+- speaker
+- pronunciation guidance
+- speech timing
+- delivery
+- pace
+- phrase grouping
+- emphasis
+- pitch/rhythm
+- pause/breathing behavior When speech generation is applicable, include a derived Voice Generation Reference inside Dialogue Sync. The Video Prompt must not become a competing voice specification.
+
+Spoken naturalization must preserve factual meaning and campaign intent. Never round, truncate, extend, or silently replace duration. If exact composition is impossible:
 
 `duration_feasibility: BLOCKED`
 
-### 09 — Voice Script
+### 09 — Video Prompt
 
 Execution condition: required only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE` and produces no spoken-content artifact.
 
@@ -281,14 +292,30 @@ This is the final assembly step, not a separate QC or approval gate.
 06 Storyboard
    ┌──────────┬──────────┐
    ↓          ↓          ↓
-07 Visual   08 Video   09 Voice [spoken modes only]
+07 Visual   08 Voice   09 Video [when required]
    │          │          │
-   └──────────┴────┬─────┘
-                  ↓
-            10 Production
+   └──────┬───┴─────────┘
+          ↓
+    10 Production
 ```
 
-Stage 08 consumes the current Visual Prompt when visual continuity is required. When spoken audio is required, it may reference the campaign audio mode and storyboard timing, but it must not invent or rewrite canonical spoken wording. Stage 09 remains the canonical spoken-content artifact and must be current for final Production Output.
+Stage 09 consumes the current Visual Prompt when visual continuity is required and the current Stage 08 Voice Script when spoken content is required. Stage 09 must not invent or rewrite canonical spoken wording.
+
+## Downstream Dependency Order
+
+After Stage 06 Storyboard, the workflow intentionally executes the spoken-content branch before motion implementation:
+
+```text
+06 Storyboard
+   ├──→ 07 Visual Prompt
+   └──→ 08 Voice Script [spoken modes only]
+             ↓
+       09 Video Prompt
+             ↓
+       10 Production Output
+```
+
+Stage 08 Voice Script is a Storyboard descendant and does not depend on Visual Prompt. Stage 09 Video Prompt consumes the current Storyboard, current Visual Prompt when visual continuity is required, and the current Stage 08 Voice Script when spoken content exists. This ordering reflects the actual data dependency rather than treating Voice Script as a final post-processing artifact.
 
 ## Revision and Invalidation
 
