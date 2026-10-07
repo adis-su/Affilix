@@ -24,7 +24,9 @@ content_format_constraint:
   format_fit: eligible | conditional
   format_requirements: []
 metadata:
-  audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER
+  audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER | NO_SPOKEN_VOICE
+  dialogue_enabled: true | false
+  dialogue_delivery: NATIVE_PROVIDER | EXTERNAL_PROVIDER | NONE
   script_id:
   creator_id:
   campaign_id:
