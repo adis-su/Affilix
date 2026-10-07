@@ -132,6 +132,14 @@ R04 is the single continuity source of truth.
 
 Bridge references are immutable continuity anchors. A changed bridge requires a new version and invalidates dependent transitions.
 
+## UGC Naturalism
+
+Action Choreography is the primary temporal implementation layer for `ENGINE/UGC_NATURALISM_CONTRACT.md`. Naturalism is bounded and motivated, not random imperfection.
+
+Use trigger → intention → micro-action → primary action → reaction → resulting state where context supports it. Never rely on `move naturally` or `make it look human` as the sole direction.
+
+Naturalism validation must inspect physical plausibility, behavioral motivation, human timing, gaze realism, expression restraint, camera realism, bounded micro-motion, product causality, and reference-state integrity.
+
 ## Validation
 
 A valid action choreography must pass:
