@@ -332,7 +332,7 @@ Examples:
 
 - Product change → Context, Creator when affected, Strategy, Hook, Storyboard, Visual, Voice, Video.
 - Campaign requirement change → affected Context, Creator, Strategy, Hook, Storyboard, Visual, Voice, Video.
-- Audio / Voice Mode change → re-evaluate Stage 09 and Stage 10. `NO_SPOKEN_VOICE` invalidates any existing Voice Script as STALE/SKIPPED and removes voice dependencies from Video; either spoken mode makes Stage 09 required and Video dependent on its current output.
+- Audio / Voice Mode change → re-evaluate Stage 08 and Stage 09. `NO_SPOKEN_VOICE` invalidates any existing Voice Script as STALE/SKIPPED and removes voice dependencies from Video; either spoken mode makes Stage 08 required and Stage 09 dependent on its current output.
 - Creator change → Strategy, Hook, Storyboard, Visual, Voice, Video.
 - Strategy change → Hook, Storyboard, Visual, Voice, Video.
 - Content Format change → Hook, Storyboard, Visual, Voice, Video, and Production Output.
