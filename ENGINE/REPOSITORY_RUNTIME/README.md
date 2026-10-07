@@ -66,16 +66,23 @@ Repository state and production-run state are separate. A repository update does
 
 If the repository does not define a fact, do not invent it. Preserve UNKNOWN where needed and ask only when the missing information materially blocks safe execution.
 
-## Engine Execution
+## Engine Resolution and Execution
 
 Before executing an engine:
-1. identify the relevant engine,
-2. load its current repository specification,
-3. load declared inputs and upstream canonical state,
-4. generate within those constraints,
-5. validate the output,
-6. pass the current result to the next dependency,
-7. invalidate affected downstream assets when upstream canonical inputs change.
+1. resolve the canonical Stage ID from `ENGINE/WORKFLOW.md`,
+2. resolve the canonical Stage Name from that registry entry,
+3. resolve the implementation path from the same registry entry,
+4. verify that the implementation path exists in the pinned repository snapshot,
+5. load the engine's current repository specification from that exact path,
+6. load declared inputs and upstream canonical state,
+7. generate within those constraints,
+8. validate the output,
+9. pass the current result to the next dependency,
+10. invalidate affected downstream assets when upstream canonical inputs change.
+
+A runtime must never synthesize an engine path from a stage number or directory prefix. For Stage 08 the required lookup is exactly `08 → Voice Script → ENGINE/08_VOICE_SCRIPT_ENGINE/`; for Stage 09 it is exactly `09 → Video Prompt → ENGINE/07_VIDEO_PROMPT_ENGINE/`.
+
+If the canonical implementation path is present in the pinned snapshot but cannot be loaded, classify the failure as `ENGINE_FILE_ACCESS_FAILURE`, not `ENGINE_NOT_FOUND`. Only report `ENGINE_NOT_FOUND` when the exact canonical path is verified absent from the pinned snapshot. Do not fall back to an assumed alternate path.
 
 ## Traceability
 
