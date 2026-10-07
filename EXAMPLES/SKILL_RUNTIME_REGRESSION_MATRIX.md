@@ -200,3 +200,10 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 ### R053 — Downstream Elaboration Is Allowed
 - Visual Prompt may refine frozen composition; Video Prompt may refine motion timing/technical segmentation; Voice Script may refine wording/delivery, provided Storyboard semantic state remains unchanged.
 - Expected: implementation elaboration PASS.
+
+
+### R054 — Video Prompt Count Matches Scene Count
+- Given a completed Storyboard with N scenes, Stage 09 produces exactly N user-facing Video Prompts.
+- Multiple technical generation segments inside a scene do not create additional user-facing prompts.
+- Multiple scenes must not be merged into one Video Prompt.
+- Expected: `scene_count == video_prompt_count`; mismatch is `NEEDS_REFINEMENT` and blocks Stage 09 completion.
