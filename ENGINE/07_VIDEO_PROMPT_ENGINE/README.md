@@ -8,6 +8,25 @@
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
 - Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
 
+## UGC Naturalism Constraint
+
+Video Prompt is the primary motion implementation layer for `ENGINE/UGC_NATURALISM_CONTRACT.md`. The prompt must produce behaviorally believable UGC, not merely photorealistic movement.
+
+For every generation segment, validate:
+- motivated trigger and intention
+- human timing with bounded hesitation, adjustment, or reaction when context supports it
+- physically plausible body and hand motion
+- causal product manipulation and state change
+- gaze changes tied to creator, product, and camera relationships
+- restrained expression changes
+- controlled handheld/camera response rather than random shake or jitter
+- bounded secondary micro-motion that never invents competing actions
+- exact start/end reference fidelity
+
+Never use `move naturally`, `make it look human`, or similar generic wording as the sole naturalism instruction. Generic realism language without action causality is insufficient.
+
+Naturalism failure should be `NEEDS_REFINEMENT` when the action remains feasible but synthetic-looking; use `BLOCKED` when physical behavior or continuity cannot be satisfied under the current constraints.
+
 ## Content Format Continuity
 
 The selected Content Format from Stage 04 is a required motion constraint. Video Prompt must express the format's mechanism through action, product interaction, proof, dialogue synchronization, and resulting states when those elements are part of the format.
