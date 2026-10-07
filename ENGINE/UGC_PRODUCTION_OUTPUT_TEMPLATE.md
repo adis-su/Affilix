@@ -77,6 +77,22 @@ For `N` Storyboard scenes:
 
 `N scenes = N Video Prompts`.
 
+### Dialogue Layer
+
+When dialogue is enabled independently of native video audio, Production Output must preserve the dialogue provider and synchronization contract without treating it as native video-provider speech.
+
+```yaml
+dialogue:
+  enabled: true | false
+  delivery: NATIVE_PROVIDER | EXTERNAL_PROVIDER | NONE
+  sync_required: true | false
+  provider_id:
+  asset_id:
+  synchronization_status: REQUIRED | SYNCHRONIZED | NOT_REQUIRED
+```
+
+For `NO_SPOKEN_VOICE + EXTERNAL_PROVIDER`, the video artifact remains silent and the external dialogue asset is assembled during final production synchronization. The canonical dialogue wording and timing remain owned by Stage 08.
+
 The remaining production output follows the current campaign, creator, product, niche context, strategy, selected Content Format, hook, storyboard, visual prompt, voice script, and video prompt state.
 
 ## Action and Reference Traceability
