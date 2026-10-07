@@ -8,6 +8,21 @@
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
 - Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
 
+## UGC Naturalism Constraint
+
+Storyboard must implement the cross-stage naturalism contract in `ENGINE/UGC_NATURALISM_CONTRACT.md`. Naturalism is expressed through motivated action, believable timing, bounded micro-motion, gaze, expression, product causality, and camera behavior. It must not be reduced to generic realism language.
+
+For each major action beat, validate:
+- trigger and intention are understandable
+- body and hand motion are physically plausible
+- product interaction has a causal result
+- gaze and expression respond to the active action
+- timing allows believable recognition, adjustment, and reaction when context supports them
+- secondary micro-motion is bounded and does not invent new actions
+- the resulting state matches the reference graph
+
+If naturalism is materially weak, mark the storyboard `NEEDS_REFINEMENT`; if it requires impossible or unsupported behavior, mark it `BLOCKED`. A naturalism change makes affected downstream visual, video, voice, and production artifacts STALE as required.
+
 ## Content Format Continuity
 
 Storyboard consumes the selected Content Format from Stage 04 and the selected Hook from Stage 05.
