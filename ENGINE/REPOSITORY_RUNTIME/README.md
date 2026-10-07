@@ -120,6 +120,26 @@ For every new `/Affilix` run:
 
 Never silently mix files from different repository commits.
 
+
+## Atomic /next Synchronization Boundary
+
+`/next` is a repository synchronization boundary for an active run. Before any next-stage engine is resolved, the runtime MUST resolve the current `main` HEAD and compare it with the active run's pinned SHA.
+
+If the SHA is unchanged, continue on the existing pinned snapshot. If it changed, the runtime MUST synchronize the run to the new SHA before loading any engine or stage-specific file. The synchronized snapshot becomes the only repository source for that `/next` execution.
+
+Required transaction:
+
+1. resolve current `main` HEAD,
+2. compare with active pin,
+3. synchronize the active pin when different,
+4. reload runtime contracts from the synchronized snapshot,
+5. revalidate prerequisites and mark only affected artifacts `STALE`,
+6. resolve the next canonical stage path,
+7. load that stage engine from the synchronized snapshot,
+8. execute and validate the stage.
+
+Never resolve a stage engine from `main` and then execute it against an older pinned snapshot. Never mix commits within one stage execution. If synchronization fails, use `REPOSITORY_SYNC_FAILURE`; do not misclassify the condition as `ENGINE_NOT_FOUND` or silently continue with the stale pin.
+
 ## Runtime State
 
 ```yaml
