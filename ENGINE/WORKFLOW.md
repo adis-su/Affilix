@@ -160,7 +160,7 @@ Creator selection must come from the current pinned repository. Identity is lock
 
 Input: completed Brief & Product, Niche & Context, and Creator.
 
-Output: objective, audience, product role, angle, core message, story arc, proof strategy, and CTA strategy.
+Output: objective, audience, product role, angle, core message, story arc, and proof strategy.
 
 ### 05 — Hook
 
@@ -275,6 +275,30 @@ Production Output must block final assembly when the selected Content Format is 
 
 This is the final assembly step, not a separate QC or approval gate.
 
+## Spoken Audio and External Dialogue
+
+Spoken dialogue is modeled independently from the video provider's native audio-generation capability.
+
+`campaign.audio_mode` answers whether the requested video generation itself must contain spoken audio:
+
+- `SPOKEN_ON_CAMERA` → Stage 08 Voice Script is required; Stage 09 synchronizes visible creator speech with the canonical dialogue.
+- `VOICE_OVER` → Stage 08 Voice Script is required; Stage 09 synchronizes the visual timeline with the canonical voice-over.
+- `NO_SPOKEN_VOICE` → Stage 08 is skipped by default, but dialogue may still be requested as an external audio asset. When external dialogue is enabled, Stage 08 becomes required for dialogue authoring and timing, while Stage 09 generates silent video and preserves dialogue timing anchors for downstream sync.
+
+Use these controls independently:
+
+```yaml
+audio_mode: NO_SPOKEN_VOICE
+dialogue:
+  enabled: true
+  delivery: EXTERNAL_PROVIDER
+  sync_required: true
+```
+
+`audio_mode` must never be overloaded to mean `dialogue_enabled`. `NO_SPOKEN_VOICE + EXTERNAL_PROVIDER` means the video provider generates no speech, while a separate dialogue provider produces the audio asset that is synchronized during final assembly.
+
+Stage 08 owns exact dialogue wording, speaker, timing, and Voice Performance/Generation Reference. Stage 09 owns visual motion and timing anchors. Stage 10 records the external dialogue asset and synchronization requirement when applicable.
+
 ## Dependency Graph
 
 ```text
@@ -298,7 +322,7 @@ This is the final assembly step, not a separate QC or approval gate.
     10 Production
 ```
 
-Stage 09 consumes the current Visual Prompt when visual continuity is required and the current Stage 08 Voice Script when spoken content is required. Stage 09 must not invent or rewrite canonical spoken wording.
+Stage 09 consumes the current Visual Prompt when visual continuity is required and the current Stage 08 Voice Script when dialogue timing is required. Native spoken-audio synchronization applies only to spoken modes; external dialogue synchronization applies when `NO_SPOKEN_VOICE` is paired with an enabled external dialogue layer. Stage 09 must not invent or rewrite canonical spoken wording.
 
 ## Downstream Dependency Order
 
@@ -331,7 +355,7 @@ Examples:
 
 - Product change → Context, Creator when affected, Strategy, Hook, Storyboard, Visual, Voice, Video.
 - Campaign requirement change → affected Context, Creator, Strategy, Hook, Storyboard, Visual, Voice, Video.
-- Audio / Voice Mode change → re-evaluate Stage 08 and Stage 09. `NO_SPOKEN_VOICE` invalidates any existing Voice Script as STALE/SKIPPED and removes voice dependencies from Video; either spoken mode makes Stage 08 required and Stage 09 dependent on its current output.
+- Audio / Voice Mode or dialogue-layer change → re-evaluate Stage 08 and Stage 09. `NO_SPOKEN_VOICE` alone permits Stage 08 to be SKIPPED; `NO_SPOKEN_VOICE + external dialogue enabled` requires Stage 08 for canonical dialogue/timing while Stage 09 remains silent-video generation. Spoken modes require Stage 08 and native dialogue synchronization.
 - Creator change → Strategy, Hook, Storyboard, Visual, Voice, Video.
 - Strategy change → Hook, Storyboard, Visual, Voice, Video.
 - Content Format change → Hook, Storyboard, Visual, Voice, Video, and Production Output.
