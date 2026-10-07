@@ -66,7 +66,7 @@ Execute each run in this order. After each stage is validated and completed, wai
 4. ENGINE/03_CONTENT_STRATEGY/README.md
 5. ENGINE/04_HOOK_ENGINE/README.md
 6. ENGINE/05_STORYBOARD_ENGINE/README.md
-7. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
+7. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md
 8. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise mark Stage 08 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
 9. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
 10. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
