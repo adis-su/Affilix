@@ -10,7 +10,7 @@
 ## Output
 
 ```yaml
-stage: 08_VIDEO_PROMPT
+stage: 09_VIDEO_PROMPT
 status: COMPLETED
 content_format_constraint:
   format_id:
