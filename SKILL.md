@@ -37,8 +37,8 @@ The canonical stage registry in `ENGINE/WORKFLOW.md` is the only source for stag
 
 Canonical mappings include:
 - Stage 07 Visual Prompt → `ENGINE/06_VISUAL_PROMPT_ENGINE/`
-- Stage 08 Video Prompt → `ENGINE/07_VIDEO_PROMPT_ENGINE/`
-- Stage 09 Voice Script → `ENGINE/08_VOICE_SCRIPT_ENGINE/`
+- Stage 08 Voice Script → `ENGINE/08_VOICE_SCRIPT_ENGINE/`
+- Stage 09 Video Prompt → `ENGINE/07_VIDEO_PROMPT_ENGINE/`
 
 If any engine message, artifact, or runtime state conflicts with the canonical registry, treat it as a contract error and stop the affected handoff. Never guess or derive stage order from folder numbers.
 
@@ -67,8 +67,8 @@ Execute each run in this order. After each stage is validated and completed, wai
 5. ENGINE/04_HOOK_ENGINE/README.md
 6. ENGINE/05_STORYBOARD_ENGINE/README.md
 7. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md when visual output is required
-8. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
-9. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise mark Stage 09 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
+8. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise mark Stage 08 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
+9. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
 10. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
 
 Do not skip an upstream stage when a downstream stage depends on it.
@@ -87,8 +87,9 @@ Every production run has one isolated runtime state:
 - hook
 - storyboard
 - visual specifications
-- video specifications
 - voice script when required by Audio / Voice Mode
+- video specifications
+- video specifications
 - production output
 
 If a canonical input changes, dependent state becomes STALE until regenerated and revalidated.
@@ -147,8 +148,8 @@ Stage order:
 5. Hook
 6. Storyboard
 7. Visual Prompt
-8. Video Prompt when required
-9. Voice Script when required
+8. Voice Script when required
+9. Video Prompt when required
 10. Production Output
 
 The run ends after the final required production output is generated. There is no separate QC stage and no separate Final UGC Package stage.
