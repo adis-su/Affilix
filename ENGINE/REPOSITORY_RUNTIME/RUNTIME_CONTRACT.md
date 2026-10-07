@@ -64,7 +64,7 @@ LOAD repository contracts
 RUN against pinned snapshot
 ```
 
-If `main` changes after pinning, the active run remains on its pinned snapshot. The newer repository state is adopted by the next new run.
+If `main` changes after pinning, the active run remains pinned until the next explicit `/next` or revision boundary. At that boundary, resolve the current `main` HEAD, synchronize the active run to the new commit, and revalidate or invalidate affected artifacts before execution.
 
 For implementation work outside an active production run, resolve the current `main` HEAD immediately before editing or reporting repository status.
 
@@ -187,7 +187,7 @@ There is no `REVIEW` state because Affilix has no approval workflow.
 
 ## Progression Contract
 
-`/next` advances the active run after the current stage completes validation. It does not represent approval, acceptance, endorsement, or waiver of validation.
+`/next` first synchronizes the active run against the current `main` repository contract when the repository has changed, then advances the active run after the current stage completes validation. It does not represent approval, acceptance, endorsement, or waiver of validation.
 
 ## Dependency and Stale-State Rules
 
