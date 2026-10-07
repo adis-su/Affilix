@@ -29,7 +29,20 @@ metadata:
   primary_content_angle:
   primary_message:
   hook_id:
-scenes: []
+scenes:
+  - scene_id:
+    reference_plan:
+      reference_density: LOW | MEDIUM | HIGH | VERY_HIGH
+      target_reference_count:
+      rationale:
+      states:
+        - reference_id:
+          reference_role: START | INTERMEDIATE | END | BRIDGE
+          source_beat_id:
+          critical_state: true | false
+          state_summary:
+    action_graph:
+      beats: []
 validation:
   content_format: PASS | NEEDS_REFINEMENT
   narrative: PASS | NEEDS_REFINEMENT
