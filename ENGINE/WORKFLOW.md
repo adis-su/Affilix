@@ -218,7 +218,7 @@ Human-looking motion must be controlled, action-coupled, and physically plausibl
 
 Input: completed Storyboard and required reference states.
 
-Output: **one static image prompt per required visual reference state**.
+Output: **one static image prompt per required visual reference state**, with every Storyboard-declared reference state rendered exactly once.
 
 A reference state is a frozen visual state, not a generation segment. Bridge references are immutable. If a bridge changes, both adjacent scene boundaries and dependent downstream transitions become stale.
 
