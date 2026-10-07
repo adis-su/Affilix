@@ -92,6 +92,7 @@ Every scene MUST define:
 - **proof mechanism:** the observable evidence the scene can legitimately establish
 - **camera state:** framing, perspective, and motivated camera response
 - **continuity invariants:** creator, wardrobe, product identity/geometry, environment, lighting, and other immutable properties
+- **reference plan:** reference density, target count, ordered reference states, roles, source beats, and critical-state rationale
 - **naturalism validation:** timing, causality, gaze, expression, micro-motion, and contextual motivation
 
 ### Action Graph
