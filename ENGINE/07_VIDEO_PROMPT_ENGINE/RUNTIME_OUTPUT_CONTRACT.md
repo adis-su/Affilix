@@ -18,6 +18,10 @@ content_format_constraint:
   format_fit: eligible | conditional
   format_requirements: []
 audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER | NO_SPOKEN_VOICE
+dialogue:
+  enabled: true | false
+  delivery: NATIVE_PROVIDER | EXTERNAL_PROVIDER | NONE
+  sync_required: true | false
 provider:
   provider_id:
   model_id:
@@ -79,7 +83,7 @@ See `ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md`.
 
 - `SPOKEN_ON_CAMERA`: Dialogue Sync may include exact creator dialogue, lip-sync, and Voice Generation Reference.
 - `VOICE_OVER`: Dialogue Sync may include canonical voice-over timing and Voice Generation Reference; do not require visible creator lip-sync.
-- `NO_SPOKEN_VOICE`: Dialogue Sync must contain no spoken dialogue, no lip-sync requirement, and no Voice Generation Reference. Video Prompt must not invent or rewrite spoken content.
+- `NO_SPOKEN_VOICE`: the video provider generates no spoken audio. If `dialogue.enabled: false`, Dialogue Sync contains no spoken content and no Voice Generation Reference. If `dialogue.delivery: EXTERNAL_PROVIDER`, Dialogue Sync may contain canonical dialogue timing anchors for an external audio asset, but must not require lip-sync or native voice generation. Video Prompt must not invent or rewrite spoken content.
 
 ## Duration Invariant
 
