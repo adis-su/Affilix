@@ -108,4 +108,48 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 - Existing dialogue must not be silently relabeled with the new format.
 
 ### R032 — No-spoken-voice exception
+
+### R033 — Naturalism Is Not Generic Realism
+- A prompt containing only "photorealistic", "realistic human movement", or "move naturally" without motivated action fails naturalism validation.
+- Expected: `NEEDS_REFINEMENT`.
+
+### R034 — Causal Human Timing
+- A storyboard/video prompt that expresses notice → reach → grip adjustment → product action → reaction → resulting state when context supports it passes naturalism validation.
+- Arbitrary fidgeting or random hesitation fails.
+- Expected: causal timing `PASS`; arbitrary imperfection `NEEDS_REFINEMENT`.
+
+### R035 — Bounded Micro-Motion
+- Breathing, limited blinking, weight shift, posture adjustment, grip correction, restrained expression change, and realistic fabric/hijab response may support the primary action.
+- Micro-motion must not invent a competing action or alter a reference state.
+- Expected: bounded support motion `PASS`; uncontrolled/random motion `NEEDS_REFINEMENT`.
+
+### R036 — Product Physical Causality
+- Product state, position, orientation, grip, and contact must change only through explicit physical interaction.
+- Drift, teleportation, duplication, unexplained morphing, or unexplained state change fails.
+- Expected: causal interaction `PASS`; unsupported transition `BLOCKED`.
+
+### R037 — Gaze and Camera Motivation
+- Gaze changes and camera reframing must respond to the creator/product/camera relationship.
+- Random shake, excessive jitter, locked gaze without context, or unexplained zoom fails naturalism validation.
+- Expected: motivated behavior `PASS`; arbitrary behavior `NEEDS_REFINEMENT`.
+
+### R038 — Frozen Visual Naturalism
+- Visual Prompt must show a plausible frozen human state with deterministic posture, grip, gaze, expression, and product relationship.
+- It must not encode motion sequences to simulate naturalism.
+- Expected: plausible frozen state `PASS`; ambiguous or synthetic pose `NEEDS_REFINEMENT`.
+
+### R039 — Spoken Naturalism Without Fabrication
+- Voice naturalization may improve phrasing, rhythm, pauses, breathing, and emphasis.
+- It must not invent personal experience, unsupported outcomes, urgency, scarcity, or claims.
+- Expected: conversational supported delivery `PASS`; mechanically promotional delivery `NEEDS_REFINEMENT`; unsupported factual invention `BLOCKED`.
+
+### R040 — Naturalism Revision Invalidation
+- A material naturalism change to Storyboard invalidates affected Visual Prompt, Video Prompt, Voice Script, and Production Output artifacts as required by dependency.
+- Existing downstream artifacts must not be silently relabeled as naturalized.
+- Expected: affected artifacts `STALE`.
+
+### R041 — Naturalism Preserves Content Format
+- Naturalism may improve action realism but cannot replace the selected Content Format mechanism with generic attention-grabbing motion.
+- Expected: format mechanism preserved and naturalism `PASS`; format substitution `NEEDS_REFINEMENT`.
+
 - When audio_mode=NO_SPOKEN_VOICE, Stage 09 is SKIPPED and Content Format voice validation is NOT_REQUIRED.
