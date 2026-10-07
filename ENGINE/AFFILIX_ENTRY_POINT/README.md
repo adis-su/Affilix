@@ -8,7 +8,7 @@ Affilix is invoked with:
 
 `/Affilix`
 
-The command starts a new isolated UGC production run. Users do not manually invoke individual engines. The entry point routes the session into the canonical continuous production workflow defined in `ENGINE/WORKFLOW.md`. Each stage completes and is validated before the next stage is available; `/next` is the progression command.
+The command starts a new isolated UGC production run. Users do not manually invoke individual engines. The entry point routes the session into the canonical continuous production workflow defined in `ENGINE/WORKFLOW.md`. Each stage completes and is validated before the next dependency-satisfied stage is available; `/next` is the progression command.
 
 ## 1. Invocation
 
@@ -273,9 +273,9 @@ The canonical workflow is defined only by `ENGINE/WORKFLOW.md`:
 → /next
 → STAGE 07 VISUAL PROMPT
 → /next
-→ STAGE 08 VIDEO PROMPT when video output is required
+→ STAGE 08 VOICE SCRIPT when `SPOKEN_ON_CAMERA` or `VOICE_OVER`
 → /next
-→ STAGE 09 VOICE SCRIPT when `SPOKEN_ON_CAMERA` or `VOICE_OVER`
+→ STAGE 09 VIDEO PROMPT when video output is required
 → /next
 → STAGE 10 PRODUCTION OUTPUT
 ```
