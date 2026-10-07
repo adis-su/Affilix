@@ -25,6 +25,36 @@ Do not silently convert one format into another during storyboard generation.
 
 If Stage 04 format is revised, the storyboard becomes STALE and must be regenerated or revalidated.
 
+## Format Mechanism Validation
+
+Content Format must materially shape the storyboard, not merely appear in `metadata.primary_content_format`.
+
+For the selected format, validate every scene against:
+
+- **Story mechanism:** the scene advances the registered format rather than a generic UGC sequence.
+- **Product role:** the product performs the role defined by the format.
+- **Proof mechanism:** any required proof is staged through an observable, evidence-supported action.
+- **Action purpose:** each major beat has a format-specific reason to exist.
+- **Transition:** the resulting state naturally advances the same format mechanism into the next beat.
+- **Hook continuity:** the first storyboard beat continues the selected Hook mechanism instead of replacing it with a generic product reveal.
+
+### Format-specific storyboard tests
+
+| Content Format | Storyboard must materially stage |
+|---|---|
+| BEAUTY_CRIME_SCENE | case/problem → inspection or intervention → observable result state |
+| PRODUCT_HAS_A_JOB | concrete need → product performs its assigned job → resulting task state |
+| BEAUTY_MYTH_LAB | test question → controlled action → observable test state |
+| PRODUCT_INTERROGATION | product question → inspection/demonstration → evidence state |
+| ONE_PRODUCT_THREE_PERSONALITIES | one product identity → distinct mode/context beats → preserved product continuity |
+| SILENT_BEAUTY_TEST | visually legible action → observable state change without dependence on dialogue |
+| BEAUTY_ROUTINE_UNDER_PRESSURE | situational pressure → constrained routine action → usable resulting state |
+| ANTI_TUTORIAL | expectation/reframe → practical demonstration or qualification → grounded conclusion |
+| LIFESTYLE_INTEGRATION | believable context → product naturally enters action → contextual resulting state |
+| PROBLEM_SOLUTION_MISSION | concrete problem → mission-oriented action → resolved task state |
+
+A storyboard that only copies the selected format into metadata while using generic scenes does not pass validation.
+
 ## Provider-Aware Duration Planning
 
 The storyboard owns creative duration, while the current video provider accepts generation clips of exactly 4s, 6s, 8s, or 10s.
