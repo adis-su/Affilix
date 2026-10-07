@@ -229,6 +229,10 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 - Expected: bridge continuity `PASS`; version mismatch `NEEDS_REFINEMENT`.
 
 ### R060 — Six References Do Not Change Video Prompt Count
+- A scene containing six visual reference states still produces exactly one user-facing Video Prompt.
+- Expected: scene-level prompt count remains `1`.
+
+### R061 — Intermediate Reference Is Not a Generation Segment
 - Given a completed Storyboard with N scenes, Stage 09 produces exactly N user-facing Video Prompts.
 - Multiple technical generation segments inside a scene do not create additional user-facing prompts.
 - Multiple scenes must not be merged into one Video Prompt.
