@@ -101,7 +101,7 @@ MARK COMPLETED
 WAIT FOR /next
 ```
 
-`/next` means **progress to the next dependency-satisfied stage**. It never means approve, accept, endorse, or waive validation.
+`/next` means **synchronize the active run with the latest repository contract, then progress to the next dependency-satisfied stage**. It never means approve, accept, endorse, or waive validation.
 
 After a revision:
 
