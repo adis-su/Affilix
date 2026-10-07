@@ -81,7 +81,7 @@ The remaining production output follows the current campaign, creator, product, 
 
 ## Action and Reference Traceability
 
-Final Production Output must retain the canonical action choreography and reference graph. Do not collapse a multi-reference scene into one generic scene description.
+Final Production Output must retain the canonical action choreography, Reference Plan, ordered reference trajectory, and reference graph. Do not collapse a multi-reference scene into one generic scene description. High-complexity scenes may contain six meaningful reference states by default when justified; these remain nested within one scene and never create additional Video Prompts.
 
 ```yaml
 scene_id:
