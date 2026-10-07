@@ -135,10 +135,10 @@ Action beats must include motivated body/hand motion, product interaction, gaze,
 ### Stage 07 — Visual Prompt
 Each frozen state must show a plausible human posture, grip, gaze, expression, product relationship, clothing/hijab state, and environment. Do not encode motion into the static frame.
 
-### Stage 08 — Video Prompt
+### Stage 09 — Video Prompt
 Motion must be causal, temporally believable, physically plausible, reference-safe, and bounded. Secondary natural motion supports the primary action and must never compete with it.
 
-### Stage 09 — Voice Script
+### Stage 08 — Voice Script
 Spoken delivery should sound conversational rather than brochure-like or mechanically paced. Naturalization must preserve exact factual meaning, supported claims, creator constraints, and campaign intent.
 
 ### Stage 10 — Production Output
