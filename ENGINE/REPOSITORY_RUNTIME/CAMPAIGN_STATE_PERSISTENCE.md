@@ -137,8 +137,8 @@ A run is complete only when every required canonical stage is `COMPLETED` or `SK
 
 Stage 01 must persist exactly one `campaign.audio_mode` value:
 
-- `SPOKEN_ON_CAMERA` → Stage 09 required; Stage 10 consumes canonical spoken dialogue and lip-sync requirements.
-- `VOICE_OVER` → Stage 09 required; Stage 10 consumes canonical voice-over timing and voice-generation reference without requiring visible creator speech.
-- `NO_SPOKEN_VOICE` → Stage 09 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`; Stage 10 has no Voice Script dependency and must declare spoken audio/lip-sync as not applicable.
+- `SPOKEN_ON_CAMERA` → Stage 08 required; Stage 09 consumes canonical spoken dialogue and lip-sync requirements.
+- `VOICE_OVER` → Stage 08 required; Stage 09 consumes canonical voice-over timing and voice-generation reference without requiring visible creator speech.
+- `NO_SPOKEN_VOICE` → Stage 08 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`; Stage 09 has no Voice Script dependency and must declare spoken audio/lip-sync as not applicable.
 
 Changing `audio_mode` is a campaign revision. Recompute Stage 08/09 dependency state and invalidate affected artifacts rather than silently carrying the previous mode forward.
