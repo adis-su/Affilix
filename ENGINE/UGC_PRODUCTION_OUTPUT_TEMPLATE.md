@@ -21,6 +21,22 @@ content_format_propagation:
 
 Production Output is valid only when the selected Content Format is current and all required downstream artifacts preserve it. A format mismatch or stale dependent artifact blocks final assembly.
 
+## UGC Naturalism Traceability
+
+Production Output must preserve the naturalism state of required upstream artifacts. Naturalism is a cross-stage constraint, not a separate QC stage.
+
+```yaml
+ugc_naturalism:
+  contract: ENGINE/UGC_NATURALISM_CONTRACT.md
+  storyboard: PASS | NEEDS_REFINEMENT | BLOCKED
+  visual_prompt: PASS | NEEDS_REFINEMENT | BLOCKED
+  video_prompt: PASS | NEEDS_REFINEMENT | BLOCKED | NOT_REQUIRED
+  voice_script: PASS | NEEDS_REFINEMENT | BLOCKED | NOT_REQUIRED
+  propagation: PRESERVED | NEEDS_REVALIDATION
+```
+
+Final assembly must not silently "humanize" an upstream artifact. If required naturalism state is `BLOCKED` or `NEEDS_REVALIDATION`, Production Output remains blocked until the affected upstream artifact is corrected and revalidated.
+
 ## Video Duration
 
 - requested_duration:
