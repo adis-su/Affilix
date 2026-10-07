@@ -10,7 +10,7 @@
 ## Output
 
 ```yaml
-stage: 07_STORYBOARD
+stage: 06_STORYBOARD
 status: COMPLETED
 metadata:
   storyboard_id:
