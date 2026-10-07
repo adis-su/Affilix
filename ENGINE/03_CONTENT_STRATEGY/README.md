@@ -12,7 +12,9 @@
 
 The Content Strategy Engine turns the normalized brief, selected creator, verified product information, and loaded niche context into a clear UGC content strategy.
 
-It decides what the content should communicate and demonstrate, not the final scene-by-scene script.\n\nIt also selects the **Content Format** that packages the content experience into a repeatable story mechanism. Content Format is distinct from Content Angle and becomes a downstream creative constraint. See `CONTENT_FORMAT_SYSTEM.md`.
+It decides what the content should communicate and demonstrate, not the final scene-by-scene script.
+
+It also selects the **Content Format** that packages the content experience into a repeatable story mechanism. Content Format is distinct from Content Angle and becomes a downstream creative constraint. See `CONTENT_FORMAT_SYSTEM.md`.
 
 ## Input
 
@@ -74,7 +76,22 @@ Return a structured strategy:
 - Demonstration opportunity
 - Evidence available
 
-### Content Format\n\nSelect one eligible primary Content Format using product behavior, proof opportunity, creator fit, campaign objective, and platform fit. Do not select a format solely for novelty.\n\nRecord:\n\n- Content Format\n- Format Fit: eligible / conditional / ineligible\n- Format Rationale\n- Format Requirements\n- Product Behavior\n- Proof Opportunity\n\nThe registered formats and eligibility rules are defined in `CONTENT_FORMAT_SYSTEM.md`. Beauty-specific compatibility guidance is defined in `PRODUCT_LIBRARY/NICHES/02_BEAUTY/CONTENT_FORMAT_COMPATIBILITY.md`.\n\n### Content Angle
+### Content Format
+
+Select one eligible primary Content Format using product behavior, proof opportunity, creator fit, campaign objective, and platform fit. Do not select a format solely for novelty.
+
+Record:
+
+- Content Format
+- Format Fit: eligible / conditional / ineligible
+- Format Rationale
+- Format Requirements
+- Product Behavior
+- Proof Opportunity
+
+The registered formats and eligibility rules are defined in `CONTENT_FORMAT_SYSTEM.md`. Beauty-specific compatibility guidance is defined in `PRODUCT_LIBRARY/NICHES/02_BEAUTY/CONTENT_FORMAT_COMPATIBILITY.md`.
+
+### Content Angle
 
 Choose one primary angle:
 
@@ -129,7 +146,16 @@ Default UGC structure:
 
 Define the desired action. Never invent discounts, urgency, scarcity, or promotional terms.
 
-## Content Format Rules\n\n1. Product truth before format novelty.\n2. Reject formats whose required proof cannot be supplied.\n3. Conditional formats must record their explicit condition.\n4. A creative format is not evidence for a product claim.\n5. Once selected, Content Format constrains Hook, Storyboard, Visual Prompt, Video Prompt, and Voice Script.\n6. If no format is eligible, preserve the blocker rather than forcing a creative concept.\n\n## Strategy Rules
+## Content Format Rules
+
+1. Product truth before format novelty.
+2. Reject formats whose required proof cannot be supplied.
+3. Conditional formats must record their explicit condition.
+4. A creative format is not evidence for a product claim.
+5. Once selected, Content Format constrains Hook, Storyboard, Visual Prompt, Video Prompt, and Voice Script.
+6. If no format is eligible, preserve the blocker rather than forcing a creative concept.
+
+## Strategy Rules
 
 1. Objective Before Creativity.
 2. Audience Relevance.
