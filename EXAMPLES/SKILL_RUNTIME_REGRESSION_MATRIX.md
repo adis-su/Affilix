@@ -74,3 +74,38 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 
 ### R021 — Content Format revision invalidation to Production Output
 - A Stage 04 Content Format change makes affected downstream artifacts, including Production Output, STALE.
+
+### R022 — Content Format mechanism in Hook
+- A selected format must be materially expressed by the Hook's opening mechanism; metadata alone is insufficient.
+
+### R023 — Content Format mechanism in Storyboard
+- A selected format must be materially expressed through scene mechanism, product role, proof, and action; metadata alone is insufficient.
+
+### R024 — Content Format revision invalidation to Storyboard
+- Changing the selected format after Storyboard completion makes the affected Storyboard STALE rather than silently relabeling it.
+
+### R025 — Content Format mechanism in Visual Prompt
+- Frozen reference states must visibly preserve the selected format mechanism without temporal language or metadata-only compliance.
+
+### R026 — Content Format revision invalidation to Visual Prompt
+- Changing the selected format after Visual Prompt completion makes affected prompts STALE.
+
+### R027 — Content Format mechanism in Video Prompt
+- Video Prompt must preserve the selected format through causal action, product interaction, proof, and resulting state.
+
+### R028 — Format-compatible motion beats generic catchiness
+- Attention-grabbing motion cannot substitute for the selected format's causal mechanism.
+
+### R029 — Content Format revision invalidation to Video Prompt
+- Changing the selected format after Video Prompt completion makes affected prompts STALE.
+
+### R030 — Content Format mechanism in Voice Script
+- For spoken modes, Voice Script must materially express the selected format through dialogue structure, product role, proof language, action alignment, and compatible CTA.
+- Metadata-only format labeling fails validation.
+
+### R031 — Format revision invalidation to Voice Script
+- Changing the selected Content Format after Voice Script completion makes the Voice Script STALE.
+- Existing dialogue must not be silently relabeled with the new format.
+
+### R032 — No-spoken-voice exception
+- When audio_mode=NO_SPOKEN_VOICE, Stage 09 is SKIPPED and Content Format voice validation is NOT_REQUIRED.
