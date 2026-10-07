@@ -136,6 +136,76 @@ Each signal is scored from 0 to 1.
 - Alternative formats may be conditional only when their explicit requirements are satisfiable.
 - Conditional selection must record the condition in `content_format_requirements`.
 
+## Numeric Ranking Checks
+
+The fixtures below make the ranking behavior explicit. Scores use the registered weights and are shown as weighted totals out of 100.
+
+### F001 Ranking
+
+Expected candidate scores:
+
+| Format | Eligibility | PB | Proof | Objective | Creator | Platform | Action | Score |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| BEAUTY_CRIME_SCENE | eligible | 1.0 | 0.9 | 0.9 | 0.9 | 1.0 | 1.0 | 94.5 |
+| PRODUCT_HAS_A_JOB | eligible | 0.9 | 0.8 | 0.8 | 0.9 | 1.0 | 1.0 | 85.5 |
+| LIFESTYLE_INTEGRATION | eligible | 0.3 | 0.6 | 0.4 | 0.9 | 1.0 | 0.7 | 52.0 |
+
+Expected winner: `BEAUTY_CRIME_SCENE`.
+
+### F002 Ranking
+
+Expected candidate scores:
+
+| Format | Eligibility | PB | Proof | Objective | Creator | Platform | Action | Score |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| ONE_PRODUCT_THREE_PERSONALITIES | eligible | 1.0 | 1.0 | 1.0 | 0.9 | 1.0 | 1.0 | 99.0 |
+| BEAUTY_MYTH_LAB | eligible | 0.8 | 0.5 | 0.4 | 0.9 | 1.0 | 0.8 | 67.0 |
+| PRODUCT_INTERROGATION | eligible | 0.7 | 0.5 | 0.3 | 0.9 | 1.0 | 0.8 | 61.5 |
+
+Expected winner: `ONE_PRODUCT_THREE_PERSONALITIES`.
+
+### F003 Ranking
+
+Expected candidate scores:
+
+| Format | Eligibility | PB | Proof | Objective | Creator | Platform | Action | Score |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| PRODUCT_HAS_A_JOB | eligible | 1.0 | 1.0 | 1.0 | 0.9 | 1.0 | 1.0 | 99.0 |
+| BEAUTY_CRIME_SCENE | eligible | 0.9 | 0.8 | 0.8 | 0.9 | 1.0 | 0.9 | 84.5 |
+| BEAUTY_ROUTINE_UNDER_PRESSURE | eligible | 0.7 | 0.6 | 0.5 | 0.9 | 1.0 | 0.8 | 68.0 |
+
+Expected winner: `PRODUCT_HAS_A_JOB`.
+
+### F004 Ranking
+
+Expected candidate scores:
+
+| Format | Eligibility | PB | Proof | Objective | Creator | Platform | Action | Score |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| LIFESTYLE_INTEGRATION | eligible | 1.0 | 0.9 | 1.0 | 1.0 | 1.0 | 0.8 | 94.5 |
+| SILENT_BEAUTY_TEST | eligible | 0.6 | 0.4 | 0.5 | 0.9 | 1.0 | 0.7 | 61.5 |
+
+Expected winner: `LIFESTYLE_INTEGRATION`.
+
+### F005 Hard Eligibility Check
+
+No numeric score may rescue a format whose proof requirement is unsatisfied.
+
+Expected result:
+
+`selection_status: BLOCKED`
+
+### F006 Ranking
+
+Expected candidate scores:
+
+| Format | Eligibility | PB | Proof | Objective | Creator | Platform | Action | Score |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| ONE_PRODUCT_THREE_PERSONALITIES | eligible | 1.0 | 1.0 | 1.0 | 0.9 | 1.0 | 1.0 | 99.0 |
+| LIFESTYLE_INTEGRATION | eligible | 0.7 | 0.9 | 0.7 | 0.9 | 1.0 | 0.8 | 80.5 |
+
+Expected winner: `ONE_PRODUCT_THREE_PERSONALITIES`.
+
 ## Validation Rules
 
 1. The highest-scoring eligible format wins.
