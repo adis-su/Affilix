@@ -39,6 +39,20 @@ The mapping above is authoritative. Any engine contract, runtime state, parser, 
 
 Never interpret `ENGINE/08_VOICE_SCRIPT_ENGINE` as Stage 08 or `ENGINE/07_VIDEO_PROMPT_ENGINE` as Stage 07. They are respectively canonical Stage 09 and Stage 10.
 
+## Cross-Stage UGC Naturalism
+
+`ENGINE/UGC_NATURALISM_CONTRACT.md` is a cross-stage production constraint, not a new stage.
+
+Naturalism is validated inside the existing stages:
+- Stage 04/05: the strategy and hook must be executable through believable human behavior.
+- Stage 06: action choreography must express motivated timing, physical plausibility, bounded micro-motion, gaze, expression, product causality, and camera motivation.
+- Stage 07: frozen reference states must preserve plausible posture, grip, gaze, expression, and continuity.
+- Stage 08: motion must express causal action, human timing, gaze behavior, restrained reaction, controlled camera response, and exact reference transitions.
+- Stage 09: spoken delivery must be conversational and physically/time aligned without inventing claims or experience.
+- Stage 10: Production Output preserves naturalism traceability and never invents a missing naturalism correction.
+
+Naturalism validation failure is handled inside the affected stage. It never creates a QC, approval, or additional workflow stage.
+
 ## Canonical Pipeline
 
 ```text
