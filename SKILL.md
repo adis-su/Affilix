@@ -67,7 +67,7 @@ Execute each run in this order. After each stage is validated and completed, wai
 5. ENGINE/04_HOOK_ENGINE/README.md
 6. ENGINE/05_STORYBOARD_ENGINE/README.md
 7. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md
-8. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise mark Stage 08 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
+8. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken dialogue is required, including external dialogue under `NO_SPOKEN_VOICE`; otherwise mark Stage 08 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
 9. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
 10. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
 
@@ -78,7 +78,7 @@ Do not skip an upstream stage when a downstream stage depends on it.
 Every production run has one isolated runtime state:
 
 - normalized brief
-- campaign requirements (platform, duration, objective, audience, requested creator, Audio / Voice Mode, CTA)
+- campaign requirements (platform, duration, objective, audience, requested creator, Audio / Voice Mode, and dialogue layer when applicable)
 - Stage 01 structured campaign choice state, audio mode, and audience provenance
 - creator
 - product
@@ -98,7 +98,7 @@ If a canonical input changes, dependent state becomes STALE until regenerated an
 
 Normalize the brief and classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN. Never convert assumptions into facts.
 
-Stage 01 Brief & Product resolves the product brief and campaign requirements, including platform, exact requested duration, objective, audience, requested creator, CTA, and Audio / Voice Mode, before downstream dependency planning. Audio / Voice Mode is persisted as `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE` before downstream dependency planning. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
+Stage 01 Brief & Product resolves the product brief and campaign requirements, including platform, exact requested duration, objective, audience, requested creator, and Audio / Voice Mode, before downstream dependency planning. When dialogue is requested independently of native video audio, persist a separate dialogue layer with provider and synchronization requirements. Audio / Voice Mode is persisted as `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE` before downstream dependency planning. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
 
 Load one canonical niche context. Missing values remain UNKNOWN. Explicit product and creator facts outrank context labels.
 
