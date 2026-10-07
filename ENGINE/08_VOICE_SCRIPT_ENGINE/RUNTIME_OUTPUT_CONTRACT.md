@@ -67,6 +67,12 @@ source_artifacts: []
 source_commit_sha:
 ```
 
+## Storyboard Authority
+
+Stage 06 Storyboard is the canonical source for scene sequence, action meaning, timing, dialogue anchors, proof mechanism, and resulting states. Voice Script may elaborate spoken wording and delivery only. It MUST NOT invent actions, proof, product outcomes, or incompatible scene meaning. A material mismatch requires Storyboard revision or marks this artifact STALE.
+
+See `ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md`.
+
 ## Content Format Validation
 
 For SPOKEN_ON_CAMERA and VOICE_OVER, the selected Stage 04 Content Format is a required narrative constraint, not metadata decoration.
