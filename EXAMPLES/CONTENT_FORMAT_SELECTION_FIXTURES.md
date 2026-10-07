@@ -215,3 +215,51 @@ Expected winner: `ONE_PRODUCT_THREE_PERSONALITIES`.
 5. Product-specific evidence outranks generic product-type tendencies.
 6. No format selection may create unsupported claims or invented experience.
 7. The selected format must propagate unchanged through Hook, Storyboard, Visual Prompt, Video Prompt, Voice Script when required, and Production Output.
+
+
+### F007 — Near Tie, Proof Wins
+
+Two eligible formats receive the same total score.
+
+| Format | PB | Proof | Objective | Creator | Platform | Action | Score |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| BEAUTY_CRIME_SCENE | 0.9 | 1.0 | 0.8 | 0.9 | 1.0 | 0.8 | 91.5 |
+| PRODUCT_HAS_A_JOB | 0.9 | 0.9 | 0.9 | 0.9 | 1.0 | 0.9 | 91.5 |
+
+Expected winner: `BEAUTY_CRIME_SCENE`.
+
+Reason: proof opportunity is the first tie-break signal and is stronger.
+
+### F008 — Full Tie, Action Wins
+
+Two eligible formats receive the same total score and equal proof opportunity.
+
+| Format | PB | Proof | Objective | Creator | Platform | Action | Score |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| BEAUTY_CRIME_SCENE | 0.9 | 0.9 | 0.8 | 0.9 | 1.0 | 0.9 | 89.5 |
+| PRODUCT_HAS_A_JOB | 0.9 | 0.9 | 0.9 | 0.9 | 1.0 | 0.8 | 89.5 |
+
+Expected winner: `BEAUTY_CRIME_SCENE`.
+
+Reason: action clarity is the second tie-break signal.
+
+### F009 — Full Tie Through Objective
+
+Two eligible formats remain tied after proof and action clarity.
+
+Expected tie-break order:
+1. proof opportunity
+2. action clarity
+3. simpler story mechanism
+4. campaign-objective fit
+
+The runtime must record which criterion resolved the tie. It must not choose based on arbitrary runtime ordering.
+
+### F010 — Unresolved Final Tie
+
+If proof, action clarity, story simplicity, and objective fit are all equal, the runtime may preserve registered format order, but must record:
+
+`tie_break: registry_order`
+
+and the candidate set that was tied.
+
