@@ -184,3 +184,19 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 ### R049 — Storyboard Production Readiness Gate
 - Storyboard with missing material timing, state, transition, proof, or action-causality fields cannot advance to downstream prompt generation.
 - Expected: NEEDS_REFINEMENT; impossible/unsupported behavior remains BLOCKED.
+
+### R050 — Storyboard Is Downstream Creative Authority
+- Visual Prompt, Video Prompt, and Voice Script must implement the current Storyboard rather than reinterpret it.
+- Expected: downstream elaboration preserves Storyboard semantics; new creative decisions make the affected artifact STALE/invalid and require Storyboard revision.
+
+### R051 — Visual Prompt Cannot Override Storyboard State
+- A Visual Prompt that depicts a different product/creator/reference state than the current Storyboard fails downstream authority validation.
+- Expected: NEEDS_REFINEMENT or STALE; no silent state substitution.
+
+### R052 — Video Prompt Cannot Invent Story Actions
+- A Video Prompt may add technical motion detail only when it preserves Storyboard action, causality, timing, and resulting state.
+- Expected: bounded implementation detail PASS; new story action NEEDS_REFINEMENT/STALE until Storyboard is revised.
+
+### R053 — Downstream Elaboration Is Allowed
+- Visual Prompt may refine frozen composition; Video Prompt may refine motion timing/technical segmentation; Voice Script may refine wording/delivery, provided Storyboard semantic state remains unchanged.
+- Expected: implementation elaboration PASS.
