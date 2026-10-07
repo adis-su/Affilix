@@ -54,3 +54,34 @@ Expected: affected Visual Prompt, Video Prompt, Voice Script, and Production Out
 8. Voice naturalization never authorizes unsupported claims or invented experience.
 9. Naturalism cannot replace Content Format or Creator/Product identity constraints.
 10. Final Production Output may only preserve validated upstream naturalism state.
+## F011 — Beat Timing Is Explicit
+Input: a beat defines ordered timing windows for gaze shift, reach, grip, lift, and adjustment without treating those windows as provider segments.
+Expected: PASS. Narrative timing is explicit and preserves total requested duration.
+
+## F012 — Action Priority Is Explicit
+Input: primary product action is distinguished from secondary gaze response, supporting posture/camera motion, and bounded micro-motion.
+Expected: PASS. Lower-priority motion does not compete with the story mechanism.
+
+## F013 — Product/Hand/Contact State Is Traceable
+Input: the storyboard identifies hand ownership, creator-product contact, product position/orientation, and product-follow-hand behavior across meaningful states.
+Expected: PASS.
+
+## F014 — Uncaused Product State Change Blocks
+Input: product orientation or position changes between references without a corresponding hand/contact action.
+Expected: BLOCKED. State changes require physical causality.
+
+## F015 — Transition Contract Preserves Invariants
+Input: R02 → R03 explicitly lists allowed changes and invariants, including creator identity, wardrobe, product geometry, environment, and lighting.
+Expected: PASS. Downstream stages have a deterministic transition boundary.
+
+## F016 — Dialogue Anchor Does Not Replace Voice Script
+Input: storyboard defines semantic intent, action window, and target reference for spoken meaning but does not author final dialogue.
+Expected: PASS. Voice Script remains the canonical spoken-content source.
+
+## F017 — Product Has a Job Requires an Actual Job
+Input: selected format PRODUCT_HAS_A_JOB, but storyboard only picks up and presents the product without a concrete need or product task.
+Expected: NEEDS_REFINEMENT. Product presentation alone does not satisfy the format mechanism.
+
+## F018 — Materially Underspecified Storyboard Cannot Advance
+Input: storyboard has scenes and poses but lacks timing, state, transition, proof, or action causality required for downstream execution.
+Expected: NEEDS_REFINEMENT. Do not promote to downstream prompt generation.
