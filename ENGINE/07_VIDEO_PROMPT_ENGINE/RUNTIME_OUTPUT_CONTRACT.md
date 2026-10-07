@@ -61,6 +61,12 @@ source_artifacts: []
 source_commit_sha:
 ```
 
+## Storyboard Authority
+
+Stage 06 Storyboard is the canonical source for scene intent, action choreography, narrative timing, product causality, resulting states, and reference transitions. Video Prompt may elaborate motion and provider segmentation only within those constraints. It MUST NOT invent, remove, or semantically alter story-critical actions or states. A material mismatch requires Storyboard revision or marks this artifact STALE.
+
+See `ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md`.
+
 ## Audio Mode Invariant
 
 `audio_mode` is inherited from Campaign Intake and is authoritative.
