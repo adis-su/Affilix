@@ -80,6 +80,18 @@ reference_version:
 continuity_lock: PASS | NEEDS_REFINEMENT
 ```
 
-A scene may therefore contain multiple prompts. A bridge prompt must use the same reference version used by both adjacent scenes.
+A scene may therefore contain multiple prompts. Visual Prompt output count is driven by the Storyboard Reference Plan, not by scene count. Every declared reference state must produce exactly one static image prompt. A bridge prompt must use the same reference version used by both adjacent scenes.
+
+### Reference Density Invariant
+
+For each Storyboard scene:
+
+```
+reference_prompt_count = declared_reference_state_count
+```
+
+High-complexity scenes should normally target six meaningful reference states when the action graph justifies that density. This is a planning target, not a blind quota. Fewer references are valid for simpler scenes when no additional meaningful state exists.
+
+Visual Prompt must preserve the Storyboard reference order, role, source beat, critical-state designation, and state semantics. It may not invent intermediate references or collapse declared states.
 
 Stage completion: process, validate, mark `COMPLETED`, then wait for `/next`. A revision invalidates only affected prompts and dependent transitions.
