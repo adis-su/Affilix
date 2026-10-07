@@ -14,7 +14,7 @@ Stage 05 executes only after current Stage 04 Content Strategy is current and va
 ## Output
 
 ```yaml
-stage: 06_HOOK
+stage: 05_HOOK
 status: COMPLETED
 content_format_constraint:
   format_id:
