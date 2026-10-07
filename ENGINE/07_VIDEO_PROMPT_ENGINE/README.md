@@ -335,9 +335,28 @@ When dialogue crosses a generation-segment boundary, preserve the same canonical
 
 ## Output Contract
 
-The final Video Prompt must be one standalone Markdown code block.
+### Prompt Count Invariant
 
-Use this canonical order:
+The number of user-facing Video Prompts MUST equal the number of Storyboard scenes exactly.
+
+- `N scenes = N Video Prompts`.
+- Each scene produces exactly one standalone Video Prompt.
+- Generation segments are technical execution metadata inside the scene output; they MUST NOT create additional user-facing Video Prompts.
+- If one scene requires multiple 4/6/8/10-second generation segments, those segments are composed under the same single scene-level Video Prompt.
+- Do not split one scene into multiple user-facing prompts merely because the provider requires multiple generation segments.
+- Do not merge multiple scenes into one Video Prompt.
+- Prompt count mismatch is `NEEDS_REFINEMENT` and blocks Stage 09 completion until corrected.
+
+Example:
+
+    3 Storyboard scenes → 3 Video Prompts
+    Scene 01 → Video Prompt 01 → generation segments: 6s + 6s
+    Scene 02 → Video Prompt 02 → generation segment: 8s
+    Scene 03 → Video Prompt 03 → generation segments: 4s + 4s + 4s
+
+The final Video Prompt artifact contains one standalone Markdown code block per scene. Metadata remains outside the code blocks.
+
+Use this canonical order for each scene-level prompt:
 
     VIDEO PROMPT
 
@@ -389,7 +408,7 @@ Use this canonical order:
     FINAL VIDEO GENERATION INSTRUCTION
     [generate the exact-duration physically plausible state transition; do not skip, anticipate, duplicate, or regress critical states]
 
-Do not split one Video Prompt across multiple code blocks. Generation-segment metadata stays outside the code block.
+Do not split one scene-level Video Prompt across multiple code blocks. Each scene gets exactly one user-facing Video Prompt code block. Generation-segment metadata stays outside the code block and must remain nested under the owning scene.
 
 ## Voice-Video Synchronization Rules
 
