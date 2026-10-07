@@ -1,6 +1,6 @@
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 06
+- Canonical workflow stage: Stage 05
 - Engine implementation path: `ENGINE/04_HOOK_ENGINE/`
 - Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
 - Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
@@ -9,13 +9,18 @@
 
 ## Stage Gate
 
-Stage 06 executes only after current Stage 05 Content Strategy is current and validated.
+Stage 05 executes only after current Stage 04 Content Strategy is current and validated.
 
 ## Output
 
 ```yaml
 stage: 06_HOOK
 status: COMPLETED
+content_format_constraint:
+  format_id:
+  format_name:
+  format_fit: eligible | conditional
+  format_requirements: []
 candidates:
   - hook_id:
     hook_type:
@@ -25,11 +30,13 @@ candidates:
     product_connection:
     context_connection:
     strategy_connection:
+    content_format_connection:
     required_visual_action: []
     required_proof: []
     claim_risk:
     status: VIABLE
 selection:
+  content_format_preserved: true
   selected_hook_id:
   rationale:
 unresolved_requirements: []
@@ -51,4 +58,4 @@ The artifact is validated, marked COMPLETED, and waits for `/next` then continue
 
 ## Invalidation
 
-Any material change to Strategy, Creator, Niche Context, or Product invalidates the Hook and all downstream creative artifacts as STALE.
+Any material change to Content Strategy, including Content Format or Content Angle, Creator, Niche Context, or Product invalidates the Hook and all downstream creative artifacts as STALE.
