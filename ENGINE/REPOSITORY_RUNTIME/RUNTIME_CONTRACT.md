@@ -149,7 +149,7 @@ artifacts:
 
 Stages 01 through 06 execute sequentially. Stage 01 establishes campaign requirements, including `campaign.audio_mode`, before downstream dependency planning. After Stage 06, downstream branches execute according to deliverable requirements:
 
-- Stage 07 Visual Prompt when visual output is required
+- Stage 07 Visual Prompt
 - Stage 08 Voice Script when `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 08 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
 - Stage 09 Video Prompt when video output is required
 - Stage 10 Production Output
@@ -167,7 +167,7 @@ These are dependency-driven stages, not approval branches.
 - Storyboard: Hook + all required upstream state COMPLETED.
 - Visual Prompt: Storyboard COMPLETED.
 - Voice Script (Stage 08): Storyboard COMPLETED when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 08 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`.
-- Video Prompt (Stage 09): Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + current Voice Script COMPLETED only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER` + provider capability profile when video generation is required.
+- Video Prompt (Stage 09): Storyboard COMPLETED + current Visual Prompt COMPLETED + current Voice Script COMPLETED only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER` + provider capability profile.
 - Production Output: all required downstream specifications current and non-STALE.
 
 There is no QC prerequisite, Final UGC Package prerequisite, or approval prerequisite.
