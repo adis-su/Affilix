@@ -16,6 +16,35 @@ Visual Prompt must preserve the format's visible mechanism without turning a sta
 
 If the Content Format changes, affected Visual Prompts become STALE and require revalidation or regeneration.
 
+## Format Mechanism → Frozen Visual State
+
+Content Format must remain visually legible at the reference-state level without turning the image prompt into motion or sequence.
+
+For each required reference state, validate:
+
+- **Format evidence:** the frame contains the visible setup, product role, or proof state required by the selected format.
+- **Storyboard state fidelity:** the frame is the deterministic visual result of the corresponding storyboard beat.
+- **Static integrity:** format meaning is expressed through what is visible in one frozen state, never through temporal wording.
+- **Continuity:** the same product identity, creator identity, wardrobe, and bridge reference version are preserved.
+- **No format invention:** the image prompt must not introduce a different format mechanism merely because it is visually convenient.
+
+Examples:
+
+| Content Format | Valid frozen-state emphasis |
+|---|---|
+| BEAUTY_CRIME_SCENE | visible problem/case setup or evidence/intervention state |
+| PRODUCT_HAS_A_JOB | product visibly positioned at the specific task area/action state |
+| BEAUTY_MYTH_LAB | controlled test setup or test-result state |
+| PRODUCT_INTERROGATION | product inspection/demonstration state |
+| ONE_PRODUCT_THREE_PERSONALITIES | one product visibly preserved within the specific mode/context state |
+| SILENT_BEAUTY_TEST | visually self-explanatory test/action state |
+| BEAUTY_ROUTINE_UNDER_PRESSURE | constrained routine context and resulting usable state |
+| ANTI-TUTORIAL | visually grounded expectation/reframe state |
+| LIFESTYLE_INTEGRATION | believable lifestyle context with product naturally integrated |
+| PROBLEM_SOLUTION_MISSION | concrete problem state or resulting task state |
+
+A prompt that merely names the selected format while depicting a generic product portrait does not pass.
+
 ## Purpose
 
 The Visual Prompt Engine converts each completed storyboard scene into a production-ready **static image-generation prompt**.
