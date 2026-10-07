@@ -8,6 +8,23 @@
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
 - Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
 
+## Content Format Continuity
+
+Storyboard consumes the selected Content Format from Stage 04 and the selected Hook from Stage 05.
+
+The storyboard MUST preserve the format's story mechanism across scenes. The format is not decorative metadata. It determines how the problem, product role, action sequence, proof, and CTA are staged when those elements are part of the registered format.
+
+For every scene, validate:
+
+- format-consistent action purpose
+- format-consistent product role
+- format-consistent proof mechanism
+- format-consistent transition into the next beat
+
+Do not silently convert one format into another during storyboard generation.
+
+If Stage 04 format is revised, the storyboard becomes STALE and must be regenerated or revalidated.
+
 ## Provider-Aware Duration Planning
 
 The storyboard owns creative duration, while the current video provider accepts generation clips of exactly 4s, 6s, 8s, or 10s.
