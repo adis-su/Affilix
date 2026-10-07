@@ -356,3 +356,38 @@ Expected:
 Changing the selected Content Format after Visual Prompt completion makes affected prompts `STALE`.
 
 The system must not retrofit a new format into an existing frozen image prompt without revalidation.
+
+
+## Video Prompt Propagation Regression
+
+### F020 — Product Has a Job Must Drive Physical Causality
+
+Given `PRODUCT_HAS_A_JOB`:
+
+- Invalid: creator holds or displays the product with generic motion and no task-driven interaction.
+- Valid: a concrete need triggers the product action, the product physically performs the assigned job, and the target state reflects the resulting task state.
+
+Expected:
+- invalid: `content_format: NEEDS_REFINEMENT`
+- valid: `content_format: PASS`
+
+### F021 — Format-Compatible Motion Beats Generic Catchiness
+
+Given `BEAUTY_CRIME_SCENE`, a generic product reveal or pattern-interrupt movement must not replace the required case/investigation mechanism merely because it is attention-grabbing.
+
+Expected:
+- format-compatible causal motion: `PASS`
+- incompatible generic motion: `NEEDS_REFINEMENT`
+
+### F022 — Bridge Reference and Format Mechanism Must Coexist
+
+When a format transition crosses a bridge reference, the bridge reference version remains immutable while the action around it expresses the selected format.
+
+Expected:
+- same bridge reference version across adjacent scenes
+- format mechanism preserved on both sides
+- any bridge mutation marks affected transitions `STALE`
+
+### F023 — Format Revision Invalidates Video Prompt
+
+Changing the selected Content Format after Video Prompt completion makes affected Video Prompts `STALE`. The existing motion graph must not be silently relabeled.
