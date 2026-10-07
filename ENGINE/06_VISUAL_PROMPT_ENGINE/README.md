@@ -115,7 +115,7 @@ Therefore:
 
 For every required visual reference state in every visual scene, return one prompt artifact per reference state. A scene is not automatically one prompt.
 
-For example, if Scene 01 contains R01, R02, and R03 as required static reference states, Stage 08 must produce three image prompts: one for R01, one for R02, and one for R03.
+For example, if Scene 01 contains R01, R02, and R03 as required static reference states, Stage 07 must produce three image prompts: one for R01, one for R02, and one for R03.
 
 For every visual scene, return:
 
