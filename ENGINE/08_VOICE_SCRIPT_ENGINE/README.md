@@ -607,6 +607,20 @@ Coordinate dialogue with:
 
 When a scene contains important product interaction, dialogue should not obscure the visual proof.
 
+## UGC Naturalism Constraint
+
+Voice Script implements the spoken portion of `ENGINE/UGC_NATURALISM_CONTRACT.md`. Natural voice performance should feel conversational and context-motivated, not like polished brochure copy.
+
+Validate:
+- phrase length and rhythm are speakable at the scene duration
+- pauses and breaths occur where a human speaker would plausibly need them
+- emphasis is restrained and purposeful
+- delivery matches creator behavior and scene action
+- dialogue does not narrate every physical action unnaturally
+- product claims and personal experience remain fully supported
+
+Naturalization may improve rhythm, phrasing, pauses, and delivery direction, but must never invent personal experience, unsupported outcomes, urgency, scarcity, or claims. If the script is factually valid but mechanically promotional, mark `NEEDS_REFINEMENT` rather than fabricating personality.
+
 ## Conversationality Validation
 
 In addition to factual and timing validation, inspect the spoken script for UGC naturalness.
