@@ -8,6 +8,14 @@
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
 - Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
 
+## Content Format Continuity
+
+The selected Content Format from Stage 04 is an upstream creative constraint carried through Storyboard into every required visual reference state.
+
+Visual Prompt must preserve the format's visible mechanism without turning a static image prompt into a sequence. The format may determine product role, proof visibility, setup, composition, or required state, but all output must remain one frozen visual state.
+
+If the Content Format changes, affected Visual Prompts become STALE and require revalidation or regeneration.
+
 ## Purpose
 
 The Visual Prompt Engine converts each completed storyboard scene into a production-ready **static image-generation prompt**.
@@ -43,7 +51,7 @@ Therefore:
 
 ## Input
 
-- Completed storyboard scene
+- Completed storyboard scene, including selected Content Format
 - Selected creator package
 - Canonical creator identity
 - Approved creator visual references
