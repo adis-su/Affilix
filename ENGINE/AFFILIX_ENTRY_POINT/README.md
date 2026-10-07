@@ -68,6 +68,10 @@ campaign:
   audience: UNKNOWN
   creator: UNKNOWN
   audio_mode: UNKNOWN
+  dialogue:
+    enabled: UNKNOWN
+    delivery: UNKNOWN
+    sync_required: UNKNOWN
 
 niche_context:
   status: NOT_LOADED
@@ -155,13 +159,14 @@ Audio / Voice Mode:
 - Spoken on camera
 - Voice-over
 - No spoken voice
+- No spoken voice + external dialogue
 
 Persist the selected value as one of:
 - `SPOKEN_ON_CAMERA`
 - `VOICE_OVER`
 - `NO_SPOKEN_VOICE`
 
-This choice is a campaign-level creative mode and must be resolved before downstream dependency planning. It determines whether Stage 08 Voice Script is required and what kind of dialogue synchronization Stage 09 Video Prompt may use.
+This choice is a campaign-level native-audio mode and must be resolved before downstream dependency planning. `No spoken voice + external dialogue` persists `audio_mode: NO_SPOKEN_VOICE` plus an enabled `EXTERNAL_PROVIDER` dialogue layer. The combination determines whether Stage 08 Voice Script is required and what kind of synchronization Stage 09 Video Prompt may use.
 ```
 
 ### Platform
@@ -201,9 +206,12 @@ Audio / Voice Mode is a required Stage 01 campaign choice.
 
 - `SPOKEN_ON_CAMERA`: creator speaks on camera; Stage 08 Voice Script is required and Stage 08 must synchronize canonical dialogue with visible creator speech.
 - `VOICE_OVER`: narration exists without requiring the creator to speak on camera; Stage 08 Voice Script is required and Stage 08 must synchronize the canonical voice-over with the visual action.
-- `NO_SPOKEN_VOICE`: no spoken dialogue or voice-over; Stage 08 is validly `SKIPPED`, and Stage 09 must not invent dialogue, lip-sync, or voice-generation requirements. Music, sound effects, or on-screen text remain optional independent layers.
+- `NO_SPOKEN_VOICE`: no native spoken dialogue or voice-over; Stage 08 is skipped only when no dialogue layer is requested.
+- `NO_SPOKEN_VOICE + EXTERNAL_PROVIDER`: the video provider generates silent video while Stage 08 authors canonical dialogue/timing for a separate external audio asset. Stage 09 carries synchronization anchors without native voice-generation or lip-sync requirements.
 
-The selected mode must be persisted in campaign state before Stage 01 can be marked `COMPLETED`.
+Music, sound effects, or on-screen text remain optional independent layers.
+
+The selected mode and any external dialogue layer must be persisted in campaign state before Stage 01 can be marked `COMPLETED`.
 
 ### Validation
 
@@ -214,6 +222,7 @@ Stage 01 must have:
 - one primary content objective
 - one AI-derived or user-corrected target audience
 - one requested creator selected from the current repository Creator Library
+- one resolved Audio / Voice Mode and dialogue-layer state
 
 Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
 
