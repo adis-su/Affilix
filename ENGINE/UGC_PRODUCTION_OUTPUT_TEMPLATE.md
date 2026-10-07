@@ -66,7 +66,16 @@ For each video segment:
 
 ## Prompt Formatting
 
-Image prompts and video prompts are user-facing generation artifacts and must each be delivered in a single standalone Markdown code block. Metadata remains outside the code block.
+Image prompts and video prompts are user-facing generation artifacts. Video Prompt count MUST equal the number of Storyboard scenes exactly.
+
+- One Video Prompt per scene.
+- One standalone Markdown code block per scene-level Video Prompt.
+- Multiple generation segments within a scene remain technical metadata and do not create additional Video Prompts.
+- Metadata remains outside the code blocks.
+
+For `N` Storyboard scenes:
+
+`N scenes = N Video Prompts`.
 
 The remaining production output follows the current campaign, creator, product, niche context, strategy, selected Content Format, hook, storyboard, visual prompt, voice script, and video prompt state.
 
