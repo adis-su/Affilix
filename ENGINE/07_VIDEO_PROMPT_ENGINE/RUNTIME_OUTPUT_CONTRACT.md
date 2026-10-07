@@ -1,6 +1,6 @@
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 08
+- Canonical workflow stage: Stage 09
 - Engine implementation path: `ENGINE/07_VIDEO_PROMPT_ENGINE/`
 - Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
 - Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
