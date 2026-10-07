@@ -107,7 +107,13 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 - Changing the selected Content Format after Voice Script completion makes the Voice Script STALE.
 - Existing dialogue must not be silently relabeled with the new format.
 
-### R032 — No-spoken-voice exception
+### R032 — No-spoken-voice and external dialogue separation
+- `NO_SPOKEN_VOICE` with no dialogue skips Stage 08 and produces silent-video requirements.
+- `NO_SPOKEN_VOICE` with `dialogue.enabled=true` and `dialogue.delivery=EXTERNAL_PROVIDER` requires Stage 08 for canonical dialogue/timing, while Stage 09 remains a silent-video prompt and carries external synchronization anchors.
+- Native video voice generation must never be implied by `NO_SPOKEN_VOICE`.
+- Expected: dependency separation `PASS`.
+
+### R032A — No-spoken-voice exception
 
 ### R033 — Naturalism Is Not Generic Realism
 - A prompt containing only "photorealistic", "realistic human movement", or "move naturally" without motivated action fails naturalism validation.
