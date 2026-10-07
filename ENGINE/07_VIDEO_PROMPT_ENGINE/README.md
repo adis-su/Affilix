@@ -8,6 +8,14 @@
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
 - Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
 
+## Content Format Continuity
+
+The selected Content Format from Stage 04 is a required motion constraint. Video Prompt must express the format's mechanism through action, product interaction, proof, dialogue synchronization, and resulting states when those elements are part of the format.
+
+The engine must not silently convert the selected format into another format. Content Format constrains the motion implementation; it does not replace the canonical Storyboard or Voice Script.
+
+If the Content Format changes, affected Video Prompts become STALE and require revalidation.
+
 ## Purpose
 
 The Video Prompt Engine converts the completed storyboard, visual scene specification, and canonical Voice Script into production-ready motion instructions for video generation.
@@ -18,7 +26,7 @@ The Video Prompt Engine does not own spoken wording. **Voice Script owns the exa
 
 ## Inputs
 
-- Completed storyboard
+- Completed storyboard, including selected Content Format
 - Completed Visual Prompt for the applicable scene
 - Completed Voice Script when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`
 - Creator identity
