@@ -29,6 +29,10 @@ scenes:
     video_prompt_id:
     user_facing_prompt_count: 1
     creative_duration:
+    reference_trajectory:
+      ordered_reference_ids: []
+      critical_reference_ids: []
+      protected_transitions: []
     generation_segments:
       - segment_id:
         final_start:
