@@ -50,8 +50,7 @@ supporting_messages: []
 proof_strategy:
 emotional_strategy:
 story_arc: []
-cta_strategy:
-strategy_confidence:
+  strategy_confidence:
 unresolved_requirements: []
 decision_queue: []
 provenance: []
