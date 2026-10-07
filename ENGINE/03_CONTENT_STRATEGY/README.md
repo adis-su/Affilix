@@ -78,7 +78,7 @@ Return a structured strategy:
 
 ### Content Format
 
-Select one eligible primary Content Format using product behavior, proof opportunity, creator fit, campaign objective, and platform fit. Do not select a format solely for novelty.
+Select one eligible primary Content Format using the operational selection algorithm in `CONTENT_FORMAT_SYSTEM.md`. Candidate ranking uses product behavior, proof opportunity, campaign objective, creator fit, platform fit, and action clarity. Do not select a format solely for novelty.
 
 Record:
 
@@ -88,6 +88,8 @@ Record:
 - Format Requirements
 - Product Behavior
 - Proof Opportunity
+- Candidate Scores
+- Selection Status: SELECTED / BLOCKED
 
 The registered formats and eligibility rules are defined in `CONTENT_FORMAT_SYSTEM.md`. Beauty-specific compatibility guidance is defined in `PRODUCT_LIBRARY/NICHES/02_BEAUTY/CONTENT_FORMAT_COMPATIBILITY.md`.
 
