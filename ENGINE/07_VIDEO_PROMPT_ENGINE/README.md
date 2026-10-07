@@ -2,7 +2,7 @@
 
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 08 — Video Prompt
+- Canonical workflow stage: Stage 09 — Video Prompt
 - Implementation path: `ENGINE/07_VIDEO_PROMPT_ENGINE/`
 - The numeric prefix in the implementation directory is NOT a workflow stage ID.
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
@@ -98,7 +98,7 @@ The Video Prompt Engine does not own spoken wording. **Voice Script owns the exa
 
 ## Canonical Dependency
 
-For video output, the downstream dependency is conditional on Campaign Intake `audio_mode`:
+For video output, Stage 09 depends on the current Stage 08 Voice Script whenever spoken content exists. The downstream dependency is conditional on Campaign Intake `audio_mode`:
 
     STORYBOARD
         │
