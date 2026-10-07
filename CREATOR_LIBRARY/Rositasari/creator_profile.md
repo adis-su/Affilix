@@ -79,7 +79,6 @@ Default principle: prioritize believable UGC over excessive commercial polish un
 - Emphasis: Sparse and semantic; prioritize the key observation, benefit, or product detail rather than stressing every keyword.
 - Pause behavior: Micro or short semantic pauses around important observations; avoid pausing mechanically at every punctuation mark.
 - Vocal behavior: Subtle breathing opportunities, restrained pitch movement, clear articulation without over-enunciation, and natural sentence endings.
-- CTA delivery: Conversational by default; soft CTA preferred. Hard CTA may be used when required by the campaign objective without changing the creator's overall conversational personality.
 
 ### Speaking Style Guardrails
 
@@ -111,13 +110,11 @@ Avoid:
 - Energy: Medium-low.
 - Delivery: More intimate and reflective.
 - Emphasis: Personal framing that is explicitly supported by the script.
-- CTA: Minimal or naturally connected to the observation.
 
 #### LIGHT_EXCITEMENT
 - Energy: Medium.
 - Delivery: Slightly brighter and more animated without becoming promotional hype.
 - Emphasis: One or two meaningful points only.
-- CTA: Clear but still conversational.
 
 The selected speaking mode may change delivery intensity while preserving the canonical Rositasari voice profile.
 
@@ -130,7 +127,6 @@ The selected speaking mode may change delivery intensity while preserving the ca
 - Proof style: [DEFINE]
 - Objection handling: [DEFINE]
 - Urgency style: [DEFINE]
-- CTA style: [DEFINE]
 
 Default selling principle:
 
@@ -138,7 +134,6 @@ Default selling principle:
 2. Introduce the product naturally.
 3. Demonstrate or explain the relevant benefit.
 4. Provide believable proof when available.
-5. Close with a clear but natural CTA.
 
 Never invent product performance, reviews, testimonials, discounts, scarcity, or guarantees.
 
@@ -161,7 +156,6 @@ Content should address audience needs without sounding like scripted corporate c
 - Hook timing: [DEFINE]
 - Scene density: [DEFINE]
 - Caption behavior: [DEFINE]
-- CTA placement: [DEFINE]
 
 ### Social Commerce
 
@@ -198,7 +192,6 @@ HOOK
 → DEMONSTRATION
 → BENEFIT / PROOF
 → PERSONAL REACTION
-→ CTA
 
 This is a default production pattern, not a mandatory script.
 
