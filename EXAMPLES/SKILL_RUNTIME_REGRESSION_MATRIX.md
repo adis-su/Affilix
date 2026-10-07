@@ -207,3 +207,29 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 - Multiple technical generation segments inside a scene do not create additional user-facing prompts.
 - Multiple scenes must not be merged into one Video Prompt.
 - Expected: `scene_count == video_prompt_count`; mismatch is `NEEDS_REFINEMENT` and blocks Stage 09 completion.
+
+### R055 — High-Complexity Scene Reference Density
+- Given a high-complexity scene with multiple material action states, Storyboard plans a meaningful multi-reference trajectory and targets six reference states when justified.
+- Expected: ordered reference plan `PASS`; redundant quota-driven references `NEEDS_REFINEMENT`.
+
+### R056 — Visual Prompt Reference Cardinality
+- Given a Storyboard scene with N declared reference states, Stage 07 produces exactly N static image prompts.
+- Expected: `reference_prompt_count == declared_reference_state_count`.
+
+### R057 — Video Prompt Uses Full Reference Trajectory
+- Given a scene with ordered references R01 → R02 → R03 → R04 → R05 → R06, Stage 09 preserves the trajectory inside one scene-level Video Prompt and does not skip or create additional prompts for intermediate states.
+- Expected: one Video Prompt, complete trajectory preserved, critical states protected.
+
+### R058 — Reference Revision Invalidation
+- Changing any material reference state or the Reference Plan makes affected Visual Prompt and Video Prompt artifacts STALE, including transitions touching the changed state.
+- Expected: affected downstream artifacts `STALE`.
+
+### R059 — Bridge Reference Remains Immutable
+- Scene N END and Scene N+1 START use the exact same bridge reference version.
+- Expected: bridge continuity `PASS`; version mismatch `NEEDS_REFINEMENT`.
+
+### R060 — Six References Do Not Change Video Prompt Count
+- Given a completed Storyboard with N scenes, Stage 09 produces exactly N user-facing Video Prompts.
+- Multiple technical generation segments inside a scene do not create additional user-facing prompts.
+- Multiple scenes must not be merged into one Video Prompt.
+- Expected: `scene_count == video_prompt_count`; mismatch is `NEEDS_REFINEMENT` and blocks Stage 09 completion.
