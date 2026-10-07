@@ -454,7 +454,7 @@ The score ranks eligible candidates. It does not override hard claim or evidence
 
 - Select the highest-scoring `eligible` candidate.
 - A `conditional` candidate may be selected only when its condition is explicitly satisfiable and recorded.
-- If multiple candidates are materially tied, prefer the simpler format with stronger proof and clearer physical action.
+- If multiple candidates are materially tied, resolve the tie deterministically in this order: (1) stronger proof opportunity score, (2) stronger action clarity score, (3) simpler story mechanism, (4) stronger campaign-objective fit. If all four remain equal, preserve registry order and record the tie-break rationale in provenance.
 - Never select an `ineligible` candidate.
 - If no candidate is eligible or conditionally satisfiable, set `format_selection_status: BLOCKED` and preserve the unresolved requirement. Do not invent a format.
 
