@@ -66,3 +66,11 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 
 13–16 remain valid for Stage 04 selection and propagation into Hook/Storyboard.
 17–19 require Content Format continuity across Visual Prompt, Video Prompt, and Voice Script; a changed format must invalidate affected downstream artifacts.
+
+
+### R020 — Content Format traceability at Production Output
+- Production Output carries the selected Content Format and propagation status across required downstream artifacts.
+- Missing, stale, or contradicted format state blocks final assembly.
+
+### R021 — Content Format revision invalidation to Production Output
+- A Stage 04 Content Format change makes affected downstream artifacts, including Production Output, STALE.
