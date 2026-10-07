@@ -178,7 +178,7 @@ Expected downstream order after Stage 07 Storyboard:
 
 Acceptance:
 - Video Prompt must not execute before a current Voice Script when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`.
-- When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE` and Video Prompt must not require or invent Voice Script content.
+- When `audio_mode` is `NO_SPOKEN_VOICE` and external dialogue is disabled, Stage 08 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`. When external dialogue is enabled, Stage 08 is required for canonical dialogue/timing, while Stage 09 must remain silent-video generation and may carry external synchronization anchors.
 - Voice Script is the canonical source of exact spoken wording.
 - Video Prompt must include DIALOGUE SYNC when spoken content exists.
 - DIALOGUE SYNC exact dialogue must match the current Voice Script.
