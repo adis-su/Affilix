@@ -16,6 +16,48 @@ Content Format does not authorize unsupported claims or invented experience. It 
 
 If the Content Format changes, affected Voice Script artifacts become STALE and require revalidation.
 
+## Content Format Mechanism Validation
+
+Content Format must materially shape spoken content. Recording the selected format in metadata is not sufficient.
+
+Validate each Voice Script against:
+
+1. **Format mechanism** — dialogue establishes or supports the selected format's narrative mechanism.
+2. **Product role** — spoken content gives the product the role required by the format.
+3. **Proof language** — dialogue describes only evidence that the storyboard can actually demonstrate or that is explicitly supported.
+4. **Action/dialogue alignment** — spoken lines explain, frame, or react to the action without replacing visual proof with unsupported claims.
+5. **CTA continuity** — CTA wording remains compatible with the selected format and campaign objective.
+6. **Format preservation** — dialogue must not imply a different content format.
+
+Format-specific voice mechanisms:
+
+| Content Format | Required spoken mechanism |
+|---|---|
+| BEAUTY_CRIME_SCENE | Establish the recognizable beauty problem/case, frame the investigation or intervention, then describe the observable result without inventing performance. |
+| PRODUCT_HAS_A_JOB | State the concrete need/task, identify the product's job, and connect the spoken line to the resulting task state. |
+| BEAUTY_MYTH_LAB | State a testable beauty question or assumption, describe the controlled test, and interpret only the evidence actually available. |
+| PRODUCT_INTERROGATION | Pose the product question/property being inspected, narrate the inspection/demo, and state only the resulting evidence. |
+| ONE_PRODUCT_THREE_PERSONALITIES | Keep one product identity while verbally distinguishing legitimate modes/contexts; do not imply three different products. |
+| SILENT_BEAUTY_TEST | Spoken content is optional and must not be required to make the core visual test understandable; when present, it supports rather than substitutes for visible evidence. |
+| BEAUTY_ROUTINE_UNDER_PRESSURE | Establish the situational pressure, explain the constrained routine task, and connect the product to the usable resulting state. |
+| ANTI_TUTORIAL | State or reframe the expectation, explain the grounded qualification/demo, and avoid turning the reframe into unsupported superiority. |
+| LIFESTYLE_INTEGRATION | Anchor the product in a believable routine/context and explain its contextual role without inventing personal experience. |
+| PROBLEM_SOLUTION_MISSION | Name the concrete problem, frame the product action as the mission step, and connect the line to the resolved task state. |
+
+A generic product introduction, feature stack, testimonial-style reaction, or CTA cannot pass Content Format validation merely because the selected format appears in metadata.
+
+For NO_SPOKEN_VOICE, this validation is NOT_REQUIRED because Stage 09 is skipped. For spoken modes, a format-specific mechanism failure is NEEDS_REFINEMENT; if the format cannot be expressed without unsupported claims or required proof is unavailable, the Voice Script is BLOCKED.
+
+### Format Mechanism Validation Checklist
+
+- format_mechanism_present: true | false
+- product_role_preserved: true | false
+- proof_language_supported: true | false
+- action_dialogue_aligned: true | false
+- cta_compatible: true | false | NOT_APPLICABLE
+- format_preserved: true | false
+- validation_status: PASS | NEEDS_REFINEMENT | BLOCKED
+
 ## Purpose
 
 The Voice Script Engine converts the validated content strategy and storyboard into spoken dialogue, voice-over, and delivery instructions.
