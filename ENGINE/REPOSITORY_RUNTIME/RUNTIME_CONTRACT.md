@@ -31,7 +31,7 @@ It MUST NOT resolve:
 
 `engine_directory_number → stage_id`
 
-Engine directory numbers are implementation identifiers only. In particular, `ENGINE/08_VOICE_SCRIPT_ENGINE/` maps to canonical Stage 09 and `ENGINE/07_VIDEO_PROMPT_ENGINE/` maps to canonical Stage 08.
+Engine directory numbers are implementation identifiers only. In particular, `ENGINE/08_VOICE_SCRIPT_ENGINE/` maps to canonical Stage 08 and `ENGINE/07_VIDEO_PROMPT_ENGINE/` maps to canonical Stage 09.
 
 Every material artifact must carry a canonical `stage` value. Runtime validation must reject an artifact when its declared stage conflicts with the canonical registry or when a dependency is inferred from an engine directory number.
 
@@ -150,9 +150,9 @@ artifacts:
 Stages 01 through 06 execute sequentially. Stage 01 establishes campaign requirements, including `campaign.audio_mode`, before downstream dependency planning. After Stage 06, downstream branches execute according to deliverable requirements:
 
 - Stage 07 Visual Prompt when visual output is required
-- Stage 08 Video Prompt when video output is required
-- Stage 09 Voice Script when `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
-- Stage 08 Production Output
+- Stage 08 Voice Script when `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 08 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
+- Stage 09 Video Prompt when video output is required
+- Stage 10 Production Output
 
 After every completed stage, wait for `/next`.
 
@@ -166,8 +166,8 @@ These are dependency-driven stages, not approval branches.
 - Hook: Content Strategy COMPLETED.
 - Storyboard: Hook + all required upstream state COMPLETED.
 - Visual Prompt: Storyboard COMPLETED.
-- Voice Script: Storyboard COMPLETED when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`.
-- Video Prompt: Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + current Voice Script COMPLETED only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER` + provider capability profile when video generation is required.
+- Voice Script (Stage 08): Storyboard COMPLETED when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 08 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`.
+- Video Prompt (Stage 09): Storyboard COMPLETED + current Visual Prompt COMPLETED when visual continuity is required + current Voice Script COMPLETED only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER` + provider capability profile when video generation is required.
 - Production Output: all required downstream specifications current and non-STALE.
 
 There is no QC prerequisite, Final UGC Package prerequisite, or approval prerequisite.
