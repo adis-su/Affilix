@@ -85,3 +85,15 @@ Expected: NEEDS_REFINEMENT. Product presentation alone does not satisfy the form
 ## F018 — Materially Underspecified Storyboard Cannot Advance
 Input: storyboard has scenes and poses but lacks timing, state, transition, proof, or action causality required for downstream execution.
 Expected: NEEDS_REFINEMENT. Do not promote to downstream prompt generation.
+
+## F019 — Downstream Prompt Cannot Override Storyboard
+Input: Storyboard defines R02 → rotate serum → R03, but Video Prompt adds opening the bottle and applying serum without a Storyboard revision.
+Expected: NEEDS_REFINEMENT or STALE. The downstream prompt has introduced a new creative decision; the Storyboard must be revised first.
+
+## F020 — Visual Prompt Must Render the Declared State
+Input: Storyboard defines R03 with serum held in the right hand and label facing camera, but Visual Prompt depicts the serum on the table.
+Expected: NEEDS_REFINEMENT. Visual Prompt must faithfully render the current Storyboard reference state.
+
+## F021 — Video Prompt May Elaborate Motion, Not Story Meaning
+Input: Storyboard defines product inspection; Video Prompt adds a small grip adjustment and motivated gaze shift while preserving the declared start/end references.
+Expected: PASS. Technical/motion elaboration is valid when semantic state and causality are preserved.
