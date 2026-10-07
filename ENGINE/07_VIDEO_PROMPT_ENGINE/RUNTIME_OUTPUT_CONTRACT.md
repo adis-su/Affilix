@@ -148,6 +148,8 @@ camera_behavior:
 duration:
 ```
 
-Every generation segment must declare `start_reference_id`, `target_reference_id`, and the transition IDs it contains. Bridge references must resolve to one immutable version across adjacent scenes.
+Every generation segment must declare `start_reference_id`, `target_reference_id`, and the transition IDs it contains. The owning scene must also preserve the complete ordered Storyboard reference trajectory, including intermediate references that occur within the scene.
+
+The scene-level Video Prompt remains exactly one prompt per Storyboard scene. A six-reference trajectory does not create six Video Prompts. It creates one scene-level prompt that specifies the controlled progression through those six states. Bridge references must resolve to one immutable version across adjacent scenes.
 
 Stage completion: process, validate, mark `COMPLETED`, then wait for `/next`. If a reference changes, all transitions touching it become `STALE`.
