@@ -14,7 +14,7 @@ Stage 05 executes only from current, validated artifacts for Stage 01 Brief & Pr
 ## Output
 
 ```yaml
-stage: 05_CONTENT_STRATEGY
+stage: 04_CONTENT_STRATEGY
 status: COMPLETED
 campaign_objective:
   primary:
@@ -53,7 +53,7 @@ One primary message only. All product facts and benefits require traceable evide
 
 UNKNOWN is preserved when evidence is absent. A missing non-critical field does not automatically block strategy.
 
-The artifact is validated, marked COMPLETED, and waits for `/next` then continue according to the canonical /next progression.
+The artifact is validated, marked COMPLETED, and waits for `/next` then continues according to the canonical /next progression. Content Format and Content Angle are both required creative constraints for downstream stages.
 
 ## Invalidation
 
