@@ -67,7 +67,6 @@ campaign:
   objective: UNKNOWN
   audience: UNKNOWN
   creator: UNKNOWN
-  cta: UNKNOWN
   audio_mode: UNKNOWN
 
 niche_context:
@@ -103,7 +102,6 @@ Durasi:
 Tujuan:
 Creator:
 Audio/Voice Mode:
-CTA:
 ```
 
 These six fields are the primary campaign controls. Do not add optional campaign fields to the copyable template. Additional information may be collected separately only when materially relevant.
@@ -164,31 +162,6 @@ Persist the selected value as one of:
 - `NO_SPOKEN_VOICE`
 
 This choice is a campaign-level creative mode and must be resolved before downstream dependency planning. It determines whether Stage 08 Voice Script is required and what kind of dialogue synchronization Stage 09 Video Prompt may use.
-
-CTA:
-- Shop now
-- Buy now
-- Add to cart
-- Check the product
-- Learn more
-- See details
-- Try it
-- Discover more
-- Visit the product page
-- Click the link
-- Tap the link
-- Follow for more
-- Save this video
-- Share this video
-- Comment your thoughts
-- Send this to someone
-- DM for details
-- Use the product
-- Consider it for your routine
-- Custom CTA
-
-Custom CTA:
-[isi jika memilih Custom CTA]
 ```
 
 ### Platform
@@ -232,10 +205,6 @@ Audio / Voice Mode is a required Stage 01 campaign choice.
 
 The selected mode must be persisted in campaign state before Stage 01 can be marked `COMPLETED`.
 
-### CTA
-
-CTA is a controlled choice with a `Custom CTA` escape hatch. Persist the selected CTA exactly enough for downstream strategy and voice/script generation.
-
 ### Validation
 
 Stage 01 must have:
@@ -245,7 +214,6 @@ Stage 01 must have:
 - one primary content objective
 - one AI-derived or user-corrected target audience
 - one requested creator selected from the current repository Creator Library
-- one CTA, including Custom CTA text when selected
 
 Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
 
