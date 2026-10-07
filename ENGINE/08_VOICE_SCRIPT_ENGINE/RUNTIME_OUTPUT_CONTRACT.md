@@ -9,9 +9,9 @@
 
 ## Stage Gate
 
-Stage 08 executes only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and only after current Stage 06 Storyboard is current and validated.
+Stage 08 executes when spoken dialogue is required, including `NO_SPOKEN_VOICE` with `dialogue.enabled=true` and `dialogue.delivery=EXTERNAL_PROVIDER`, and only after current Stage 06 Storyboard is current and validated.
 
-When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 08 must not generate a placeholder or invented script. Its valid runtime state is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`. Visual Prompt is a parallel Storyboard descendant and is not a prerequisite for Voice Script.
+When `audio_mode` is `NO_SPOKEN_VOICE` and external dialogue is disabled, Stage 08 must not generate a placeholder or invented script. Its valid runtime state is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`. Visual Prompt is a parallel Storyboard descendant and is not a prerequisite for Voice Script.
 
 ## Output
 
@@ -47,7 +47,6 @@ scenes:
     pause_points: []
     pronunciation_notes: []
     lip_sync_priority:
-    cta_role:
 validation:
   content_format: PASS | NEEDS_REFINEMENT | BLOCKED
   accuracy: PASS | NEEDS_REFINEMENT
@@ -59,7 +58,6 @@ content_format_validation:
   product_role_preserved: true | false
   proof_language_supported: true | false
   action_dialogue_aligned: true | false
-  cta_compatible: true | false | NOT_APPLICABLE
   format_preserved: true | false
   validation_status: PASS | NEEDS_REFINEMENT | BLOCKED
 unresolved_requirements: []
@@ -90,7 +88,7 @@ The following failures are NEEDS_REFINEMENT:
 
 The result is BLOCKED when the selected format cannot be expressed in spoken content without inventing unsupported claims, personal experience, or unavailable proof.
 
-For NO_SPOKEN_VOICE, Stage 08 remains SKIPPED; Content Format validation is NOT_REQUIRED.
+For NO_SPOKEN_VOICE with external dialogue enabled, Stage 08 validates the dialogue because it remains the canonical dialogue/timing source. For NO_SPOKEN_VOICE without dialogue, Stage 08 is SKIPPED and Content Format voice validation is NOT_REQUIRED.
 
 ## Rules
 
