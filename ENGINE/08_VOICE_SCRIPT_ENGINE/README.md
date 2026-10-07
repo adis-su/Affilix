@@ -8,6 +8,14 @@
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
 - Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
 
+## Content Format Continuity
+
+The selected Content Format from Stage 04 is an upstream narrative constraint for spoken content. Voice Script must support the format's story mechanism through dialogue structure, product reveal, proof language, and CTA when applicable.
+
+Content Format does not authorize unsupported claims or invented experience. It shapes how validated facts are spoken, while Content Angle and Campaign Objective remain authoritative for the message.
+
+If the Content Format changes, affected Voice Script artifacts become STALE and require revalidation.
+
 ## Purpose
 
 The Voice Script Engine converts the validated content strategy and storyboard into spoken dialogue, voice-over, and delivery instructions.
@@ -20,7 +28,7 @@ It controls what the creator says and how the delivery should align with the cre
 - Selected creator profile
 - Product facts
 - Approved selling points
-- Content strategy
+- Content strategy, including selected Content Format
 - Approved hook
 - Storyboard
 - Scene durations
