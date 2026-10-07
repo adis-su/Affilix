@@ -74,6 +74,8 @@ A storyboard that only copies the selected format into metadata while using gene
 
 Storyboard output is the canonical production blueprint between Hook and downstream prompt stages. It must expose enough structure for Visual Prompt, Video Prompt, and Voice Script to execute the same action graph without inventing missing behavior.
 
+Each scene must include a Reference Plan and ordered Reference Trajectory. Reference density is driven by action complexity. High-complexity scenes should target six meaningful reference states by default when justified; simpler scenes may use fewer. Six references are never a quota and never represent six scenes or six Video Prompts.
+
 Every scene MUST define:
 
 - **scene timing:** scene duration plus beat-level timing windows where action order matters
