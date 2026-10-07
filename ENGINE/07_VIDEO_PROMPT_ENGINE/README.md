@@ -264,7 +264,7 @@ Do not use "move naturally" as the only motion instruction.
 
 ## Dialogue Synchronization
 
-When `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and the Voice Script contains spoken content, every affected Video Prompt must include a dedicated DIALOGUE SYNC section.
+When spoken content exists, every affected Video Prompt must include a dedicated DIALOGUE SYNC section. For `NO_SPOKEN_VOICE + EXTERNAL_PROVIDER`, this section carries timing/synchronization anchors for the external dialogue asset and must not require native speech generation or lip-sync.
 
 The section must identify:
 
@@ -273,7 +273,7 @@ The section must identify:
 - Start timing
 - End timing
 - Delivery
-- Lip-sync requirement
+- Lip-sync requirement when `SPOKEN_ON_CAMERA`
 - Emotional intent
 - Action/dialogue relationship
 
