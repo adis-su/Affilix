@@ -417,3 +417,64 @@ VOICE SCRIPT
 Downstream stages MUST preserve the selected format unless Stage 04 is revised.
 
 If product evidence, product type, or selected format changes, the affected downstream artifacts become stale and must be revalidated.
+
+
+## Operational Selection Algorithm
+
+Stage 04 MUST resolve format selection deterministically from the current validated inputs.
+
+### Candidate Generation
+
+1. Load all registered formats.
+2. Determine product behavior classes from product type, supplied product evidence, use case, and demonstration opportunity.
+3. Generate candidates whose `supported_product_behaviors` intersect the resolved product behavior.
+4. Remove candidates whose `requires` conditions cannot be satisfied.
+5. Mark candidates with unresolved but non-critical requirements as `conditional`.
+
+### Candidate Scoring
+
+For each remaining candidate, evaluate:
+
+| Signal | Weight |
+|---|---:|
+| Product behavior fit | 30 |
+| Proof opportunity fit | 25 |
+| Campaign objective fit | 15 |
+| Creator fit | 10 |
+| Platform fit | 10 |
+| Action clarity / physical demonstrability | 10 |
+
+Score each signal from 0–1, then calculate:
+
+`format_score = Σ(signal_score × weight)`
+
+The score ranks eligible candidates. It does not override hard claim or evidence constraints.
+
+### Selection
+
+- Select the highest-scoring `eligible` candidate.
+- A `conditional` candidate may be selected only when its condition is explicitly satisfiable and recorded.
+- If multiple candidates are materially tied, prefer the simpler format with stronger proof and clearer physical action.
+- Never select an `ineligible` candidate.
+- If no candidate is eligible or conditionally satisfiable, set `format_selection_status: BLOCKED` and preserve the unresolved requirement. Do not invent a format.
+
+### Output Traceability
+
+The selected strategy must preserve enough information to explain the decision:
+
+```yaml
+content_format:
+  id:
+  name:
+  fit: eligible | conditional
+  score:
+  rationale:
+  requirements: []
+content_format_selection:
+  product_behavior: []
+  proof_opportunity:
+  candidate_scores: []
+  selection_status: SELECTED | BLOCKED
+```
+
+The candidate score list is diagnostic strategy provenance, not a downstream creative instruction.
