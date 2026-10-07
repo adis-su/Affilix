@@ -27,7 +27,7 @@ If naturalism is materially weak, mark the storyboard `NEEDS_REFINEMENT`; if it 
 
 Storyboard consumes the selected Content Format from Stage 04 and the selected Hook from Stage 05.
 
-The storyboard MUST preserve the format's story mechanism across scenes. The format is not decorative metadata. It determines how the problem, product role, action sequence, proof, and CTA are staged when those elements are part of the registered format.
+The storyboard MUST preserve the format's story mechanism across scenes. The format is not decorative metadata. It determines how the problem, product role, action sequence, proof, are staged when those elements are part of the registered format.
 
 For every scene, validate:
 
