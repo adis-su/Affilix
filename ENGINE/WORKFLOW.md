@@ -362,7 +362,7 @@ For every new `/Affilix` run:
 
 Never silently mix files from different commits.
 
-If `main` changes after a run is pinned, the active run remains on its pinned commit. The newer repository state is picked up by the next new run.
+If `main` changes after a run is pinned, the active run remains on its pinned commit until the next explicit `/next` or revision boundary. At that boundary, resolve the current `main` HEAD, synchronize the active run to the latest commit atomically before loading the next stage files, revalidate or invalidate affected artifacts, and only then execute the next dependency-satisfied stage. Never mix files from the old and new commits within one stage execution.
 
 For implementation work outside a production run, resolve the current `main` HEAD immediately before editing or reporting repository status.
 
