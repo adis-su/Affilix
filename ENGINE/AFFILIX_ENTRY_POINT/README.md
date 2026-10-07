@@ -324,7 +324,7 @@ Before intake:
 
 All steps above are internal. The resolved SHA and bootstrap diagnostics must never be included in the initial user-facing response.
 
-A repository update on `main` is picked up by the next new run. The active run remains pinned to its initialized commit.
+When `main` changes after a run is pinned, the active run remains pinned until the next explicit `/next` or revision boundary. At that boundary, resolve the current `main` HEAD, synchronize the active run to the new commit, and revalidate or invalidate affected artifacts before executing the requested progression or revision. This rule is authoritative with `ENGINE/REPOSITORY_RUNTIME/RUNTIME_CONTRACT.md` and `SKILL.md`.
 
 ## 10. Runtime State
 
