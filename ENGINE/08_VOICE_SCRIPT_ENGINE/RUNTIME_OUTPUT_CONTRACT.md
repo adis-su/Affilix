@@ -47,17 +47,42 @@ scenes:
     lip_sync_priority:
     cta_role:
 validation:
-  content_format: PASS | NEEDS_REFINEMENT
+  content_format: PASS | NEEDS_REFINEMENT | BLOCKED
   accuracy: PASS | NEEDS_REFINEMENT
   creator: PASS | NEEDS_REFINEMENT
   timing: PASS | NEEDS_REFINEMENT
   narrative: PASS | NEEDS_REFINEMENT
+content_format_validation:
+  format_mechanism_present: true | false
+  product_role_preserved: true | false
+  proof_language_supported: true | false
+  action_dialogue_aligned: true | false
+  cta_compatible: true | false | NOT_APPLICABLE
+  format_preserved: true | false
+  validation_status: PASS | NEEDS_REFINEMENT | BLOCKED
 unresolved_requirements: []
 decision_queue: []
 provenance: []
 source_artifacts: []
 source_commit_sha:
 ```
+
+## Content Format Validation
+
+For SPOKEN_ON_CAMERA and VOICE_OVER, the selected Stage 04 Content Format is a required narrative constraint, not metadata decoration.
+
+The Voice Script passes Content Format validation only when dialogue materially supports the selected format mechanism, preserves the product role, uses only supported proof language, remains aligned with storyboard action, and does not imply another format.
+
+The following failures are NEEDS_REFINEMENT:
+- generic dialogue that could belong to any format,
+- format-specific mechanism present only in metadata,
+- dialogue that describes a product role different from the selected format,
+- dialogue that talks about proof the storyboard does not demonstrate,
+- CTA or product reveal that substitutes a different format mechanism.
+
+The result is BLOCKED when the selected format cannot be expressed in spoken content without inventing unsupported claims, personal experience, or unavailable proof.
+
+For NO_SPOKEN_VOICE, Stage 09 remains SKIPPED; Content Format validation is NOT_REQUIRED.
 
 ## Rules
 
