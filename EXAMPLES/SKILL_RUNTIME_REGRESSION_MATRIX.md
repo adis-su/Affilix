@@ -100,7 +100,7 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 - Changing the selected format after Video Prompt completion makes affected prompts STALE.
 
 ### R030 — Content Format mechanism in Voice Script
-- For spoken modes, Voice Script must materially express the selected format through dialogue structure, product role, proof language, action alignment, and compatible CTA.
+- For spoken modes, Voice Script must materially express the selected format through dialogue structure, product role, proof language, and action alignment.
 - Metadata-only format labeling fails validation.
 
 ### R031 — Format revision invalidation to Voice Script
