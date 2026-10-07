@@ -172,7 +172,9 @@ Output: validated hook direction/copy and delivery direction.
 
 Input: completed Hook and all required upstream state.
 
-Output: the canonical temporal scene sequence, action choreography, reference graph, creative timing, and generation-segmentation intent.
+Output: the canonical temporal scene sequence, action choreography, Reference Plan, reference graph, creative timing, and generation-segmentation intent.
+
+For each scene, Storyboard must plan an ordered Reference Trajectory. Reference density is action-complexity-driven. High-complexity scenes should target six meaningful reference states by default when justified; simpler scenes may use fewer. Six references are never a quota and never represent six scenes or six Video Prompts.
 
 Storyboard is the creative source of truth for duration and temporal action.
 
