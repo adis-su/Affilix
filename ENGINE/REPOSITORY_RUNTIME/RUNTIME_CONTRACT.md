@@ -21,17 +21,27 @@ The Project is the user-facing host. GitHub `adis-su/Affilix` on `main` is the i
 
 ## Canonical Stage Resolution
 
-`ENGINE/WORKFLOW.md` is the sole authority for canonical stage IDs, names, order, prerequisites, and dependencies.
+`ENGINE/WORKFLOW.md` is the sole authority for canonical stage IDs, names, order, prerequisites, dependencies, and implementation paths.
 
-Runtime MUST resolve:
+Runtime MUST resolve in this exact order:
 
-`canonical_stage_id → canonical_stage_name → implementation_path`
+`canonical_stage_id → canonical_stage_name → implementation_path → verify_path_exists → load_engine_contract`
 
 It MUST NOT resolve:
 
 `engine_directory_number → stage_id`
 
 Engine directory numbers are implementation identifiers only. In particular, `ENGINE/08_VOICE_SCRIPT_ENGINE/` maps to canonical Stage 08 and `ENGINE/07_VIDEO_PROMPT_ENGINE/` maps to canonical Stage 09.
+
+For Stage 08, the resolver MUST resolve exactly:
+
+`08 → Voice Script → ENGINE/08_VOICE_SCRIPT_ENGINE/`
+
+For Stage 09, the resolver MUST resolve exactly:
+
+`09 → Video Prompt → ENGINE/07_VIDEO_PROMPT_ENGINE/`
+
+The runtime MUST verify the exact canonical implementation path against the pinned repository snapshot before claiming an engine is missing. If the path exists but file loading fails, the failure is `ENGINE_FILE_ACCESS_FAILURE`. Only a verified-absent canonical path may produce `ENGINE_NOT_FOUND`. The runtime MUST NOT fall back to a guessed or alternate engine path.
 
 Every material artifact must carry a canonical `stage` value. Runtime validation must reject an artifact when its declared stage conflicts with the canonical registry or when a dependency is inferred from an engine directory number.
 
