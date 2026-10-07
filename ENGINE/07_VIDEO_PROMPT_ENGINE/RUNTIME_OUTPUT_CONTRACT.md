@@ -1,6 +1,6 @@
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 10
+- Canonical workflow stage: Stage 08
 - Engine implementation path: `ENGINE/07_VIDEO_PROMPT_ENGINE/`
 - Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
 - Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
@@ -10,8 +10,13 @@
 ## Output
 
 ```yaml
-stage: 10_VIDEO_PROMPT
+stage: 08_VIDEO_PROMPT
 status: COMPLETED
+content_format_constraint:
+  format_id:
+  format_name:
+  format_fit: eligible | conditional
+  format_requirements: []
 audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER | NO_SPOKEN_VOICE
 provider:
   provider_id:
@@ -43,6 +48,7 @@ scenes:
     motion_intensity:
     dialogue_sync: []
 validation:
+  content_format: PASS | NEEDS_REFINEMENT
   identity: PASS | NEEDS_REFINEMENT
   product: PASS | NEEDS_REFINEMENT
   motion: PASS | NEEDS_REFINEMENT
@@ -86,7 +92,7 @@ The user-facing video prompt itself must be one standalone Markdown code block. 
 
 ## Invalidation
 
-Changes to Storyboard, Visual Prompt, Creator, Product, Context, Campaign `audio_mode`, provider capability profile, or requested duration invalidate Video Prompt as STALE.
+Changes to Content Format, Storyboard, Visual Prompt, Creator, Product, Context, Campaign `audio_mode`, provider capability profile, or requested duration invalidate Video Prompt as STALE.
 
 
 ## Reference Transition Output
