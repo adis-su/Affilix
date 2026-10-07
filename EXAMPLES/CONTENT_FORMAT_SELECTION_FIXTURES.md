@@ -327,3 +327,32 @@ Expected:
 Given a completed Storyboard under `PRODUCT_HAS_A_JOB`, changing Stage 04 Content Format makes the Storyboard `STALE`.
 
 The old scene sequence must not be silently relabeled with the new format.
+
+
+## Visual Prompt Propagation Regression
+
+### F017 — Format Must Be Visible in the Frozen State
+
+Given `PRODUCT_HAS_A_JOB`:
+
+- Invalid visual prompt: generic beauty portrait holding the product, with format only recorded in metadata.
+- Valid visual prompt: the frozen frame visibly establishes the specific product-task state required by the storyboard.
+
+Expected:
+- invalid: `mechanism_preserved: false`
+- valid: `mechanism_preserved: true`
+- no temporal language may be added to make the format legible.
+
+### F018 — One Product, Three Personalities Preserves Product Identity
+
+Given `ONE_PRODUCT_THREE_PERSONALITIES`, each reference state may represent a distinct mode, but the product identity must remain consistent across all states.
+
+Expected:
+- mode-specific frozen states: `PASS`
+- product morph/identity drift between modes: `NEEDS_REFINEMENT`
+
+### F019 — Format Revision Invalidates Visual Prompt
+
+Changing the selected Content Format after Visual Prompt completion makes affected prompts `STALE`.
+
+The system must not retrofit a new format into an existing frozen image prompt without revalidation.
