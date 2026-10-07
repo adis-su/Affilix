@@ -50,3 +50,19 @@ There is no QC stage or Final UGC Package contract in this regression matrix.
 ## Regression Result
 
 Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, stage contracts, action/reference contracts, duration contract, and production output template.
+
+
+### R017 — Content Format propagation to Visual Prompt
+- Given a valid selected Content Format and completed Storyboard, Visual Prompt carries the same format constraint.
+- Visual output remains a single frozen state and does not introduce a different format.
+
+### R018 — Content Format propagation to Video Prompt
+- Given a valid selected Content Format, Video Prompt preserves the format mechanism through action, product interaction, proof, and resulting state where applicable.
+- A format revision invalidates affected Video Prompt artifacts.
+
+### R019 — Content Format propagation to Voice Script
+- Given a valid selected Content Format and spoken audio mode, Voice Script structures dialogue to support the selected format without inventing claims or experience.
+- A format revision invalidates affected Voice Script artifacts.
+
+13–16 remain valid for Stage 04 selection and propagation into Hook/Storyboard.
+17–19 require Content Format continuity across Visual Prompt, Video Prompt, and Voice Script; a changed format must invalidate affected downstream artifacts.
