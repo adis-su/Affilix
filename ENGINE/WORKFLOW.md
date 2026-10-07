@@ -81,7 +81,7 @@ Naturalism validation failure is handled inside the affected stage. It never cre
 
 No QC stage, Final UGC Package stage, or approval gate exists.
 
-A stage may be skipped only when its output is genuinely not required by the requested deliverable. Skipping is a dependency decision, not an approval decision.
+Only Stage 08 may be skipped when `audio_mode` is `NO_SPOKEN_VOICE`. All other canonical stages remain required for the Affilix UGC production pipeline. Skipping is a dependency decision, not an approval decision.
 
 ## Stage Execution Contract
 
