@@ -233,7 +233,5 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 - Expected: scene-level prompt count remains `1`.
 
 ### R061 — Intermediate Reference Is Not a Generation Segment
-- Given a completed Storyboard with N scenes, Stage 09 produces exactly N user-facing Video Prompts.
-- Multiple technical generation segments inside a scene do not create additional user-facing prompts.
-- Multiple scenes must not be merged into one Video Prompt.
-- Expected: `scene_count == video_prompt_count`; mismatch is `NEEDS_REFINEMENT` and blocks Stage 09 completion.
+- A reference state is a frozen visual checkpoint, not a provider generation segment.
+- Expected: reference count and generation-segment count remain independently validated.
