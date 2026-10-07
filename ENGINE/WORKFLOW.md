@@ -249,9 +249,11 @@ Generation durations are limited to `[4, 6, 8, 10]` seconds. Final campaign dura
 
 ### 10 — Production Output
 
-Input: all required current, non-STALE upstream artifacts.
+Input: all required current, non-STALE upstream artifacts, including the selected Content Format and its downstream propagation state.
 
-Output: consolidated production output assembled from current runtime state.
+Output: consolidated production output assembled from current runtime state, with Content Format traceability preserved through Hook, Storyboard, Visual Prompt, Video Prompt, and Voice Script when applicable.
+
+Production Output must block final assembly when the selected Content Format is missing, stale, or contradicted by a required downstream artifact.
 
 This is the final assembly step, not a separate QC or approval gate.
 
@@ -298,6 +300,7 @@ Examples:
 - Audio / Voice Mode change → re-evaluate Stage 09 and Stage 10. `NO_SPOKEN_VOICE` invalidates any existing Voice Script as STALE/SKIPPED and removes voice dependencies from Video; either spoken mode makes Stage 09 required and Video dependent on its current output.
 - Creator change → Strategy, Hook, Storyboard, Visual, Voice, Video.
 - Strategy change → Hook, Storyboard, Visual, Voice, Video.
+- Content Format change → Hook, Storyboard, Visual, Voice, Video, and Production Output.
 - Hook change → affected Storyboard and downstream assets.
 - Storyboard change → Visual, Voice, Video.
 - Reference-state change → affected Visual and Video transitions.
