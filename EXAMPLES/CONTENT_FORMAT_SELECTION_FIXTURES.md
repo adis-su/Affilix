@@ -295,3 +295,35 @@ Expected:
 Given a completed Hook generated under `LIFESTYLE_INTEGRATION`, changing Stage 04 Content Format to `ONE_PRODUCT_THREE_PERSONALITIES` makes the Hook `STALE`.
 
 The system must not silently relabel the old Hook with the new format.
+
+
+## Storyboard Propagation Regression
+
+### F014 — Product Has a Job Must Become a Job-Centered Scene
+
+Given `PRODUCT_HAS_A_JOB`:
+
+- Invalid storyboard: generic creator/product introduction with no concrete task.
+- Valid storyboard: a defined makeup need triggers the product action, and the resulting state reflects completion of that task.
+
+Expected:
+- invalid storyboard: `NEEDS_REFINEMENT`
+- valid storyboard: `PASS`
+- metadata alone cannot satisfy format validation.
+
+### F015 — One Product, Three Personalities Must Produce Distinct Modes
+
+Given `ONE_PRODUCT_THREE_PERSONALITIES`:
+
+- The storyboard must preserve one product identity while staging distinct context/mode beats.
+- Three arbitrary poses or cosmetic close-ups without distinct mode purpose do not satisfy the format.
+
+Expected:
+- mode-driven storyboard: `PASS`
+- generic multi-shot product montage: `NEEDS_REFINEMENT`
+
+### F016 — Format Revision Invalidates Storyboard
+
+Given a completed Storyboard under `PRODUCT_HAS_A_JOB`, changing Stage 04 Content Format makes the Storyboard `STALE`.
+
+The old scene sequence must not be silently relabeled with the new format.
