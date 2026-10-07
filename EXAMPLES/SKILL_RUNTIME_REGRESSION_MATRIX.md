@@ -153,3 +153,34 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 - Expected: format mechanism preserved and naturalism `PASS`; format substitution `NEEDS_REFINEMENT`.
 
 - When audio_mode=NO_SPOKEN_VOICE, Stage 09 is SKIPPED and Content Format voice validation is NOT_REQUIRED.
+### R042 — Storyboard Beat Timing Contract
+- Major sequential storyboard actions expose narrative timing windows without confusing them with provider generation segments.
+- Expected: explicit timing PASS; ambiguous ordering NEEDS_REFINEMENT.
+
+### R043 — Storyboard Action Priority
+- Primary action, secondary responsive action, supporting motion, and bounded micro-motion are distinguishable.
+- Expected: priority hierarchy PASS; competing/random secondary motion NEEDS_REFINEMENT.
+
+### R044 — Storyboard Product/Hand/Contact State
+- Product manipulation preserves hand ownership, contact state, product state, and product-follow-hand behavior.
+- Expected: complete causal state PASS; missing or contradictory ownership/contact state NEEDS_REFINEMENT.
+
+### R045 — Storyboard Uncaused Product State Blocks
+- A product position, orientation, or state change without corresponding physical interaction is invalid.
+- Expected: BLOCKED.
+
+### R046 — Storyboard Transition Contract
+- Reference transitions declare allowed changes, invariants, and resulting reference.
+- Expected: deterministic transition PASS; silent downstream state invention NEEDS_REFINEMENT.
+
+### R047 — Storyboard Dialogue Anchors
+- Spoken meaning is anchored to an action window and target reference without replacing Stage 09 Voice Script.
+- Expected: anchor PASS; storyboard-authored final dialogue NEEDS_REFINEMENT.
+
+### R048 — Product Has a Job Requires Action
+- PRODUCT_HAS_A_JOB must stage concrete need → product performs assigned job → resulting task state.
+- Expected: product-job mechanism PASS; pickup/presentation-only sequence NEEDS_REFINEMENT.
+
+### R049 — Storyboard Production Readiness Gate
+- Storyboard with missing material timing, state, transition, proof, or action-causality fields cannot advance to downstream prompt generation.
+- Expected: NEEDS_REFINEMENT; impossible/unsupported behavior remains BLOCKED.
