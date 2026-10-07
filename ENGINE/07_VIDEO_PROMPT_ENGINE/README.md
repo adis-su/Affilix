@@ -16,6 +16,37 @@ The engine must not silently convert the selected format into another format. Co
 
 If the Content Format changes, affected Video Prompts become STALE and require revalidation.
 
+## Format Mechanism → Causal Motion Validation
+
+Content Format must materially shape the video transition. Carrying `format_id` or repeating the format name is insufficient.
+
+For every generation segment, validate that the selected format is expressed through the actual motion graph:
+
+- **Format trigger:** the action begins from the format's required problem, question, mission, context, or mode.
+- **Format-specific product role:** product interaction performs the role defined by the format.
+- **Proof/action mechanism:** observable evidence is produced only when supported by available evidence.
+- **Causal state transition:** trigger → intention → action → physical result → target state.
+- **Reference fidelity:** start and target references remain physically reachable and bridge references remain immutable.
+- **Dialogue alignment:** when spoken content exists, dialogue supports the same format mechanism and does not create a competing story.
+- **No format substitution:** a catchy but incompatible motion pattern does not override the selected format.
+
+### Format-specific motion tests
+
+| Content Format | Video transition must express |
+|---|---|
+| BEAUTY_CRIME_SCENE | case/problem → inspection/intervention → observable resulting state |
+| PRODUCT_HAS_A_JOB | concrete need → product performs its job → task/result state |
+| BEAUTY_MYTH_LAB | test question → controlled test action → evidence state |
+| PRODUCT_INTERROGATION | product question → inspection/demonstration → evidence state |
+| ONE_PRODUCT_THREE_PERSONALITIES | one product identity → distinct mode actions → preserved identity across transitions |
+| SILENT_BEAUTY_TEST | visually readable test/action → observable state change without spoken dependency |
+| BEAUTY_ROUTINE_UNDER_PRESSURE | situational pressure → constrained routine action → usable resulting state |
+| ANTI-TUTORIAL | expectation/reframe → grounded action or qualification → resulting state |
+| LIFESTYLE_INTEGRATION | believable context → natural product use → contextual resulting state |
+| PROBLEM_SOLUTION_MISSION | concrete problem → mission action → resolved task state |
+
+A segment that only contains generic product handling while the selected format exists in metadata does not pass.
+
 ## Purpose
 
 The Video Prompt Engine converts the completed storyboard, visual scene specification, and canonical Voice Script into production-ready motion instructions for video generation.
