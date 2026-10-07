@@ -18,7 +18,6 @@ Pose selection must support the scene's narrative and product interaction.
 - Sitting
 - Standing
 - Lifestyle interaction
-- CTA gesture
 - Reaction pose
 
 ## Pose Components
