@@ -235,7 +235,7 @@ Examples:
 - Creator revision → Strategy, Hook, Storyboard, Visual, Voice, Video become STALE.
 - Product or niche revision → all dependent creative stages become STALE.
 - Campaign requirement revision → affected Context, Creator, Strategy, Hook, Storyboard, Visual, Voice, Video become STALE.
-- `campaign.audio_mode` revision → re-evaluate Stage 09 and Stage 08 dependency state; never leave a stale Voice Script as an implicit dependency when mode is `NO_SPOKEN_VOICE`.
+- `campaign.audio_mode` or dialogue-layer revision → re-evaluate Stage 08 and Stage 09 dependency state. `NO_SPOKEN_VOICE` alone may skip Stage 08, while external dialogue under `NO_SPOKEN_VOICE` requires Stage 08 for canonical dialogue/timing and keeps Stage 09 as silent-video generation.
 - Strategy revision → Hook, Storyboard, Visual, Voice, Video become STALE.
 - Hook revision → affected Storyboard and downstream assets become STALE.
 - Storyboard revision → Visual, Voice, Video become STALE.
