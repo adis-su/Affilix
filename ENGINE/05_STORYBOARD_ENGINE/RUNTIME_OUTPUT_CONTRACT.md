@@ -23,11 +23,15 @@ metadata:
   generation_segmentation_plan: []
   aspect_ratio:
   scene_count:
+  primary_content_format:
+  content_format_fit: eligible | conditional
+  content_format_requirements: []
   primary_content_angle:
   primary_message:
   hook_id:
 scenes: []
 validation:
+  content_format: PASS | NEEDS_REFINEMENT
   narrative: PASS | NEEDS_REFINEMENT
   identity: PASS | NEEDS_REFINEMENT
   product: PASS | NEEDS_REFINEMENT
