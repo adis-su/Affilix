@@ -1,4 +1,25 @@
-# Affilix — UGC Production Output Template v3
+# Affilix — UGC Production Output Template v4
+
+## Content Format Traceability
+
+Production Output must preserve the selected Content Format from Stage 04 as traceable metadata. Production Output assembles upstream artifacts and must not reinterpret or silently replace the selected format.
+
+```yaml
+content_format:
+  format_id:
+  format_name:
+  format_fit: eligible | conditional
+  format_requirements: []
+  selection_status: SELECTED
+content_format_propagation:
+  hook: PRESERVED | NEEDS_REVALIDATION
+  storyboard: PRESERVED | NEEDS_REVALIDATION
+  visual_prompt: PRESERVED | NEEDS_REVALIDATION
+  video_prompt: PRESERVED | NEEDS_REVALIDATION
+  voice_script: PRESERVED | NEEDS_REVALIDATION | NOT_REQUIRED
+```
+
+Production Output is valid only when the selected Content Format is current and all required downstream artifacts preserve it. A format mismatch or stale dependent artifact blocks final assembly.
 
 ## Video Duration
 
@@ -31,7 +52,7 @@ For each video segment:
 
 Image prompts and video prompts are user-facing generation artifacts and must each be delivered in a single standalone Markdown code block. Metadata remains outside the code block.
 
-The remaining production output follows the current campaign, creator, product, niche context, strategy, hook, storyboard, visual prompt, voice script, and video prompt state.
+The remaining production output follows the current campaign, creator, product, niche context, strategy, selected Content Format, hook, storyboard, visual prompt, voice script, and video prompt state.
 
 ## Action and Reference Traceability
 
