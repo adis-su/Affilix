@@ -1,6 +1,6 @@
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 08
+- Canonical workflow stage: Stage 07
 - Engine implementation path: `ENGINE/06_VISUAL_PROMPT_ENGINE/`
 - Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
 - Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
@@ -9,13 +9,18 @@
 
 ## Stage Gate
 
-Stage 08 executes only after current Stage 07 Storyboard is COMPLETED and valid.
+Stage 07 executes only after current Stage 06 Storyboard is COMPLETED and valid.
 
 ## Output
 
 ```yaml
-stage: 08_VISUAL_PROMPT
+stage: 07_VISUAL_PROMPT
 status: COMPLETED
+content_format_constraint:
+  format_id:
+  format_name:
+  format_fit: eligible | conditional
+  format_requirements: []
 prompts:
   - prompt_id:
     scene_id:
@@ -28,7 +33,9 @@ prompts:
     pose_expression_references: []
     environment_references: []
     style_references: []
-    static_qc:
+    content_format_connection:
+  mechanism_preserved: true
+static_qc:
       single_frame: PASS | NEEDS_REFINEMENT
       no_motion: PASS | NEEDS_REFINEMENT
       no_temporal_instruction: PASS | NEEDS_REFINEMENT
@@ -53,7 +60,7 @@ The artifact is validated, marked COMPLETED when valid, then waits for /next bef
 
 ## Invalidation
 
-Changes to Storyboard, Creator, Product, Context, or visual references invalidate Visual Prompts as STALE.
+Changes to Content Format, Storyboard, Creator, Product, Context, or visual references invalidate Visual Prompts as STALE.
 
 
 ## Reference-State Output
