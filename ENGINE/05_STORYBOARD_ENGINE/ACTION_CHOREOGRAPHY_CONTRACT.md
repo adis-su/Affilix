@@ -115,9 +115,11 @@ A reference chain may be:
 R01 → R02 → R03 → R04
 ```
 
-A scene may contain many references.
+A scene may contain many references. Reference density is determined by action complexity, not by scene count or provider segment count.
 
-A reference is not a generation segment.
+For high-complexity action scenes, Affilix should target six ordered reference states by default when six distinct states materially improve action control. Simpler scenes may use fewer references when additional states would be redundant. Affilix must never add references merely to reach a numeric quota.
+
+A reference is not a generation segment. A reference state is a frozen visual state; the transition between references is the motion specification.
 
 ## Bridge Reference
 
