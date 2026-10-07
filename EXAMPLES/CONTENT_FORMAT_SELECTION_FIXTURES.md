@@ -391,3 +391,34 @@ Expected:
 ### F023 — Format Revision Invalidates Video Prompt
 
 Changing the selected Content Format after Video Prompt completion makes affected Video Prompts `STALE`. The existing motion graph must not be silently relabeled.
+
+## Voice Script Propagation Regression
+
+### F024 — Product Has a Job Must Shape Spoken Content
+
+Given selected format PRODUCT_HAS_A_JOB for a concealer campaign:
+
+- Invalid dialogue: generic product praise with no concrete makeup need, product job, or resulting task state.
+- Valid dialogue: names the makeup need, frames the concealer as performing the specific task, and connects the spoken line to the visible resulting state.
+
+Expected:
+- invalid: content_format: NEEDS_REFINEMENT
+- valid: content_format: PASS
+- unsupported correction, treatment, healing, or guaranteed-result claims remain prohibited.
+
+### F025 — Silent Beauty Test Must Not Become Dialogue-Dependent
+
+Given selected format SILENT_BEAUTY_TEST:
+
+- Invalid dialogue: the script explains a test result that is not visually demonstrated, making the spoken claim the only evidence.
+- Valid dialogue: speech is optional and, when present, supports the visible test without replacing it with unsupported claims.
+
+Expected:
+- dialogue-dependent unsupported proof: content_format: NEEDS_REFINEMENT
+- visually supported companion dialogue: content_format: PASS
+
+### F026 — Format Revision Invalidates Voice Script
+
+Given a completed Voice Script under BEAUTY_CRIME_SCENE, changing Stage 04 Content Format to PRODUCT_HAS_A_JOB makes the Voice Script STALE.
+
+The old dialogue must not be silently relabeled with the new format. Revalidation must inspect the actual spoken mechanism, not only the metadata.
