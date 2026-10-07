@@ -9,7 +9,7 @@
 
 ## Stage Gate
 
-Stage 09 executes only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and only after current Stage 07 Storyboard is current and validated.
+Stage 09 executes only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and only after current Stage 06 Storyboard is current and validated.
 
 When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 must not generate a placeholder or invented script. Its valid runtime state is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`. Visual Prompt is a parallel Storyboard descendant and is not a prerequisite for Voice Script.
 
@@ -18,6 +18,11 @@ When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 must not generate a placeholder
 ```yaml
 stage: 09_VOICE_SCRIPT
 status: COMPLETED
+content_format_constraint:
+  format_id:
+  format_name:
+  format_fit: eligible | conditional
+  format_requirements: []
 metadata:
   audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER
   script_id:
@@ -42,6 +47,7 @@ scenes:
     lip_sync_priority:
     cta_role:
 validation:
+  content_format: PASS | NEEDS_REFINEMENT
   accuracy: PASS | NEEDS_REFINEMENT
   creator: PASS | NEEDS_REFINEMENT
   timing: PASS | NEEDS_REFINEMENT
@@ -65,4 +71,4 @@ The artifact is validated, marked COMPLETED, and waits for `/next` then continue
 
 ## Invalidation
 
-Changes to Storyboard, Strategy, Hook, Creator, Product, or campaign language requirements invalidate the Voice Script as STALE.
+Changes to Content Format, Storyboard, Strategy, Hook, Creator, Product, or campaign language requirements invalidate the Voice Script as STALE.
