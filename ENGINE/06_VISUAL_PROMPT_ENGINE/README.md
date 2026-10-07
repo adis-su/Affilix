@@ -233,7 +233,6 @@ Examples:
 
 | Storyboard intent | Image prompt translation |
 |---|---|
-| Creator points toward CTA | Creator is posed facing camera with one hand clearly pointing downward toward the lower frame |
 | Creator holds product | Creator visibly holds the product in the specified hand and position |
 | Creator looks at product | Creator's gaze is directed toward the visible product |
 | Creator walks into frame | Do not depict walking motion; depict the approved still pose/state if a keyframe is required |
@@ -241,20 +240,6 @@ Examples:
 
 Do not carry temporal verbs into the image prompt when they imply motion.
 
-## CTA and Overlay Rule
-
-When a scene requires CTA text or UI to be added later:
-
-- Describe only the physical pose and composition needed to support the CTA.
-- Reserve clean negative space where the overlay will be composited.
-- Do not bake CTA text into the generated image unless explicitly requested.
-- Do not generate shopping-cart icons, yellow basket graphics, badges, prices, discounts, or interface elements unless they are explicitly part of the physical visual reference.
-
-Example:
-
-```text
-Leave clean lower-frame negative space for a separately composited CTA overlay.
-```
 
 ## Timecode and Duration
 
