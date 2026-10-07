@@ -169,7 +169,7 @@ A product may belong to multiple classes. Selection must use the supplied produc
 **Supported behaviors:** TESTABLE, JOB_ORIENTED, PROBLEM_SOLUTION
 
 **Story pattern:**
-Problem → Investigation → Product as evidence/intervention → Test/action → Resulting state → CTA
+Problem → Investigation → Product as evidence/intervention → Test/action → Resulting state
 
 **Action pattern:** inspect → identify issue → reach for product → apply/use → observe resulting state.
 
@@ -190,7 +190,7 @@ Problem → Investigation → Product as evidence/intervention → Test/action �
 **Supported behaviors:** JOB_ORIENTED, PROBLEM_SOLUTION
 
 **Story pattern:**
-Need → Mission → Product takes the job → Action → Resulting state → CTA
+Need → Mission → Product takes the job → Action → Resulting state
 
 **Action pattern:** trigger → product pickup → deliberate application/use → inspect/adjust → resulting state.
 
@@ -233,7 +233,7 @@ Question → Setup → Test → Observation → Interpretation
 **Supported behaviors:** TESTABLE
 
 **Story pattern:**
-Question → Product on trial → Evidence/action → Finding → CTA
+Question → Product on trial → Evidence/action → Finding
 
 **Action pattern:** present product → inspect/open → apply/test → observe → conclude.
 
@@ -254,7 +254,7 @@ Question → Product on trial → Evidence/action → Finding → CTA
 **Supported behaviors:** MULTI_MODE
 
 **Story pattern:**
-Product → Mode 1 → Mode 2 → Mode 3 → takeaway → CTA
+Product → Mode 1 → Mode 2 → Mode 3 → takeaway
 
 **Action pattern:** context change → product use → styling/application adjustment → resulting visual state.
 
@@ -276,7 +276,7 @@ Product → Mode 1 → Mode 2 → Mode 3 → takeaway → CTA
 **Supported behaviors:** TESTABLE, EXPERIENCE_LED, JOB_ORIENTED
 
 **Story pattern:**
-Context → Product → Action → Observation → CTA
+Context → Product → Action → Observation
 
 **Action pattern:** gaze, gesture, application, inspection, restrained reaction, camera reframing.
 
@@ -297,7 +297,7 @@ Context → Product → Action → Observation → CTA
 **Supported behaviors:** JOB_ORIENTED, EXPERIENCE_LED, PROBLEM_SOLUTION
 
 **Story pattern:**
-Constraint → Need → Product action → Completion → CTA
+Constraint → Need → Product action → Completion
 
 **Action pattern:** time/context trigger → rapid but controlled product interaction → transition → resulting state.
 
@@ -318,7 +318,7 @@ Constraint → Need → Product action → Completion → CTA
 **Supported behaviors:** all, when evidence supports the framing
 
 **Story pattern:**
-Expectation → Qualification → Product reality → Best-fit use case → CTA
+Expectation → Qualification → Product reality → Best-fit use case
 
 **Action pattern:** demonstrate relevant use → reveal limitation/context → reposition expectation.
 
@@ -339,7 +339,7 @@ Expectation → Qualification → Product reality → Best-fit use case → CTA
 **Supported behaviors:** EXPERIENCE_LED, MULTI_MODE, JOB_ORIENTED
 
 **Story pattern:**
-Context → Need/moment → Product interaction → Lifestyle payoff → CTA
+Context → Need/moment → Product interaction → Lifestyle payoff
 
 **Action pattern:** enter context → notice need → retrieve product → use → continue activity.
 
@@ -361,7 +361,7 @@ Context → Need/moment → Product interaction → Lifestyle payoff → CTA
 **Supported behaviors:** JOB_ORIENTED, PROBLEM_SOLUTION
 
 **Story pattern:**
-Problem → Mission → Action → Check → Resulting state → CTA
+Problem → Mission → Action → Check → Resulting state
 
 **Action pattern:** trigger → intention → product interaction → adjustment → inspection → resulting state.
 
