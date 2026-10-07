@@ -26,6 +26,8 @@ provider:
   selected_generation_duration_policy: EXACT_SEGMENT_COMPOSITION
 scenes:
   - scene_id:
+    video_prompt_id:
+    user_facing_prompt_count: 1
     creative_duration:
     generation_segments:
       - segment_id:
@@ -94,7 +96,24 @@ If exact composition is impossible, `duration_feasibility` is `BLOCKED`. Do not 
 
 ## Output Formatting
 
-The user-facing video prompt itself must be one standalone Markdown code block. Metadata remains outside the code block.
+The user-facing Video Prompt count MUST equal the Storyboard scene count exactly.
+
+- One Storyboard scene produces exactly one user-facing Video Prompt.
+- Multiple generation segments inside one scene do not increase Video Prompt count.
+- Multiple scenes must never be merged into one Video Prompt.
+- `user_facing_prompt_count` is always `1` per scene.
+- The final artifact contains one standalone Markdown code block for each scene, in scene order. Metadata remains outside the code blocks.
+
+Prompt count validation:
+
+```yaml
+prompt_count_validation:
+  scene_count:
+  video_prompt_count:
+  status: PASS | NEEDS_REFINEMENT
+```
+
+`video_prompt_count != scene_count` is `NEEDS_REFINEMENT` and blocks Stage 09 completion.
 
 ## Invalidation
 
