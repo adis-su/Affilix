@@ -1,6 +1,6 @@
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 07
+- Canonical workflow stage: Stage 06
 - Engine implementation path: `ENGINE/05_STORYBOARD_ENGINE/`
 - Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
 - Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
@@ -53,7 +53,7 @@ When video generation is required, generation segments must use only 4s, 6s, 8s,
 
 If exact composition is impossible, duration_feasibility is BLOCKED and the requested duration is not changed silently.
 
-Storyboard remains the canonical scene sequence for downstream Visual Prompt, Video Prompt, and Voice Script.
+Storyboard remains the canonical creative production blueprint for downstream Visual Prompt, Video Prompt, and Voice Script. See `DOWNSTREAM_AUTHORITY_CONTRACT.md`. Downstream artifacts may elaborate implementation detail but MUST NOT introduce new creative decisions or silently alter Storyboard state.
 
 
 ## Action and Reference Graph
