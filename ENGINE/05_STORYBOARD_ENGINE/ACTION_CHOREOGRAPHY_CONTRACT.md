@@ -275,7 +275,28 @@ Camera behavior must have a defined state and motivation when it materially affe
 
 Random shake, decorative zoom, and unexplained camera movement are invalid naturalism shortcuts.
 
-### Validation Outcomes
+### Reference Density Planning
+
+Before downstream prompt generation, each scene must declare a Reference Plan:
+
+```yaml
+reference_plan:
+  reference_density: LOW | MEDIUM | HIGH | VERY_HIGH
+  target_reference_count:
+  rationale:
+  states:
+    - reference_id:
+      reference_role: START | INTERMEDIATE | END | BRIDGE
+      source_beat_id:
+      critical_state: true | false
+      state_summary:
+```
+
+Reference count must follow the action graph. Every reference must represent a meaningful state change or continuity anchor. A high-density scene should expose enough intermediate states to protect critical action transitions, with six references as the default target when appropriate.
+
+The Reference Plan is part of Storyboard authority. Visual Prompt renders these states; Video Prompt traverses the ordered transitions. Neither downstream stage may add, remove, reorder, or reinterpret reference states.
+
+## Validation Outcomes
 
 ```text
 PASS
