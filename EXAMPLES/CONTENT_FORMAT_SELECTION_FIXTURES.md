@@ -263,3 +263,35 @@ If proof, action clarity, story simplicity, and objective fit are all equal, the
 
 and the candidate set that was tied.
 
+
+
+## Hook Propagation Regression
+
+### F011 — Format Metadata Alone Must Not Pass
+
+Given selected format `PRODUCT_HAS_A_JOB` for a concealer campaign:
+
+- Invalid hook: generic curiosity hook that mentions the concealer but establishes no concrete job or need.
+- Valid hook: opens on the specific makeup need, then physically frames the concealer as the product taking that job.
+
+Expected:
+- invalid hook: `NEEDS_REFINEMENT`
+- valid hook: `VIABLE`
+- `content_format_preserved: true`
+
+### F012 — Beauty Crime Scene Mechanism Must Survive the Hook
+
+Given selected format `BEAUTY_CRIME_SCENE`:
+
+- The hook must establish a recognizable beauty problem/case and an investigation/intervention path.
+- A generic product reveal without the case mechanism is not sufficient.
+
+Expected:
+- mechanism-preserving hook: `VIABLE`
+- generic product reveal: `NEEDS_REFINEMENT`
+
+### F013 — Format Revision Invalidates Hook
+
+Given a completed Hook generated under `LIFESTYLE_INTEGRATION`, changing Stage 04 Content Format to `ONE_PRODUCT_THREE_PERSONALITIES` makes the Hook `STALE`.
+
+The system must not silently relabel the old Hook with the new format.
