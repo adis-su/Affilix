@@ -48,6 +48,12 @@ source_artifacts: []
 source_commit_sha:
 ```
 
+## Storyboard Authority
+
+Stage 06 Storyboard is the canonical creative production blueprint. This stage may elaborate the frozen visual implementation of the current Storyboard reference, but MUST NOT introduce new actions, product states, reference transitions, Content Format mechanisms, or creative decisions. Any material mismatch requires Storyboard revision or marks this artifact STALE.
+
+See `ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md`.
+
 ## Static Invariant
 
 Each final prompt describes exactly one frozen visual state. Camera movement, duration instructions, temporal sequences, and next-scene directions are prohibited in the generation prompt.
