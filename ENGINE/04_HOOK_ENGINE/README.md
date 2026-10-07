@@ -14,7 +14,7 @@ Generate opening concepts that capture attention while remaining faithful to app
 
 ## Input
 
-- Content strategy
+- Content strategy, including selected Content Format and Content Angle
 - Normalized brief
 - Selected creator
 - Product identity
@@ -62,6 +62,21 @@ Each candidate contains:
 - Claim risk
 - Status
 
+## Content Format Constraint
+
+The selected Content Format is a required upstream creative constraint.
+
+Hooks MUST:
+
+- reinforce the selected format's story mechanism
+- satisfy the format's requirements
+- use hook patterns compatible with the selected format
+- avoid introducing a different content format through the opening beat
+
+The Hook Engine may vary the hook type and wording, but it must not silently replace the selected Content Format.
+
+Record the selected format connection in each candidate's `strategy_connection`.
+
 ## Hook Types
 
 - Problem
@@ -78,7 +93,8 @@ Each candidate contains:
 
 Evaluate:
 
-1. Campaign objective
+1. Selected Content Format alignment
+2. Campaign objective
 2. Audience relevance
 3. Sub-niche/context relevance
 4. Content-angle alignment
