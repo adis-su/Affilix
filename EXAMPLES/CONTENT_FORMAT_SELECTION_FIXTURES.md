@@ -146,7 +146,7 @@ Expected candidate scores:
 
 | Format | Eligibility | PB | Proof | Objective | Creator | Platform | Action | Score |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| BEAUTY_CRIME_SCENE | eligible | 1.0 | 0.9 | 0.9 | 0.9 | 1.0 | 1.0 | 94.5 |
+| BEAUTY_CRIME_SCENE | eligible | 1.0 | 0.9 | 0.9 | 0.9 | 1.0 | 1.0 | 95.0 |
 | PRODUCT_HAS_A_JOB | eligible | 0.9 | 0.8 | 0.8 | 0.9 | 1.0 | 1.0 | 85.5 |
 | LIFESTYLE_INTEGRATION | eligible | 0.3 | 0.6 | 0.4 | 0.9 | 1.0 | 0.7 | 52.0 |
 
@@ -182,7 +182,7 @@ Expected candidate scores:
 
 | Format | Eligibility | PB | Proof | Objective | Creator | Platform | Action | Score |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| LIFESTYLE_INTEGRATION | eligible | 1.0 | 0.9 | 1.0 | 1.0 | 1.0 | 0.8 | 94.5 |
+| LIFESTYLE_INTEGRATION | eligible | 1.0 | 0.9 | 1.0 | 1.0 | 1.0 | 0.8 | 95.5 |
 | SILENT_BEAUTY_TEST | eligible | 0.6 | 0.4 | 0.5 | 0.9 | 1.0 | 0.7 | 61.5 |
 
 Expected winner: `LIFESTYLE_INTEGRATION`.
@@ -202,7 +202,7 @@ Expected candidate scores:
 | Format | Eligibility | PB | Proof | Objective | Creator | Platform | Action | Score |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | ONE_PRODUCT_THREE_PERSONALITIES | eligible | 1.0 | 1.0 | 1.0 | 0.9 | 1.0 | 1.0 | 99.0 |
-| LIFESTYLE_INTEGRATION | eligible | 0.7 | 0.9 | 0.7 | 0.9 | 1.0 | 0.8 | 80.5 |
+| LIFESTYLE_INTEGRATION | eligible | 0.7 | 0.9 | 0.7 | 0.9 | 1.0 | 0.8 | 81.0 |
 
 Expected winner: `ONE_PRODUCT_THREE_PERSONALITIES`.
 
