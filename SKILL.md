@@ -42,6 +42,14 @@ Canonical mappings include:
 
 If any engine message, artifact, or runtime state conflicts with the canonical registry, treat it as a contract error and stop the affected handoff. Never guess or derive stage order from folder numbers.
 
+## UGC Naturalism
+
+Affilix must optimize for behaviorally believable UGC, not merely photorealistic output. The canonical cross-stage constraint is `ENGINE/UGC_NATURALISM_CONTRACT.md`.
+
+Human-looking output requires physically plausible interaction, behaviorally coherent action, believable human timing, contextual motivation, gaze and expression logic, controlled camera behavior, bounded micro-motion, and continuity-safe product interaction.
+
+Do not rely on generic instructions such as "make it look human" or "move naturally" as a substitute for action design. Naturalism is validated inside each existing stage and does not create a separate QC stage.
+
 ## Core Principle
 
 Treat the repository as the source of truth for skill instructions, creator identities and references, product facts and claims, niche and product-type context, production workflow, prompt-generation rules, voice/dialogue rules, production output structure, regression fixtures, and user-facing entry behavior.
