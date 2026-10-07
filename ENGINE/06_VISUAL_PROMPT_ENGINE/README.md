@@ -558,6 +558,12 @@ Product and creator identity remain higher-priority source-of-truth layers.
 
 Context labels must never become unsupported product attributes, origin claims, branding, or creator identity changes.
 
+## Reference Density
+
+Visual Prompt follows the Storyboard Reference Plan exactly. Every declared reference state becomes one static prompt, and one scene may therefore produce multiple image prompts. Reference density is action-complexity-driven.
+
+For high-complexity scenes, six meaningful reference states are the default target when justified by the action graph. Simpler scenes may use fewer. Never invent redundant states merely to reach six.
+
 ## Runtime Invariants
 
 - One final prompt per required visual reference state.
