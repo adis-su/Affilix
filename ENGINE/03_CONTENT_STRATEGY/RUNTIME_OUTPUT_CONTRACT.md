@@ -9,7 +9,7 @@
 
 ## Stage Gate
 
-Stage 05 executes only from current, validated artifacts for Stage 01 Brief & Product, Stage 03 Niche & Context, and Stage 04 Creator.
+Stage 04 Content Strategy executes only from current, validated artifacts for Stage 01 Brief & Product, Stage 02 Niche & Context, and Stage 03 Creator.
 
 ## Output
 
@@ -32,6 +32,15 @@ product_role:
   supported_benefit:
   demonstration_opportunity:
   evidence: []
+content_format:
+  id:
+  name:
+  fit:
+  rationale:
+  requirements: []
+content_format_selection:
+  product_behavior: []
+  proof_opportunity:
 content_angle:
 core_message:
 supporting_messages: []
