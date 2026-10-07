@@ -127,7 +127,6 @@ campaign:
   objective:
   audience:
   creator:
-  cta:
   audio_mode:
   key_message:
   talking_points:
