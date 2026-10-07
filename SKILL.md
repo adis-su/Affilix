@@ -106,7 +106,7 @@ Load the selected Creator Library records and preserve identity across scenes. N
 
 Load Product Library facts, selling points, claims rules, niche context, and product-type rules. Never invent specifications, performance, reviews, testimonials, discounts, scarcity, guarantees, certifications, or personal experience.
 
-Run strategy before scenes or prompts. Generate hooks from the validated strategy. Storyboard is the canonical temporal and scene sequence. Visual, Voice, and Video specifications remain subordinate to the Storyboard and their upstream sources. Voice Script is the canonical spoken-content source for Video Prompt.
+Run strategy before scenes or prompts. Generate hooks from the validated strategy. Storyboard is the canonical temporal and scene sequence, including action choreography, Reference Plan, ordered reference trajectory, and state transitions. For each scene, reference density is determined by action complexity. High-complexity scenes should target six meaningful visual reference states by default when justified; simpler scenes may use fewer references. Reference count never changes scene count or Video Prompt count. Visual, Voice, and Video specifications remain subordinate to the Storyboard and their upstream sources. Voice Script is the canonical spoken-content source for Video Prompt.
 
 ## Reclassification and Revision
 
