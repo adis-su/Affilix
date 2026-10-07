@@ -10,7 +10,7 @@
 
 ## Content Format Continuity
 
-The selected Content Format from Stage 04 is an upstream narrative constraint for spoken content. Voice Script must support the format's story mechanism through dialogue structure, product reveal, proof language, and CTA when applicable.
+The selected Content Format from Stage 04 is an upstream narrative constraint for spoken content. Voice Script must support the format's story mechanism through dialogue structure, product reveal, proof language, and.
 
 Content Format does not authorize unsupported claims or invented experience. It shapes how validated facts are spoken, while Content Angle and Campaign Objective remain authoritative for the message.
 
@@ -26,7 +26,7 @@ Validate each Voice Script against:
 2. **Product role** — spoken content gives the product the role required by the format.
 3. **Proof language** — dialogue describes only evidence that the storyboard can actually demonstrate or that is explicitly supported.
 4. **Action/dialogue alignment** — spoken lines explain, frame, or react to the action without replacing visual proof with unsupported claims.
-5. **CTA continuity** — CTA wording remains compatible with the selected format and campaign objective.
+5. **CTA continuity** — The dialogue remains compatible with the selected format and campaign objective.
 6. **Format preservation** — dialogue must not imply a different content format.
 
 Format-specific voice mechanisms:
@@ -107,7 +107,6 @@ For each scene:
 - Pause points
 - Pronunciation notes when needed
 - Lip-sync priority
-- CTA role when applicable
 
 ## Script Structure
 
@@ -121,7 +120,6 @@ Default structure:
 4. Demonstration
 5. Benefit / proof
 6. Personal reaction
-7. CTA
 
 The structure may be shortened or rearranged when required.
 
@@ -176,7 +174,7 @@ Convert supported product facts into natural spoken language without weakening f
 
 Prefer a human conversational progression such as:
 
-**PERSONAL/RELATABLE CONTEXT → PRODUCT OBSERVATION → REASON/BENEFIT → NATURAL CTA**
+**PERSONAL/RELATABLE CONTEXT → PRODUCT OBSERVATION → REASON/BENEFIT → NATURAL CLOSE**
 
 Do not default to:
 
@@ -200,7 +198,7 @@ Avoid by default:
 - exaggerated superlatives
 - forced English marketing phrases when they are not part of the creator profile or campaign requirement
 
-A hard CTA such as "Buy now" is allowed when explicitly selected or required by the campaign. It must not be inserted merely because the script contains a product benefit. When a softer delivery is compatible with the selected CTA, preserve the CTA intent while making the spoken transition natural.
+Do not append a promotional closing merely because the script contains a product benefit. Keep the spoken ending aligned with the selected format and campaign objective.
 
 Examples:
 
