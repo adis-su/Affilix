@@ -1,6 +1,6 @@
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 09
+- Canonical workflow stage: Stage 08
 - Engine implementation path: `ENGINE/08_VOICE_SCRIPT_ENGINE/`
 - Engine directory numbering is an implementation identifier only and MUST NOT be used to infer workflow order, prerequisites, or downstream dependencies.
 - Workflow order and dependencies are defined exclusively by `ENGINE/WORKFLOW.md`.
@@ -9,14 +9,14 @@
 
 ## Stage Gate
 
-Stage 09 executes only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and only after current Stage 06 Storyboard is current and validated.
+Stage 08 executes only when Campaign Intake `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and only after current Stage 06 Storyboard is current and validated.
 
-When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 must not generate a placeholder or invented script. Its valid runtime state is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`. Visual Prompt is a parallel Storyboard descendant and is not a prerequisite for Voice Script.
+When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 08 must not generate a placeholder or invented script. Its valid runtime state is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`. Visual Prompt is a parallel Storyboard descendant and is not a prerequisite for Voice Script.
 
 ## Output
 
 ```yaml
-stage: 09_VOICE_SCRIPT
+stage: 08_VOICE_SCRIPT
 status: COMPLETED
 content_format_constraint:
   format_id:
@@ -88,7 +88,7 @@ The following failures are NEEDS_REFINEMENT:
 
 The result is BLOCKED when the selected format cannot be expressed in spoken content without inventing unsupported claims, personal experience, or unavailable proof.
 
-For NO_SPOKEN_VOICE, Stage 09 remains SKIPPED; Content Format validation is NOT_REQUIRED.
+For NO_SPOKEN_VOICE, Stage 08 remains SKIPPED; Content Format validation is NOT_REQUIRED.
 
 ## Rules
 
