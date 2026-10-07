@@ -77,6 +77,40 @@ The Hook Engine may vary the hook type and wording, but it must not silently rep
 
 Record the selected format connection in each candidate's `strategy_connection`.
 
+## Format Mechanism Validation
+
+Content Format is not satisfied by copying `format_id` into metadata. The hook's opening action and narrative trigger must make the selected format recognizable in the first beat.
+
+For every selected format, validate the hook against its registered mechanism:
+
+| Content Format | Hook must establish |
+|---|---|
+| BEAUTY_CRIME_SCENE | a recognizable problem/case and an investigative or evidence-oriented opening |
+| PRODUCT_HAS_A_JOB | a concrete need/mission that gives the product a specific job |
+| BEAUTY_MYTH_LAB | a testable question or beauty assumption that can be examined |
+| PRODUCT_INTERROGATION | a product question/property that will be inspected or demonstrated |
+| ONE_PRODUCT_THREE_PERSONALITIES | the premise that one product will serve multiple legitimate modes/contexts |
+| SILENT_BEAUTY_TEST | a visually legible action that can carry meaning without relying on spoken explanation |
+| BEAUTY_ROUTINE_UNDER_PRESSURE | a real situational constraint that triggers the routine task |
+| ANTI_TUTORIAL | a truthful expectation/qualification that reframes product fit |
+| LIFESTYLE_INTEGRATION | a believable context or routine in which the product naturally belongs |
+| PROBLEM_SOLUTION_MISSION | a concrete problem and mission-oriented action path |
+
+### Hook Format Validation
+
+A Hook is `VIABLE` only when:
+
+1. the opening beat visibly or verbally establishes the selected format mechanism;
+2. the required action is executable with the supplied product and creator;
+3. required proof is available or explicitly marked as conditional;
+4. the hook does not imply a different registered format;
+5. the hook preserves the selected Content Angle and campaign objective;
+6. format-specific claim constraints remain intact.
+
+A hook that merely contains the product name while using a generic attention pattern does **not** pass Content Format validation.
+
+If the selected format is changed, existing Hook candidates become STALE and must be regenerated or revalidated.
+
 ## Hook Types
 
 - Problem
