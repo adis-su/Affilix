@@ -8,6 +8,21 @@
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
 - Resolve workflow stage identity exclusively from `ENGINE/WORKFLOW.md`.
 
+## UGC Naturalism Constraint
+
+Visual Prompt must implement `ENGINE/UGC_NATURALISM_CONTRACT.md` at the frozen-state level. Naturalism here means a plausible human state, not motion language.
+
+Validate every reference state for:
+- believable posture and weight distribution
+- plausible hand/product contact and grip
+- motivated gaze direction
+- restrained expression appropriate to the action
+- realistic clothing/hijab state and environmental relationship
+- continuity of product, creator, and bridge reference invariants
+- no synthetic-looking pose that exists only to display the product
+
+Do not encode blinking, breathing, hand movement, or other temporal motion as a sequence. Freeze the resulting state that the video action will use. If a state cannot be made physically plausible without inventing facts or changing the storyboard, mark it `NEEDS_REFINEMENT` or `BLOCKED` rather than improvising.
+
 ## Content Format Continuity
 
 The selected Content Format from Stage 04 is an upstream creative constraint carried through Storyboard into every required visual reference state.
