@@ -107,7 +107,7 @@ Avoid random shake, excessive jitter, unexplained zoom, or abrupt movement.
 
 ## Reference State Rule
 
-References represent meaningful visual states, not every micro-motion.
+References represent meaningful visual states, not every micro-motion. A reference state is an ordered visual checkpoint tied to a meaningful Action Beat or critical transition.
 
 A reference chain may be:
 
