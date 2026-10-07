@@ -157,6 +157,8 @@ expression:
 camera_behavior:
 resulting_state:
 reference_after:
+reference_role: START | INTERMEDIATE | END | BRIDGE
+reference_priority: ANCHOR | TRANSITION | CRITICAL
 ```
 
 ### Action Priority
