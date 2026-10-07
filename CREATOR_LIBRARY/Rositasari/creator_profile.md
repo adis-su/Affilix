@@ -106,7 +106,6 @@ Avoid:
 - Energy: Medium-low to medium.
 - Delivery: Warm, relaxed, lightly curious.
 - Emphasis: Product observation and relevant benefit.
-- CTA: Soft and conversational.
 
 #### PERSONAL_OBSERVATION
 - Energy: Medium-low.
@@ -169,7 +168,6 @@ Content should address audience needs without sounding like scripted corporate c
 - Product visibility: [DEFINE]
 - Demonstration priority: [DEFINE]
 - Affiliate disclosure behavior: [DEFINE]
-- Link/shop CTA behavior: [DEFINE]
 
 Platform-specific rules should override generic creator defaults when supplied in the campaign brief.
 
