@@ -80,6 +80,27 @@ For implementation work outside an active production run, resolve the current `m
 
 If current HEAD or a required file cannot be resolved, do not claim that the repository is current.
 
+
+## Atomic /next Repository Synchronization
+
+When `/next` is received for an active run, repository synchronization is a mandatory boundary operation, not an optional diagnostic.
+
+The runtime MUST execute this transaction in order:
+
+1. resolve the current `main` HEAD SHA,
+2. compare it with the active run's pinned `repository.commit_sha`,
+3. if identical, continue using the pinned snapshot,
+4. if different, stop stage execution before loading any new stage file,
+5. synchronize the active run's repository pin to the resolved `main` SHA,
+6. reload the canonical runtime contracts and the next stage engine from that single synchronized snapshot,
+7. identify artifacts whose source contracts changed and mark only those artifacts `STALE`,
+8. revalidate the current stage and its prerequisites against the synchronized snapshot,
+9. execute the next dependency-satisfied stage only after synchronization completes.
+
+The runtime MUST NOT resolve the next engine from current `main` while retaining an older pinned run snapshot. It MUST NOT load one file from the old pin and another file from the new `main` during the same stage execution.
+
+If synchronization cannot be completed atomically, block progression with `REPOSITORY_SYNC_FAILURE` rather than mixing snapshots or reporting the engine as missing.
+
 ## Runtime State Contract
 
 ```yaml
