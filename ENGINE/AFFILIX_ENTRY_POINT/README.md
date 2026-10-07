@@ -163,7 +163,7 @@ Persist the selected value as one of:
 - `VOICE_OVER`
 - `NO_SPOKEN_VOICE`
 
-This choice is a campaign-level creative mode and must be resolved before downstream dependency planning. It determines whether Stage 09 Voice Script is required and what kind of dialogue synchronization Stage 08 Video Prompt may use.
+This choice is a campaign-level creative mode and must be resolved before downstream dependency planning. It determines whether Stage 08 Voice Script is required and what kind of dialogue synchronization Stage 09 Video Prompt may use.
 
 CTA:
 - Shop now
@@ -226,9 +226,9 @@ The selected value is the requested creator input and is later resolved/validate
 
 Audio / Voice Mode is a required Stage 01 campaign choice.
 
-- `SPOKEN_ON_CAMERA`: creator speaks on camera; Stage 09 Voice Script is required and Stage 08 must synchronize canonical dialogue with visible creator speech.
-- `VOICE_OVER`: narration exists without requiring the creator to speak on camera; Stage 09 Voice Script is required and Stage 08 must synchronize the canonical voice-over with the visual action.
-- `NO_SPOKEN_VOICE`: no spoken dialogue or voice-over; Stage 09 is validly `SKIPPED`, and Stage 08 must not invent dialogue, lip-sync, or voice-generation requirements. Music, sound effects, or on-screen text remain optional independent layers.
+- `SPOKEN_ON_CAMERA`: creator speaks on camera; Stage 08 Voice Script is required and Stage 08 must synchronize canonical dialogue with visible creator speech.
+- `VOICE_OVER`: narration exists without requiring the creator to speak on camera; Stage 08 Voice Script is required and Stage 08 must synchronize the canonical voice-over with the visual action.
+- `NO_SPOKEN_VOICE`: no spoken dialogue or voice-over; Stage 08 is validly `SKIPPED`, and Stage 09 must not invent dialogue, lip-sync, or voice-generation requirements. Music, sound effects, or on-screen text remain optional independent layers.
 
 The selected mode must be persisted in campaign state before Stage 01 can be marked `COMPLETED`.
 
