@@ -36,11 +36,14 @@ content_format:
   id:
   name:
   fit:
+  score:
   rationale:
   requirements: []
 content_format_selection:
   product_behavior: []
   proof_opportunity:
+  candidate_scores: []
+  selection_status: SELECTED | BLOCKED
 content_angle:
 core_message:
 supporting_messages: []
