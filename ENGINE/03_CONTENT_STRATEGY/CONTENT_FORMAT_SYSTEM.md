@@ -212,7 +212,7 @@ Need → Mission → Product takes the job → Action → Resulting state → CT
 **Supported behaviors:** TESTABLE
 
 **Story pattern:**
-Question → Setup → Test → Observation → Interpretation → CTA
+Question → Setup → Test → Observation → Interpretation
 
 **Action pattern:** establish baseline → apply/use consistently → perform test → inspect comparison.
 
