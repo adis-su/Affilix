@@ -2,7 +2,7 @@
 
 ## Canonical Stage Identity
 
-- Canonical workflow stage: Stage 09 — Voice Script
+- Canonical workflow stage: Stage 08 — Voice Script
 - Implementation path: `ENGINE/08_VOICE_SCRIPT_ENGINE/`
 - The numeric prefix in the implementation directory is NOT a workflow stage ID.
 - Do not infer ordering, prerequisites, or downstream dependencies from the directory prefix.
@@ -46,7 +46,7 @@ Format-specific voice mechanisms:
 
 A generic product introduction, feature stack, testimonial-style reaction, or CTA cannot pass Content Format validation merely because the selected format appears in metadata.
 
-For NO_SPOKEN_VOICE, this validation is NOT_REQUIRED because Stage 09 is skipped. For spoken modes, a format-specific mechanism failure is NEEDS_REFINEMENT; if the format cannot be expressed without unsupported claims or required proof is unavailable, the Voice Script is BLOCKED.
+For NO_SPOKEN_VOICE, this validation is NOT_REQUIRED because Stage 08 is skipped. For spoken modes, a format-specific mechanism failure is NEEDS_REFINEMENT; if the format cannot be expressed without unsupported claims or required proof is unavailable, the Voice Script is BLOCKED.
 
 ### Format Mechanism Validation Checklist
 
