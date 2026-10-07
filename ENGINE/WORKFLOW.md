@@ -134,12 +134,6 @@ Input: completed Stage 01 Brief & Product.
 
 Output: exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
 
-### 02 — Niche & Context
-
-Input: completed Brief & Product.
-
-Output: exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
-
 ### 03 — Creator
 
 Input: completed Niche & Context and Brief & Product.
@@ -212,6 +206,18 @@ Output: **one static image prompt per required visual reference state**.
 
 A reference state is a frozen visual state, not a generation segment. Bridge references are immutable. If a bridge changes, both adjacent scene boundaries and dependent downstream transitions become stale.
 
+### 08 — Video Prompt
+
+Input: completed Storyboard, current Visual Prompt when visual continuity is required, current Voice Script only when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and provider capability profile when generation is required.
+
+Output: provider-compatible motion specifications and exact generation segment mapping.
+
+Video Prompt consumes, but does not rewrite, canonical Voice Script dialogue. When speech generation is applicable, include a derived Voice Generation Reference inside Dialogue Sync. The Video Prompt must not become a competing voice specification.
+
+Generation durations are limited to `[4, 6, 8, 10]` seconds. Final campaign duration is authoritative and must be composed exactly from supported segments. Never round, truncate, extend, or silently replace duration. If exact composition is impossible:
+
+`duration_feasibility: BLOCKED`
+
 ### 09 — Voice Script
 
 Execution condition: required only when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`. When `audio_mode` is `NO_SPOKEN_VOICE`, Stage 09 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE` and produces no spoken-content artifact.
@@ -234,18 +240,6 @@ Voice Script is the sole source of truth for:
 - pause/breathing behavior
 
 Spoken naturalization must preserve factual meaning and campaign intent.
-
-### 08 — Video Prompt
-
-Input: completed Storyboard, current Visual Prompt when visual continuity is required, current Voice Script only when `audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`, and provider capability profile when generation is required.
-
-Output: provider-compatible motion specifications and exact generation segment mapping.
-
-Video Prompt consumes, but does not rewrite, canonical Voice Script dialogue. When speech generation is applicable, include a derived Voice Generation Reference inside Dialogue Sync. The Video Prompt must not become a competing voice specification.
-
-Generation durations are limited to `[4, 6, 8, 10]` seconds. Final campaign duration is authoritative and must be composed exactly from supported segments. Never round, truncate, extend, or silently replace duration. If exact composition is impossible:
-
-`duration_feasibility: BLOCKED`
 
 ### 10 — Production Output
 
