@@ -92,6 +92,25 @@ PRODUCT / GAZE / CAMERA RESPONSE
 TARGET REFERENCE
 ```
 
+## Reference Trajectory Contract
+
+A scene-level Video Prompt must traverse the ordered Storyboard reference trajectory:
+
+```
+R01 → R02 → R03 → R04 → R05 → R06
+```
+
+Intermediate references are control states, not additional user-facing Video Prompts. When a scene contains multiple meaningful reference states, the Video Prompt must identify the ordered transition path and protect critical intermediate states from being skipped, anticipated, reversed, duplicated, or silently replaced.
+
+For high-complexity scenes, a six-state trajectory is the default target when supported by the Storyboard Reference Plan. The count must never be inflated with redundant states.
+
+```yaml
+reference_trajectory:
+  ordered_reference_ids: []
+  critical_reference_ids: []
+  protected_transitions: []
+```
+
 ## Generation Segment Mapping
 
 Generation segments are technical provider clips.
