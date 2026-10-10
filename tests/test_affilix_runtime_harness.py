@@ -3,6 +3,10 @@ import unittest
 
 from scripts.affilix_runtime_harness import (
     DOWNSTREAM,
+    ContentMode,
+    change_content_mode,
+    new_isolated_run,
+    resolve_stage_plan,
     STAGES,
     RunState,
     RuntimeBlocked,
@@ -110,6 +114,83 @@ class RuntimeProgressionTests(unittest.TestCase):
         self.assertEqual(state.current_stage, "06_STORYBOARD")
         self.assertEqual(state.stages["07_VISUAL_PROMPT"].status, StageStatus.STALE)
         self.assertEqual(state.progression, "ACTIVE")
+
+
+    def test_quote_image_routes_static_stages_to_explicit_skips(self):
+        plan = resolve_stage_plan(
+            "QUOTE_CONTENT",
+            selected_format="QUOTE_IMAGE",
+            creator_required=False,
+            strategy_allows_hook_skip=True,
+        )
+        for stage in ("06_STORYBOARD", "08_VOICE_SCRIPT", "09_VIDEO_PROMPT"):
+            self.assertEqual(plan[stage]["status"], "SKIPPED")
+            self.assertEqual(plan[stage]["reason"], "STATIC_IMAGE_FORMAT")
+        self.assertEqual(plan["05_HOOK"]["status"], "SKIPPED")
+        self.assertEqual(plan["07_VISUAL_PROMPT"]["status"], "REQUIRED")
+        self.assertEqual(plan["10_PRODUCTION_OUTPUT"]["status"], "REQUIRED")
+        self.assertEqual(plan["03_CREATOR"]["reason"], "NO_ON_SCREEN_CREATOR_REQUIRED")
+
+    def test_quote_image_does_not_skip_hook_without_strategy_permission(self):
+        plan = resolve_stage_plan(
+            "QUOTE_CONTENT",
+            selected_format="QUOTE_IMAGE",
+            strategy_allows_hook_skip=False,
+        )
+        self.assertEqual(plan["05_HOOK"]["status"], "REQUIRED")
+
+    def test_quote_video_no_spoken_voice_skips_voice_with_mode_reason(self):
+        plan = resolve_stage_plan(
+            "QUOTE_CONTENT",
+            selected_format="RELATABLE_STORY_REELS",
+            audio_mode="NO_SPOKEN_VOICE",
+        )
+        self.assertEqual(plan["08_VOICE_SCRIPT"]["status"], "SKIPPED")
+        self.assertEqual(plan["08_VOICE_SCRIPT"]["reason"], "NO_SPOKEN_VOICE_REQUIRED")
+        self.assertEqual(plan["06_STORYBOARD"]["status"], "REQUIRED")
+        self.assertEqual(plan["09_VIDEO_PROMPT"]["status"], "REQUIRED")
+
+    def test_external_dialogue_keeps_voice_script_required_without_on_camera_speech(self):
+        plan = resolve_stage_plan(
+            "QUOTE_CONTENT",
+            selected_format="RELATABLE_STORY_REELS",
+            audio_mode="NO_SPOKEN_VOICE",
+            external_dialogue_required=True,
+        )
+        self.assertEqual(plan["08_VOICE_SCRIPT"]["status"], "REQUIRED")
+
+    def test_ugc_cannot_silently_skip_required_creator(self):
+        with self.assertRaisesRegex(RuntimeBlocked, "UGC_CREATOR_REQUIREMENT_CANNOT_BE_SKIPPED"):
+            resolve_stage_plan(
+                "UGC_AFFILIATE",
+                selected_format="VIDEO",
+                creator_required=False,
+            )
+
+    def test_mode_change_requires_new_isolated_run(self):
+        state = new_isolated_run(
+            run_id="quote-run",
+            pinned_commit_sha="commit-a",
+            content_mode="QUOTE_CONTENT",
+            selected_format="QUOTE_IMAGE",
+        )
+        self.assertEqual(state.content_mode, ContentMode.QUOTE_CONTENT)
+        self.assertEqual(len(state.artifact_source_commits), 0)
+        with self.assertRaisesRegex(RuntimeBlocked, "CONTENT_MODE_CHANGE_REQUIRES_NEW_ISOLATED_RUN"):
+            change_content_mode(state, "UGC_AFFILIATE")
+        other = new_isolated_run(
+            run_id="ugc-run",
+            pinned_commit_sha="commit-a",
+            content_mode="UGC_AFFILIATE",
+        )
+        self.assertNotEqual(state.run_id, other.run_id)
+        self.assertEqual(other.content_mode, ContentMode.UGC_AFFILIATE)
+
+    def test_unsupported_content_mode_or_format_blocks_closed(self):
+        with self.assertRaisesRegex(RuntimeBlocked, "UNSUPPORTED_CONTENT_MODE"):
+            resolve_stage_plan("UNKNOWN_MODE")
+        with self.assertRaisesRegex(RuntimeBlocked, "UNSUPPORTED_QUOTE_CONTENT_FORMAT"):
+            resolve_stage_plan("QUOTE_CONTENT", selected_format="UNREGISTERED_FORMAT")
 
     def test_final_stage_completes_run_without_adding_stage(self):
         state = active_run()
