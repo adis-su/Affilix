@@ -271,3 +271,31 @@ The following cases extend the canonical regression matrix. Detailed input/outpu
 - Given a completed Storyboard missing required reference metadata, Stage 07 identifies the exact scene and fields and does not fabricate IDs, versions, source beats, or transitions.
 - If metadata is derivable without changing creative meaning, Stage 06 is repaired/revalidated before Stage 07 resumes; otherwise the dependency remains incomplete.
 - Expected: no completed Stage 07 artifact until reference coverage and prompt cardinality pass.
+
+
+### R072 — Per-State Scene and Beat Provenance
+- Every video reference state explicitly carries `source_scene_id` and `source_beat_id`; both resolve to the exact current storyboard artifact and the beat establishes the state.
+- Expected: valid provenance `PASS`; dangling or mismatched provenance blocks Stage 06 completion and Stage 07 generation.
+
+### R073 — Storyboard Artifact Identity and Version Pinning
+- A completed video storyboard exposes a stable `storyboard_id` and explicit `storyboard_version`; Stage 07 records and uses that exact pair alongside `source_commit_sha`.
+- A storyboard revision increments its artifact version and invalidates dependent outputs; commit SHA alone cannot substitute for artifact identity.
+- Expected: exact source binding `PASS`; stale/mixed versions `NEEDS_REFINEMENT` or `STALE`.
+
+### R074 — Exact Per-Scene Transition Cardinality
+- For every scene with n reference states, the ordered trajectory matches the Reference Plan and has exactly n−1 transition records, one per adjacent pair.
+- Expected: cardinality and pair resolution `PASS`; missing, duplicated, reordered, or dangling transitions block completion.
+
+### R075 — Canonical Bridge Prompt Deduplication
+- A shared scene-boundary bridge uses one canonical reference ID/version and produces exactly one image prompt for that canonical state.
+- Expected: bridge ID/version equality `PASS`; duplicate independent bridge state or duplicate bridge prompt fails validation.
+
+### R076 — Visual Prompt Exact Literal Section Validation
+- For Quote Content, parse full `WARDROBE` and `ENVIRONMENT` section bodies and require exact equality with `Sesuai referensi gambar yang diupload user.` with no additional text.
+- Expected: exact equality `PASS`; any added description, translation, or paraphrase blocks Stage 07 completion.
+
+### R077 — Visual Prompt Frozen-State Integrity
+- Each image prompt describes one frozen visual state and contains no temporal sequence, motion progression, or next-scene instruction.
+- Expected: single-frame `PASS`; temporal/motion instructions in the image prompt fail validation.
+
+**Execution status:** specifications updated; runtime execution NOT RUN. Do not infer PASS from documentation presence.
