@@ -74,16 +74,20 @@ For video-format reference prompts, explicitly specify `CAMERA: vertical 9:16, m
 
 ## Reference-State Invariants for Video Formats
 
-Each prompt must map to exactly one declared reference:
-
+Each prompt MUST map to exactly one complete, declared Stage 06 reference state and carry:
 - `reference_id`
 - `reference_role`
 - `reference_version`
 - `source_scene_id`
 - `source_beat_id`
+- `sequence_index`
+- `state_summary`
 - `continuity_lock`
+- the applicable ordered `reference_trajectory` and transition IDs as traceability metadata
 
-Every storyboard-declared reference state produces exactly one prompt. A shared bridge reference uses the same ID and version at both adjacent scene boundaries. Never reinterpret an immutable bridge independently for each scene.
+Stage 07 must first validate the incoming storyboard. If a required reference ID, version, source beat, sequence index, state summary, ordered trajectory, or transition is missing, do not invent it in the image prompt and do not report Stage 07 as completed. Return a specific `NEEDS_REFINEMENT` dependency report identifying the exact scene and missing fields, and require Stage 06 to regenerate/revalidate its reference plan. If a value can be deterministically populated from the current storyboard's existing beat IDs and states without changing creative meaning, that repair belongs in Stage 06, followed by revalidation.
+
+Every storyboard-declared reference state produces exactly one prompt; no missing or extra prompts are allowed. A shared bridge reference uses the same ID and version at both adjacent scene boundaries. Never reinterpret an immutable bridge independently for each scene. Validate `prompt_count == declared_reference_state_count` and preserve storyboard ordering.
 
 ## Validation
 
