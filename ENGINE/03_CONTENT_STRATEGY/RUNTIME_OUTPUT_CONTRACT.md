@@ -66,6 +66,54 @@ UNKNOWN is preserved when evidence is absent. A missing non-critical field does 
 
 The artifact is validated, marked COMPLETED, and waits for `/next` then continues according to the canonical /next progression. Content Format and Content Angle are both required creative constraints for downstream stages.
 
+## Quote Content Output Contract
+
+When `content_mode = QUOTE_CONTENT`, use `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md` and persist the following mode-specific artifact rather than filling product-only fields:
+
+```yaml
+stage: 04_CONTENT_STRATEGY
+content_mode: QUOTE_CONTENT
+status: COMPLETED | BLOCKED
+campaign_objective:
+  primary:
+  secondary:
+  desired_audience_action:
+platform:
+pillar:
+  id:
+  name:
+  rationale:
+secondary_pillar:
+format:
+  id:
+  name:
+  output_type:
+  requirements: []
+  rationale:
+audience:
+  target:
+  context:
+  core_need:
+  awareness_level:
+editorial_topic:
+primary_message:
+takeaway:
+emotional_strategy:
+  intended_response:
+  emotional_movement: []
+story_arc: []
+hook_direction:
+caption_direction:
+cta_strategy:
+source_provenance: []
+unresolved_requirements: []
+decision_queue: []
+source_artifacts: []
+source_commit_sha:
+```
+
+For this branch, product role, product behavior, proof opportunity, and product claim scoring are `NOT_APPLICABLE`. A static `QUOTE_IMAGE` may record downstream video/story stages as `SKIPPED` only according to the strategy contract.
+
 ## Invalidation
 
-Changes to any upstream product, niche/context, or creator artifact invalidate Strategy and all downstream creative artifacts as STALE.
+Changes to any upstream product, niche/context, or creator artifact invalidate UGC Strategy and its downstream creative artifacts as STALE. For `QUOTE_CONTENT`, changes to editorial topic, audience, platform when format-sensitive, pillar, format, primary message, or takeaway invalidate the strategy and all dependent downstream artifacts as STALE.
