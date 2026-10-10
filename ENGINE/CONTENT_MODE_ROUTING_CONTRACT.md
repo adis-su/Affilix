@@ -83,22 +83,22 @@ A conditional skip is not a failure or approval gate. Record the canonical stage
 
 ## Implementation Readiness
 
-Mode selection and state routing are architectural foundations, not proof that every Quote Content production engine is implemented. Current readiness after Phase 02 is:
+Readiness means a current mode-specific contract exists and is wired into the canonical engine/runtime references. It does not claim that external image/video generation has been run for a particular campaign.
 
 | Stage | Quote Content readiness | Runtime behavior |
 |---|---|---|
-| 01 Brief & Product | Editorial brief normalization contract added in Phase 01 | May execute through mode-aware intake and Brief Analyzer |
-| 02 Niche & Context | Editorial context branch added in Phase 02 | May execute without product classification; preserve provenance and unknowns |
-| 03 Creator | Optional; existing Creator Library may be used when explicitly required | If not required, mark `SKIPPED`; if required but not resolvable, block |
-| 04 Content Strategy | Editorial pillar/format/message contract added in Phase 02 | May execute using `QUOTE_CONTENT_STRATEGY_CONTRACT.md` |
-| 05 Hook | Editorial hook families and validation contract added in Phase 02 | May execute for supported formats; static image may skip only with explicit reason |
-| 06 Storyboard | Mode-specific integration not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` when required |
-| 07 Visual Prompt | Mode-specific output contract not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` when required |
-| 08 Voice Script | Conditional mode-specific integration not yet implemented | Block if selected deliverable requires it; otherwise skip only with explicit reason |
-| 09 Video Prompt | Mode-specific output contract not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` when video is required |
-| 10 Production Output | Quote Content assembly contract not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`; never fall back to UGC output template |
+| 01 Brief & Product | Implemented in Phase 01 | Execute mode-aware editorial intake; no product dependency |
+| 02 Niche & Context | Implemented in Phase 02 | Use editorial context; preserve provenance and unknowns |
+| 03 Creator | Conditional; existing Creator Library integration | Skip with reason when no visible creator/persona is needed; block if required but unresolved |
+| 04 Content Strategy | Implemented in Phase 02 | Use `QUOTE_CONTENT_STRATEGY_CONTRACT.md` |
+| 05 Hook | Implemented in Phase 02 | Use `QUOTE_CONTENT_HOOK_CONTRACT.md`; static format may skip only with explicit reason |
+| 06 Storyboard | Implemented in Phase 03 | Use `QUOTE_CONTENT_STORYBOARD_CONTRACT.md`; `QUOTE_IMAGE` skips with `STATIC_IMAGE_FORMAT` |
+| 07 Visual Prompt | Implemented in Phase 03 | Use `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md`; one prompt per required visual/reference state |
+| 08 Voice Script | Implemented in Phase 03, conditional | Use `QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md`; skip only under its explicit audio/format rules |
+| 09 Video Prompt | Implemented in Phase 03, conditional | Use `QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md`; one prompt per scene and exact duration composition |
+| 10 Production Output | Implemented in Phase 03 | Use `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`; never fall back to UGC template |
 
-Do not silently fall back to product-centered UGC logic or claim a complete production output while a required mode-specific contract is missing. Phase 02 implements editorial context, strategy, and hook only; Phases 03–04 remain necessary for production and regression hardening. Do not create a duplicate workflow registry.
+Mode-specific contracts do not replace the universal engine; they select the applicable behavior and schema. A required artifact that is missing, stale, contradictory, or unsupported still blocks the affected stage. Phase 04 regression and hardening remains required before claiming end-to-end regression acceptance.
 
 ## Revision and Invalidation
 
