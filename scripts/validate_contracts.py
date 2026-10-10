@@ -128,6 +128,8 @@ check("anchor_resolution: PASS | NEEDS_REFINEMENT | BLOCKED" in voice and "sourc
       "Quote Content Voice Script requires anchor-resolution and source-freshness validation")
 check("action_window" in voice and "target_reference" in voice and "protected pause" in voice.lower(),
       "Voice Script validates line timing, target references, and protected visual beats")
+check("source_freshness: PASS | BLOCKED" in video and "dependency_alignment: PASS | BLOCKED" in video,
+      "Video Prompt blocks stale or mismatched Storyboard, Visual Prompt, and Voice Script sources")
 check("QCR-024" in matrix and "QCR-025" in matrix and "QCR-026" in matrix,
       "Regression matrix includes timing, dialogue-anchor, and stale-source integration cases")
 check("requested video duration" in brief.lower() and "NOT_APPLICABLE" in brief,
