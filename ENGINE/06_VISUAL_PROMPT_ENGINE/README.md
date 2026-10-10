@@ -609,3 +609,8 @@ Validation:
     generated_prompts = [P01, P02, P03]
     assert len(generated_prompts) == len(required_reference_states)
     assert generated_prompts[i].reference_id == required_reference_states[i]
+
+
+## Quote Content Mode Dispatch
+
+When `content_mode = QUOTE_CONTENT`, load `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md`. `QUOTE_IMAGE` uses one static image prompt without a Storyboard dependency. Video formats produce exactly one image prompt per declared Storyboard reference state. Product references are `NOT_APPLICABLE` unless the brief explicitly changes to product-centered content. The universal frozen-state and bridge-reference invariants still apply.
