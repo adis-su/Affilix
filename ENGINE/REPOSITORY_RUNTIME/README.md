@@ -52,7 +52,7 @@ SKILL.md
 Typical mapping:
 - Mode selection/intake: SKILL + WORKFLOW + Content Mode Routing + Entry + Brief Analyzer
 - `UGC_AFFILIATE`: existing product-centered engine contracts and libraries
-- `QUOTE_CONTENT`: editorial context loader + `QUOTE_CONTENT_STRATEGY_CONTRACT.md` + `QUOTE_CONTENT_HOOK_CONTRACT.md`; use mode-specific production contracts when implemented and block unsupported required stages
+- `QUOTE_CONTENT`: editorial context loader + `QUOTE_CONTENT_STRATEGY_CONTRACT.md` + `QUOTE_CONTENT_HOOK_CONTRACT.md`; then load `QUOTE_CONTENT_STORYBOARD_CONTRACT.md`, `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md`, conditional `QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md`, `QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md`, and `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md` according to the selected format/audio mode
 - Creator: Creator Selector + Creator Library
 - Product/Niche: Product Library + Niche Context Loader + applicable niche rules
 - Strategy/Hook/Storyboard: engines 03, 04, 05; load the Quote Content strategy/hook contracts when `content_mode = QUOTE_CONTENT`
@@ -60,7 +60,7 @@ Typical mapping:
 - Video: engine 07 + current storyboard + visual specification when applicable
 - Voice: engine 08 + current storyboard
 - Production Output (`UGC_AFFILIATE`): UGC Production Output Template + all required current upstream artifacts
-- Production Output (`QUOTE_CONTENT`): mode-specific output contract when implemented; otherwise block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`
+- Production Output (`QUOTE_CONTENT`): `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`; block with `QUOTE_CONTENT_OUTPUT_DEPENDENCY_BLOCKED` when a required artifact is missing, stale, or invalid
 
 ## Runtime State Separation
 
@@ -184,3 +184,16 @@ If the current repository head cannot be resolved or required files cannot be lo
 - otherwise block the affected operation.
 
 A cached snapshot must never be presented as the current `main` branch.
+
+
+## Quote Content Production Contracts
+
+The following mode-specific contracts are active and must be loaded only for `content_mode = QUOTE_CONTENT`:
+
+- Stage 06: `ENGINE/05_STORYBOARD_ENGINE/QUOTE_CONTENT_STORYBOARD_CONTRACT.md`
+- Stage 07: `ENGINE/06_VISUAL_PROMPT_ENGINE/QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md`
+- Stage 08: `ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md`
+- Stage 09: `ENGINE/07_VIDEO_PROMPT_ENGINE/QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md`
+- Stage 10: `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`
+
+Do not load the UGC Production Output Template for Quote Content. Stage skips must record the canonical stage ID and precise reason. A skip is not a generated artifact.
