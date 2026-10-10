@@ -33,7 +33,7 @@ At the start of an Affilix run:
 4. Read `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
 5. Load only the Creator Library, Product Library, mode-appropriate Niche/Editorial Context, and engine files relevant to the current stage.
 5. Load the current engine specification immediately before executing that engine when its rules materially affect output.
-6. For `UGC_AFFILIATE`, load `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` before final output assembly. For `QUOTE_CONTENT`, load its mode-specific output contract when implemented; otherwise block final assembly rather than falling back to the UGC template.
+6. For `UGC_AFFILIATE`, load `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` before final output assembly. For `QUOTE_CONTENT`, load `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`; block final assembly if a required dependency is missing, stale, or invalid.
 
 Do not load or depend on obsolete QC/final-package contracts.
 
