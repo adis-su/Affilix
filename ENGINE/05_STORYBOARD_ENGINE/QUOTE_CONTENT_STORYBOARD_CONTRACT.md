@@ -59,6 +59,7 @@ Use causal progression: `TRIGGER → INTENTION → ACTION → RESULTING STATE`. 
 Every video scene MUST declare a complete, ordered Reference Plan and Reference Trajectory before Stage 06 can be marked `COMPLETED`. Do not leave reference metadata for Stage 07 to infer or invent.
 
 Every declared reference state MUST include:
+- `source_scene_id`: the canonical owning scene ID for this state. It must resolve to an existing scene in this exact storyboard artifact. A shared bridge may be referenced at both scene boundaries, but remains one canonical state identity/version with explicit boundary mapping; do not create a second independent state.
 - `reference_id`: unique, stable ID within the active storyboard run (for example `R01`).
 - `reference_version`: explicit version, initialized to `v1` for a new state.
 - `sequence_index`: unique, contiguous order within the scene, starting at 1.
@@ -86,6 +87,8 @@ content_mode: QUOTE_CONTENT
 status: COMPLETED | BLOCKED | SKIPPED
 skip_reason: null | STATIC_IMAGE_FORMAT
 metadata:
+  storyboard_id: required stable ID for this storyboard artifact
+  storyboard_version: required explicit version, initialized to v1 and incremented on material revision
   strategy_id:
   hook_id:
   format_id:
@@ -131,6 +134,7 @@ scenes:
       states:
         - reference_id:
           reference_version: v1
+          source_scene_id: required; must equal the owning scene_id, including explicit bridge mapping
           sequence_index:
           reference_role: START | INTERMEDIATE | END | BRIDGE
           source_beat_id:
@@ -168,6 +172,14 @@ For every video beat, `time_window.start_time` and `time_window.end_time` are re
 When spoken dialogue is required, each dialogue-bearing beat MUST declare `dialogue_anchor.semantic_intent`, `dialogue_anchor.action_window.start_time`, `dialogue_anchor.action_window.end_time`, and `dialogue_anchor.target_reference`. The action window must be non-empty, fall within the owning beat and scene windows, and point to a declared reference state established by that beat or its explicitly declared transition. `target_reference` must resolve to the exact `reference_id@reference_version`; no guessed or nearest-state fallback is allowed. Beats without spoken dialogue may omit `dialogue_anchor` or set it to `null`.
 
 Stage 08 must bind each dialogue line to a storyboard `scene_id` and `dialogue_anchor`, preserve the anchor's semantic intent, and keep the line's `start_time`/`end_time` inside the anchor action window. A line may reference an anchor only if that anchor exists in the current Stage 06 artifact. Dialogue may overlap a beat only when it does not obscure a required silent pause, critical reaction, or visually dependent action. If dialogue timing cannot fit, Stage 08 must revise wording/delivery or mark `NEEDS_REFINEMENT`; it must not move the storyboard window or change the final duration. If the anchor cannot be resolved without inventing creative intent, block the affected output.
+
+## Artifact Identity and Provenance
+
+Every non-skipped video storyboard artifact MUST expose a stable, non-empty `metadata.storyboard_id` and explicit `metadata.storyboard_version`. Initialize a new artifact at `v1`; increment the version when any material storyboard content or reference graph changes. The pair `(storyboard_id, storyboard_version)` identifies the exact artifact version. `source_commit_sha` identifies repository source, not the storyboard artifact, and MUST NOT be used as a substitute for artifact identity. Every scene/state source reference must resolve within this exact artifact. Record upstream `source_artifacts` with artifact IDs and versions where available. `QUOTE_IMAGE` remains `SKIPPED` and does not require a temporal storyboard artifact.
+
+## Reference Graph Cardinality and Canonicalization
+
+For each scene with `n` ordered reference states, `reference_trajectory.ordered_reference_ids` MUST contain exactly those `n` states in the same order as `reference_plan.states`; the scene must contain exactly `max(0, n - 1)` internal transition records, one for each adjacent pair and no duplicate pair. Every transition's `from_reference_id` and `to_reference_id` must match the corresponding adjacent IDs. Every beat's `reference_after` must resolve to a state ID and explicit version in the same storyboard artifact; use a structured reference `{ reference_id, reference_version }` where supported, otherwise require a documented unambiguous ID-to-version resolution. A bridge is a single canonical `(reference_id, reference_version)` reused at the preceding scene's END and following scene's START; the boundary mapping must not create two independently versioned states. `source_scene_id` and `source_beat_id` must resolve to the owning scene and an existing beat, respectively.
 
 ## Validation and Invalidation
 
