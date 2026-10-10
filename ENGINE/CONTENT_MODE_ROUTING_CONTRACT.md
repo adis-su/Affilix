@@ -69,10 +69,10 @@ The canonical stage registry and stage IDs do not change.
 | Canonical Stage | UGC Affiliate | Quote Content |
 |---|---|---|
 | 01 Brief & Product | Required; product and campaign intake | Required; editorial brief intake, no product dependency |
-| 02 Niche & Context | Required; canonical product/niche context | Required; resolve editorial niche/audience context without inventing product state |
+| 02 Niche & Context | Required; canonical product/niche context | Required; use the editorial context branch in `ENGINE/NICHE_CONTEXT_LOADER/README.md` |
 | 03 Creator | Required when a creator is selected/required by the brief | Optional; select a creator only when the intended format needs an on-screen/persona identity |
-| 04 Content Strategy | Existing product-centered strategy contract | Must use editorial strategy, pillar, and format rules; do not invoke product proof scoring |
-| 05 Hook | Required for applicable video/story formats; mode contract determines applicability | Required for story/reel formats; may be skipped for static quote image only if the mode-specific strategy contract explicitly says so |
+| 04 Content Strategy | Existing product-centered strategy contract | Use `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md`; do not invoke product proof scoring |
+| 05 Hook | Required for applicable video/story formats; mode contract determines applicability | Use `ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md` for story/reel formats; may be skipped for static quote image only when strategy explicitly permits |
 | 06 Storyboard | Required for video output | Required for video/story formats; skipped for static image-only output |
 | 07 Visual Prompt | Required | Required; prompt must match the selected static or video reference-state needs |
 | 08 Voice Script | Required for spoken dialogue or requested external dialogue; otherwise skip under existing audio rules | Required only when the selected format requires authored spoken/external dialogue; otherwise skip with a mode-specific reason |
@@ -83,19 +83,22 @@ A conditional skip is not a failure or approval gate. Record the canonical stage
 
 ## Implementation Readiness
 
-Mode selection and state routing are architectural foundations, not proof that every Quote Content engine is already implemented. Current readiness after Phase 01 is:
+Mode selection and state routing are architectural foundations, not proof that every Quote Content production engine is implemented. Current readiness after Phase 02 is:
 
-| Stage | Quote Content readiness | Runtime behavior until implemented |
+| Stage | Quote Content readiness | Runtime behavior |
 |---|---|---|
-| 01 Brief & Product | Editorial brief normalization contract added | May execute using the mode-aware Brief Analyzer and entry contract |
-| 02 Niche & Context | Editorial context adapter not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`; do not pass an editorial-only brief to a product-only context loader |
-| 03 Creator | Existing creator library may be used when a creator is explicitly required; optional otherwise | If not required, mark `SKIPPED`; if required and resolvable through the current creator contract, execute; otherwise block |
-| 04 Content Strategy | Not implemented for Quote Content | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` |
-| 05–10 | Mode-specific strategy/production behavior not implemented | Block the next required stage with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`; do not fall back to UGC behavior |
+| 01 Brief & Product | Editorial brief normalization contract added in Phase 01 | May execute through mode-aware intake and Brief Analyzer |
+| 02 Niche & Context | Editorial context branch added in Phase 02 | May execute without product classification; preserve provenance and unknowns |
+| 03 Creator | Optional; existing Creator Library may be used when explicitly required | If not required, mark `SKIPPED`; if required but not resolvable, block |
+| 04 Content Strategy | Editorial pillar/format/message contract added in Phase 02 | May execute using `QUOTE_CONTENT_STRATEGY_CONTRACT.md` |
+| 05 Hook | Editorial hook families and validation contract added in Phase 02 | May execute for supported formats; static image may skip only with explicit reason |
+| 06 Storyboard | Mode-specific integration not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` when required |
+| 07 Visual Prompt | Mode-specific output contract not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` when required |
+| 08 Voice Script | Conditional mode-specific integration not yet implemented | Block if selected deliverable requires it; otherwise skip only with explicit reason |
+| 09 Video Prompt | Mode-specific output contract not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` when video is required |
+| 10 Production Output | Quote Content assembly contract not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`; never fall back to UGC output template |
 
-Until the Quote Content context, strategy, and production contracts are implemented, unsupported downstream Quote Content stages must be reported as `BLOCKED` rather than silently falling back to product-centered UGC logic or claiming a complete production output.
-
-As phases 02 and 03 are implemented, update this contract and the relevant engine contracts together. Do not create a duplicate workflow registry.
+Do not silently fall back to product-centered UGC logic or claim a complete production output while a required mode-specific contract is missing. Phase 02 implements editorial context, strategy, and hook only; Phases 03–04 remain necessary for production and regression hardening. Do not create a duplicate workflow registry.
 
 ## Revision and Invalidation
 
