@@ -89,12 +89,7 @@ Do not collect or require a content quantity/batch-count field or a user-selecte
 
 For Quote Content video formats, default the visual delivery to `DIRECT_TO_CAMERA_TALKING_HEAD`: the creator speaks to the lens, not as voice-over over B-roll. The selected Voice/Audio option can explicitly override spoken delivery, but must not silently change the visual treatment. Persist `delivery_mode` with the normalized campaign/strategy state and pass it to Storyboard, Visual Prompt, Voice Script, and Video Prompt.
 
-For spoken video, the selected duration is a hard creative constraint for script length and timing:
-- 18 seconds: initial target 35–42 spoken words.
-- 28 seconds: initial target 55–65 spoken words.
-- 30 seconds: initial target 60–70 spoken words.
-
-These are initial conversational-delivery ranges, not a substitute for timing validation. Validate the actual script against delivery pace, pauses, speaker changes, and storyboard timing. Do not pad, rush unnaturally, or change the requested duration to fit an overlong script. Text-only videos do not use a spoken-word target; validate on-screen text readability instead.
+For `QUOTE_CONTENT` video formats, final duration is fixed at exactly 20 seconds and is not user-selectable. Use exactly two provider generation segments: Segment 1 = 10 seconds and Segment 2 = 10 seconds. For spoken video, target an initial total of 38–44 spoken words across all speakers, with roughly 19–22 words per segment as a drafting guide, not a guarantee. Validate actual delivery pace, pauses, speaker changes, emotional beats, and storyboard timing. Revise overlong dialogue before handoff; never rush delivery, add filler, or change the duration to fit the script. Text-only videos do not use a spoken-word target; validate on-screen text readability instead.
 
 ## 3. Product Intake State
 
@@ -240,7 +235,7 @@ Platform is a controlled choice. Persist the selected platform as one of:
 
 ### Duration
 
-This UGC Affiliate duration rule applies only to `UGC_AFFILIATE`. For `QUOTE_CONTENT` video formats, the only user-selectable durations are 18, 28, and 30 seconds. Their exact segment compositions are respectively `8 + 10`, `10 + 10 + 8`, and `10 + 10 + 10`, using provider-supported segments `[4, 6, 8, 10]`. Preserve the selected final duration exactly. Do not silently change, round, truncate, extend, or pad the video. For static `QUOTE_IMAGE`, duration is `NOT_APPLICABLE`.
+This UGC Affiliate duration rule applies only to `UGC_AFFILIATE` and remains unchanged. For `QUOTE_CONTENT` video formats, final duration is fixed at exactly 20 seconds, composed as Segment 1 = 10 seconds + Segment 2 = 10 seconds using provider-supported segment durations `[4, 6, 8, 10]`. Duration is not a user-selectable field. Preserve the final duration exactly; do not silently change, round, truncate, extend, or pad the video. For static `QUOTE_IMAGE`, duration is `NOT_APPLICABLE`.
 
 ### Content Objective
 
@@ -282,7 +277,7 @@ For `UGC_AFFILIATE`, Stage 01 must have:
 - one requested creator selected from the current repository Creator Library
 - one resolved Audio / Voice Mode and dialogue-layer state
 
-For `QUOTE_CONTENT`, validate the editorial brief and applicable controls: platform, objective, topic/audience context, and a supported duration of exactly 18, 28, or 30 seconds for video formats. Static `QUOTE_IMAGE` uses `duration: NOT_APPLICABLE`. Format and pillar can be automatic or explicit; audio mode must be resolved when it changes stage dependencies. Product identity and creator identity are not mandatory by default. Do not add user input fields for content quantity or CTA. Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
+For `QUOTE_CONTENT`, validate the editorial brief and applicable controls: platform, objective, topic/audience context, and the fixed 20-second duration for video formats. The duration is set by the contract, not selected by the user. Static `QUOTE_IMAGE` uses `duration: NOT_APPLICABLE`. Format and pillar can be automatic or explicit; audio mode must be resolved when it changes stage dependencies. Product identity and creator identity are not mandatory by default. Do not add user input fields for content quantity or CTA. Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
 
 After validation, mark Stage 01 COMPLETED and wait for `/next`.
 
