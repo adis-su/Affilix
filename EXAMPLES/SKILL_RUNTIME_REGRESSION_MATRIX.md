@@ -259,3 +259,15 @@ The following cases extend the canonical regression matrix. Detailed input/outpu
 | R069 | Quote Content versus UGC isolation | Editorial runs never fall back to UGC production output; existing UGC behavior remains intact |
 
 **Execution status:** specifications added; runtime execution NOT RUN. Do not infer PASS from documentation presence.
+
+
+### R070 — Storyboard Reference Metadata Completeness
+- Given any video Storyboard, every declared reference has a stable ID, explicit version, sequence index, source beat ID, frozen state summary, continuity invariants, and a role.
+- Each scene declares an ordered reference trajectory whose IDs match the reference plan, with a causal transition for every adjacent pair and valid `reference_after` beat links.
+- Bridge references share the same immutable ID/version across adjacent scene boundaries.
+- Expected: Stage 06 generates deterministic metadata from existing beats and validates it before completion; missing non-inferable creative facts remain `NEEDS_REFINEMENT` or `BLOCKED`, never silently invented by Stage 07.
+
+### R071 — Visual Prompt Missing Reference Metadata Recovery
+- Given a completed Storyboard missing required reference metadata, Stage 07 identifies the exact scene and fields and does not fabricate IDs, versions, source beats, or transitions.
+- If metadata is derivable without changing creative meaning, Stage 06 is repaired/revalidated before Stage 07 resumes; otherwise the dependency remains incomplete.
+- Expected: no completed Stage 07 artifact until reference coverage and prompt cardinality pass.
