@@ -642,3 +642,11 @@ Validation:
 ## Quote Content Mode Dispatch
 
 When `content_mode = QUOTE_CONTENT`, load `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md`. `QUOTE_IMAGE` uses one static image prompt without a Storyboard dependency. Video formats produce exactly one image prompt per declared Storyboard reference state. Product references are `NOT_APPLICABLE` unless the brief explicitly changes to product-centered content. The universal frozen-state and bridge-reference invariants still apply.
+
+## Source Version and Reference Validation
+
+For video formats, Stage 07 requires a completed Stage 06 artifact with `metadata.storyboard_id`, `metadata.storyboard_version`, and `source_commit_sha`. Record the same artifact ID/version in `source_artifacts`. Every prompt carries `source_scene_id`, `source_beat_id`, `sequence_index`, `reference_id`, `reference_version`, and source storyboard ID/version. Never combine data from different storyboard versions.
+
+Before prompt generation, validate state metadata, scene/beat resolution, contiguous unique sequence indices, equality between the Reference Plan and ordered trajectory, exactly n−1 adjacent transitions per scene with n states, valid `reference_after` links, and matching bridge ID/version at both scene boundaries. On failure, report the exact scene and missing fields; do not fabricate metadata or mark Stage 07 completed.
+
+Generate one prompt per unique canonical reference state in storyboard order. A shared bridge remains one state and must not produce duplicate prompts. For `QUOTE_CONTENT`, the complete `WARDROBE` and `ENVIRONMENT` section bodies must each equal `Sesuai referensi gambar yang diupload user.` exactly. Each prompt describes one frozen frame, never a motion sequence.
