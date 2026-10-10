@@ -46,6 +46,9 @@ Phase 04 verifies that Quote Content mode contracts, the canonical ten-stage wor
 | QCR-022 | Text-only duration behavior | Text-only output does not invent spoken dialogue or enforce a spoken-word budget; on-screen text legibility and reading time are validated | Major | NOT RUN |
 
 | QCR-023 | Exact wardrobe/environment literals in every Stage 07 prompt | Under `QUOTE_CONTENT`, the entire `WARDROBE` section is exactly `Sesuai referensi gambar yang diupload user.` and the entire `ENVIRONMENT` section is exactly the same sentence; no hijab/outfit details or room/background prose may be appended; violating output is repaired or blocked, never marked complete | Critical | NOT RUN |
+| QCR-024 | Storyboard beat timing contract | Every video beat has numeric `time_window.start_time` and `time_window.end_time` within the final 20-second timeline and its owning scene; invalid, missing, or out-of-range windows prevent Stage 06 completion | Critical | NOT RUN |
+| QCR-025 | Dialogue anchor alignment | Every Stage 08 line resolves to a current Stage 06 scene, source beat, dialogue anchor, semantic intent, and exact target reference ID/version; line timing stays inside both the anchor action window and scene window and avoids protected pauses/critical visual actions | Critical | NOT RUN |
+| QCR-026 | Parallel branch and stale-source integrity | Stage 07 and Stage 08 consume the same current Stage 06 artifact/source commit without depending on each other; a storyboard revision invalidates affected Visual Prompt and Voice Script outputs, and Stage 09 cannot consume mixed or stale source versions | Critical | NOT RUN |
 
 ## Execution Protocol
 
