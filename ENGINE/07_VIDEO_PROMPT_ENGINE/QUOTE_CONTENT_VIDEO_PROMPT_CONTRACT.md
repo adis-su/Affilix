@@ -73,7 +73,7 @@ Bridge references are immutable. A segment's start and target references must re
 
 For `QUOTE_CONTENT` video formats, final duration is fixed at exactly 20 seconds and must use exactly two generation segments: Segment 1 = 10 seconds, Segment 2 = 10 seconds. Supported generation segment durations are `[4, 6, 8, 10]` seconds under `EXACT_SEGMENT_COMPOSITION`. Segment durations must sum to exactly 20 seconds. No rounding, truncation, extension, or filler. If impossible, set `duration_feasibility: BLOCKED` and do not produce a falsely complete video plan.
 
-Generation segments are technical subparts of a scene, not additional scenes or prompts. Each segment must declare start reference, target reference, contained transitions, primary action, action causality, timing guidance, camera behavior, and continuity constraints.
+Generation segments are technical provider requests, not additional scenes or user-facing prompts. The segment plan is validated across the entire run, not independently per scene: it must contain exactly two segments total, each exactly 10 seconds, covering the final timeline `[0, 10]` and `[10, 20]` with no gap or overlap. The sum must be exactly 20 seconds. Each segment must declare its `segment_id`, `source_scene_ids`, final start/end times, start reference, target reference, contained transition IDs, primary action, action causality, timing guidance, camera behavior, and continuity constraints. A segment may cover transitions across scene boundaries when the storyboard timeline requires it; retain one user-facing Video Prompt per Storyboard scene regardless of segment allocation. If the current per-scene segment records cannot represent this run-wide plan unambiguously, block completion rather than silently changing scene count or duration.
 
 ## Output Shape
 
@@ -96,7 +96,10 @@ scenes:
     final_prompt:
     generation_segments:
       - segment_id:
-        generation_duration: 4 | 6 | 8 | 10
+        source_scene_ids: []
+        final_start_time:
+        final_end_time:
+        generation_duration: 10
         start_reference_id:
         target_reference_id:
         transition_ids: []
@@ -122,6 +125,7 @@ validation:
   dialogue_sync: PASS | NEEDS_REFINEMENT | NOT_REQUIRED
   timing: PASS | NEEDS_REFINEMENT
   duration_feasibility: PASS | BLOCKED
+  run_wide_segment_composition: PASS | BLOCKED
 unresolved_requirements: []
 source_artifacts: []
 provenance: []
