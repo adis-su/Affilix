@@ -56,6 +56,39 @@ The selected hook must be physically executable and specify the opening visual s
 
 The artifact is validated, marked COMPLETED, and waits for `/next` then continue according to the canonical /next progression.
 
+## Quote Content Output Contract
+
+When `content_mode = QUOTE_CONTENT`, use `ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md` and persist:
+
+```yaml
+stage: 05_HOOK
+content_mode: QUOTE_CONTENT
+status: COMPLETED | BLOCKED | SKIPPED
+skip_reason:
+candidates:
+  - hook_id:
+    hook_type:
+    hook_text_or_visual_concept:
+    opening_trigger:
+    audience_recognition:
+    pillar_connection:
+    format_connection:
+    message_connection:
+    emotional_risk:
+    visual_action: []
+    status: VIABLE | BLOCKED
+    rationale:
+    provenance: []
+selection:
+  selected_hook_id:
+  rationale:
+unresolved_requirements: []
+source_artifacts: []
+source_commit_sha:
+```
+
+Product connection, product proof, and product claim risk fields are not required for this mode. For a static quote image, the stage may be marked `SKIPPED` only when permitted by the selected format strategy, with a precise skip reason.
+
 ## Invalidation
 
-Any material change to Content Strategy, including Content Format or Content Angle, Creator, Niche Context, or Product invalidates the Hook and all downstream creative artifacts as STALE.
+Any material change to UGC Content Strategy, including Content Format or Content Angle, Creator, Niche Context, or Product invalidates the Hook and all downstream creative artifacts as STALE. For `QUOTE_CONTENT`, changes to editorial context, pillar, format, audience, primary message, or takeaway invalidate the Hook and dependent downstream artifacts.
