@@ -110,13 +110,14 @@ check(all(f"QCR-{i:03d}" in matrix for i in range(1, 23)),
       "Quote Content regression matrix includes QCR-001 through QCR-022")
 
 # Quote Content intake and duration-bound script rules.
-for duration in ("18", "28", "30"):
-    check(duration in entry and duration in routing and duration in voice,
-          f"Quote Content duration {duration}s is documented across intake, routing, and voice contract")
+check("20 seconds" in entry and "20 seconds" in routing and "20 seconds" in voice,
+      "Quote Content fixed 20-second duration is documented across intake, routing, and voice contract")
+check("10 + 10" in entry and "10 + 10" in voice,
+      "Quote Content uses exactly two 10-second generation segments")
 check("content quantity" in entry.lower() and "user-selected CTA" in entry,
       "Quote Content intake excludes content quantity and user-selected CTA fields")
-check("35–42" in voice and "55–65" in voice and "60–70" in voice,
-      "Quote Content voice contract defines duration-specific spoken-word targets")
+check("38–44" in voice,
+      "Quote Content voice contract defines the 20-second spoken-word target")
 check("requested video duration" in brief.lower() and "NOT_APPLICABLE" in brief,
       "Brief Analyzer normalizes video duration and static-image not-applicable state")
 
