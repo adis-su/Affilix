@@ -96,6 +96,17 @@ for relative, content in [
 check("Stage 06, 08, and 09 must be `SKIPPED` with `STATIC_IMAGE_FORMAT`" in output,
       "Production Output enforces Quote Image skip states")
 
+# Stage 06 -> Stage 07 dependency recovery must not loop on unchanged defects.
+check("Mandatory Pre-Handoff Self-Repair" in storyboard and
+      "Do not rely on Stage 07 to discover omissions" in storyboard,
+      "Stage 06 self-validates and deterministically repairs its own reference metadata")
+check("Stage 06 Dependency Failure Recovery" in visual and
+      "Do not repeatedly display the same stale defect list" in visual,
+      "Stage 07 routes upstream defects to Stage 06 instead of repeating a dead-end error")
+check("Stage 06 → Stage 07 Dependency Recovery" in skill and
+      "wait for `/next`" in skill,
+      "Skill runtime repairs Stage 06, pauses, and retries Stage 07 only on the next /next")
+
 # Reference-state coverage and prompt/scene cardinality.
 check("target_reference_count" in storyboard and "reference_version" in storyboard,
       "Storyboard declares reference counts and versioned reference states")
