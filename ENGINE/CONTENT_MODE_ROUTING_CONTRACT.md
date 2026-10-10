@@ -53,12 +53,15 @@ Collect only the inputs materially needed to establish the editorial brief:
 
 - platform
 - publishing objective
-- target audience or audience context
-- topic/theme or audience situation
+- target audience/context and topic/theme or audience situation
 - intended emotional response or takeaway
-- requested output constraints when supplied
+- optional format preference (automatic selection is allowed)
+- optional editorial pillar preference (automatic selection is allowed)
+- requested video duration: exactly 18, 28, or 30 seconds for video formats
+- audio/voice preference when it affects stage dependencies
+- optional additional context or constraints
 
-Persist these under the campaign/editorial brief, with provenance. Keep unresolved non-critical fields as `UNKNOWN`; ask only when a missing field materially blocks a safe, coherent output.
+For static `QUOTE_IMAGE`, duration is `NOT_APPLICABLE`. Do not request or require a content quantity/batch-count field or a user-selected CTA field. CTA is an editorial decision and is included only when it serves the publishing objective. Persist supplied values and their provenance under the campaign/editorial brief. Keep unresolved non-critical fields as `UNKNOWN`; ask only when a missing field materially blocks a safe, coherent output.
 
 The existing six-field UGC campaign template remains unchanged and is shown only for `UGC_AFFILIATE`.
 
