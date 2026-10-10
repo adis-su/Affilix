@@ -60,6 +60,24 @@ Examples:
 
 A prompt that merely names the selected format while depicting a generic product portrait does not pass.
 
+## Quote Content: Exact Wardrobe and Environment Override
+
+**This rule is a hard output invariant for `QUOTE_CONTENT`, not a style suggestion.** The mode-specific contract `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md` takes precedence over generic creator styling rules, Hijab Rules, Environment and Props, naturalism guidance, examples, and any generated prose when determining the contents of these two sections.
+
+The final prompt must use these exact section bodies, with no appended sentences, translations, qualifiers, or descriptive details:
+
+```text
+WARDROBE
+Sesuai referensi gambar yang diupload user.
+
+ENVIRONMENT
+Sesuai referensi gambar yang diupload user.
+```
+
+Do not put wardrobe/environment descriptions elsewhere as a workaround for violating these section locks. Preserve creator identity through the canonical identity reference, but do not restate clothing/hijab specifics. Do not describe a generic room, neutral background, furniture, props, or real-home implication. The external image-generation provider receives the user's reference image separately; Affilix does not inspect or verify that upload.
+
+**Stage 07 output validation:** extract the complete `WARDROBE` and `ENVIRONMENT` sections from every prompt. Each must equal the required literal exactly. If either has extra content, repair and revalidate before returning output. A violating prompt is invalid and cannot be marked `COMPLETED`.
+
 ## Purpose
 
 The Visual Prompt Engine converts each completed storyboard scene into a production-ready **static image-generation prompt**.
