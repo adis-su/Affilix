@@ -323,3 +323,8 @@ SCENE 02
 ```
 
 A bridge reference is the shared, immutable boundary state. Reference states and provider generation segments are separate concepts.
+
+
+## Quote Content Mode Dispatch
+
+When `content_mode = QUOTE_CONTENT`, load `QUOTE_CONTENT_STORYBOARD_CONTRACT.md` as the mode-specific authority. `QUOTE_IMAGE` skips Stage 06 with `STATIC_IMAGE_FORMAT`; the four registered Quote Content video formats use the editorial action/story mechanism in that contract. Do not apply product-demo or product-proof requirements to an editorial-only story. The universal reference graph, immutable bridge, action causality, and exact-duration rules remain in force.
