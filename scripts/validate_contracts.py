@@ -152,11 +152,11 @@ check("reference_coverage: PASS | BLOCKED | NOT_APPLICABLE" in output and
       "Production Output validates canonical reference coverage and Storyboard lineage")
 check("exactly two segments total" in output and "no gaps or overlaps" in output,
       "Production Output blocks segment count, duration, gap, and overlap mismatches")
-check("exact same Storyboard artifact/version" in authority and
+check("exact Storyboard artifact/version" in authority and
       "Never silently mix artifacts from different Storyboard versions" in authority,
       "Downstream stages must pin the same exact Storyboard version")
-check("Storyboard Authority" in video_runtime and "Video Prompt owns motion" in video_runtime and
-      "Storyboard remains the canonical scene sequence" in voice_runtime,
+check("Storyboard owns the canonical scene sequence" in video_runtime and "Video Prompt owns motion" in video_runtime and
+      "Voice Script owns exact spoken wording" in voice_runtime,
       "Stage 08/09 runtime contracts preserve field ownership")
 check(all(f"QCR-{i:03d}" in matrix for i in range(27, 33)),
       "Regression matrix includes QCR-027 through QCR-032 for downstream integration")
