@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The GitHub Runtime Adapter resolves the canonical Affilix repository version for a production run and loads runtime rules from the pinned commit.
+The GitHub Runtime Adapter resolves the canonical Affilix repository version for a production run and loads runtime rules from the pinned commit. It provides repository access only; it is not a campaign-state database or an alternative workflow runtime.
 
 Canonical repository:
 
@@ -17,7 +17,7 @@ For every new campaign run:
 2. Record the exact commit SHA.
 3. Use that SHA as the immutable repository version for the run.
 4. Load runtime-critical files from that SHA.
-5. Persist the SHA and repository access status in `public.affilix_campaigns`.
+5. Return the commit SHA and repository access status to the ChatGPT Project runtime state.
 6. Never mix files from a later commit into the active run.
 
 Runtime-critical bootstrap files:
@@ -29,22 +29,27 @@ Runtime-critical bootstrap files:
 
 ## Access Model
 
-The current repository is public, so the first runtime implementation uses GitHub's public REST endpoint to resolve the branch head and raw file URLs to load pinned content.
+The current repository is public, so repository resolution uses GitHub's public REST endpoints and loads raw file content pinned to the resolved commit SHA.
 
-For higher production reliability and API-rate capacity, a GitHub credential may later be added as a Supabase Edge Function secret. The runtime must keep the same commit-pinning semantics regardless of authentication method.
+The canonical runtime host is the ChatGPT Project / Affilix Skill. Active campaign state and stage progression remain in the Project's run context as defined by `CAMPAIGN_STATE_PERSISTENCE.md` and `RUNTIME_CONTRACT.md`.
+
+This adapter MUST NOT require or introduce Supabase, an external campaign database, a Supabase Edge Function, Telegram, or another service as the canonical runtime or persistence layer. Any future architecture change requires an explicit update to the canonical architecture contracts before implementation.
 
 ## Failure Behavior
 
 If GitHub cannot be reached or the expected files cannot be loaded:
 
 - do not claim that the latest repository was loaded,
-- persist the repository access failure,
+- return the repository access failure to the Project runtime,
 - do not invent repository rules,
-- block only the operations that require the unavailable runtime rules.
+- block only the operations that require the unavailable runtime rules,
+- use `REPOSITORY_SYNC_FAILURE` when an atomic `/next` synchronization cannot complete.
+
+Do not persist campaign state to an external service as a fallback.
 
 ## State Traceability
 
-A campaign row must retain:
+The active Project run state should retain:
 
 - repository
 - repository ref
@@ -52,4 +57,4 @@ A campaign row must retain:
 - repository loaded timestamp
 - repository access status
 
-The commit SHA is the authoritative link between a production run and the repository rules used by that run.
+The commit SHA is the authoritative link between a production run and the repository rules used by that run. The adapter supplies repository metadata; it does not own the campaign state.
