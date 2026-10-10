@@ -128,3 +128,20 @@ Stage completion follows `PROCESS → VALIDATE → MARK COMPLETED → WAIT FOR /
 ## Mode-Specific Schema Dispatch
 
 For `content_mode = QUOTE_CONTENT`, the authoritative Stage 06 schema and applicability rules are in `QUOTE_CONTENT_STORYBOARD_CONTRACT.md`. Use that contract's output shape and explicit static-image skip. Do not force Quote Content into product-oriented Storyboard fields. For `UGC_AFFILIATE`, this existing universal output contract remains in force.
+
+
+## Mandatory Complete Artifact Provenance
+
+A completed Stage 06 video artifact MUST include all of the following; empty placeholders are invalid:
+
+- `metadata.storyboard_id`: stable, non-empty artifact identifier.
+- `metadata.storyboard_version`: explicit version for this artifact, initially `v1`.
+- `source_commit_sha`: exact repository commit pinned for the active run.
+- `source_artifacts`: one provenance record for every required upstream artifact actually consumed, with at minimum `stage_id`, `artifact_id`, `artifact_version`, and `content_mode`; include source commit/hash when available. Required upstream records must identify the current Stage 04 Strategy and Stage 05 Hook, plus Stage 01/02 and Stage 03 when consumed by the active mode and creative configuration. Do not fabricate unavailable IDs or versions: mark the dependency unresolved and block completion until it is resolved.
+- `provenance`: field-level or artifact-level origin records sufficient to trace creative decisions to their upstream source artifact and version.
+
+The active storyboard's `metadata.storyboard_id` + `metadata.storyboard_version` is the artifact identity. `source_commit_sha` is repository provenance only and must never substitute for artifact identity or upstream artifact provenance.
+
+For every scene, the Reference Plan is canonical. If it declares states `R01@v1` through `R05@v1`, the scene's `reference_trajectory.ordered_reference_ids` MUST resolve to exactly `[R01@v1, R02@v1, R03@v1, R04@v1, R05@v1]` in that order. The scene MUST contain exactly four causal transition records: R01→R02, R02→R03, R03→R04, and R04→R05. Each record must state its source beat, causal action, allowed changes, invariants, and resulting state. Every action beat's `reference_after` must explicitly resolve to a declared `reference_id` and `reference_version`; missing, implicit, dangling, or guessed mappings fail validation. This five-state example is a cardinality/order rule, not permission to invent state content absent from the source beats.
+
+Completion gate: do not mark Stage 06 `COMPLETED` if artifact identity, pinned source commit, required upstream provenance, any required state field, trajectory ordering, transition causality, or beat-to-reference mapping is missing or invalid. Generate metadata from known current artifacts where possible; otherwise mark `NEEDS_REFINEMENT` or `BLOCKED` according to the existing contract. After completion, wait for `/next`.
