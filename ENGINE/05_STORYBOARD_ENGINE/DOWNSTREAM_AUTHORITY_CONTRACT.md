@@ -182,6 +182,17 @@ Material fields include:
 
 Downstream stages must never silently absorb a Storyboard revision while retaining a prior semantic state.
 
+## Cross-Stage Lineage and Handoff Invariants
+
+Every downstream artifact must identify the exact upstream artifact versions it consumed, including the canonical Stage 06 `storyboard_id`, `storyboard_version`, artifact ID/version, and pinned `source_commit_sha` where those fields are part of the runtime schema. Matching scene names, reference labels, or visually similar frames do not prove lineage.
+
+- **Stage 07 Visual Prompt** validates the full Storyboard Reference Plan before generation and emits exactly one static prompt per unique canonical reference state. An immutable bridge referenced by two adjacent scenes remains one state and one prompt.
+- **Stage 08 Voice Script** binds each dialogue line to a valid Storyboard scene, beat, and dialogue anchor; its timing must fit the anchor and scene windows. Stage 08 is a parallel descendant of Stage 06 and must not depend on Stage 07.
+- **Stage 09 Video Prompt** consumes compatible current Stage 06 and Stage 07 artifacts, plus Stage 08 when dialogue is required. It verifies that Stage 07 and Stage 08 both identify the exact Storyboard artifact/version used by Stage 09. Its user-facing prompt count equals Storyboard scene count; technical generation segments do not change that count.
+- **Stage 10 Production Output** assembles only current, validated artifacts from a compatible lineage. It verifies reference coverage, scene-to-prompt count, dialogue/scene timing, reference versions, immutable bridge identity, and exact duration composition before assembly.
+
+A material Stage 06 revision invalidates affected Stage 07 prompts, Stage 08 dialogue/timing, Stage 09 motion prompts and transitions, and Stage 10 assembly. A Stage 07 revision invalidates Stage 09 and Stage 10. A Stage 08 revision invalidates Stage 09 dialogue synchronization and Stage 10. A Stage 09 revision invalidates Stage 10. Never silently mix artifacts from different Storyboard versions or pinned source snapshots.
+
 ## Validation Principle
 
 The correct question for every downstream artifact is:
