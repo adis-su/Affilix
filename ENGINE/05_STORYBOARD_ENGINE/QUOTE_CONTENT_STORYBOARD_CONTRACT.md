@@ -64,7 +64,7 @@ Reference states are not generation segments. One scene can have multiple refere
 
 ## Duration
 
-The requested final duration is authoritative. Creative scene durations must sum exactly to it. Video generation segment durations may only be 4, 6, 8, or 10 seconds and must sum exactly to the requested final duration. No rounding, truncation, extension, or filler. If exact composition is impossible, set `duration_feasibility: BLOCKED`.
+For `QUOTE_CONTENT` video formats, the final duration is fixed at exactly 20 seconds. Plan exactly two generation segments of 10 seconds each (`10 + 10`). Creative scene durations must sum exactly to 20 seconds. Provider segment durations may only be 4, 6, 8, or 10 seconds and must sum exactly to the final duration. No rounding, truncation, extension, or filler. If exact composition is impossible, set `duration_feasibility: BLOCKED`.
 
 ## Output Shape
 
