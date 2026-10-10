@@ -37,10 +37,13 @@ For `TEXT_ONLY` or other explicitly no-spoken-voice output, spoken-word targets 
 
 ## Format and Editorial Rules
 
-- `CINEMATIC_QUOTE_REELS`: speech is optional; if present, it supports the core statement and does not compete with on-screen text.
-- `RELATABLE_STORY_REELS`: dialogue may establish the situation and emotional turn, but may not claim it happened to the user unless the user said so.
-- `POV_RELATIONSHIP_REELS`: dialogue clarifies perspective and communication insight without caricature or false universal claims.
-- `MINI_STORYTELLING_REELS`: spoken beats follow the storyboard trigger, consequential action, and resulting state.
+For every Quote Content video format, default to `delivery_mode: DIRECT_TO_CAMERA_TALKING_HEAD`. When `audio_mode = SPOKEN_ON_CAMERA`, write the script as words the on-screen creator says directly to the lens, in a conversational first- or second-person address as appropriate. It must sound like a person talking to a viewer, not like formal narration intended to sit over B-roll. Include restrained delivery cues and beat-level pauses; do not add filler merely to fill time. Stage 09 must preserve the exact canonical wording and synchronize visible mouth movement with each line's timing anchors.
+
+- `CINEMATIC_QUOTE_REELS`: the creator speaks the central reflection directly to camera by default; on-screen text may emphasize the key phrase but must not compete with the spoken line.
+
+- `RELATABLE_STORY_REELS`: the creator recounts the situation directly to camera, establishing the trigger and emotional turn without claiming it happened to the user unless the user said so.
+- `POV_RELATIONSHIP_REELS`: the creator explains the perspective and communication insight directly to camera without caricature or false universal claims.
+- `MINI_STORYTELLING_REELS`: the creator tells the story directly to camera; spoken beats follow the storyboard trigger, consequential action, and resulting state.
 - `QUOTE_IMAGE`: no voice script.
 
 Avoid universal claims about all spouses, fabricated quotation attribution, fake testimonials, unsupported diagnoses, guaranteed healing, and engagement bait that distorts the message. Abuse, coercion, threats, and fear must not be normalized as ordinary relationship conflict.
@@ -53,6 +56,7 @@ content_mode: QUOTE_CONTENT
 status: COMPLETED | BLOCKED | SKIPPED
 skip_reason: null | STATIC_IMAGE_FORMAT | NO_SPOKEN_VOICE_REQUIRED
 audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER | NO_SPOKEN_VOICE
+delivery_mode: DIRECT_TO_CAMERA_TALKING_HEAD | USER_OVERRIDE
 dialogue:
   enabled: true | false
   delivery: NATIVE_PROVIDER | EXTERNAL_PROVIDER | NONE
