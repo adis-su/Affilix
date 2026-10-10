@@ -118,6 +118,12 @@ provenance: []
 source_commit_sha:
 ```
 
+## Source Freshness and Cross-Stage Handoff
+
+For video formats, Stage 07 must record the exact current Stage 06 storyboard artifact ID/version in `source_artifacts` and preserve its `source_commit_sha`. Validate that every prompt maps to a declared reference state in that exact storyboard artifact, including `reference_id`, `reference_version`, `source_scene_id`, `source_beat_id`, and `sequence_index`. Do not combine reference states from multiple storyboard versions or repository commits. If the storyboard source is missing, stale, or from a different pinned commit, block completion until Stage 06 is current and valid.
+
+Stage 07 and Stage 08 are parallel descendants of Stage 06. Stage 07 must not require a Voice Script, and Stage 08 must not require Visual Prompt. Stage 09 is the integration point and may consume only current, mutually compatible Stage 06/07/08 artifacts. A Stage 06 revision invalidates affected Stage 07 prompts and Stage 08 dialogue assets; Stage 09 must not combine a current visual artifact with a stale script or a script tied to a different storyboard source.
+
 ## Invalidation
 
 Changes to editorial message, format, hook where visible, storyboard/reference graph, selected creator, or style constraints invalidate only the dependent prompts and transitions. Mark completed and wait for `/next`.
