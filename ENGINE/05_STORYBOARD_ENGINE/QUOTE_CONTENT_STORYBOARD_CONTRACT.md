@@ -103,6 +103,9 @@ scenes:
     action_graph:
       beats:
         - beat_id:
+          time_window:
+            start_time:
+            end_time:
           trigger:
           intention:
           action:
@@ -113,6 +116,12 @@ scenes:
           expression:
           camera_behavior:
           micro_motion:
+          dialogue_anchor:
+            semantic_intent:
+            action_window:
+              start_time:
+              end_time:
+            target_reference:
           text_or_dialogue_anchor:
           reference_after:
     reference_plan:
@@ -151,6 +160,14 @@ unresolved_requirements: []
 provenance: []
 source_artifacts: []
 ```
+
+## Beat Timing and Dialogue Anchor Contract
+
+For every video beat, `time_window.start_time` and `time_window.end_time` are required numeric seconds relative to the start of the final 20-second video. Require `0 <= start_time < end_time <= 20`. Beat windows must be chronologically ordered; overlap is allowed only when the beat explicitly identifies concurrent motion channels and the causal order remains clear. Scene durations must sum exactly to 20 seconds, and each beat window must fit wholly inside its owning scene window.
+
+When spoken dialogue is required, each dialogue-bearing beat MUST declare `dialogue_anchor.semantic_intent`, `dialogue_anchor.action_window.start_time`, `dialogue_anchor.action_window.end_time`, and `dialogue_anchor.target_reference`. The action window must be non-empty, fall within the owning beat and scene windows, and point to a declared reference state established by that beat or its explicitly declared transition. `target_reference` must resolve to the exact `reference_id@reference_version`; no guessed or nearest-state fallback is allowed. Beats without spoken dialogue may omit `dialogue_anchor` or set it to `null`.
+
+Stage 08 must bind each dialogue line to a storyboard `scene_id` and `dialogue_anchor`, preserve the anchor's semantic intent, and keep the line's `start_time`/`end_time` inside the anchor action window. A line may reference an anchor only if that anchor exists in the current Stage 06 artifact. Dialogue may overlap a beat only when it does not obscure a required silent pause, critical reaction, or visually dependent action. If dialogue timing cannot fit, Stage 08 must revise wording/delivery or mark `NEEDS_REFINEMENT`; it must not move the storyboard window or change the final duration. If the anchor cannot be resolved without inventing creative intent, block the affected output.
 
 ## Validation and Invalidation
 
