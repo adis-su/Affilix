@@ -67,7 +67,7 @@ The existing six-field UGC campaign template remains unchanged and is shown only
 
 ## Stage Routing and Conditional Dependencies
 
-The canonical stage registry and stage IDs do not change.
+The canonical stage registry and stage IDs do not change. User-facing display names are mode-specific: for `QUOTE_CONTENT`, Stage 01 is **Brief** and Stage 02 is **Sub Pilar**; for `UGC_AFFILIATE`, keep **Brief & Product** and **Niche & Context**. These aliases apply only to presentation and must not alter IDs, dependencies, or runtime contracts.
 
 | Canonical Stage | UGC Affiliate | Quote Content |
 |---|---|---|
