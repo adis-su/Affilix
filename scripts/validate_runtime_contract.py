@@ -16,6 +16,7 @@ FILES = {
     "runtime_readme": "ENGINE/REPOSITORY_RUNTIME/README.md",
     "state": "ENGINE/REPOSITORY_RUNTIME/CAMPAIGN_STATE_PERSISTENCE.md",
     "authority": "ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md",
+    "audit": "RUNTIME_EXECUTION_BOUNDARY_AUDIT.md",
 }
 errors = []
 checks = 0
@@ -50,8 +51,8 @@ check("synchronize the active run's repository pin" in runtime and
       "runtime contract requires pin synchronization and contract reload before stage execution")
 check("REPOSITORY_SYNC_FAILURE" in runtime and "REPOSITORY_SYNC_FAILURE" in adapter,
       "failed atomic synchronization blocks progression with the canonical error")
-check("Never silently mix repository commits" in readme and
-      "Never mix files from different repository commits" in adapter,
+check("Never silently mix files from different repository commits" in readme and
+      "Never silently mix files from different repository commits" in adapter,
       "repository loaders forbid mixed-commit stage execution")
 check("source_commit_sha" in state and "source repository commit SHA" in runtime,
       "run and artifact traceability include the pinned source commit")
@@ -85,7 +86,7 @@ check("If a canonical input changes, dependent state becomes STALE" in skill,
 check("MUST NOT require or introduce Supabase" in adapter and
       "Do not persist campaign state to an external service as a fallback" in adapter,
       "repository adapter remains access-only and does not add external state persistence")
-check("does not execute the conversational Skill runtime" in docs.get("runtime_readme", "") + docs.get("runtime", ""),
+check("does not execute the conversational Skill runtime" in docs.get("audit", ""),
       "repository clearly distinguishes contract checks from conversational runtime execution")
 
 print(f"\nRuntime contract checks: {checks - len(errors)}/{checks} passed.")
