@@ -116,3 +116,33 @@ The following concepts are not part of the canonical runtime:
 Architecture status: PASS
 
 The repository is aligned with the current Affilix architecture. The main remaining maintenance task is to keep future regression artifacts and audit snapshots aligned with the canonical ten-stage workflow.
+
+
+---
+
+## Mode Routing Addendum
+
+### Addendum Date
+2026-10-10
+
+### Scope
+Phase 01 — Content Mode Architecture.
+
+### Changes Verified
+- Added `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` as the single mode-routing contract.
+- Registered `UGC_AFFILIATE` and `QUOTE_CONTENT` as the only supported mode values.
+- Updated `SKILL.md`, `ENGINE/AFFILIX_ENTRY_POINT/README.md`, `ENGINE/01_BRIEF_ANALYZER/README.md`, `ENGINE/WORKFLOW.md`, and repository runtime contracts to persist and route by mode.
+- Preserved the canonical Stage 01–10 registry and existing UGC engine mappings.
+- Defined explicit blockers for Quote Content stages whose mode-specific implementation is not yet available.
+- Added `EXAMPLES/CONTENT_MODE_ROUTING_FIXTURES.md` for routing, isolation, blocking, and backward-compatibility checks.
+- Updated the repository map and runtime loading order.
+
+### Phase 01 Status
+**PASS — routing foundation only.**
+
+The repository now defines the mode-selection boundary and mode-specific intake/dependency behavior. This does not mean Quote Content can yet be produced end-to-end. Quote Content strategy and production remain pending Phases 02 and 03; unsupported downstream stages must block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` and must not fall back to UGC logic.
+
+### Required Next Work
+1. Implement the Quote Content strategy, pillar, format, and editorial validation contracts.
+2. Implement mode-aware image/video/voice and production-output behavior.
+3. Add end-to-end Quote Content regression fixtures and validate existing UGC regressions.
