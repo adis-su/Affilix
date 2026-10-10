@@ -65,6 +65,9 @@ voice = read("ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.
 authority = read("ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md")
 video_runtime = read("ENGINE/07_VIDEO_PROMPT_ENGINE/RUNTIME_OUTPUT_CONTRACT.md")
 voice_runtime = read("ENGINE/08_VOICE_SCRIPT_ENGINE/RUNTIME_OUTPUT_CONTRACT.md")
+runtime_contract = read("ENGINE/REPOSITORY_RUNTIME/RUNTIME_CONTRACT.md")
+campaign_persistence = read("ENGINE/REPOSITORY_RUNTIME/CAMPAIGN_STATE_PERSISTENCE.md")
+github_adapter = read("ENGINE/REPOSITORY_RUNTIME/GITHUB_RUNTIME_ADAPTER.md")
 
 # Canonical registry identity and the non-numeric engine-to-stage mappings.
 stage_rows = [match.group(1) for match in re.finditer(r"^\|\s*(\d{2})\s*\|[^\n]*ENGINE/", workflow, flags=re.MULTILINE)]
@@ -122,6 +125,16 @@ check("Segment 1 = 10 seconds" in entry and "10 + 10" in voice,
       "Quote Content uses exactly two 10-second generation segments")
 check("content quantity" in entry.lower() and "user-selected CTA" in entry,
       "Quote Content intake excludes content quantity and user-selected CTA fields")
+
+# Canonical runtime architecture must not drift toward an external campaign database.
+check("ChatGPT Project" in runtime_contract and "does not maintain a competing workflow" in runtime_contract,
+      "runtime contract keeps ChatGPT Project as the user-facing runtime host")
+check("External database / Telegram / Edge Functions" in campaign_persistence and "NOT part of the canonical runtime" in campaign_persistence,
+      "campaign state contract excludes external databases, Telegram, and Edge Functions")
+check("MUST NOT require or introduce Supabase" in github_adapter and "campaign-state database" in github_adapter,
+      "GitHub adapter provides repository access without introducing a Supabase runtime")
+check("public.affilix_campaigns" not in github_adapter and "Supabase Edge Function" not in github_adapter,
+      "GitHub adapter contains no conflicting external persistence requirement")
 check("38–44" in voice,
       "Quote Content voice contract defines the 20-second spoken-word target")
 
