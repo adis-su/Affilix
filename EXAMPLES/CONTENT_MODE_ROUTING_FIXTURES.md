@@ -134,3 +134,98 @@ Phase 01 is accepted when the mode contract, entrypoint, Skill, canonical workfl
 - preserved UGC compatibility.
 
 Phase 01 does not certify Quote Content end-to-end production. That depends on Phase 02 strategy and Phase 03 production implementation.
+
+
+## CM-007 — Quote Content Editorial Context Does Not Require Product
+
+**Input**
+
+- User selects `QUOTE_CONTENT`.
+- Topic: emotional load of household responsibilities.
+- Audience context: wives and mothers.
+- No product identity or product reference is supplied.
+
+**Expected**
+
+- Stage 02 resolves editorial niche, audience context, topic context, and relevant sensitivity flags.
+- Product niche, product type, and product behavior are `NOT_APPLICABLE`, not invented.
+- Preserve source provenance and unknown fields.
+
+**Fail if**
+
+- The product-oriented context loader requests a product.
+- Demographic, psychological, or personal facts are inferred without evidence.
+
+## CM-008 — Editorial Strategy Selects One Pillar and One Format
+
+**Input**
+
+- A validated Quote Content brief about feeling unseen in household responsibilities.
+- No explicit format preference.
+
+**Expected**
+
+- Stage 04 selects one primary editorial pillar and one primary format from the Quote Content registries.
+- Platform is recorded separately from format.
+- One primary message and takeaway are defined.
+- No product proof scoring or product claims are generated.
+
+**Fail if**
+
+- More than one primary pillar or format is selected.
+- `FACEBOOK_PRO` is treated as a content format.
+- The strategy invents a product, personal testimony, or audience demographic.
+
+## CM-009 — Quote Content Hook Preserves Editorial Strategy
+
+**Input**
+
+- Current Stage 04 strategy selects `PILLAR_01` and `RELATABLE_STORY_REELS`.
+
+**Expected**
+
+- Stage 05 hook establishes a recognizable situation or story trigger.
+- Hook records pillar, format, and primary-message connections.
+- Language remains specific without claiming every husband or wife behaves the same way.
+
+**Fail if**
+
+- Hook uses generic engagement bait unrelated to the selected strategy.
+- Hook fabricates lived experience or a real quote attribution.
+- Hook normalizes abuse or coercion as ordinary communication trouble.
+
+## CM-010 — Static Quote Image Has Explicit Stage Skips
+
+**Input**
+
+- Current Stage 04 strategy selects `QUOTE_IMAGE`.
+
+**Expected**
+
+- Stage 05 may be `SKIPPED` only when strategy explicitly permits it and records a reason.
+- Stage 06, Stage 08, and Stage 09 are marked `SKIPPED` with `STATIC_IMAGE_FORMAT` where their outputs are not applicable.
+- Stage 07 remains required for the image prompt, and Stage 10 remains blocked until Quote Content output assembly is implemented.
+
+**Fail if**
+
+- A skipped stage is represented as generated output.
+- Video prompts or voice scripts are invented for a static-only deliverable.
+- UGC Production Output Template is used as a fallback.
+
+## CM-011 — Batch Pillar Mix Is Not an Individual Post Constraint
+
+**Input**
+
+- A batch plan uses the initial editorial mix 40% `PILLAR_01`, 20% `PILLAR_02`, 40% `PILLAR_03`.
+- One individual post has a clear fit for `PILLAR_02`.
+
+**Expected**
+
+- The individual post is assigned according to topic/audience/message fit.
+- The percentages guide batch-level planning only.
+- No algorithmic-performance claim is made without actual analytics.
+
+**Fail if**
+
+- Every individual post is forced to meet batch percentages.
+- The mix is described as a proven platform algorithm requirement.
