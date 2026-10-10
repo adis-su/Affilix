@@ -100,3 +100,18 @@ Stage completion: process, validate, mark `COMPLETED`, then wait for `/next`. A 
 ## Mode-Specific Schema Dispatch
 
 For `content_mode = QUOTE_CONTENT`, use `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md` as the authoritative output schema, including the static `QUOTE_IMAGE` path and one prompt per declared video reference state. For `UGC_AFFILIATE`, retain this contract unchanged.
+
+
+## Fixed Wardrobe and Environment Output
+
+Every final image-generation prompt must use these exact section values, without appended description or paraphrase:
+
+```text
+WARDROBE
+Sesuai referensi gambar yang diupload user.
+
+ENVIRONMENT
+Sesuai referensi gambar yang diupload user.
+```
+
+The uploaded user image is the visual authority for both attributes. If no uploaded image is available, preserve the required literal strings but record the missing reference as unresolved; never claim to have inspected an unavailable image or invent its contents. Validate exact-string equality for both sections before marking Stage 07 COMPLETED.
