@@ -157,3 +157,8 @@ Every generation segment must declare `start_reference_id`, `target_reference_id
 The scene-level Video Prompt remains exactly one prompt per Storyboard scene. A six-reference trajectory does not create six Video Prompts. It creates one scene-level prompt that specifies the controlled progression through those six states. Bridge references must resolve to one immutable version across adjacent scenes.
 
 Stage completion: process, validate, mark `COMPLETED`, then wait for `/next`. If a reference changes, all transitions touching it become `STALE`.
+
+
+## Mode-Specific Schema Dispatch
+
+For `content_mode = QUOTE_CONTENT`, use `QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md` as the authoritative output schema and validation contract. Keep one user-facing prompt per Storyboard scene, exact segment composition, audio-mode behavior, and immutable bridge references. `QUOTE_IMAGE` is an explicit `SKIPPED` case, not generated video output. For `UGC_AFFILIATE`, retain this contract unchanged.
