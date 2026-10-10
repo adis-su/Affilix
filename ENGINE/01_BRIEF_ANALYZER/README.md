@@ -10,15 +10,17 @@
 
 ## Purpose
 
-The Brief Analyzer converts an unstructured user brief and available product references into a structured production brief that downstream Affilix engines can process.
+The Brief Analyzer converts the selected mode's unstructured user brief and available references into a structured Stage 01 artifact that downstream Affilix engines can process.
 
-It is the first normalization layer between human input and the UGC production pipeline.
+For `UGC_AFFILIATE`, it remains the product and campaign normalization layer. For `QUOTE_CONTENT`, it normalizes an editorial brief without requiring a product. Mode selection and mode-specific required fields are defined by `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
 
 ## Input
 
-When the user provides a product link/reference, the analyzer must actively inspect and extract available product information from that reference before asking for additional product details. The link is an evidence source to investigate, not merely a field to acknowledge.
+When `content_mode` is `UGC_AFFILIATE` and the user provides a product link/reference, the analyzer must actively inspect and extract available product information from that reference before asking for additional product details. The link is an evidence source to investigate, not merely a field to acknowledge. When `content_mode` is `QUOTE_CONTENT`, do not require or invent a product reference.
 
-The user may provide:
+The user may provide mode-specific information, including an editorial topic/theme and audience context for `QUOTE_CONTENT`, or product information and campaign requirements for `UGC_AFFILIATE`.
+
+For `UGC_AFFILIATE`, the user may provide:
 
 - Product information
 - Creator requirements
@@ -43,7 +45,7 @@ Input may be incomplete, informal, mixed-language, or poorly structured.
 
 ## Product Reference Research
 
-For a supplied product URL or reference, Stage 01 should research the accessible source as deeply as reasonably possible and extract all materially useful product information available from it, including where present:
+This section applies only when `content_mode` is `UGC_AFFILIATE` or the user explicitly includes a product as part of the selected brief. For a supplied product URL or reference, Stage 01 should research the accessible source as deeply as reasonably possible and extract all materially useful product information available from it, including where present:
 
 - exact product name and brand
 - category and product type
@@ -62,11 +64,25 @@ Classify each finding as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN. P
 
 If the reference is inaccessible, incomplete, blocked, or ambiguous, record the limitation and continue with whatever evidence is available rather than pretending that the link was fully inspected.
 
-Stage 01 output should present a useful product research summary after processing, while keeping Campaign Intake fields hidden until Stage 02.
+For `UGC_AFFILIATE`, Stage 01 output should present a useful product research summary after processing. For `QUOTE_CONTENT`, Stage 01 output should present the normalized editorial brief and its provenance. In both modes, render only fields owned by the active stage.
 
 ## Output
 
-The analyzer should normalize the brief into:
+The analyzer must persist `content_mode` and normalize the brief according to the selected mode.
+
+For `QUOTE_CONTENT`, normalize at minimum:
+
+### Editorial Brief
+- Topic/theme: [DEFINE / UNKNOWN]
+- Audience context: [DEFINE / UNKNOWN]
+- Publishing objective: [DEFINE / UNKNOWN]
+- Intended emotional response: [DEFINE / UNKNOWN]
+- Intended takeaway: [DEFINE / UNKNOWN]
+- Source/provenance for explicit and inferred fields
+
+Do not require product identity, product facts, product claims, creator identity, or product proof in this branch unless the user explicitly requests product-centered content.
+
+For `UGC_AFFILIATE`, normalize the existing product-centered brief:
 
 ### Campaign
 - Campaign ID: [GENERATE OR DEFINE]
@@ -142,9 +158,13 @@ List only information that is genuinely required for the next production stage.
 12. Detect niche and product type when the product information supports a reliable classification.
 13. Keep niche classification separate from product claims. A classification is not evidence for a product attribute.
 
+## Editorial Brief Normalization
+
+For `QUOTE_CONTENT`, normalize editorial topic, audience context, publishing objective, intended emotional response, and takeaway. Preserve explicit versus inferred provenance. Do not convert a broad audience label into unsupported demographic facts, and do not frame harmful or abusive relationship dynamics as ordinary communication problems. Missing non-critical details remain `UNKNOWN`.
+
 ## Niche Detection
 
-Use this order:
+For `UGC_AFFILIATE`, use this order:
 
 1. Explicit category/product type in the user brief.
 2. Approved Product Library category/type.
