@@ -241,3 +241,21 @@ Baseline: PASS by contract review against current `SKILL.md`, `WORKFLOW.md`, sta
 ### R061 — Intermediate Reference Is Not a Generation Segment
 - A reference state is a frozen visual checkpoint, not a provider generation segment.
 - Expected: reference count and generation-segment count remain independently validated.
+
+
+## Quote Content Regression Extensions
+
+The following cases extend the canonical regression matrix. Detailed input/output protocols and severity rules live in `EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md`.
+
+| ID | Scenario | Expected Result |
+|---|---|---|
+| R062 | Quote Content static image routing | `QUOTE_IMAGE` skips Storyboard, Voice Script, and Video Prompt with `STATIC_IMAGE_FORMAT`; Visual Prompt and Production Output remain applicable |
+| R063 | Quote Content scene/prompt cardinality | Exactly one user-facing Video Prompt per Storyboard scene; one Visual Prompt per declared reference state |
+| R064 | Quote Content exact segment duration | Segment durations are each 4/6/8/10 seconds and sum exactly to the requested final duration; infeasible composition blocks |
+| R065 | Quote Content immutable bridge | Shared scene-boundary bridge has identical ID/version; edits stale dependent transitions and prompts |
+| R066 | Quote Content voice ownership | Video Prompt synchronizes canonical Voice Script without rewriting dialogue; no-spoken skip carries an explicit reason |
+| R067 | Quote Content output dependency guard | Stage 10 blocks missing, stale, invalid, or contradictory required artifacts with `QUOTE_CONTENT_OUTPUT_DEPENDENCY_BLOCKED` |
+| R068 | Quote Content attribution/non-fabrication | No invented lived experience, quote attribution, biography, or unsupported claims |
+| R069 | Quote Content versus UGC isolation | Editorial runs never fall back to UGC production output; existing UGC behavior remains intact |
+
+**Execution status:** specifications added; runtime execution NOT RUN. Do not infer PASS from documentation presence.
