@@ -18,8 +18,9 @@ Affilix supports two routed content modes: `UGC_AFFILIATE` for product-centered 
 10. [ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md](ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md) — Quote Content output assembly
 11. [ENGINE/NICHE_CONTEXT_LOADER/README.md](ENGINE/NICHE_CONTEXT_LOADER/README.md) — canonical product/editorial context
 12. [ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md](ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md) — UGC production output contract
-13. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
-14. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT Project interface boundary
+13. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — universal runtime regression coverage
+14. [EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md](EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md) — Quote Content production regression and hardening matrix
+15. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT Project interface boundary
 
 ## Repository Map
 
@@ -112,6 +113,6 @@ For niche or product-type changes, update the canonical context system before mo
 
 The latest repository architecture audit is recorded in REPOSITORY_ARCHITECTURE_AUDIT.md.
 
-Current status: **QUOTE CONTENT PRODUCTION CONTRACTS ADDED; REGRESSION HARDENING PENDING**
+Current status: **QUOTE CONTENT PRODUCTION CONTRACTS ADDED; REGRESSION SPECIFICATIONS ADDED**
 
-Quote Content now has mode-specific editorial context, strategy, hook, storyboard, visual prompt, conditional voice, video prompt, and production-output contracts. Campaign execution must still validate every stage and current dependency; repository contract presence does not imply generated assets or completed end-to-end tests. Phase 04 regression hardening remains pending.
+Quote Content now has mode-specific editorial context, strategy, hook, storyboard, visual prompt, conditional voice, video prompt, and production-output contracts. Campaign execution must still validate every stage and current dependency; repository contract presence does not imply generated assets or completed end-to-end tests. Phase 04 now includes an explicit Quote Content regression matrix. End-to-end runtime execution and observed PASS/FAIL evidence remain pending.
