@@ -37,10 +37,13 @@ scenes:
       rationale:
       states:
         - reference_id:
+          reference_version: v1
+          sequence_index:
           reference_role: START | INTERMEDIATE | END | BRIDGE
           source_beat_id:
-          critical_state: true | false
           state_summary:
+          continuity_invariants: []
+          critical_state: true | false
     action_graph:
       beats: []
 validation:
@@ -93,15 +96,28 @@ scenes:
           reference_after:
     reference_states:
       - reference_id:
+        reference_version: v1
         sequence_index:
-        role: START | INTERMEDIATE | END | BRIDGE
-        version:
-        state: {}
-        continuity_critical: []
+        reference_role: START | INTERMEDIATE | END | BRIDGE
+        source_beat_id:
+        state_summary:
+        continuity_invariants: []
+        critical_state: true | false
+    reference_trajectory:
+      ordered_reference_ids: []
+      transitions:
+        - transition_id:
+          from_reference_id:
+          to_reference_id:
+          source_beat_id:
+          causal_action:
+          allowed_changes: []
+          invariants: []
+          resulting_state:
     bridge_reference_id:
 ```
 
-Bridge invariants: Scene N END and Scene N+1 START must resolve to the same reference version. Changing a bridge creates a new version and invalidates dependent downstream transitions.
+Bridge invariants: Scene N END and Scene N+1 START must resolve to the exact same `reference_id` and `reference_version`; e.g. `R03@v1` at both ends, never `R03` and `R04` as independent states. The bridge is one canonical continuity anchor shared by both scenes. Every reference state must have an explicit ID, version, contiguous scene-local sequence index, role, valid source beat, frozen state summary, and continuity invariants. Every adjacent pair must have a transition record containing transition ID, source beat, causal action, allowed changes, invariants, and resulting state. Every `reference_after` must resolve to a state declared in its own scene. Validate that the ordered trajectory matches the declared Reference Plan and reject dangling IDs, invalid source beats, duplicate sequence indices, missing transitions, or mismatched bridge ID/version pairs. Changing a bridge creates a new version and invalidates dependent transitions and downstream artifacts.
 
 Stage completion follows `PROCESS → VALIDATE → MARK COMPLETED → WAIT FOR /next`. `/next` is progression only, not approval.
 
