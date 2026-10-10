@@ -83,9 +83,17 @@ A conditional skip is not a failure or approval gate. Record the canonical stage
 
 ## Implementation Readiness
 
-Mode selection and state routing are architectural foundations, not proof that every Quote Content engine is already implemented.
+Mode selection and state routing are architectural foundations, not proof that every Quote Content engine is already implemented. Current readiness after Phase 01 is:
 
-Until the Quote Content strategy and production contracts are completed, downstream Quote Content stages must be reported as `BLOCKED` with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` rather than silently falling back to product-centered UGC logic or claiming a complete production output.
+| Stage | Quote Content readiness | Runtime behavior until implemented |
+|---|---|---|
+| 01 Brief & Product | Editorial brief normalization contract added | May execute using the mode-aware Brief Analyzer and entry contract |
+| 02 Niche & Context | Editorial context adapter not yet implemented | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`; do not pass an editorial-only brief to a product-only context loader |
+| 03 Creator | Existing creator library may be used when a creator is explicitly required; optional otherwise | If not required, mark `SKIPPED`; if required and resolvable through the current creator contract, execute; otherwise block |
+| 04 Content Strategy | Not implemented for Quote Content | Block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` |
+| 05–10 | Mode-specific strategy/production behavior not implemented | Block the next required stage with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`; do not fall back to UGC behavior |
+
+Until the Quote Content context, strategy, and production contracts are implemented, unsupported downstream Quote Content stages must be reported as `BLOCKED` rather than silently falling back to product-centered UGC logic or claiming a complete production output.
 
 As phases 02 and 03 are implemented, update this contract and the relevant engine contracts together. Do not create a duplicate workflow registry.
 
