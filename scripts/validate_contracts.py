@@ -61,7 +61,7 @@ brief = read("ENGINE/01_BRIEF_ANALYZER/README.md")
 voice = read("ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md")
 
 # Canonical registry identity and the non-numeric engine-to-stage mappings.
-stage_rows = re.findall(r"^\|\s*(\d{2})\s*\|", workflow, flags=re.MULTILINE)
+stage_rows = [match.group(1) for match in re.finditer(r"^\|\s*(\d{2})\s*\|[^\n]*ENGINE/", workflow, flags=re.MULTILINE)]
 check(stage_rows[:10] == [f"{i:02d}" for i in range(1, 11)],
       "canonical workflow registry lists stages 01–10 in order")
 check("08 | Voice Script" in workflow and "ENGINE/08_VOICE_SCRIPT_ENGINE/" in workflow,
@@ -94,7 +94,7 @@ check("one image prompt for each Storyboard-declared reference state" in visual,
       "Visual Prompt requires one image prompt per declared reference state")
 check("video_prompt_count = storyboard_scene_count" in video,
       "Video Prompt count equals Storyboard scene count")
-check("immutable" in storyboard.lower() and "same reference ID and version" in storyboard,
+check("bridge" in storyboard.lower() and "reference_version" in storyboard and "exact same" in storyboard.lower(),
       "Storyboard protects immutable bridge references")
 
 # Exact duration and honest regression reporting.
@@ -132,7 +132,7 @@ check("source_freshness: PASS | BLOCKED" in video and "dependency_alignment: PAS
       "Video Prompt blocks stale or mismatched Storyboard, Visual Prompt, and Voice Script sources")
 check("QCR-024" in matrix and "QCR-025" in matrix and "QCR-026" in matrix,
       "Regression matrix includes timing, dialogue-anchor, and stale-source integration cases")
-check("requested video duration" in brief.lower() and "NOT_APPLICABLE" in brief,
+check("final video duration" in brief.lower() and "NOT_APPLICABLE" in brief,
       "Brief Analyzer normalizes video duration and static-image not-applicable state")
 
 print(f"\nStatic contract checks: {checks - len(errors)}/{checks} passed.")
