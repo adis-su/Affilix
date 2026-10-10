@@ -328,3 +328,22 @@ A bridge reference is the shared, immutable boundary state. Reference states and
 ## Quote Content Mode Dispatch
 
 When `content_mode = QUOTE_CONTENT`, load `QUOTE_CONTENT_STORYBOARD_CONTRACT.md` as the mode-specific authority. `QUOTE_IMAGE` skips Stage 06 with `STATIC_IMAGE_FORMAT`; the four registered Quote Content video formats use the editorial action/story mechanism in that contract. Do not apply product-demo or product-proof requirements to an editorial-only story. The universal reference graph, immutable bridge, action causality, and exact-duration rules remain in force.
+
+## Mandatory Reference Graph Validation and Artifact Identity
+
+For every completed video storyboard, emit a stable non-empty `metadata.storyboard_id` and explicit `metadata.storyboard_version` (new artifact starts at `v1`; every material revision increments the version). `source_commit_sha` identifies repository source and is not a substitute for storyboard artifact identity.
+
+Every declared reference state must include `reference_id`, `reference_version`, `source_scene_id`, `source_beat_id`, `sequence_index`, `reference_role`, `state_summary`, and `continuity_invariants`. Resolve scene and beat IDs against the exact storyboard artifact. `source_scene_id` must resolve to the canonical owning scene; a shared bridge is one canonical ID/version with explicit boundary mapping, never two independently generated states.
+
+Before marking Stage 06 completed, validate all of the following:
+- Each scene's ordered trajectory exactly matches its Reference Plan.
+- Sequence indices are unique, contiguous, and start at 1 within each scene.
+- Every source beat exists in the owning scene and causally establishes the stated frozen state.
+- Each scene with n ordered states has exactly n−1 transitions, one per adjacent pair, with no missing, duplicate, reordered, or dangling pair.
+- Every transition includes ID, source beat, causal action, allowed changes, invariants, and resulting state.
+- Every beat's `reference_after` resolves to a declared reference ID and version in the active storyboard artifact.
+- Adjacent scene boundaries reuse the exact same bridge reference ID and version.
+- All storyboard artifact and upstream provenance fields are explicit.
+
+If a missing field can be derived deterministically from existing beats without inventing creative meaning, repair it in Stage 06 and rerun validation. Otherwise return `NEEDS_REFINEMENT` or `BLOCKED` as appropriate. Never defer reference-graph construction to Stage 07.
+
