@@ -9,7 +9,9 @@ Affilix supports two routed content modes: `UGC_AFFILIATE` for product-centered 
 1. [SKILL.md](SKILL.md) — runtime entry point and governing behavior
 2. [ENGINE/WORKFLOW.md](ENGINE/WORKFLOW.md) — canonical stage registry, dependency, invalidation, reclassification, and revision contract
 3. [ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md](ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md) — content mode selection, mode-specific intake, conditional stage dependencies, and implementation blockers
-4. [ENGINE/NICHE_CONTEXT_LOADER/README.md](ENGINE/NICHE_CONTEXT_LOADER/README.md) — canonical runtime context
+4. [ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md](ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md) — editorial pillars, formats, strategy selection, and validation
+5. [ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md](ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md) — editorial hook families and safety rules
+6. [ENGINE/NICHE_CONTEXT_LOADER/README.md](ENGINE/NICHE_CONTEXT_LOADER/README.md) — canonical runtime context
 5. [ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md](ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md) — final production output contract
 6. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
 7. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT Project interface boundary
@@ -21,6 +23,8 @@ Affilix supports two routed content modes: `UGC_AFFILIATE` for product-centered 
 | SKILL.md | Runtime entry point and top-level execution rules |
 | ENGINE/ | Universal production engines and runtime contracts |
 | ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md | Canonical mode selection and mode-specific stage routing |
+| ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md | Editorial pillars, formats, and Quote Content strategy |
+| ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md | Editorial hook generation and validation |
 | ENGINE/01_BRIEF_ANALYZER/ | Normalize and classify incoming briefs |
 | ENGINE/NICHE_CONTEXT_LOADER/ | Resolve one canonical niche/product context per run |
 | ENGINE/02_CREATOR_SELECTOR/ | Select and load creator identity |
