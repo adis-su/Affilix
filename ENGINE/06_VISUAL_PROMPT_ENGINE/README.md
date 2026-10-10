@@ -156,7 +156,7 @@ CREATOR
 [canonical identity and visible appearance]
 
 WARDROBE
-[visible outfit and hijab]
+Sesuai referensi gambar yang diupload user.
 
 PRODUCT
 [visible product identity, state, and appearance]
@@ -165,7 +165,7 @@ POSE & EXPRESSION
 [one deterministic visible pose, gesture, gaze, and expression]
 
 ENVIRONMENT
-[visible setting, background, and supported props]
+Sesuai referensi gambar yang diupload user.
 
 COMPOSITION
 [shot size, framing, subject placement, product placement, negative space]
@@ -300,7 +300,7 @@ Allowed visual variation may include:
 - Lighting when explicitly specified and continuity-validated
 - Outfit, hijab color/fabric/drape, or makeup intensity only when an explicit upstream selection or user instruction authorizes that change
 
-An already-approved wardrobe is inherited as a locked configuration by default. Do not independently select a new outfit, hijab color, fabric, drape, accessories, or makeup merely because a new reference state is being generated.
+The final prompt's `WARDROBE` section must contain exactly `Sesuai referensi gambar yang diupload user.` with no additional wardrobe description. This is a fixed literal string, not a paraphrasable instruction. The uploaded user reference image is the visual authority; do not independently select a new outfit, hijab color, fabric, drape, accessories, or makeup.
 
 Audience context must never change the creator's canonical age, identity, or physical characteristics.
 
@@ -360,7 +360,7 @@ Describe only visible, supported scene elements.
 
 ### Inheritance rule
 
-If the environment has already been selected or approved, inherit that exact configuration/reference. Do not recreate the environment from a generic description or use it as loose inspiration. Do not choose a new room, layout, furniture, palette, props, or location. When an approved background reference is supplied, it is the visual authority for the visible background attributes. If a detail is not established by the configuration or visible reference, preserve it as UNKNOWN rather than inventing it. Any explicit environment change must be scoped, authorized, and checked against all dependent reference states.
+The final prompt's `ENVIRONMENT` section must contain exactly `Sesuai referensi gambar yang diupload user.` with no additional environment description. This is a fixed literal string, not a paraphrasable instruction. The uploaded user reference image is the visual authority; do not recreate or redesign the environment or choose a new room, layout, furniture, palette, props, or location. If no uploaded reference image is available, preserve the literal output but flag the missing reference as unresolved; never claim to have inspected a reference that is unavailable.
 
 Do not invent:
 
@@ -459,7 +459,7 @@ Continuity in an image prompt is **visual continuity**, not temporal narration.
 
 ### Locked configuration inheritance
 
-Wardrobe and environment are not re-authored independently for every image prompt. When selected upstream or explicitly set by the user, they are inherited from the approved configuration/reference. The prompt may identify the inherited configuration, but must not invent a fresh description or select a replacement. Reference-specific changes should be limited to the storyboard-defined visible state, such as pose, expression, gaze, or authorized framing. If required configuration is missing, mark the attribute UNKNOWN and request refinement/block only when the missing information is necessary to produce a valid frame. Never silently replace missing configuration with invented details.
+Wardrobe and environment are not re-authored independently for every image prompt. Their final prompt sections must each contain exactly `Sesuai referensi gambar yang diupload user.` with no added description. Treat the uploaded image as the visual authority and never select a replacement. If the image is unavailable, retain the literal output while marking the missing reference unresolved; do not falsely claim reference inspection or invent details. Reference-specific changes remain limited to authorized storyboard states.
 
 Use continuity to preserve:
 
