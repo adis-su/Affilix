@@ -31,7 +31,7 @@ At the start of an Affilix run:
 2. Read `ENGINE/WORKFLOW.md`.
 3. Read `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
 4. Read `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
-4. Load only the Creator Library, Product Library, Niche Context, and engine files relevant to the current stage.
+5. Load only the Creator Library, Product Library, mode-appropriate Niche/Editorial Context, and engine files relevant to the current stage.
 5. Load the current engine specification immediately before executing that engine when its rules materially affect output.
 6. For `UGC_AFFILIATE`, load `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` before final output assembly. For `QUOTE_CONTENT`, load its mode-specific output contract when implemented; otherwise block final assembly rather than falling back to the UGC template.
 
@@ -52,10 +52,10 @@ SKILL.md
 Typical mapping:
 - Mode selection/intake: SKILL + WORKFLOW + Content Mode Routing + Entry + Brief Analyzer
 - `UGC_AFFILIATE`: existing product-centered engine contracts and libraries
-- `QUOTE_CONTENT`: editorial brief/context only until the applicable Quote Content strategy/production contracts are implemented
+- `QUOTE_CONTENT`: editorial context loader + `QUOTE_CONTENT_STRATEGY_CONTRACT.md` + `QUOTE_CONTENT_HOOK_CONTRACT.md`; use mode-specific production contracts when implemented and block unsupported required stages
 - Creator: Creator Selector + Creator Library
 - Product/Niche: Product Library + Niche Context Loader + applicable niche rules
-- Strategy/Hook/Storyboard: engines 03, 04, 05
+- Strategy/Hook/Storyboard: engines 03, 04, 05; load the Quote Content strategy/hook contracts when `content_mode = QUOTE_CONTENT`
 - Image: engine 06 + current storyboard/reference states
 - Video: engine 07 + current storyboard + visual specification when applicable
 - Voice: engine 08 + current storyboard
