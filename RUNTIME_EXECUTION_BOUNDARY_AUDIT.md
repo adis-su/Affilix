@@ -50,3 +50,28 @@ A genuine end-to-end orchestration test requires an executable runtime/state-tra
 - Live `/next` synchronization: **NOT RUN**
 - Live revision invalidation: **NOT RUN**
 - External image/video provider execution: **NOT RUN**
+
+
+## Follow-up implementation — mode-aware orchestration model
+
+After the initial audit, added an executable in-memory transition model and regression tests:
+
+- `scripts/affilix_runtime_harness.py` models stage completion, explicit `/next`, prerequisite checks, repository snapshot changes, artifact commit matching, revision validation, and dependency invalidation.
+- The model now resolves conditional stage plans for `UGC_AFFILIATE` and `QUOTE_CONTENT`, including `QUOTE_IMAGE`, creator-optional routing, audio-mode voice skips, and external-dialogue requirements.
+- A content-mode change is rejected in-place; a separate isolated run must be created to prevent cross-mode artifact reuse.
+- `tests/test_affilix_runtime_harness.py` now covers the routing and isolation behaviors in addition to progression and revision cases.
+- GitHub Actions run [38056239954](https://github.com/adis-su/Affilix/actions/runs/38056239954) completed successfully, including static contract validation, runtime contract validation, runtime harness tests, and Stage 06–10 Quote Content artifact integration tests.
+
+## Remaining boundary
+
+The harness is a deterministic executable model for regression testing. It is **not** a production state store, does not receive real ChatGPT commands, does not load GitHub files itself, and does not prove that the live conversational Skill calls these transitions. Repository synchronization is represented by injected resolved-SHA/load-success inputs. External image/video providers are not invoked.
+
+## Updated acceptance status
+
+- Repository contracts present: **PASS**
+- Runtime transition model tests: **PASS**
+- Mode-aware conditional routing tests: **PASS**
+- Cross-mode isolation tests: **PASS**
+- Quote Content Stage 06–10 artifact integration tests: **PASS**
+- Live ChatGPT Skill command integration: **NOT VERIFIED**
+- External image/video provider execution: **NOT RUN**
