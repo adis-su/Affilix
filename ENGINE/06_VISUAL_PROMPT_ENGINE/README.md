@@ -300,7 +300,7 @@ Allowed visual variation may include:
 - Lighting when explicitly specified and continuity-validated
 - Outfit, hijab color/fabric/drape, or makeup intensity only when an explicit upstream selection or user instruction authorizes that change
 
-The final prompt's `WARDROBE` section must contain exactly `Sesuai referensi gambar yang diupload user.` with no additional wardrobe description. This is a fixed literal string, not a paraphrasable instruction. The uploaded user reference image is the visual authority; do not independently select a new outfit, hijab color, fabric, drape, accessories, or makeup.
+The final prompt's `WARDROBE` section must contain exactly `Sesuai referensi gambar yang diupload user.` with no additional wardrobe description. This fixed literal refers to the image the user uploads separately to the external AI image-generation provider, not to an image stored in Affilix or GitHub. Affilix emits the instruction but does not host, inspect, or verify the provider-side upload. Do not independently select a new outfit, hijab color, fabric, drape, accessories, or makeup.
 
 Audience context must never change the creator's canonical age, identity, or physical characteristics.
 
@@ -360,7 +360,7 @@ Describe only visible, supported scene elements.
 
 ### Inheritance rule
 
-The final prompt's `ENVIRONMENT` section must contain exactly `Sesuai referensi gambar yang diupload user.` with no additional environment description. This is a fixed literal string, not a paraphrasable instruction. The uploaded user reference image is the visual authority; do not recreate or redesign the environment or choose a new room, layout, furniture, palette, props, or location. If no uploaded reference image is available, preserve the literal output but flag the missing reference as unresolved; never claim to have inspected a reference that is unavailable.
+The final prompt's `ENVIRONMENT` section must contain exactly `Sesuai referensi gambar yang diupload user.` with no additional environment description. This fixed literal refers to the image the user uploads separately to the external AI image-generation provider, not to an image stored in Affilix or GitHub. The user supplies that image through the provider's own reference-image interface; Affilix does not access or verify the upload. Do not recreate or redesign the environment or choose a new room, layout, furniture, palette, props, or location.
 
 Do not invent:
 
@@ -459,7 +459,7 @@ Continuity in an image prompt is **visual continuity**, not temporal narration.
 
 ### Locked configuration inheritance
 
-Wardrobe and environment are not re-authored independently for every image prompt. Their final prompt sections must each contain exactly `Sesuai referensi gambar yang diupload user.` with no added description. Treat the uploaded image as the visual authority and never select a replacement. If the image is unavailable, retain the literal output while marking the missing reference unresolved; do not falsely claim reference inspection or invent details. Reference-specific changes remain limited to authorized storyboard states.
+Wardrobe and environment are not re-authored independently for every image prompt. Their final prompt sections must each contain exactly `Sesuai referensi gambar yang diupload user.` with no added description. This refers to the reference image the user uploads separately to the external AI image-generation provider. Affilix only writes the instruction; it does not access, store, or verify that provider-side image. Never select a replacement. Reference-specific changes remain limited to authorized storyboard states.
 
 Use continuity to preserve:
 
