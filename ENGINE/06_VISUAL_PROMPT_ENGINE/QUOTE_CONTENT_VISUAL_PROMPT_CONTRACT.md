@@ -18,6 +18,8 @@ Every image prompt represents one frozen visual state, not a motion sequence. Pr
 
 Visual direction may define composition, typography style, contrast, palette, lighting, environment, camera/framing, and emotional tone. It must not invent a creator identity or imply that a fictional scene is a real user's personal experience.
 
+For all Quote Content video formats, use `DIRECT_TO_CAMERA_TALKING_HEAD` by default. Each reference state should show the same creator addressing the camera in a vertical 9:16 medium close-up or close-up, with lens-level gaze, a relevant uncluttered background, and a specific expression/posture/gesture state tied to the storyboard beat. Across reference states, vary only what the action causes: posture, hand gesture, gaze break/return, and restrained expression. Keep creator identity, wardrobe, framing logic, lighting, and environment consistent. Do not substitute B-roll, cinematic scenery, a second character, or a montage for the talking-head performance unless explicitly requested by the user.
+
 ## Required Prompt Structure
 
 Each user-facing prompt is one coherent Markdown code block using these sections:
@@ -45,6 +47,8 @@ FINAL IMAGE GENERATION INSTRUCTION
 For Quote Content, use `PRODUCT: NOT APPLICABLE` unless product-centered content was explicitly requested. Use `CREATOR: NOT REQUIRED` when no creator is selected. Do not invent placeholder product facts.
 
 For `QUOTE_IMAGE`, ensure the visual supports the primary statement, maintains legible hierarchy, sufficient contrast and negative space, and avoids fake quote marks/attribution. The image itself is a frozen layout, not a sequence.
+
+For video-format reference prompts, explicitly specify `CAMERA: vertical 9:16, medium close-up/close-up, lens-level, stable framing`; `POSE & EXPRESSION` must identify the exact beat-specific delivery state, and `CONTINUITY` must lock creator identity, wardrobe, location, framing, and lighting across references.
 
 ## Reference-State Invariants for Video Formats
 
