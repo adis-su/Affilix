@@ -40,6 +40,10 @@ Phase 04 verifies that Quote Content mode contracts, the canonical ten-stage wor
 | QCR-016 | Unsupported format | Unknown format blocks with `QUOTE_CONTENT_FORMAT_UNSUPPORTED`; no closest-format substitution | Major | NOT RUN |
 | QCR-017 | Canonical stage registry | IDs remain 01–10; engine folder prefixes never determine workflow order; no QC, approval, or final-package stage appears | Critical | NOT RUN |
 | QCR-018 | UGC regression guard | Existing UGC product evidence, creator identity, product claims, action choreography, duration, and output behavior remain unchanged | Critical | NOT RUN |
+| QCR-019 | Quote Content intake fields | Intake offers platform, objective, topic/audience context, optional format/pillar, duration, and audio preference; no content quantity or CTA input field is requested | Critical | NOT RUN |
+| QCR-020 | Supported Quote Content durations | Video intake accepts exactly 18, 28, or 30 seconds; static `QUOTE_IMAGE` uses `NOT_APPLICABLE`; other video durations are blocked rather than silently substituted | Critical | NOT RUN |
+| QCR-021 | Spoken word budget by duration | Spoken script targets 35–42 words at 18 seconds, 55–65 at 28 seconds, and 60–70 at 30 seconds; all speaker dialogue is counted together and timing is validated | Critical | NOT RUN |
+| QCR-022 | Text-only duration behavior | Text-only output does not invent spoken dialogue or enforce a spoken-word budget; on-screen text legibility and reading time are validated | Major | NOT RUN |
 
 ## Execution Protocol
 
