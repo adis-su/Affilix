@@ -186,7 +186,7 @@ artifacts:
 
 ## Stage Orchestration
 
-Mode-specific stage applicability and explicit implementation blockers are governed by `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`. Do not run a product-centered engine for `QUOTE_CONTENT` as an implicit fallback. Stages 01 through 06 execute according to the selected mode's dependencies and sequential progression rules. Stage 01 establishes campaign requirements, including `campaign.audio_mode`, before downstream dependency planning. After Stage 06, downstream branches execute according to deliverable requirements:
+Mode-specific stage applicability and blockers are governed by `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`. Do not run a product-centered engine for `QUOTE_CONTENT` as an implicit fallback. Stages 01–06 execute according to the selected mode's dependencies and sequential progression rules. Stage 01 establishes `campaign.audio_mode` before downstream dependency planning. For `QUOTE_CONTENT`, load the mode-specific Stage 06–10 contracts referenced in the routing contract and dispatch list in `ENGINE/REPOSITORY_RUNTIME/README.md`. `QUOTE_IMAGE` skips Stage 06, 08, and 09 with `STATIC_IMAGE_FORMAT`; video formats require Stage 06 and 09, while Stage 08 is conditional on audio/dialogue requirements. Stage 10 must use `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`. After Stage 06 or an explicit permitted skip, downstream branches execute according to deliverable requirements:
 
 - Stage 07 Visual Prompt
 - Stage 08 Voice Script when spoken dialogue is required, including external dialogue under `NO_SPOKEN_VOICE`; otherwise Stage 08 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
@@ -204,10 +204,10 @@ These are dependency-driven stages, not approval branches.
 - Content Strategy: Brief & Product + Niche Context + Creator COMPLETED.
 - Hook: Content Strategy COMPLETED.
 - Storyboard: Hook + all required upstream state COMPLETED.
-- Visual Prompt: Storyboard COMPLETED.
-- Voice Script (Stage 08): Storyboard COMPLETED when Brief & Product `campaign.audio_mode` is `SPOKEN_ON_CAMERA` or `VOICE_OVER`; otherwise Stage 08 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`.
-- Video Prompt (Stage 09): Storyboard COMPLETED + current Visual Prompt COMPLETED + current Voice Script COMPLETED when spoken dialogue exists, including external dialogue under `NO_SPOKEN_VOICE`; otherwise no Voice Script dependency + provider capability profile.
-- Production Output: all required downstream specifications current and non-STALE.
+- Visual Prompt: for UGC/video formats, Storyboard COMPLETED; for `QUOTE_CONTENT` + `QUOTE_IMAGE`, validated editorial strategy/context and any required Hook state, with no Storyboard dependency. Video formats require current Storyboard reference states.
+- Voice Script (Stage 08): Storyboard COMPLETED for video/story formats when dialogue is required; `QUOTE_IMAGE` skips with `STATIC_IMAGE_FORMAT`; other no-spoken outputs may skip only with the applicable mode-specific reason. UGC audio-mode rules remain unchanged.
+- Video Prompt (Stage 09): video/story format requires Storyboard COMPLETED + current Visual Prompt COMPLETED + current Voice Script COMPLETED when spoken/external dialogue is required + provider capability profile. `QUOTE_IMAGE` skips with `STATIC_IMAGE_FORMAT`.
+- Production Output: UGC uses the existing UGC template; Quote Content uses `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`. All required downstream specifications must be current and non-STALE.
 
 There is no QC prerequisite, Final UGC Package prerequisite, or approval prerequisite.
 
