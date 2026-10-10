@@ -53,7 +53,7 @@ Stage 03 Creator is optional. If the selected format requires a visible on-scree
 
 ### Subpillar Selection
 
-The canonical 45-item catalogue and runtime rules live in `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md`. Every `QUOTE_CONTENT` strategy must select exactly one primary subpillar beneath its primary pillar, recommend one automatically when the user has not chosen, derive a concrete content angle, and pass the angle through the registry's editorial safety rules. Store subpillar ID/name/rationale, content angle, and safety validation in the Stage 04 artifact. Changes to pillar, subpillar, or angle invalidate dependent downstream artifacts.
+The canonical subpillar catalogue and exploration rules live in `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md`. Stage 04 must display exactly 15 selectable subpillar candidates for the active pillar and expose a `Ganti Subpilar` action that produces 15 fresh, semantically distinct alternatives per activation. The user explicitly selects one subpillar. Track all batches and selections per pillar within the run to prevent repeated or cosmetic variants. Generate more valid candidates when the finite catalogue cannot provide a fresh batch; never duplicate or pad. Apply editorial safety validation to every batch and to the final content angle. Store subpillar ID/name/rationale, batch ID/number/history, content angle, and safety validation in the Stage 04 artifact. A refresh alone does not invalidate downstream artifacts; changing the selected pillar, subpillar, or angle does.
 
 ### Editorial Mix
 
