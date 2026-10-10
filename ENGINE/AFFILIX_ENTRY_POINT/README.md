@@ -78,7 +78,7 @@ Optional constraints may be collected separately when materially relevant. The s
 
 ### User-Facing Stage Isolation
 
-Stage 01 user-facing output begins with Product Intake, then collects the required campaign requirements before Stage 01 is completed. There is no separate Campaign Intake stage. A generic runtime-state renderer must be stage-aware and must never dump the full campaign state during Stage 01.
+Stage 01 user-facing output begins with the Content Mode Selector only when mode is not explicit. `UGC_AFFILIATE` then begins with Product Intake and collects required campaign requirements before Stage 01 is completed. `QUOTE_CONTENT` begins with its editorial brief intake and does not require product intake. There is no separate Campaign Intake stage. A generic runtime-state renderer must be stage-aware and must never dump the full campaign state during Stage 01.
 
 Initialize isolated state:
 
@@ -123,14 +123,11 @@ Apply the mode-specific intake and validation rules from `ENGINE/CONTENT_MODE_RO
 
 For `UGC_AFFILIATE`:
 
-1. Normalize through `ENGINE/01_BRIEF_ANALYZER/README.md`.
-2. Actively inspect the supplied product link/reference and extract all accessible, materially useful product information.
-3. Treat the product link as evidence to research, while distinguishing sourced facts from unsupported marketing claims.
-4. Load and validate Product Library facts and reconcile them with the supplied reference.
-5. Preserve genuinely unavailable fields as UNKNOWN.
-6. Present the resulting product research summary as the Stage 01 output.
-7. Validate Product Intake and mark Stage 01 COMPLETED.
-8. Wait for `/next`.
+1. Normalize through `ENGINE/01_BRIEF_ANALYZER/README.md` using the selected content mode.
+2. For `UGC_AFFILIATE`, inspect the supplied product link/reference, reconcile accessible product facts with Product Library records, and preserve genuinely unavailable fields as UNKNOWN.
+3. For `QUOTE_CONTENT`, normalize the editorial brief and its provenance without requiring a product reference.
+4. Present the Stage 01 output scoped to the active mode.
+5. Validate the mode-specific required fields, mark Stage 01 COMPLETED, and wait for `/next`.
 
 ## 5. Stage 01 — Campaign Requirements
 
@@ -257,7 +254,7 @@ The selected mode and any external dialogue layer must be persisted in campaign 
 
 ### Validation
 
-Stage 01 must have:
+For `UGC_AFFILIATE`, Stage 01 must have:
 
 - one supported platform
 - one exact requested duration, either the default 18 seconds or an explicit Custom value
@@ -266,7 +263,7 @@ Stage 01 must have:
 - one requested creator selected from the current repository Creator Library
 - one resolved Audio / Voice Mode and dialogue-layer state
 
-Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
+For `QUOTE_CONTENT`, validate the editorial brief fields and only those campaign controls required by the selected editorial format. Product identity and creator identity are not mandatory by default. Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
 
 After validation, mark Stage 01 COMPLETED and wait for `/next`.
 
