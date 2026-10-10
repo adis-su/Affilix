@@ -56,11 +56,23 @@ Use causal progression: `TRIGGER → INTENTION → ACTION → RESULTING STATE`. 
 
 ## Reference Graph
 
-Every video scene declares an ordered Reference Plan and Reference Trajectory. Use as many meaningful states as action complexity warrants. High-complexity scenes should target six references when justified; this is not a quota and never changes scene count.
+Every video scene MUST declare a complete, ordered Reference Plan and Reference Trajectory before Stage 06 can be marked `COMPLETED`. Do not leave reference metadata for Stage 07 to infer or invent.
 
-A bridge reference is immutable. If Scene N END and Scene N+1 START use the same reference, both must point to the same reference ID and version. A changed bridge version invalidates every dependent transition and downstream prompt.
+Every declared reference state MUST include:
+- `reference_id`: unique, stable ID within the active storyboard run (for example `R01`).
+- `reference_version`: explicit version, initialized to `v1` for a new state.
+- `sequence_index`: unique, contiguous order within the scene, starting at 1.
+- `reference_role`: `START`, `INTERMEDIATE`, `END`, or `BRIDGE`.
+- `source_beat_id`: an existing beat ID from the same scene that causes or establishes this state.
+- `state_summary`: one concrete frozen visual state, not a motion sequence.
+- `continuity_invariants`: the identity, framing, wardrobe/environment inheritance, and other attributes that must remain unchanged.
+- `critical_state`: whether the state is required to preserve a material action or continuity change.
 
-Reference states are not generation segments. One scene can have multiple reference states and multiple technical generation segments, but it remains one scene.
+Every scene MUST also include `reference_trajectory.ordered_reference_ids` in the same order as its Reference Plan, plus explicit transition records connecting each adjacent state. Each transition records a `transition_id`, `from_reference_id`, `to_reference_id`, `source_beat_id`, the causal action, allowed changes, invariants, and resulting state. Every `action_graph.beats[].reference_after` must resolve to a declared reference in that scene. No dangling IDs, duplicate sequence indices, missing beat references, or unordered trajectories are allowed.
+
+A shared scene-boundary bridge MUST resolve to the exact same `reference_id` and `reference_version` at the end of Scene N and start of Scene N+1. Do not duplicate or independently regenerate the bridge state. Revising a bridge version invalidates all transitions that touch it and all dependent downstream artifacts.
+
+Reference states are frozen visual checkpoints, not generation segments. One scene can have multiple reference states and multiple technical generation segments, but it remains one scene. Reference count is driven by meaningful action complexity, not a fixed quota; high-complexity scenes may target six states when justified.
 
 ## Duration
 
@@ -104,15 +116,29 @@ scenes:
           text_or_dialogue_anchor:
           reference_after:
     reference_plan:
+      reference_density: LOW | MEDIUM | HIGH | VERY_HIGH
       target_reference_count:
       rationale:
       states:
         - reference_id:
+          sequence_index:
           reference_role: START | INTERMEDIATE | END | BRIDGE
           reference_version:
           source_beat_id:
           state_summary:
-    transitions: []
+          critical_state: true | false
+          continuity_invariants: []
+    reference_trajectory:
+      ordered_reference_ids: []
+      transitions:
+        - transition_id:
+          from_reference_id:
+          to_reference_id:
+          source_beat_id:
+          causal_action:
+          allowed_changes: []
+          invariants: []
+          resulting_state:
     continuity_invariants: []
 validation:
   format_mechanism: PASS | NEEDS_REFINEMENT | BLOCKED
@@ -128,6 +154,6 @@ source_artifacts: []
 
 ## Validation and Invalidation
 
-Complete only when the format mechanism, causal story progression, sensitivity, timing, and reference graph pass. Mark `NEEDS_REFINEMENT` for a feasible but underspecified story; mark `BLOCKED` for unsupported or unsafe framing, impossible continuity, missing critical dependencies, or infeasible exact duration.
+Complete only when the format mechanism, causal story progression, sensitivity, timing, and reference graph pass. Reference-graph validation MUST verify that every reference has a non-empty ID/version/source beat/state summary, sequence indices are contiguous, every source beat exists, the ordered trajectory matches the Reference Plan, each adjacent pair has a transition, every beat's `reference_after` resolves, and bridge ID/version pairs match across scene boundaries. If the story is feasible but these fields can be generated from existing storyboard beats, generate them during Stage 06 before validation. Do not defer metadata creation to Stage 07. Mark `NEEDS_REFINEMENT` for a feasible but underspecified story; mark `BLOCKED` only when a required state/transition cannot be established without inventing creative facts, continuity is impossible, a critical dependency is missing, or exact duration is infeasible.
 
 Changes to brief, editorial context, strategy, hook, creator identity when used, duration, or a reference state invalidate affected storyboard elements and all dependent downstream artifacts. After validation, mark the stage complete and wait for `/next`.
