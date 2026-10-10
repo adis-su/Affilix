@@ -112,7 +112,7 @@ check(all(f"QCR-{i:03d}" in matrix for i in range(1, 23)),
 # Quote Content intake and duration-bound script rules.
 check("20 seconds" in entry and "20 seconds" in routing and "20 seconds" in voice,
       "Quote Content fixed 20-second duration is documented across intake, routing, and voice contract")
-check("10 + 10" in entry and "10 + 10" in voice,
+check("Segment 1 = 10 seconds" in entry and "10 + 10" in voice,
       "Quote Content uses exactly two 10-second generation segments")
 check("content quantity" in entry.lower() and "user-selected CTA" in entry,
       "Quote Content intake excludes content quantity and user-selected CTA fields")
