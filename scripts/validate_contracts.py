@@ -70,7 +70,7 @@ check("engine directory prefixes" in skill.lower() and "must not" in skill.lower
 # Mode routing and the static-image branch.
 check("UGC_AFFILIATE" in routing and "QUOTE_CONTENT" in routing,
       "both supported content modes are registered")
-check("Never fall back to UGC template" in routing,
+check("never fall back to UGC template" in routing.lower(),
       "Quote Content cannot silently fall back to the UGC output template")
 for relative, content in [
     ("Storyboard", storyboard),
