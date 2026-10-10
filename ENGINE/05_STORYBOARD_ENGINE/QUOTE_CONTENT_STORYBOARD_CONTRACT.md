@@ -38,6 +38,23 @@ Preserve the selected format's mechanism. A relationship or reflective story mus
 
 These are story functions, not mandatory scene counts. The storyboard determines scene count from the requested duration and creative need.
 
+## Quote Content Narrative and Performance Beats
+
+For direct-to-camera quote videos, plan the spoken thought as a coherent progression rather than a stack of unrelated inspirational sentences. Use these narrative functions when they fit the selected format and message:
+
+1. **HOOK / RECOGNITION** — continue the selected Stage 05 hook and establish the relatable thought or tension.
+2. **DEVELOPMENT** — make the situation, contradiction, or emotional reality specific enough to feel recognizable.
+3. **CORE INSIGHT** — deliver the central quote or point with clear semantic emphasis.
+4. **PAYOFF / RESONANCE** — land a grounded reframe, consequence, or memorable final thought.
+
+These are narrative functions, not mandatory beat or scene counts. One beat may serve more than one function, and the functions may be combined when the dialogue is short. Never pad the script just to fill a template. Preserve the selected format mechanism and the actual meaning of the Stage 05 hook.
+
+For each dialogue-bearing beat, storyboard the delivery intention and timing: the semantic point, phrase or word to emphasize, intended pace, meaningful pause, and the visible action that supports the line. Stage 06 defines semantic anchors and performance timing; it MUST NOT author or silently replace the final spoken wording owned by Stage 08. Dialogue-bearing beats must leave enough time for plausible speech and any story-critical pause or reaction. Avoid assigning a new gesture to every sentence.
+
+Emotional progression must follow the meaning of the line. Define the starting expression, motivated change, and resulting expression where material. Keep gestures purposeful and restrained; maintain direct lens gaze by default, allowing brief gaze breaks only when motivated. Bound micro-motion to plausible breathing, blinking, small posture/weight shifts, and minor hand or clothing adjustments. The creator remains visibly speaking on camera when `audio_mode = SPOKEN_ON_CAMERA`; do not require lip-sync for `VOICE_OVER` or `NO_SPOKEN_VOICE`.
+
+Storyboard validation for Quote Content must explicitly check narrative progression, hook continuity, dialogue-to-action alignment, emotional plausibility, direct-to-camera treatment, and absence of filler or unrelated cutaways.
+
 ## Action Choreography
 
 Each scene is a process of action over time, not a sequence of unrelated poses. For every meaningful beat specify:
@@ -77,7 +94,7 @@ Reference states are frozen visual checkpoints, not generation segments. One sce
 
 ## Duration
 
-For `QUOTE_CONTENT` video formats, the final duration is fixed at exactly 20 seconds. Plan exactly two generation segments of 10 seconds each (`10 + 10`). Creative scene durations must sum exactly to 20 seconds. Provider segment durations may only be 4, 6, 8, or 10 seconds and must sum exactly to the final duration. No rounding, truncation, extension, or filler. If exact composition is impossible, set `duration_feasibility: BLOCKED`.
+For `QUOTE_CONTENT` video formats, the requested final duration MUST be one of `18`, `28`, or `30` seconds. The requested duration is the source of truth and must not be silently changed. Compose provider generation segments using only `4`, `6`, `8`, or `10` seconds, with exact total duration: `18 = 8 + 10`, `28 = 10 + 10 + 8`, and `30 = 10 + 10 + 10`. Creative scene durations must also sum exactly to the requested duration. Segment boundaries belong to the downstream Video Prompt implementation plan; they must follow meaningful action/narrative boundaries and must not force unnecessary scene changes. No rounding, truncation, extension, or filler. If the requested duration is outside the supported set or exact composition is impossible, set `duration_feasibility: BLOCKED` and report the reason; do not substitute another duration.
 
 ## Output Shape
 
@@ -167,7 +184,7 @@ source_artifacts: []
 
 ## Beat Timing and Dialogue Anchor Contract
 
-For every video beat, `time_window.start_time` and `time_window.end_time` are required numeric seconds relative to the start of the final 20-second video. Require `0 <= start_time < end_time <= 20`. Beat windows must be chronologically ordered; overlap is allowed only when the beat explicitly identifies concurrent motion channels and the causal order remains clear. Scene durations must sum exactly to 20 seconds, and each beat window must fit wholly inside its owning scene window.
+For every video beat, `time_window.start_time` and `time_window.end_time` are required numeric seconds relative to the start of the requested final video. Require `0 <= start_time < end_time <= metadata.requested_duration`, where the requested duration is exactly `18`, `28`, or `30` seconds. Beat windows must be chronologically ordered; overlap is allowed only when the beat explicitly identifies concurrent motion channels and the causal order remains clear. Scene durations must sum exactly to `metadata.requested_duration`, and each beat window must fit wholly inside its owning scene window.
 
 When spoken dialogue is required, each dialogue-bearing beat MUST declare `dialogue_anchor.semantic_intent`, `dialogue_anchor.action_window.start_time`, `dialogue_anchor.action_window.end_time`, and `dialogue_anchor.target_reference`. The action window must be non-empty, fall within the owning beat and scene windows, and point to a declared reference state established by that beat or its explicitly declared transition. `target_reference` must resolve to the exact `reference_id@reference_version`; no guessed or nearest-state fallback is allowed. Beats without spoken dialogue may omit `dialogue_anchor` or set it to `null`.
 
