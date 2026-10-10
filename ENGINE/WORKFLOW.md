@@ -152,7 +152,7 @@ For `UGC_AFFILIATE`, the supplied product link/reference must be actively inspec
 Input: completed Stage 01 brief artifact.
 
 - `UGC_AFFILIATE`: output exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
-- `QUOTE_CONTENT`: resolve editorial niche, audience context, and topic context without manufacturing a product or product-type state.
+- `QUOTE_CONTENT`: the intended output is editorial niche, audience context, and topic context without manufacturing a product or product-type state. The current Niche Context Loader has not yet been adapted for this mode; block Stage 02 with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` until that adapter is implemented.
 
 Output and validation must preserve `content_mode` and source provenance.
 
