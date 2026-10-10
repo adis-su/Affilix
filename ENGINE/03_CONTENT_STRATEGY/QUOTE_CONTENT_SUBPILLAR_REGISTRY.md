@@ -91,17 +91,18 @@ Purpose: improve understanding and communication without caricature, forced equi
 | P03-S14 | Apresiasi dan Pengakuan | Expressing appreciation without turning affection into a points system |
 | P03-S15 | Bertumbuh Bersama | Shared learning without requiring both people to progress identically |
 
-## Runtime Selection Contract
+## Runtime Selection and Exploration Contract
 
-For each strategy run:
+For each `QUOTE_CONTENT` Stage 04 strategy run:
 
-1. Select one primary pillar from the canonical pillar registry.
-2. Recommend a subpillar from this registry based on the user's topic, audience context, publishing objective, and intended takeaway.
-3. If the user has not chosen a subpillar, default to automatic recommendation and briefly state the selected subpillar and why it fits.
-4. Allow explicit user selection or revision without requiring the user to choose from all 45 items every time.
-5. Define a concrete content angle under the chosen subpillar. The subpillar itself is not the hook or final script.
-6. Validate the angle against the Editorial Safety Rules, stereotypes, overgeneralization, blame, unsupported claims, duplication, and sensitive-context risks.
-7. If the angle fails, rewrite it neutrally and revalidate. If safety-relevant facts remain materially ambiguous, ask the minimum necessary clarification.
-8. Record `subpillar.id`, `subpillar.name`, `subpillar.rationale`, `content_angle`, and `editorial_safety_validation` in the Stage 04 strategy artifact.
-9. A change to primary pillar, subpillar, or content angle invalidates dependent Hook, Storyboard, Visual Prompt, Voice Script, Video Prompt, and Production Output artifacts as applicable.
-
+1. Resolve exactly one primary pillar. If the user has not selected one and automatic selection is enabled, select the best-fit pillar from the topic, audience context, objective, and intended takeaway.
+2. Display exactly 15 subpillar candidates for the active pillar as native selectable controls. Candidates may be drawn from this registry or generated as additional candidates consistent with the pillar's purpose and editorial boundaries.
+3. The user explicitly selects one primary subpillar. Do not silently finalize an unselected candidate when the interface supports selection. If native controls are unavailable, use a numbered list and accept the user's chosen number or name.
+4. Provide a visible **Ganti Subpilar** action beside or beneath the candidate list. Each activation must produce exactly 15 fresh alternatives for the same active pillar.
+5. Fresh means semantically distinct from every candidate previously shown in this run for that pillar. Do not count reordering, synonym swaps, cosmetic renaming, or near-duplicates as new alternatives. Exclude prior batches and previously selected items unless the user explicitly asks to revisit them.
+6. Keep per-run exploration state, including active pillar, batch number, candidate IDs/names, prior batches, selected subpillar, and any replacement choice. Preserve the current selection until the user selects a replacement. On pillar change, show a fresh batch for the new pillar and retain that pillar's prior history for deduplication.
+7. If the finite registry cannot supply 15 fresh items, generate additional subpillar concepts from the pillar purpose and safety boundaries, validate distinctness, and then return exactly 15. Never pad with duplicates. If 15 valid distinct alternatives cannot be produced, mark the refresh `BLOCKED` and explain the constraint rather than misrepresenting the result.
+8. Each candidate must have a clear topic boundary and avoid blame, humiliation, stereotyping, cornering, universal gender claims, fabricated lived experience, and unsafe normalization of abuse/coercion. Apply the Editorial Safety Rules to every generated batch.
+9. After selection, define a concrete content angle under that subpillar. The subpillar itself is not the hook or final script.
+10. Record `subpillar.id`, `subpillar.name`, `subpillar.rationale`, `subpillar.batch_id`, `subpillar.batch_number`, `subpillar.exploration_history`, `content_angle`, and `editorial_safety_validation` in the Stage 04 strategy artifact.
+11. A change to primary pillar, selected subpillar, or content angle invalidates dependent Hook, Storyboard, Visual Prompt, Voice Script, Video Prompt, and Production Output artifacts as applicable. A refresh action alone does not invalidate downstream artifacts until the user selects a different subpillar.
