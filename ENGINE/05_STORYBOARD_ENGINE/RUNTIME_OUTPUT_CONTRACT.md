@@ -13,7 +13,8 @@
 stage: 06_STORYBOARD
 status: COMPLETED
 metadata:
-  storyboard_id:
+  storyboard_id: required stable artifact ID
+  storyboard_version: required explicit artifact version, initialized to v1 and incremented on material revision
   campaign_id:
   creator_id:
   product_id:
@@ -38,6 +39,7 @@ scenes:
       states:
         - reference_id:
           reference_version: v1
+          source_scene_id: required owning scene ID
           sequence_index:
           reference_role: START | INTERMEDIATE | END | BRIDGE
           source_beat_id:
@@ -97,6 +99,7 @@ scenes:
     reference_states:
       - reference_id:
         reference_version: v1
+        source_scene_id:
         sequence_index:
         reference_role: START | INTERMEDIATE | END | BRIDGE
         source_beat_id:
@@ -117,7 +120,7 @@ scenes:
     bridge_reference_id:
 ```
 
-Bridge invariants: Scene N END and Scene N+1 START must resolve to the exact same `reference_id` and `reference_version`; e.g. `R03@v1` at both ends, never `R03` and `R04` as independent states. The bridge is one canonical continuity anchor shared by both scenes. Every reference state must have an explicit ID, version, contiguous scene-local sequence index, role, valid source beat, frozen state summary, and continuity invariants. Every adjacent pair must have a transition record containing transition ID, source beat, causal action, allowed changes, invariants, and resulting state. Every `reference_after` must resolve to a state declared in its own scene. Validate that the ordered trajectory matches the declared Reference Plan and reject dangling IDs, invalid source beats, duplicate sequence indices, missing transitions, or mismatched bridge ID/version pairs. Changing a bridge creates a new version and invalidates dependent transitions and downstream artifacts.
+Artifact identity invariants: `metadata.storyboard_id` and `metadata.storyboard_version` are required for every completed video storyboard; `source_commit_sha` is not a substitute for artifact identity. Every reference state must explicitly include `source_scene_id`, which resolves to the canonical owning scene in this artifact. Bridge invariants: Scene N END and Scene N+1 START must resolve to the exact same `reference_id` and `reference_version`; e.g. `R03@v1` at both ends, never `R03` and `R04` as independent states. The bridge is one canonical continuity anchor shared by both scenes. Every reference state must have an explicit ID, version, contiguous scene-local sequence index, role, valid source beat, frozen state summary, and continuity invariants. Every adjacent pair must have a transition record containing transition ID, source beat, causal action, allowed changes, invariants, and resulting state. Every `reference_after` must resolve to a state declared in its own scene and exact storyboard artifact version. Each scene's ordered trajectory must match its Reference Plan exactly and contain exactly n−1 transition records for n states, one per adjacent pair. Validate that the ordered trajectory matches the declared Reference Plan and reject dangling IDs, invalid source beats, duplicate sequence indices, missing transitions, or mismatched bridge ID/version pairs. Changing a bridge creates a new version and invalidates dependent transitions and downstream artifacts.
 
 Stage completion follows `PROCESS → VALIDATE → MARK COMPLETED → WAIT FOR /next`. `/next` is progression only, not approval.
 
