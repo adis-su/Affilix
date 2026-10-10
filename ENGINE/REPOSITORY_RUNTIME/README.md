@@ -29,7 +29,8 @@ At the start of an Affilix run:
 
 1. Read `SKILL.md`.
 2. Read `ENGINE/WORKFLOW.md`.
-3. Read `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
+3. Read `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
+4. Read `ENGINE/AFFILIX_ENTRY_POINT/README.md`.
 4. Load only the Creator Library, Product Library, Niche Context, and engine files relevant to the current stage.
 5. Load the current engine specification immediately before executing that engine when its rules materially affect output.
 6. Load `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` before final output assembly.
@@ -49,7 +50,9 @@ SKILL.md
 ```
 
 Typical mapping:
-- Intake: SKILL + WORKFLOW + Entry + Brief Analyzer
+- Mode selection/intake: SKILL + WORKFLOW + Content Mode Routing + Entry + Brief Analyzer
+- `UGC_AFFILIATE`: existing product-centered engine contracts and libraries
+- `QUOTE_CONTENT`: editorial brief/context only until the applicable Quote Content strategy/production contracts are implemented
 - Creator: Creator Selector + Creator Library
 - Product/Niche: Product Library + Niche Context Loader + applicable niche rules
 - Strategy/Hook/Storyboard: engines 03, 04, 05
@@ -115,8 +118,10 @@ For every new `/Affilix` run:
 2. read the current branch head,
 3. record `repository.commit_sha`,
 4. pin that commit for the run,
-5. load relevant files from the pinned commit,
-6. record repository access status and load time.
+5. load `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`,
+6. resolve and persist one `run.content_mode`,
+7. load only that mode's applicable files from the pinned commit,
+8. record repository access status, load time, and content mode.
 
 Never silently mix files from different repository commits.
 
