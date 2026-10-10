@@ -65,7 +65,7 @@ Bridge references are immutable. A segment's start and target references must re
 
 ## Exact Duration Composition
 
-Supported generation segment durations are `[4, 6, 8, 10]` seconds under `EXACT_SEGMENT_COMPOSITION`. The sum of all segment durations must equal the requested final duration exactly. No rounding, truncation, extension, or filler. If impossible, set `duration_feasibility: BLOCKED` and do not produce a falsely complete video plan.
+For `QUOTE_CONTENT` video formats, final duration is fixed at exactly 20 seconds and must use exactly two generation segments: Segment 1 = 10 seconds, Segment 2 = 10 seconds. Supported generation segment durations are `[4, 6, 8, 10]` seconds under `EXACT_SEGMENT_COMPOSITION`. Segment durations must sum to exactly 20 seconds. No rounding, truncation, extension, or filler. If impossible, set `duration_feasibility: BLOCKED` and do not produce a falsely complete video plan.
 
 Generation segments are technical subparts of a scene, not additional scenes or prompts. Each segment must declare start reference, target reference, contained transitions, primary action, action causality, timing guidance, camera behavior, and continuity constraints.
 
