@@ -51,8 +51,8 @@ check("synchronize the active run's repository pin" in runtime and
       "runtime contract requires pin synchronization and contract reload before stage execution")
 check("REPOSITORY_SYNC_FAILURE" in runtime and "REPOSITORY_SYNC_FAILURE" in adapter,
       "failed atomic synchronization blocks progression with the canonical error")
-check("mix files from different repository commits" in readme and
-      "mix files from different repository commits" in adapter,
+check("Never silently mix files from different repository commits" in readme and
+      "Never mix files from a later commit into the active run" in adapter,
       "repository loaders forbid mixed-commit stage execution")
 check("source_commit_sha" in state and "source repository commit SHA" in runtime,
       "run and artifact traceability include the pinned source commit")
