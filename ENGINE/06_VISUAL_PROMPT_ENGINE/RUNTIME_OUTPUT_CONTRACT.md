@@ -102,6 +102,12 @@ Stage completion: process, validate, mark `COMPLETED`, then wait for `/next`. A 
 For `content_mode = QUOTE_CONTENT`, use `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md` as the authoritative output schema, including the static `QUOTE_IMAGE` path and one prompt per declared video reference state. For `UGC_AFFILIATE`, retain this contract unchanged.
 
 
+## Quote Content Exact-Value Validation Gate
+
+For `content_mode = QUOTE_CONTENT`, the fixed section values below are a blocking invariant, not advisory prompt guidance. Generic creator defaults (including hijab/clothing descriptions), environment examples, naturalism requirements, and editorial scene descriptions must not append text to either section.
+
+The runtime must validate the parsed full section bodies, not merely check whether the required sentence appears somewhere in the prompt. If either section contains extra words, English paraphrases, or scene descriptions, repair the prompt and rerun validation. If exact equality still fails, do not return it as a completed Stage 07 artifact.
+
 ## Fixed Wardrobe and Environment Output
 
 Every final image-generation prompt must use these exact section values, without appended description or paraphrase:
