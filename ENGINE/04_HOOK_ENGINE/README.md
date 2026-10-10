@@ -195,6 +195,12 @@ The hook must be physically and visually executable.
 
 For `QUOTE_CONTENT`, the selected hook becomes the opening editorial beat for the applicable format. For video formats it passes to Storyboard and downstream production. For `QUOTE_IMAGE`, Stage 05 may be skipped only as explicitly permitted by the editorial strategy contract.
 
+### Final Hook Lock and Completion State
+
+When one candidate (for example, `H04`) is selected as final in the active run, persist that exact candidate as `selected_hook_id` and preserve its validated content as the canonical Stage 05 output. Mark Stage 05 `COMPLETED` only after validation passes. Then stop: keep Stage 05 as the current stage, set progression to `WAITING_FOR_NEXT`, and explicitly report that the selected hook is locked and Stage 06 — Storyboard has not started. Never begin Storyboard automatically as part of Hook completion.
+
+When the user sends `/next`, the runtime must verify the selected hook is still present, current, and valid, then hand off that exact artifact to Storyboard. Do not silently choose a different hook during handoff. If the selected hook or its dependencies have become stale, block the handoff until Stage 05 is revalidated.
+
 For `UGC_AFFILIATE`, the approved hook becomes the opening beat for:
 
 - 05_STORYBOARD_ENGINE
