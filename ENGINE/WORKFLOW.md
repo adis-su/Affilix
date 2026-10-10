@@ -145,6 +145,19 @@ Use only:
 
 There is no `REVIEW` state because Affilix has no approval workflow.
 
+
+### Completed-Stage Hold and Explicit Progression
+
+A stage completion message is a state report, not permission to execute the next stage. When Stage 05 — Hook validates successfully and a hook is selected as final for the active run:
+
+- persist the selected hook ID and complete hook artifact as the active Stage 05 output;
+- mark Stage 05 `COMPLETED` only after validation passes;
+- keep the run's current stage at Stage 05 and set progression state to `WAITING_FOR_NEXT`;
+- state explicitly that the selected hook is locked for the active run and that Stage 06 — Storyboard has **not** started;
+- do not draft, preview, or partially execute Storyboard until the user sends `/next`.
+
+When `/next` arrives, synchronize repository state, verify Stage 05 is `COMPLETED`, verify its selected hook is present and current, then execute Stage 06 only if all its prerequisites are satisfied. Pass the exact selected hook artifact downstream; do not silently regenerate or replace it. If the hook is missing, stale, or invalid, block progression and repair/revalidate Stage 05 first. Apply the same completed-stage hold to every other stage: no automatic stage advancement after completion or revision.
+
 ## Canonical Stage Contracts
 
 ### 01 — Brief & Product (canonical; displayed as “Brief” for QUOTE_CONTENT)
