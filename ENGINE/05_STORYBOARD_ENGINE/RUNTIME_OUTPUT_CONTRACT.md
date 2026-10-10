@@ -104,3 +104,8 @@ scenes:
 Bridge invariants: Scene N END and Scene N+1 START must resolve to the same reference version. Changing a bridge creates a new version and invalidates dependent downstream transitions.
 
 Stage completion follows `PROCESS → VALIDATE → MARK COMPLETED → WAIT FOR /next`. `/next` is progression only, not approval.
+
+
+## Mode-Specific Schema Dispatch
+
+For `content_mode = QUOTE_CONTENT`, the authoritative Stage 06 schema and applicability rules are in `QUOTE_CONTENT_STORYBOARD_CONTRACT.md`. Use that contract's output shape and explicit static-image skip. Do not force Quote Content into product-oriented Storyboard fields. For `UGC_AFFILIATE`, this existing universal output contract remains in force.
