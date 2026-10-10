@@ -133,8 +133,8 @@ check("External database / Telegram / Edge Functions" in campaign_persistence an
       "campaign state contract excludes external databases, Telegram, and Edge Functions")
 check("MUST NOT require or introduce Supabase" in github_adapter and "campaign-state database" in github_adapter,
       "GitHub adapter provides repository access without introducing a Supabase runtime")
-check("public.affilix_campaigns" not in github_adapter and "Supabase Edge Function" not in github_adapter,
-      "GitHub adapter contains no conflicting external persistence requirement")
+check("public.affilix_campaigns" not in github_adapter and "persist campaign state to an external service as a fallback" in github_adapter,
+      "GitHub adapter contains no external persistence requirement and forbids fallback persistence")
 check("38–44" in voice,
       "Quote Content voice contract defines the 20-second spoken-word target")
 
