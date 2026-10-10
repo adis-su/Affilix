@@ -197,3 +197,35 @@ Phase 03 — Quote Content production contracts.
 **PASS — CONTRACTS ADDED AND STATIC CONSISTENCY CHECKS PASSED; AUTOMATED REGRESSION NOT CLAIMED.**
 
 This addendum records repository contract changes only. It does not claim that image/video generation or end-to-end campaign execution was run. Phase 04 regression and hardening remains pending.
+
+
+---
+
+## Phase 04 — Quote Content Regression & Hardening Addendum
+
+### Addendum Date
+2026-10-10
+
+### Scope
+Cross-file consistency review and regression test specification coverage for the Quote Content mode.
+
+### Hardening Changes
+- Added `EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md` with 18 explicit cases covering mode routing, static-image skips, video prompt/scene cardinality, reference coverage, immutable bridges, exact duration composition, conditional voice, attribution/non-fabrication, dependency invalidation, unsupported formats, and UGC regression protection.
+- Extended `EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md` with R062–R069 for Quote Content-specific runtime invariants.
+- Updated the content-mode routing fixture purpose and acceptance wording to reflect the current Stage 02–10 mode-specific contracts while keeping unsupported-contract blocking behavior for genuinely unsupported cases.
+- Added the new regression matrix to the repository index.
+
+### Static Consistency Review
+The following repository references were fetched and checked after changes:
+- Stage 02 editorial context and Stage 04/05 strategy-hook dispatch.
+- Stage 06 Storyboard, Stage 07 Visual Prompt, Stage 08 conditional Voice Script, Stage 09 Video Prompt, and Stage 10 mode-specific output dispatch.
+- Static `QUOTE_IMAGE` skip rules.
+- Exactly one user-facing Video Prompt per Storyboard scene.
+- Exact 4/6/8/10-second segment policy and exact requested-duration sum.
+- Immutable bridge-reference invariants.
+- Explicitly documented regression cases and honest test execution status.
+
+### Execution Status
+**STATIC CONSISTENCY REVIEW: PARTIAL PASS. END-TO-END REGRESSION: NOT RUN.**
+
+The repository contains test specifications, not observed end-to-end execution results. No runtime suite or external image/video generation was run as part of this addendum. Do not mark the regression matrix PASS until the listed runtime cases have been executed and their outputs inspected. Phase 04 remains open for runtime execution and observed-result recording.
