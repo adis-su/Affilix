@@ -10,11 +10,16 @@
 
 ## Purpose
 
-The Content Strategy Engine turns the normalized brief, selected creator, verified product information, and loaded niche context into a clear UGC content strategy.
+The Content Strategy Engine is mode-aware. For `UGC_AFFILIATE`, it turns the normalized brief, selected creator, verified product information, and loaded niche context into a product-centered UGC strategy. For `QUOTE_CONTENT`, follow `QUOTE_CONTENT_STRATEGY_CONTRACT.md` for editorial pillars, formats, message design, and editorial validation. Never apply product proof scoring to quote-led editorial content.
 
 It decides what the content should communicate and demonstrate, not the final scene-by-scene script.
 
 It also selects the **Content Format** that packages the content experience into a repeatable story mechanism. Content Format is distinct from Content Angle and becomes a downstream creative constraint. See `CONTENT_FORMAT_SYSTEM.md`.
+
+## Mode Routing
+
+- `UGC_AFFILIATE`: use this README and `CONTENT_FORMAT_SYSTEM.md` as the existing product-centered strategy contract.
+- `QUOTE_CONTENT`: use `QUOTE_CONTENT_STRATEGY_CONTRACT.md` as the authoritative editorial strategy contract. Platform and format are separate fields. Do not require product role, product behavior, proof opportunity, or product claims.
 
 ## Input
 
@@ -182,7 +187,9 @@ Record:
 
 ## Handoff
 
-The final strategy passes Content Format and Content Angle downstream to:
+For `UGC_AFFILIATE`, the strategy passes Content Format and Content Angle downstream to. For `QUOTE_CONTENT`, it passes the selected editorial pillar, format, primary message, takeaway, emotional strategy, and source provenance to the applicable Hook/production contracts.
+
+The UGC branch passes Content Format and Content Angle downstream to:
 
 - 04_HOOK_ENGINE
 - 05_STORYBOARD_ENGINE
