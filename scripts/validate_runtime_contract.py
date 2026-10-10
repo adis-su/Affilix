@@ -17,6 +17,9 @@ FILES = {
     "state": "ENGINE/REPOSITORY_RUNTIME/CAMPAIGN_STATE_PERSISTENCE.md",
     "authority": "ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md",
     "audit": "RUNTIME_EXECUTION_BOUNDARY_AUDIT.md",
+    "routing": "ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md",
+    "harness": "scripts/affilix_runtime_harness.py",
+    "runtime_tests": "tests/test_affilix_runtime_harness.py",
 }
 errors = []
 checks = 0
@@ -41,6 +44,9 @@ skill = docs["skill"]
 workflow = docs["workflow"]
 authority = docs["authority"]
 state = docs["state"]
+routing = docs["routing"]
+harness = docs["harness"]
+runtime_tests = docs["runtime_tests"]
 
 # Repository pinning and atomic synchronization.
 check("resolve the current `main` HEAD SHA" in runtime and
@@ -82,6 +88,17 @@ check("Never silently mix artifacts from different Storyboard versions" in autho
 check("If a canonical input changes, dependent state becomes STALE" in skill,
       "Skill declares stale propagation when canonical inputs change")
 
+# Mode-aware routing and isolated-run safeguards.
+check("QUOTE_IMAGE" in routing and "STATIC_IMAGE_FORMAT" in routing and
+      "A conditional skip is not a failure or approval gate" in routing,
+      "routing contract defines conditional static-image skips")
+check("def resolve_stage_plan(" in harness and "CONTENT_MODE_CHANGE_REQUIRES_NEW_ISOLATED_RUN" in harness,
+      "executable harness models conditional routing and forbids in-place cross-mode mutation")
+check("test_quote_image_routes_static_stages_to_explicit_skips" in runtime_tests and
+      "test_mode_change_requires_new_isolated_run" in runtime_tests and
+      "test_external_dialogue_keeps_voice_script_required_without_on_camera_speech" in runtime_tests,
+      "regression suite covers image routing, mode isolation, and external dialogue")
+
 # Architecture boundary and honest capability statement.
 check("MUST NOT require or introduce Supabase" in adapter and
       "Do not persist campaign state to an external service as a fallback" in adapter,
@@ -93,4 +110,4 @@ print(f"\nRuntime contract checks: {checks - len(errors)}/{checks} passed.")
 if errors:
     print(f"Failures: {len(errors)}")
     sys.exit(1)
-print("Scope: documented runtime invariants only; this script does not simulate or execute /next.")
+print("Scope: static contract drift checks; executable transition behavior is tested separately by tests/test_affilix_runtime_harness.py. This does not prove live ChatGPT Skill integration.")
