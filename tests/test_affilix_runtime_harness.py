@@ -115,6 +115,7 @@ class RuntimeProgressionTests(unittest.TestCase):
         state = active_run()
         state.current_stage = STAGES[-1]
         state.progression = "WAITING_FOR_NEXT"
+        mark_completed(state, STAGES[-2])
         mark_completed(state, STAGES[-1])
         result = next_stage(state, resolved_main_sha="commit-a")
         self.assertEqual(result, STAGES[-1])
