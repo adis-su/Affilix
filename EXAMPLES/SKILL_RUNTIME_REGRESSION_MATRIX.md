@@ -251,7 +251,7 @@ The following cases extend the canonical regression matrix. Detailed input/outpu
 |---|---|---|
 | R062 | Quote Content static image routing | `QUOTE_IMAGE` skips Storyboard, Voice Script, and Video Prompt with `STATIC_IMAGE_FORMAT`; Visual Prompt and Production Output remain applicable |
 | R063 | Quote Content scene/prompt cardinality | Exactly one user-facing Video Prompt per Storyboard scene; one Visual Prompt per declared reference state |
-| R064 | Quote Content exact segment duration | Segment durations are each 4/6/8/10 seconds and sum exactly to the requested final duration; infeasible composition blocks |
+| R064 | Quote Content fixed 20-second composition | Every Quote Content video uses exactly two 10-second segments, sums to 20 seconds, and blocks infeasible composition; UGC duration behavior remains unchanged |
 | R065 | Quote Content immutable bridge | Shared scene-boundary bridge has identical ID/version; edits stale dependent transitions and prompts |
 | R066 | Quote Content voice ownership | Video Prompt synchronizes canonical Voice Script without rewriting dialogue; no-spoken skip carries an explicit reason |
 | R067 | Quote Content output dependency guard | Stage 10 blocks missing, stale, invalid, or contradictory required artifacts with `QUOTE_CONTENT_OUTPUT_DEPENDENCY_BLOCKED` |
