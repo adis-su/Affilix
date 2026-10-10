@@ -105,7 +105,11 @@ format_id:
 prompts:
   - prompt_id:
     prompt_type: Image
-    source_scene_id: null
+    source_scene_id: null | required source scene ID for video references
+    source_beat_id: null | required source beat ID for video references
+    sequence_index: null | required scene-local order for video references
+    source_storyboard_id: null | exact Stage 06 storyboard_id for video references
+    source_storyboard_version: null | exact Stage 06 storyboard_version for video references
     reference_id: null
     reference_role: STATIC_IMAGE | START | INTERMEDIATE | END | BRIDGE
     reference_version: null
@@ -117,11 +121,7 @@ prompts:
       format_mechanism: PASS | NEEDS_REFINEMENT
       continuity: PASS | NEEDS_REFINEMENT
       non_fabrication: PASS | BLOCKED
-source_artifacts:
-  - artifact_type: 06_STORYBOARD
-    artifact_id: required storyboard_id from source
-    artifact_version: required storyboard_version from source
-    source_commit_sha: exact source commit SHA
+source_artifacts: [] # For video formats, include the exact 06_STORYBOARD artifact_id, artifact_version, and source_commit_sha; QUOTE_IMAGE has no temporal storyboard dependency.
 provenance: []
 source_commit_sha:
 ```
