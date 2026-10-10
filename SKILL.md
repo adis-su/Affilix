@@ -109,6 +109,8 @@ Load the selected Creator Library records and preserve identity across scenes. N
 
 Load Product Library facts, selling points, claims rules, niche context, and product-type rules. Never invent specifications, performance, reviews, testimonials, discounts, scarcity, guarantees, certifications, or personal experience.
 
+For `QUOTE_CONTENT`, use `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md` to recommend one subpillar under the selected primary pillar and define a concrete content angle. Validate every angle for blame, shaming, stereotypes, overgeneralization, unsupported claims, and sensitive-context risks; revise and revalidate before marking Stage 04 complete. Do not force users to choose manually from the entire subpillar catalogue. Record subpillar and editorial safety validation in the strategy artifact. Changes to pillar, subpillar, or angle invalidate affected downstream artifacts.
+
 Run strategy before scenes or prompts. Generate hooks from the validated strategy. Storyboard is the canonical temporal and scene sequence, including action choreography, Reference Plan, ordered reference trajectory, and state transitions. For each scene, reference density is determined by action complexity. High-complexity scenes should target six meaningful visual reference states by default when justified; simpler scenes may use fewer references. Reference count never changes scene count or Video Prompt count. Visual, Voice, and Video specifications remain subordinate to the Storyboard and their upstream sources. Voice Script is the canonical spoken-content source for Video Prompt.
 
 ## Reclassification and Revision
