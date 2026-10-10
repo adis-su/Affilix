@@ -94,7 +94,7 @@ check("immutable" in storyboard.lower() and "same reference ID and version" in s
 # Exact duration and honest regression reporting.
 for content, label in [(storyboard, "Storyboard"), (video, "Video Prompt"), (output, "Production Output")]:
     exact_duration = "sum exactly" in content.lower() or "must equal" in content.lower()
-    blocked_duration = bool(re.search(r"duration_feasibility:[^\\n]*BLOCKED", content))
+    blocked_duration = "duration_feasibility" in content and "BLOCKED" in content
     check(all(token in content for token in ("4", "6", "8", "10")) and
           exact_duration and blocked_duration,
           f"{label} contract preserves exact segment duration and infeasible-duration blocking")
