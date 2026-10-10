@@ -21,6 +21,9 @@ REQUIRED_FILES = [
     "ENGINE/06_VISUAL_PROMPT_ENGINE/QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md",
     "ENGINE/07_VIDEO_PROMPT_ENGINE/QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md",
     "ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md",
+    "ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md",
+    "ENGINE/07_VIDEO_PROMPT_ENGINE/RUNTIME_OUTPUT_CONTRACT.md",
+    "ENGINE/08_VOICE_SCRIPT_ENGINE/RUNTIME_OUTPUT_CONTRACT.md",
     "EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md",
 ]
 
@@ -59,6 +62,9 @@ matrix = read("EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md")
 entry = read("ENGINE/AFFILIX_ENTRY_POINT/README.md")
 brief = read("ENGINE/01_BRIEF_ANALYZER/README.md")
 voice = read("ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md")
+authority = read("ENGINE/05_STORYBOARD_ENGINE/DOWNSTREAM_AUTHORITY_CONTRACT.md")
+video_runtime = read("ENGINE/07_VIDEO_PROMPT_ENGINE/RUNTIME_OUTPUT_CONTRACT.md")
+voice_runtime = read("ENGINE/08_VOICE_SCRIPT_ENGINE/RUNTIME_OUTPUT_CONTRACT.md")
 
 # Canonical registry identity and the non-numeric engine-to-stage mappings.
 stage_rows = [match.group(1) for match in re.finditer(r"^\|\s*(\d{2})\s*\|[^\n]*ENGINE/", workflow, flags=re.MULTILINE)]
@@ -132,6 +138,28 @@ check("source_freshness: PASS | BLOCKED" in video and "dependency_alignment: PAS
       "Video Prompt blocks stale or mismatched Storyboard, Visual Prompt, and Voice Script sources")
 check("QCR-024" in matrix and "QCR-025" in matrix and "QCR-026" in matrix,
       "Regression matrix includes timing, dialogue-anchor, and stale-source integration cases")
+
+# Storyboard authority and Quote Content run-wide production invariants.
+check("Cross-Stage Lineage and Handoff Invariants" in authority and
+      "Stage 08 is a parallel descendant of Stage 06" in authority,
+      "Storyboard authority contract defines lineage and parallel Stage 07/08 branches")
+check("exactly two segments total" in video and "[0, 10]" in video and "[10, 20]" in video,
+      "Quote Content Video Prompt enforces a run-wide 10s + 10s timeline")
+check("source_scene_ids: []" in video and "run_wide_segment_composition: PASS | BLOCKED" in video,
+      "Video Prompt segment schema can identify source scenes and validate run-wide composition")
+check("reference_coverage: PASS | BLOCKED | NOT_APPLICABLE" in output and
+      "storyboard_lineage: PASS | BLOCKED" in output,
+      "Production Output validates canonical reference coverage and Storyboard lineage")
+check("exactly two segments total" in output and "no gaps or overlaps" in output,
+      "Production Output blocks segment count, duration, gap, and overlap mismatches")
+check("exact same Storyboard artifact/version" in authority and
+      "Never silently mix artifacts from different Storyboard versions" in authority,
+      "Downstream stages must pin the same exact Storyboard version")
+check("Storyboard Authority" in video_runtime and "Video Prompt owns motion" in video_runtime and
+      "Storyboard remains the canonical scene sequence" in voice_runtime,
+      "Stage 08/09 runtime contracts preserve field ownership")
+check(all(f"QCR-{i:03d}" in matrix for i in range(27, 33)),
+      "Regression matrix includes QCR-027 through QCR-032 for downstream integration")
 check("final video duration" in brief.lower() and "NOT_APPLICABLE" in brief,
       "Brief Analyzer normalizes video duration and static-image not-applicable state")
 
