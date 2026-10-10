@@ -70,7 +70,7 @@ check("engine directory prefixes" in skill.lower() and "must not" in skill.lower
 # Mode routing and the static-image branch.
 check("UGC_AFFILIATE" in routing and "QUOTE_CONTENT" in routing,
       "both supported content modes are registered")
-check("never fall back to UGC template" in routing.lower(),
+check("never fall back to ugc template" in routing.lower(),
       "Quote Content cannot silently fall back to the UGC output template")
 for relative, content in [
     ("Storyboard", storyboard),
@@ -93,8 +93,10 @@ check("immutable" in storyboard.lower() and "same reference ID and version" in s
 
 # Exact duration and honest regression reporting.
 for content, label in [(storyboard, "Storyboard"), (video, "Video Prompt"), (output, "Production Output")]:
+    exact_duration = "sum exactly" in content.lower() or "must equal" in content.lower()
+    blocked_duration = bool(re.search(r"duration_feasibility:[^\\n]*BLOCKED", content))
     check(all(token in content for token in ("4", "6", "8", "10")) and
-          "sum exactly" in content and "duration_feasibility: BLOCKED" in content,
+          exact_duration and blocked_duration,
           f"{label} contract preserves exact segment duration and infeasible-duration blocking")
 check("NOT RUN as an end-to-end runtime suite" in matrix,
       "regression matrix clearly distinguishes test specifications from runtime execution")
