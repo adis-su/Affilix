@@ -282,7 +282,7 @@ Spoken naturalization must preserve factual meaning and campaign intent.
 
 Input: all required current, non-STALE upstream artifacts for the selected `content_mode`.
 
-Output must be assembled by the applicable mode-specific output contract and include only required, current assets. `UGC_AFFILIATE` retains the existing UGC output contract. `QUOTE_CONTENT` must not use the UGC output template as an implicit fallback until its mode-specific strategy and production contracts are implemented.
+Output must be assembled by the applicable mode-specific output contract and include only required, current assets. `UGC_AFFILIATE` retains the existing UGC output contract. `QUOTE_CONTENT` must use `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`; it must never use the UGC output template as an implicit fallback.
 
 Production Output must block final assembly when the selected mode or format is missing, stale, unsupported, or contradicted by a required downstream artifact.
 
