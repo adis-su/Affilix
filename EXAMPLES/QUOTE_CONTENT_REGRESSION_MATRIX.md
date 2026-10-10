@@ -50,6 +50,9 @@ Phase 04 verifies that Quote Content mode contracts, the canonical ten-stage wor
 | QCR-025 | Dialogue anchor alignment | Every Stage 08 line resolves to a current Stage 06 scene, source beat, dialogue anchor, semantic intent, and exact target reference ID/version; line timing stays inside both the anchor action window and scene window and avoids protected pauses/critical visual actions | Critical | NOT RUN |
 | QCR-026 | Parallel branch and stale-source integrity | Stage 07 and Stage 08 consume the same current Stage 06 artifact/source commit without depending on each other; a storyboard revision invalidates affected Visual Prompt and Voice Script outputs, and Stage 09 cannot consume mixed or stale source versions | Critical | NOT RUN |
 
+
+| QCR-027 | Complete Stage 06 artifact identity, upstream provenance, five-state trajectory and beat mapping | A completed storyboard includes `storyboard_id`, `storyboard_version`, pinned `source_commit_sha`, versioned upstream `source_artifacts`, and traceable `provenance`; when the Reference Plan declares R01@v1–R05@v1, trajectory order matches exactly and four causal adjacent transitions exist; every beat's `reference_after` resolves to an explicit state ID/version. Missing or invented data prevents completion | Critical | NOT RUN |
+
 ## Execution Protocol
 
 For each case:
