@@ -22,7 +22,7 @@ Production Output assembles current, validated source artifacts without changing
 
 Do not invent quote attribution, lived experience, author identity, platform-performance claims, statistics, testimonials, or guaranteed outcomes. Keep original authored copy separate from any explicitly supplied third-party quotation and record provenance. When rights/attribution are uncertain, do not imply authorship by a named person.
 
-For video, the number of user-facing Video Prompts must equal Storyboard scene count. Technical generation segments do not increase prompt count. Generation segments may only be 4, 6, 8, or 10 seconds and must sum exactly to requested final duration; infeasible composition blocks output.
+For video, the number of user-facing Video Prompts must equal Storyboard scene count exactly, and Stage 07 must provide exactly one image prompt per unique canonical Storyboard reference state (count the immutable bridge state once, even when used at both adjacent scene boundaries). Technical generation segments do not increase prompt count. For Quote Content video, validate the run-wide generation plan across all scene records: exactly two segments total, each exactly 10 seconds, with final timeline windows `[0, 10]` and `[10, 20]`, no gaps or overlaps, and a total of exactly 20 seconds. Every segment must resolve its source scene(s), start/target reference IDs and versions, and transition IDs to the same current Stage 06 storyboard artifact used by Stage 07 and Stage 08. Any mismatch or infeasible composition blocks output; do not infer compatibility from matching names or silently reuse stale assets.
 
 ## Output Shape
 
@@ -78,6 +78,8 @@ validation:
   provenance_and_attribution: PASS | BLOCKED
   safety_and_sensitivity: PASS | BLOCKED
   prompt_count: PASS | BLOCKED | NOT_APPLICABLE
+  reference_coverage: PASS | BLOCKED | NOT_APPLICABLE
+  storyboard_lineage: PASS | BLOCKED
   duration_integrity: PASS | BLOCKED | NOT_APPLICABLE
 unresolved_requirements: []
 provenance: []
