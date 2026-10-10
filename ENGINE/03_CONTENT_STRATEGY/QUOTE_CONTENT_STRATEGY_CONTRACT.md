@@ -108,6 +108,17 @@ Platform and format are separate dimensions. `FACEBOOK_PRO` is a platform value,
 - Requirements: one narrative spine, a motivated turning point, no filler beats, and exact requested duration.
 - Availability: supported as a strategy classification; downstream production must still satisfy the current Storyboard/Visual/Voice/Video contracts. If an applicable downstream contract is not mode-ready, block rather than fallback.
 
+## Default Video Delivery: Direct-to-Camera Talking Head
+
+For every video format in `QUOTE_CONTENT`, the default visual delivery is `DIRECT_TO_CAMERA_TALKING_HEAD`: the creator addresses the camera lens and delivers the message as spoken, conversational content. This is the delivery format, while the selected editorial format still determines the narrative mechanism. Do not default to cinematic montage, unrelated B-roll, acted scenes between multiple characters, or quote-only visuals as a substitute for the creator speaking to camera.
+
+- `CINEMATIC_QUOTE_REELS`: the creator speaks the central reflection directly to camera; use restrained lighting/framing and subtle visual development rather than replacing speech with a montage.
+- `RELATABLE_STORY_REELS`: the creator recounts a relatable situation directly to camera, with the trigger and emotional turn carried primarily by spoken delivery and motivated expression/gestures.
+- `POV_RELATIONSHIP_REELS`: the creator explains the POV directly to camera; do not stage a second-person scene unless the user explicitly requests that treatment.
+- `MINI_STORYTELLING_REELS`: the creator tells the compact story directly to camera, with setup, turning point, and takeaway expressed in the spoken narrative and controlled performance.
+
+Default composition is vertical 9:16, medium close-up or close-up, lens-level eye contact, clean and relevant background, and stable framing with only motivated subtle reframing. Use natural but bounded breathing, blinking, posture/weight shifts, small head movements, restrained facial changes, and purposeful hand gestures. The creator should visibly speak when the resolved audio mode is `SPOKEN_ON_CAMERA`; spoken wording and mouth movement must synchronize to the canonical Stage 08 script. Subtitles/captions, if requested or part of the platform treatment, must match the spoken words exactly. An explicit user choice of `VOICE_OVER` or `NO_SPOKEN_VOICE` overrides native on-camera speech but does not silently change the visual concept; retain direct-to-camera presence unless the user explicitly requests another visual treatment.
+
 ## Strategy Selection
 
 1. Validate the brief and editorial context. Preserve unknowns rather than inventing audience facts.
@@ -161,6 +172,7 @@ format:
   name:
   output_type:
   requirements: []
+  delivery_mode: DIRECT_TO_CAMERA_TALKING_HEAD | USER_OVERRIDE
   rationale:
 audience:
   target:
