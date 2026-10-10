@@ -20,6 +20,8 @@ Editorial social content centered on relatable experiences, emotional reflection
 
 Initial editorial context may include platform, audience, topic/theme, intended emotional response, publishing objective, and user-supplied constraints. The mode-specific strategy determines the final content format.
 
+For every Quote Content video format, the default visual delivery is `DIRECT_TO_CAMERA_TALKING_HEAD`: the creator addresses the lens as the primary on-screen speaker. Resolve `Otomatis` to `audio_mode: SPOKEN_ON_CAMERA` plus this delivery mode. Explicit `VOICE_OVER` or `NO_SPOKEN_VOICE` selections override the audio behavior but do not silently switch the visual treatment to B-roll or montage. Carry `delivery_mode` through Strategy, Storyboard, Visual Prompt, Voice Script, and Video Prompt. `QUOTE_IMAGE` is unaffected.
+
 ## Mode Selection
 
 For a new `/Affilix` run without an explicit mode, present the Content Mode Selector before requesting mode-specific fields:
