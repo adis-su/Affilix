@@ -95,3 +95,8 @@ High-complexity scenes should normally target six meaningful reference states wh
 Visual Prompt must preserve the Storyboard reference order, role, source beat, critical-state designation, and state semantics. It may not invent intermediate references or collapse declared states.
 
 Stage completion: process, validate, mark `COMPLETED`, then wait for `/next`. A revision invalidates only affected prompts and dependent transitions.
+
+
+## Mode-Specific Schema Dispatch
+
+For `content_mode = QUOTE_CONTENT`, use `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md` as the authoritative output schema, including the static `QUOTE_IMAGE` path and one prompt per declared video reference state. For `UGC_AFFILIATE`, retain this contract unchanged.
