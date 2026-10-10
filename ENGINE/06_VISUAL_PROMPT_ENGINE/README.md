@@ -101,10 +101,10 @@ Therefore:
 - Approved creator visual references
 - Product identity
 - Approved product references
-- Wardrobe selection
+- Approved wardrobe configuration/reference (inherit when already selected; do not redesign)
 - Expression selection
 - Pose selection
-- Scene environment
+- Approved scene environment/configuration/reference (inherit when already selected; do not redesign)
 - Composition requirements
 - Camera requirements
 - Lighting requirements
@@ -296,13 +296,11 @@ Allowed visual variation may include:
 - Eye direction
 - Pose
 - Gesture
-- Camera angle
-- Lighting
-- Outfit
-- Hijab color
-- Hijab fabric
-- Hijab drape
-- Makeup intensity when approved
+- Camera angle when authorized by the storyboard
+- Lighting when explicitly specified and continuity-validated
+- Outfit, hijab color/fabric/drape, or makeup intensity only when an explicit upstream selection or user instruction authorizes that change
+
+An already-approved wardrobe is inherited as a locked configuration by default. Do not independently select a new outfit, hijab color, fabric, drape, accessories, or makeup merely because a new reference state is being generated.
 
 Audience context must never change the creator's canonical age, identity, or physical characteristics.
 
@@ -359,6 +357,10 @@ When an approved environment/background reference is supplied, treat it as a loc
 ## Environment and Props
 
 Describe only visible, supported scene elements.
+
+### Inheritance rule
+
+If the environment has already been selected or approved, inherit that exact configuration/reference. Do not recreate the environment from a generic description or use it as loose inspiration. Do not choose a new room, layout, furniture, palette, props, or location. When an approved background reference is supplied, it is the visual authority for the visible background attributes. If a detail is not established by the configuration or visible reference, preserve it as UNKNOWN rather than inventing it. Any explicit environment change must be scoped, authorized, and checked against all dependent reference states.
 
 Do not invent:
 
@@ -454,6 +456,10 @@ It must not override creator identity or product facts.
 ## Continuity
 
 Continuity in an image prompt is **visual continuity**, not temporal narration.
+
+### Locked configuration inheritance
+
+Wardrobe and environment are not re-authored independently for every image prompt. When selected upstream or explicitly set by the user, they are inherited from the approved configuration/reference. The prompt may identify the inherited configuration, but must not invent a fresh description or select a replacement. Reference-specific changes should be limited to the storyboard-defined visible state, such as pose, expression, gaze, or authorized framing. If required configuration is missing, mark the attribute UNKNOWN and request refinement/block only when the missing information is necessary to produce a valid frame. Never silently replace missing configuration with invented details.
 
 Use continuity to preserve:
 
