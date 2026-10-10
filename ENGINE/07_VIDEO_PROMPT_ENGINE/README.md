@@ -706,3 +706,8 @@ The dependency chain is:
               Production Output
 
 Storyboard remains canonical for temporal intent. Visual Prompt remains canonical for static appearance. Voice Script remains canonical for spoken content and delivery.
+
+
+## Quote Content Mode Dispatch
+
+When `content_mode = QUOTE_CONTENT`, load `QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md` as the mode-specific contract. The registered video formats use editorial action causality rather than product-demo choreography. `QUOTE_IMAGE` skips Stage 09 with `STATIC_IMAGE_FORMAT`. Exactly one user-facing Video Prompt is required per Storyboard scene; reference count and technical segment count never change that relationship. Exact provider duration composition and immutable bridge rules remain mandatory.
