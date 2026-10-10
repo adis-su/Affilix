@@ -352,6 +352,10 @@ Instead specify the actual visual requirement, for example:
 
 Only use details supported by the storyboard or approved references.
 
+## Background Reference Lock
+
+When an approved environment/background reference is supplied, treat it as a locked source-of-truth asset, not inspiration. The final prompt must explicitly preserve the same background geometry, layout, architecture, furniture, props, object positions, textures, colors, perspective, depth, and visible lighting cues. Do not generate a replacement setting, add/remove/move objects, extend the room, change the camera viewpoint to reveal unseen areas, or apply stylistic redesign. The creator may be integrated into the reference while the background remains unchanged. If the reference does not reveal a detail, do not invent it. The environment reference must be tracked separately from creator, wardrobe, product, and style references. For video, lock the background across all reference states, transitions, and generation segments; changes are permitted only when explicitly requested by the user. Add explicit negative constraints such as `no background replacement, no background redesign, no object relocation, no new props, no layout changes`.
+
 ## Environment and Props
 
 Describe only visible, supported scene elements.
