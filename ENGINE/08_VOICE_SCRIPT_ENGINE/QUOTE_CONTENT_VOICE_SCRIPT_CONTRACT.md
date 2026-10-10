@@ -20,6 +20,14 @@ Current Stage 01 editorial brief, Stage 02 context, Stage 04 strategy, Stage 05 
 
 Voice Script owns exact spoken wording, speaker identity/role, pronunciation notes, delivery, timing, pauses, and voice performance plan. Video Prompt may synchronize the canonical script but must not rewrite it. The script must support the selected pillar, format, primary message, and takeaway without introducing a new narrative claim.
 
+## Deterministic Storyboard Handoff
+
+Stage 08 consumes only the current, validated Stage 06 artifact for the active campaign and repository snapshot. Record the storyboard artifact ID/version (or canonical source artifact reference) in `source_artifacts`; preserve its `source_commit_sha`. Do not use a stale storyboard or silently mix artifacts generated from different source commits.
+
+Each dialogue line MUST bind to an existing storyboard `scene_id` and `dialogue_anchor` from a specific Stage 06 beat. The line's `dialogue_anchor` field must identify that anchor unambiguously (prefer `beat_id` plus `anchor_id` when multiple anchors exist; otherwise use the unique `beat_id`). Preserve the anchor's `semantic_intent`. Require numeric `start_time` and `end_time` in seconds on the final-video timeline, with `0 <= start_time < end_time <= 20`. The line interval must fit entirely inside the anchor's `action_window` and its owning scene window. The referenced `target_reference` must resolve to the exact declared `reference_id@reference_version` in Stage 06. No nearest-reference, missing-anchor, inferred-timing, or stale-artifact fallback is permitted.
+
+Validate line-level intervals as well as total duration. Reject or refine any line that overlaps a storyboard-declared protected pause, critical reaction, or visually dependent action. Concurrent speech is allowed only when the storyboard explicitly permits it and it does not contradict the action's semantic intent. If a line cannot fit, first shorten or re-deliver the wording while preserving meaning; if that cannot satisfy the anchor, return `NEEDS_REFINEMENT` or `BLOCKED` as appropriate rather than editing Storyboard timing from Stage 08.
+
 ## Duration-Bound Spoken Word Budget
 
 For Quote Content video formats, the final duration is fixed at exactly 20 seconds by the mode contract. Stage 01 must not ask the user to select a duration. The canonical generation composition is exactly two 10-second segments; do not substitute a provider segment duration for the final video duration.
@@ -58,6 +66,7 @@ dialogue:
   lines:
     - line_id:
       scene_id:
+      source_beat_id:
       dialogue_anchor:
       speaker_role:
       exact_text:
@@ -75,6 +84,8 @@ voice_performance_plan:
 validation:
   strategy_alignment: PASS | NEEDS_REFINEMENT
   storyboard_alignment: PASS | NEEDS_REFINEMENT
+  anchor_resolution: PASS | NEEDS_REFINEMENT | BLOCKED
+  source_freshness: PASS | BLOCKED
   provenance_and_non_fabrication: PASS | BLOCKED
   sensitivity: PASS | NEEDS_REFINEMENT | BLOCKED
   timing: PASS | NEEDS_REFINEMENT
@@ -86,6 +97,6 @@ source_commit_sha:
 
 ## Validation and Invalidation
 
-For video formats, validate that final duration is exactly 20 seconds and generation composition is exactly `10 + 10` seconds. Check the combined spoken-word count against the initial 38–44 word target, unless a documented delivery rationale justifies a different count. Spoken text must fit the storyboard's timing and dialogue anchors. Mark `NEEDS_REFINEMENT` when wording or timing can be corrected without changing the strategy/storyboard. Mark `BLOCKED` if duration is unsupported or coherent dialogue requires fabricated lived experience, unsupported factual claims, unsafe framing, or incompatible story changes.
+For video formats, validate that final duration is exactly 20 seconds and generation composition is exactly `10 + 10` seconds. Check the combined spoken-word count against the initial 38–44 word target, unless a documented delivery rationale justifies a different count. Spoken text must fit the storyboard's timing and dialogue anchors. For every line, validate scene and source beat existence, exact anchor resolution, semantic-intent alignment, target reference ID/version resolution, numeric interval bounds, containment within the anchor action window and scene window, and absence of conflicts with protected pauses or critical visual actions. `anchor_resolution` and `source_freshness` must both be `PASS` before Stage 08 can be marked `COMPLETED`. Missing, stale, or contradictory dependencies must never be silently repaired by inventing a new anchor. Mark `NEEDS_REFINEMENT` when wording or timing can be corrected without changing the strategy/storyboard. Mark `BLOCKED` if duration is unsupported or coherent dialogue requires fabricated lived experience, unsupported factual claims, unsafe framing, or incompatible story changes.
 
 Changes to topic, audience, strategy, hook, storyboard, speaker, audio mode, or delivery constraints invalidate affected voice assets. Mark completed and wait for `/next`.
