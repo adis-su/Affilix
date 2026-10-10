@@ -114,4 +114,4 @@ ENVIRONMENT
 Sesuai referensi gambar yang diupload user.
 ```
 
-The uploaded user image is the visual authority for both attributes. If no uploaded image is available, preserve the required literal strings but record the missing reference as unresolved; never claim to have inspected an unavailable image or invent its contents. Validate exact-string equality for both sections before marking Stage 07 COMPLETED.
+"Gambar yang diupload user" refers to an image uploaded by the user directly to the external AI image-generation provider, not to the Affilix repository. The user must attach that image separately using the provider's reference-image interface. Affilix only emits the prompt instruction and does not host, access, inspect, or verify that image. Validate exact-string equality for both sections before marking Stage 07 COMPLETED.
