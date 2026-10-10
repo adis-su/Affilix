@@ -16,6 +16,12 @@ Required for `CINEMATIC_QUOTE_REELS`, `RELATABLE_STORY_REELS`, `POV_RELATIONSHIP
 
 Current Stage 06 Storyboard and Stage 07 Visual Prompt are required. Stage 08 Voice Script is required only when the selected audio mode requires authored spoken or external dialogue. For silent/no-spoken output, do not invent dialogue or Voice Generation Reference.
 
+## Cross-Stage Source Integrity
+
+Stage 09 must verify that Stage 06, Stage 07, and (when required) Stage 08 are current artifacts for the same campaign and compatible repository snapshot. The Stage 07 artifact must identify the exact Stage 06 storyboard artifact/version it rendered. The Stage 08 artifact must identify the exact Stage 06 storyboard artifact/version whose dialogue anchors it followed. Compare these upstream references before prompt generation; do not infer compatibility solely from matching scene names or visually similar states.
+
+If any required artifact is missing, stale, tied to a different storyboard artifact/version, or generated from an incompatible pinned source snapshot, block Stage 09 with a dependency validation failure and identify the mismatched artifact. Do not repair mismatches by rewriting dialogue, silently substituting reference states, or regenerating only one branch against an older storyboard.
+
 ## Count Invariant
 
 The number of user-facing Video Prompts must equal the number of Storyboard scenes exactly. Emit exactly one standalone `VIDEO PROMPT` Markdown code block per scene, in scene order. Multiple references or generation segments inside a scene never create extra user-facing Video Prompts.
@@ -107,6 +113,8 @@ scenes:
         continuity_requirements: []
         negative_motion_constraints: []
 validation:
+  source_freshness: PASS | BLOCKED
+  dependency_alignment: PASS | BLOCKED
   format_mechanism: PASS | NEEDS_REFINEMENT | BLOCKED
   scene_prompt_count: PASS | NEEDS_REFINEMENT
   reference_fidelity: PASS | NEEDS_REFINEMENT | BLOCKED
@@ -122,4 +130,4 @@ source_commit_sha:
 
 ## Invalidation
 
-Changes to strategy, hook, storyboard, visual references, duration, audio mode, or voice script when required invalidate affected video prompts. Complete and wait for `/next` only after validation.
+Changes to strategy, hook, storyboard, visual references, duration, audio mode, or voice script when required invalidate affected video prompts. `source_freshness` and `dependency_alignment` must both be `PASS` before Stage 09 can be marked `COMPLETED`. Complete and wait for `/next` only after validation.
