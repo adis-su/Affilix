@@ -121,13 +121,13 @@ scenes:
       rationale:
       states:
         - reference_id:
+          reference_version: v1
           sequence_index:
           reference_role: START | INTERMEDIATE | END | BRIDGE
-          reference_version:
           source_beat_id:
           state_summary:
-          critical_state: true | false
           continuity_invariants: []
+          critical_state: true | false
     reference_trajectory:
       ordered_reference_ids: []
       transitions:
