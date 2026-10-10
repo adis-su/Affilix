@@ -22,8 +22,11 @@ Every image prompt represents one frozen visual state, not a motion sequence. Pr
 
 Wardrobe and environment are inherited inputs, not fresh creative decisions, whenever they have already been selected or approved by the user or upstream configuration.
 
-- `WARDROBE`: use the established wardrobe configuration/reference as-is. Do not choose a new outfit, hijab color, fabric, accessories, or styling. Do not restate speculative wardrobe details merely to fill the prompt template.
-- `ENVIRONMENT`: use the established environment configuration/reference as-is. Do not invent or redesign the room, background, furniture, props, layout, palette, or location.
+- The final prompt's `WARDROBE` section must contain exactly this sentence and no additional description: `Sesuai referensi gambar yang diupload user.`
+- The final prompt's `ENVIRONMENT` section must contain exactly this sentence and no additional description: `Sesuai referensi gambar yang diupload user.`
+- These are fixed literal output strings, not paraphrasable guidance. Do not replace them with an English translation, synonyms, inferred details, or an expanded description.
+- The referenced uploaded image is the visual authority for wardrobe and environment. Do not choose a new outfit, hijab color, fabric, accessories, styling, room, background, furniture, props, layout, palette, or location.
+- If no user-uploaded reference image is available in the current context, preserve the required literal strings but mark the missing reference as unresolved in validation/metadata; do not claim that a reference was actually inspected or invent its contents.
 - If an approved visual reference is provided, treat it as the visual authority for the attributes it actually shows. Preserve unseen details as UNKNOWN rather than inventing them.
 - If the upstream configuration already contains a wardrobe or environment, inherit it and refer to its approved reference/configuration. Do not ask the image model to select a replacement.
 - A change is permitted only when explicitly requested or specified by the authoritative Storyboard state. Keep the override scoped to the changed attribute and validate affected downstream references.
@@ -45,9 +48,11 @@ REFERENCE STATE
 SUBJECT
 CREATOR
 WARDROBE
+Sesuai referensi gambar yang diupload user.
 PRODUCT
 POSE & EXPRESSION
 ENVIRONMENT
+Sesuai referensi gambar yang diupload user.
 COMPOSITION
 CAMERA
 LIGHTING
@@ -62,7 +67,7 @@ For Quote Content, use `PRODUCT: NOT APPLICABLE` unless product-centered content
 
 For `QUOTE_IMAGE`, ensure the visual supports the primary statement, maintains legible hierarchy, sufficient contrast and negative space, and avoids fake quote marks/attribution. The image itself is a frozen layout, not a sequence.
 
-For video-format reference prompts, explicitly specify `CAMERA: vertical 9:16, medium close-up/close-up, lens-level, stable framing`; `POSE & EXPRESSION` must identify the exact beat-specific delivery state. `WARDROBE` and `ENVIRONMENT` must inherit approved upstream configuration instead of selecting or redesigning them. `CONTINUITY` must preserve creator identity, inherited wardrobe, established environment, framing logic, and lighting baseline across references unless an explicit, validated change is required.
+For video-format reference prompts, explicitly specify `CAMERA: vertical 9:16, medium close-up/close-up, lens-level, stable framing`; `POSE & EXPRESSION` must identify the exact beat-specific delivery state. The `WARDROBE` and `ENVIRONMENT` sections must each contain only the exact sentence `Sesuai referensi gambar yang diupload user.` `CONTINUITY` must preserve creator identity, wardrobe/environment as shown in the uploaded reference, framing logic, and lighting baseline across references unless an explicit, validated change is required.
 
 ## Reference-State Invariants for Video Formats
 
