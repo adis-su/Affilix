@@ -229,3 +229,26 @@ The following repository references were fetched and checked after changes:
 **STATIC CONSISTENCY REVIEW: PARTIAL PASS. END-TO-END REGRESSION: NOT RUN.**
 
 The repository contains test specifications, not observed end-to-end execution results. No runtime suite or external image/video generation was run as part of this addendum. Do not mark the regression matrix PASS until the listed runtime cases have been executed and their outputs inspected. Phase 04 remains open for runtime execution and observed-result recording.
+
+
+---
+
+## Phase 04 Continuation — Automated Static Contract Validation
+
+### Date
+2026-10-10
+
+### Changes
+- Added `scripts/validate_contracts.py`, a dependency-free static checker for required mode-specific contracts, canonical Stage 01–10 identity, Stage 08/09 engine mappings, no-QC/no-approval architecture, Quote Content static-image skips, reference-state coverage, immutable bridge wording, video prompt/scene cardinality, exact-duration blocking, and regression-matrix coverage.
+- Added `.github/workflows/contract-validation.yml` to run the checker on pushes, pull requests, and manual dispatch.
+- Updated the repository index to distinguish automated static validation from end-to-end runtime execution.
+
+### Observed CI Result
+- Workflow: [Affilix Contract Validation](https://github.com/adis-su/Affilix/actions/runs/38016494355)
+- Commit tested: `a3840be154fe73f617e649e4e6affbbbf668f9c7`
+- Result: **PASS — 27/27 static contract checks.**
+
+### Scope and Remaining Blocker
+The checker verifies repository contract presence and selected cross-file invariants. It does not execute the conversational Skill runtime, create a campaign state, invoke external image/video providers, or prove that runtime-generated outputs obey these contracts.
+
+**Phase 04 status: STATIC CONTRACT CI PASS; END-TO-END REGRESSION STILL NOT RUN.** The 18 Quote Content regression cases remain `NOT RUN` until actual runtime behavior and outputs can be exercised and inspected. Do not treat this CI result as an end-to-end campaign pass.
