@@ -65,7 +65,7 @@ The requested final duration is authoritative. Creative scene durations must sum
 ```yaml
 stage: 06_STORYBOARD
 content_mode: QUOTE_CONTENT
-status: COMPLETED | NEEDS_REFINEMENT | BLOCKED | SKIPPED
+status: COMPLETED | BLOCKED | SKIPPED
 skip_reason: null | STATIC_IMAGE_FORMAT
 metadata:
   strategy_id:
