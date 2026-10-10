@@ -68,7 +68,7 @@ Generation segments are technical subparts of a scene, not additional scenes or 
 ```yaml
 stage: 09_VIDEO_PROMPT
 content_mode: QUOTE_CONTENT
-status: COMPLETED | NEEDS_REFINEMENT | BLOCKED | SKIPPED
+status: COMPLETED | BLOCKED | SKIPPED
 skip_reason: null | STATIC_IMAGE_FORMAT
 audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER | NO_SPOKEN_VOICE
 scenes:
