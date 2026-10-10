@@ -155,8 +155,8 @@ check("exactly two segments total" in output and "no gaps or overlaps" in output
 check("exact Storyboard artifact/version" in authority and
       "Never silently mix artifacts from different Storyboard versions" in authority,
       "Downstream stages must pin the same exact Storyboard version")
-check("Storyboard owns the canonical scene sequence" in video_runtime and "Video Prompt owns motion" in video_runtime and
-      "Voice Script owns exact spoken wording" in voice_runtime,
+check("Storyboard owns creative scene intent and timing" in video_runtime and "Video Prompt owns motion and technical generation segmentation" in video_runtime and
+      "Voice Script owns spoken language and delivery direction only" in voice_runtime,
       "Stage 08/09 runtime contracts preserve field ownership")
 check(all(f"QCR-{i:03d}" in matrix for i in range(27, 33)),
       "Regression matrix includes QCR-027 through QCR-032 for downstream integration")
