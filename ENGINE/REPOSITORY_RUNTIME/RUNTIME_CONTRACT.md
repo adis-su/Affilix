@@ -17,7 +17,7 @@ Affilix Skill
     └── Production Artifacts
 ```
 
-The Project is the user-facing host. GitHub `adis-su/Affilix` on `main` is the implementation source of truth. The Project must not maintain a competing workflow contract.
+The Project is the user-facing host. GitHub `adis-su/Affilix` on `main` is the implementation source of truth. The Project must not maintain a competing workflow contract. `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` is the canonical contract for `UGC_AFFILIATE` versus `QUOTE_CONTENT` selection, mode-specific intake, conditional dependencies, and implementation blockers.
 
 ## Canonical Stage Resolution
 
@@ -55,8 +55,9 @@ Every new `/Affilix` production run must:
 4. record `repository.commit_sha`
 5. pin that commit for the run
 6. load `SKILL.md`, `ENGINE/WORKFLOW.md`, the entry contract, and relevant current engine/library files
-7. create isolated campaign state
-8. start Stage 01
+7. resolve and persist `run.content_mode` using `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`
+8. create isolated mode-specific campaign state
+9. start Stage 01 using the selected mode's intake
 
 The active run must never silently mix repository files from different commits.
 
@@ -109,6 +110,7 @@ run:
   entry_command: /Affilix
   status:
   current_stage:
+  content_mode: UGC_AFFILIATE | QUOTE_CONTENT
   created_at:
 
 repository:
@@ -117,6 +119,13 @@ repository:
   commit_sha:
   loaded_at:
   access_status:
+
+editorial_brief:
+  topic:
+  audience_context:
+  intended_emotional_response:
+  takeaway:
+  provenance: []
 
 campaign:
   platform:
@@ -177,7 +186,7 @@ artifacts:
 
 ## Stage Orchestration
 
-Stages 01 through 06 execute sequentially. Stage 01 establishes campaign requirements, including `campaign.audio_mode`, before downstream dependency planning. After Stage 06, downstream branches execute according to deliverable requirements:
+Mode-specific stage applicability and explicit implementation blockers are governed by `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`. Do not run a product-centered engine for `QUOTE_CONTENT` as an implicit fallback. Stages 01 through 06 execute according to the selected mode's dependencies and sequential progression rules. Stage 01 establishes campaign requirements, including `campaign.audio_mode`, before downstream dependency planning. After Stage 06, downstream branches execute according to deliverable requirements:
 
 - Stage 07 Visual Prompt
 - Stage 08 Voice Script when spoken dialogue is required, including external dialogue under `NO_SPOKEN_VOICE`; otherwise Stage 08 is `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
