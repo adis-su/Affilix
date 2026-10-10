@@ -64,15 +64,30 @@ Natural-language input is supported. Continue to use the existing UGC campaign t
 
 ### Quote Content
 
-Do not request product name or product link as mandatory fields. Collect the minimum editorial brief required to begin Stage 01:
+Do not request product name or product link as mandatory fields. Do not show the UGC campaign template in this mode. Use this Quote Content intake template; users may answer in natural language or leave non-critical preferences to Affilix:
 
-- Platform
-- Tujuan publikasi
-- Target audiens atau konteks audiens
-- Topik/tema atau situasi audiens
-- Dampak emosional atau takeaway yang dituju
+```text
+QUOTE CONTENT BRIEF
 
-Optional constraints may be collected separately when materially relevant. The six-field UGC campaign template is not used for Quote Content.
+Platform:
+Format: Otomatis / Quote Image / Cinematic Quote Reels / Relatable Story Reels / POV Relationship Reels / Mini Storytelling Reels
+Pilar: Otomatis / Curhat Relate Rumah Tangga / Self-Healing Istri & Ibu / Relasi & Komunikasi Pasangan
+Tujuan:
+Durasi video: 18 / 28 / 30 detik
+Voice/Audio: Otomatis / Teks saja / Voice-over / Dialog
+Topik atau konteks khusus (opsional):
+```
+
+Required intake controls are platform, publishing objective, topic/audience context sufficient for a coherent concept, and video duration when a video format is requested. Format and pillar may be left on automatic selection. Audio mode may be inferred from an explicit format/context when safe; otherwise use the minimum-question principle. For static `QUOTE_IMAGE`, duration is `NOT_APPLICABLE`, not a video-duration choice.
+
+Do not collect or require a content quantity/batch-count field or a user-selected CTA field. Affilix may plan batch distribution only when separately requested, and may derive a CTA only when it serves the publishing objective.
+
+For spoken video, the selected duration is a hard creative constraint for script length and timing:
+- 18 seconds: initial target 35–42 spoken words.
+- 28 seconds: initial target 55–65 spoken words.
+- 30 seconds: initial target 60–70 spoken words.
+
+These are initial conversational-delivery ranges, not a substitute for timing validation. Validate the actual script against delivery pace, pauses, speaker changes, and storyboard timing. Do not pad, rush unnaturally, or change the requested duration to fit an overlong script. Text-only videos do not use a spoken-word target; validate on-screen text readability instead.
 
 ## 3. Product Intake State
 
@@ -217,9 +232,7 @@ Platform is a controlled choice. Persist the selected platform as one of:
 
 ### Duration
 
-The default campaign duration is 18 seconds. A `Custom` duration requires an explicit duration value.
-
-The requested duration is the canonical creative duration and must be preserved exactly downstream. Duration feasibility is validated separately against provider-supported generation durations `[4, 6, 8, 10]` using exact segment composition. For example, 18 seconds is feasible as `8 + 10`. If a custom duration cannot be composed exactly, set `duration_feasibility: BLOCKED` and do not silently change, round, truncate, or extend it.
+This UGC Affiliate duration rule applies only to `UGC_AFFILIATE`. For `QUOTE_CONTENT` video formats, the only user-selectable durations are 18, 28, and 30 seconds. Their exact segment compositions are respectively `8 + 10`, `10 + 10 + 8`, and `10 + 10 + 10`, using provider-supported segments `[4, 6, 8, 10]`. Preserve the selected final duration exactly. Do not silently change, round, truncate, extend, or pad the video. For static `QUOTE_IMAGE`, duration is `NOT_APPLICABLE`.
 
 ### Content Objective
 
@@ -261,7 +274,7 @@ For `UGC_AFFILIATE`, Stage 01 must have:
 - one requested creator selected from the current repository Creator Library
 - one resolved Audio / Voice Mode and dialogue-layer state
 
-For `QUOTE_CONTENT`, validate the editorial brief fields and only those campaign controls required by the selected editorial format. Product identity and creator identity are not mandatory by default. Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
+For `QUOTE_CONTENT`, validate the editorial brief and applicable controls: platform, objective, topic/audience context, and a supported duration of exactly 18, 28, or 30 seconds for video formats. Static `QUOTE_IMAGE` uses `duration: NOT_APPLICABLE`. Format and pillar can be automatic or explicit; audio mode must be resolved when it changes stage dependencies. Product identity and creator identity are not mandatory by default. Do not add user input fields for content quantity or CTA. Do not use `UNKNOWN` as a substitute for a required user choice when the choice can be presented or derived safely.
 
 After validation, mark Stage 01 COMPLETED and wait for `/next`.
 
