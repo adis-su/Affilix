@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#!/usr/bin/env python3
 """Static contract checks for Affilix.
 
 These checks verify repository wiring and critical documented invariants.
