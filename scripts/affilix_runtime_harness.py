@@ -39,6 +39,11 @@ DOWNSTREAM: dict[str, tuple[str, ...]] = {
 }
 
 
+class ContentMode(str, Enum):
+    UGC_AFFILIATE = "UGC_AFFILIATE"
+    QUOTE_CONTENT = "QUOTE_CONTENT"
+
+
 class StageStatus(str, Enum):
     NOT_STARTED = "NOT_STARTED"
     DRAFT = "DRAFT"
@@ -63,6 +68,9 @@ class StageRecord:
 class RunState:
     run_id: str
     pinned_commit_sha: str
+    content_mode: ContentMode = ContentMode.UGC_AFFILIATE
+    selected_format: str = "VIDEO"
+    audio_mode: str = "SPOKEN_ON_CAMERA"
     current_stage: str = STAGES[0]
     progression: str = "ACTIVE"
     stages: dict[str, StageRecord] = field(
@@ -188,3 +196,100 @@ def mark_completed(state: RunState, stage: str, *, commit_sha: str | None = None
     record.validated = True
     record.artifact_version = max(1, record.artifact_version)
     state.artifact_source_commits[stage] = commit_sha or state.pinned_commit_sha
+
+
+
+def resolve_stage_plan(
+    content_mode: str,
+    *,
+    selected_format: str = "VIDEO",
+    audio_mode: str = "SPOKEN_ON_CAMERA",
+    creator_required: bool = True,
+    strategy_allows_hook_skip: bool = False,
+    external_dialogue_required: bool = False,
+) -> dict[str, dict[str, str]]:
+    """Resolve conditional stage applicability from the routing contract.
+
+    Returned entries contain status (REQUIRED or SKIPPED) and, for skips, a reason.
+    This is a deterministic model of the documented routing contract, not a Skill
+    invocation or provider execution.
+    """
+    if content_mode not in {mode.value for mode in ContentMode}:
+        raise RuntimeBlocked(f"UNSUPPORTED_CONTENT_MODE:{content_mode}")
+    mode = ContentMode(content_mode)
+    fmt = selected_format.strip().upper()
+    audio = audio_mode.strip().upper()
+    if audio not in {"SPOKEN_ON_CAMERA", "VOICE_OVER", "NO_SPOKEN_VOICE"}:
+        raise RuntimeBlocked(f"UNSUPPORTED_AUDIO_MODE:{audio_mode}")
+    if mode == ContentMode.QUOTE_CONTENT and not fmt:
+        raise RuntimeBlocked("QUOTE_CONTENT_FORMAT_REQUIRED")
+
+    plan = {
+        stage: {"status": "REQUIRED", "reason": ""}
+        for stage in STAGES
+    }
+
+    def skip(stage: str, reason: str) -> None:
+        plan[stage] = {"status": "SKIPPED", "reason": reason}
+
+    if mode == ContentMode.QUOTE_CONTENT and not creator_required:
+        skip("03_CREATOR", "NO_ON_SCREEN_CREATOR_REQUIRED")
+
+    if mode == ContentMode.QUOTE_CONTENT and fmt == "QUOTE_IMAGE":
+        if strategy_allows_hook_skip:
+            skip("05_HOOK", "STATIC_IMAGE_FORMAT")
+        skip("06_STORYBOARD", "STATIC_IMAGE_FORMAT")
+        skip("08_VOICE_SCRIPT", "STATIC_IMAGE_FORMAT")
+        skip("09_VIDEO_PROMPT", "STATIC_IMAGE_FORMAT")
+        return plan
+
+    if mode == ContentMode.QUOTE_CONTENT and fmt not in {
+        "VIDEO", "RELATABLE_STORY_REELS", "TALKING_HEAD", "QUOTE_VIDEO"
+    }:
+        raise RuntimeBlocked(f"UNSUPPORTED_QUOTE_CONTENT_FORMAT:{fmt}")
+
+    if not creator_required and mode == ContentMode.UGC_AFFILIATE:
+        raise RuntimeBlocked("UGC_CREATOR_REQUIREMENT_CANNOT_BE_SKIPPED")
+
+    if audio == "NO_SPOKEN_VOICE" and not external_dialogue_required:
+        reason = (
+            "NO_SPOKEN_VOICE_REQUIRED"
+            if mode == ContentMode.QUOTE_CONTENT
+            else "AUDIO_MODE_NO_SPOKEN_VOICE"
+        )
+        skip("08_VOICE_SCRIPT", reason)
+    else:
+        plan["08_VOICE_SCRIPT"] = {"status": "REQUIRED", "reason": ""}
+
+    return plan
+
+
+def change_content_mode(state: RunState, new_mode: str) -> RunState:
+    """Prevent in-place cross-mode mutation; mode changes require a fresh isolated run."""
+    if new_mode not in {mode.value for mode in ContentMode}:
+        raise RuntimeBlocked(f"UNSUPPORTED_CONTENT_MODE:{new_mode}")
+    if new_mode != state.content_mode.value:
+        raise RuntimeBlocked("CONTENT_MODE_CHANGE_REQUIRES_NEW_ISOLATED_RUN")
+    return state
+
+
+def new_isolated_run(
+    *,
+    run_id: str,
+    pinned_commit_sha: str,
+    content_mode: str,
+    selected_format: str = "VIDEO",
+    audio_mode: str = "SPOKEN_ON_CAMERA",
+) -> RunState:
+    """Create a fresh run with no inherited artifacts from another mode/run."""
+    if content_mode not in {mode.value for mode in ContentMode}:
+        raise RuntimeBlocked(f"UNSUPPORTED_CONTENT_MODE:{content_mode}")
+    if not pinned_commit_sha.strip():
+        raise RuntimeBlocked("REPOSITORY_SYNC_FAILURE: resolved commit SHA is empty")
+    return RunState(
+        run_id=run_id,
+        pinned_commit_sha=pinned_commit_sha,
+        content_mode=ContentMode(content_mode),
+        selected_format=selected_format,
+        audio_mode=audio_mode,
+    )
