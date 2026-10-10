@@ -45,6 +45,8 @@ Phase 04 verifies that Quote Content mode contracts, the canonical ten-stage wor
 | QCR-021 | 20-second spoken word budget | Spoken script targets 38–44 words total, with timing validated against delivery pace, pauses, emotional beats, and both 10-second segments | Critical | NOT RUN |
 | QCR-022 | Text-only duration behavior | Text-only output does not invent spoken dialogue or enforce a spoken-word budget; on-screen text legibility and reading time are validated | Major | NOT RUN |
 
+| QCR-023 | Exact wardrobe/environment literals in every Stage 07 prompt | Under `QUOTE_CONTENT`, the entire `WARDROBE` section is exactly `Sesuai referensi gambar yang diupload user.` and the entire `ENVIRONMENT` section is exactly the same sentence; no hijab/outfit details or room/background prose may be appended; violating output is repaired or blocked, never marked complete | Critical | NOT RUN |
+
 ## Execution Protocol
 
 For each case:
