@@ -53,8 +53,7 @@ Stage 03 Creator is optional. If the selected format requires a visible on-scree
 
 ### Subpillar Selection
 
-The canonical subpillar catalogue and exploration rules live in `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md`. Stage 04 must display exactly 15 selectable subpillar candidates for the active pillar and expose a `Ganti Subpilar` action that produces 15 fresh, semantically distinct alternatives per activation. The user explicitly selects one subpillar. Track all batches and selections per pillar within the run to prevent repeated or cosmetic variants. Generate more valid candidates when the finite catalogue cannot provide a fresh batch; never duplicate or pad. Apply editorial safety validation to every batch and to the final content angle. Store subpillar ID/name/rationale, batch ID/number/history, content angle, and safety validation in the Stage 04 artifact. A refresh alone does not invalidate downstream artifacts; changing the selected pillar, subpillar, or angle does.
-
+The canonical subpillar catalogue and exploration rules live in `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md`. Stage 02 owns user-facing pillar/subpillar selection and the `Ganti Subpilar` action. Stage 04 consumes the validated Stage 02 pillar/subpillar, chooses the content format, and defines the content angle, editorial message, emotional strategy, and takeaway. Do not display a duplicate subpillar picker in Stage 04 unless the user explicitly requests a revision. Stage 04 records the consumed Stage 02 subpillar ID/name and provenance alongside the angle and editorial safety validation. A refresh in Stage 02 alone does not invalidate Stage 04 until the user selects a different subpillar; changing the selected pillar/subpillar invalidates Stage 04 and affected downstream artifacts.
 ### Editorial Mix
 
 The initial batch-planning hypothesis is:
