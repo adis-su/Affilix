@@ -66,7 +66,7 @@ Validate single-frame integrity, exact text/message fidelity, format mechanism v
 ```yaml
 stage: 07_VISUAL_PROMPT
 content_mode: QUOTE_CONTENT
-status: COMPLETED | NEEDS_REFINEMENT | BLOCKED
+status: COMPLETED | BLOCKED
 format_id:
 prompts:
   - prompt_id:
