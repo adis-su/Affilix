@@ -62,7 +62,8 @@ class RuntimeProgressionTests(unittest.TestCase):
         mark_completed(state, STAGES[1])
         state.current_stage = STAGES[1]
         state.progression = "WAITING_FOR_NEXT"
-        next_stage(state, resolved_main_sha="commit-b")
+        with self.assertRaisesRegex(RuntimeBlocked, "CURRENT_STAGE_NOT_VALIDATED"):
+            next_stage(state, resolved_main_sha="commit-b")
         self.assertEqual(state.pinned_commit_sha, "commit-b")
         self.assertEqual(state.stages[STAGES[0]].status, StageStatus.STALE)
         self.assertEqual(state.stages[STAGES[1]].status, StageStatus.STALE)
