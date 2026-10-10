@@ -228,6 +228,12 @@ There is no `REVIEW` state because Affilix has no approval workflow.
 
 `/next` first synchronizes the active run against the current `main` repository contract when the repository has changed, then advances the active run after the current stage completes validation. It does not represent approval, acceptance, endorsement, or waiver of validation.
 
+### Completed-Stage Hold and Stage 05 → Stage 06 Handoff
+
+A completed-stage status must never trigger automatic execution of the next stage. After Stage 05 — Hook passes validation and a final hook is selected, the runtime must persist the exact selected hook artifact/ID, mark Stage 05 `COMPLETED`, keep `run.current_stage = 05`, and set progression to `WAITING_FOR_NEXT`. The user-facing status must make clear that the hook is locked for the active run and Stage 06 — Storyboard has not started.
+
+On `/next`, synchronize repository state first, then verify Stage 05 is `COMPLETED`, its selected hook artifact exists and is current, and all Stage 06 prerequisites are satisfied. Only then may Stage 06 execute, using that exact hook artifact. Do not silently regenerate or replace the selected hook. If the hook is missing, stale, or invalid, block progression and revalidate Stage 05 before continuing. Revisions must revalidate the current stage and then wait for another explicit `/next`; they never advance automatically.
+
 ## Dependency and Stale-State Rules
 
 When a completed upstream canonical input changes:
