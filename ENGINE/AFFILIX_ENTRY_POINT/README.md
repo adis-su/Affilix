@@ -64,19 +64,23 @@ Natural-language input is supported. Continue to use the existing UGC campaign t
 
 ### Quote Content
 
-Do not request product name or product link as mandatory fields. Do not show the UGC campaign template in this mode. Use this Quote Content intake template; users may answer in natural language or leave non-critical preferences to Affilix:
+Do not request product name or product link as mandatory fields. Do not show the UGC campaign template in this mode. Use an interactive, click-to-select intake for Quote Content. Do not present the options below as a plain-text template that users must copy, type, or manually reproduce. In the ChatGPT interface, render native interactive controls (for example, radio groups, segmented controls, or dropdowns) for the fixed-choice fields, and a text input for the optional topic/context. If interactive controls are unavailable in a particular client, show a concise numbered fallback and accept natural-language answers.
 
-```text
-QUOTE CONTENT BRIEF
+### Quote Content Interactive Intake
 
-Platform:
-Format: Otomatis / Quote Image / Cinematic Quote Reels / Relatable Story Reels / POV Relationship Reels / Mini Storytelling Reels
-Pilar: Otomatis / Curhat Relate Rumah Tangga / Self-Healing Istri & Ibu / Relasi & Komunikasi Pasangan
-Tujuan:
-Durasi video: 18 / 28 / 30 detik
-Voice/Audio: Otomatis / Teks saja / Voice-over / Dialog
-Topik atau konteks khusus (opsional):
-```
+Render these fields as selectable controls:
+
+- **Platform** — required selection: TikTok, Instagram Reels, Facebook, or other supported platform. Use only platforms supported by the current repository contract.
+- **Format** — optional preference; default to **Otomatis (AI memilih)**. Choices: Quote Image, Cinematic Quote Reels, Relatable Story Reels, POV Relationship Reels, Mini Storytelling Reels.
+- **Pilar** — optional preference; default to **Otomatis (AI memilih)**. Choices: Curhat Relate Rumah Tangga, Self-Healing Istri & Ibu, Relasi & Komunikasi Pasangan.
+- **Tujuan publikasi** — required selection, presented as concise clickable options appropriate to editorial content, such as engagement, relatability/community, emotional reflection, or relationship communication/education. Do not expose product-sales objectives in Quote Content mode unless the user explicitly reclassifies the run.
+- **Durasi video** — required only for video formats: 18 detik, 28 detik, or 30 detik. For Quote Image, automatically set duration to NOT_APPLICABLE and hide/disable this control.
+- **Voice/Audio** — selectable options: Otomatis (AI memilih), Teks saja, Voice-over, Dialog. Resolve the selected option into the canonical audio/dialogue state before downstream dependency planning.
+- **Topik atau konteks khusus** — optional free-text input. The user may leave it blank and let Affilix derive a coherent topic from the selected pillar, objective, and available editorial context.
+
+Use concise labels and sensible defaults. Do not force users to fill optional fields, do not request a content quantity/batch-count field, and do not add a user-selected CTA field. CTA remains an editorial decision only when it serves the objective.
+
+When the interface supports interactive controls, collect selections through those controls and normalize their values into the existing canonical brief schema. Do not change stage IDs, downstream contracts, or the existing UGC Affiliate intake.
 
 Required intake controls are platform, publishing objective, topic/audience context sufficient for a coherent concept, and video duration when a video format is requested. Format and pillar may be left on automatic selection. Audio mode may be inferred from an explicit format/context when safe; otherwise use the minimum-question principle. For static `QUOTE_IMAGE`, duration is `NOT_APPLICABLE`, not a video-duration choice.
 
