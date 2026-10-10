@@ -42,7 +42,7 @@ Before collecting mode-specific intake, resolve exactly one `run.content_mode` v
 - `UGC_AFFILIATE`
 - `QUOTE_CONTENT`
 
-Do not inherit mode or production artifacts from another run. `UGC_AFFILIATE` retains the existing product evidence, claim safety, creator identity, action choreography, reference graph, and exact-duration rules. `QUOTE_CONTENT` must not fabricate a product dependency or silently fall back to product-centered UGC behavior. Stage 02 editorial context, Stage 04 strategy, and Stage 05 hook use their mode-specific contracts. Until the applicable downstream production engines and Quote Content output contract are implemented, block unsupported required stages with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`.
+Do not inherit mode or production artifacts from another run. `UGC_AFFILIATE` retains the existing product evidence, claim safety, creator identity, action choreography, reference graph, and exact-duration rules. `QUOTE_CONTENT` must not fabricate a product dependency or silently fall back to product-centered UGC behavior. Stage 02 editorial context, Stage 04 strategy, and Stage 05 hook use their mode-specific contracts. For Stages 06–10, load the applicable contracts listed in `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`: Quote Content Storyboard, Visual Prompt, conditional Voice Script, Video Prompt, and `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`. Block missing, stale, or invalid required artifacts; do not fall back to UGC output.
 
 ## UGC Naturalism
 
@@ -71,7 +71,7 @@ Execute each run using the canonical ten-stage registry and the selected mode's 
 7. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md
 8. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken dialogue is required, including external dialogue under `NO_SPOKEN_VOICE`; otherwise mark Stage 08 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
 9. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
-10. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md for `UGC_AFFILIATE`; for `QUOTE_CONTENT`, use the mode-specific output contract when implemented and otherwise block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`.
+10. `ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md` for `UGC_AFFILIATE`; `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md` for `QUOTE_CONTENT`.
 
 Do not skip an upstream stage when a downstream stage depends on it.
 
