@@ -35,7 +35,7 @@ Avoid universal claims about all spouses, fabricated quotation attribution, fake
 ```yaml
 stage: 08_VOICE_SCRIPT
 content_mode: QUOTE_CONTENT
-status: COMPLETED | NEEDS_REFINEMENT | BLOCKED | SKIPPED
+status: COMPLETED | BLOCKED | SKIPPED
 skip_reason: null | STATIC_IMAGE_FORMAT | NO_SPOKEN_VOICE_REQUIRED
 audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER | NO_SPOKEN_VOICE
 dialogue:
