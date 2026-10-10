@@ -18,6 +18,16 @@ Every image prompt represents one frozen visual state, not a motion sequence. Pr
 
 
 
+### Locked Wardrobe and Environment Inheritance
+
+Wardrobe and environment are inherited inputs, not fresh creative decisions, whenever they have already been selected or approved by the user or upstream configuration.
+
+- `WARDROBE`: use the established wardrobe configuration/reference as-is. Do not choose a new outfit, hijab color, fabric, accessories, or styling. Do not restate speculative wardrobe details merely to fill the prompt template.
+- `ENVIRONMENT`: use the established environment configuration/reference as-is. Do not invent or redesign the room, background, furniture, props, layout, palette, or location.
+- If an approved visual reference is provided, treat it as the visual authority for the attributes it actually shows. Preserve unseen details as UNKNOWN rather than inventing them.
+- If the upstream configuration already contains a wardrobe or environment, inherit it and refer to its approved reference/configuration. Do not ask the image model to select a replacement.
+- A change is permitted only when explicitly requested or specified by the authoritative Storyboard state. Keep the override scoped to the changed attribute and validate affected downstream references.
+
 ### Background Reference Lock
 
 When the user provides an approved background/environment reference, that reference is the sole visual authority for the background. The image prompt must explicitly instruct the image model to preserve the reference background as-is, including location/layout, architecture, furniture, objects, object placement, surface details, colors, perspective, depth, and visible lighting cues. Do not redesign, replace, extend, beautify, declutter, restyle, or invent background elements. The creator may be composited into the referenced environment only as needed; changes to the creator must not cause changes to the background. If no background reference is supplied, use only the established scene environment and do not claim a reference lock. Include the background reference in `environment_references` and continuity metadata when provided. For video, preserve the same background across every reference state and generation segment; only change it when the user explicitly requests a background change.Visual direction may define composition, typography style, contrast, palette, lighting, environment, camera/framing, and emotional tone. It must not invent a creator identity or imply that a fictional scene is a real user's personal experience.
@@ -52,7 +62,7 @@ For Quote Content, use `PRODUCT: NOT APPLICABLE` unless product-centered content
 
 For `QUOTE_IMAGE`, ensure the visual supports the primary statement, maintains legible hierarchy, sufficient contrast and negative space, and avoids fake quote marks/attribution. The image itself is a frozen layout, not a sequence.
 
-For video-format reference prompts, explicitly specify `CAMERA: vertical 9:16, medium close-up/close-up, lens-level, stable framing`; `POSE & EXPRESSION` must identify the exact beat-specific delivery state, and `CONTINUITY` must lock creator identity, wardrobe, location, framing, and lighting across references.
+For video-format reference prompts, explicitly specify `CAMERA: vertical 9:16, medium close-up/close-up, lens-level, stable framing`; `POSE & EXPRESSION` must identify the exact beat-specific delivery state. `WARDROBE` and `ENVIRONMENT` must inherit approved upstream configuration instead of selecting or redesigning them. `CONTINUITY` must preserve creator identity, inherited wardrobe, established environment, framing logic, and lighting baseline across references unless an explicit, validated change is required.
 
 ## Reference-State Invariants for Video Formats
 
