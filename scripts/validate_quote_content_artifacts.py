@@ -116,6 +116,8 @@ def validate_bundle(bundle: dict[str, Any]) -> list[str]:
     def source_matches(artifact: dict[str, Any], artifact_name: str) -> None:
         sources = artifact.get("source_artifacts", [])
         src = _source_identity(sources, "STORYBOARD")
+        if src is None and isinstance(sources, dict):
+            src = sources.get("stage_06")
         if src is None:
             # Canonical Stage 07 also records the exact storyboard identity on each prompt.
             prompts = artifact.get("prompts", [])
