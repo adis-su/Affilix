@@ -9,10 +9,10 @@ Affilix supports two routed content modes: `UGC_AFFILIATE` for product-centered 
 1. [SKILL.md](SKILL.md) — runtime entry point and governing behavior
 2. [ENGINE/WORKFLOW.md](ENGINE/WORKFLOW.md) — canonical stage registry, dependency, invalidation, reclassification, and revision contract
 3. [ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md](ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md) — content mode selection, mode-specific intake, conditional stage dependencies, and implementation blockers
-3. [ENGINE/NICHE_CONTEXT_LOADER/README.md](ENGINE/NICHE_CONTEXT_LOADER/README.md) — canonical runtime context
-4. [ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md](ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md) — final production output contract
-5. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
-6. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT Project interface boundary
+4. [ENGINE/NICHE_CONTEXT_LOADER/README.md](ENGINE/NICHE_CONTEXT_LOADER/README.md) — canonical runtime context
+5. [ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md](ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md) — final production output contract
+6. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
+7. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT Project interface boundary
 
 ## Repository Map
 
@@ -38,6 +38,7 @@ Affilix supports two routed content modes: `UGC_AFFILIATE` for product-centered 
 | PRODUCT_LIBRARY/NICHE_SYSTEM/ | Niche registry and shared context schemas |
 | PRODUCT_LIBRARY/NICHES/ | Niche-specific rules and product-type behavior |
 | EXAMPLES/ | Fixtures, test matrices, E2E tests, and contract tests |
+| EXAMPLES/CONTENT_MODE_ROUTING_FIXTURES.md | Regression fixtures for mode selection, isolation, blocking, and UGC compatibility |
 | REPOSITORY_ARCHITECTURE_AUDIT.md | Latest architecture audit and maintenance findings |
 | SKILL_PACKAGING_RELEASE_AUDIT.md | v1 packaging and release audit |
 
