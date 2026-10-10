@@ -1,8 +1,8 @@
-# AFFILIX — UGC AFFILIATE SKILL
+# AFFILIX — CONTENT PRODUCTION SKILL
 
 ## Purpose
 
-Affilix is a ChatGPT-native UGC Affiliate production system. It converts a product brief, creator identity, references, and campaign constraints into structured production outputs.
+Affilix is a ChatGPT-native content production system with two routed modes: `UGC_AFFILIATE` for product-centered affiliate production and `QUOTE_CONTENT` for editorial, quote-led social content. It converts mode-specific briefs, context, and campaign constraints into structured production outputs. Mode selection and conditional dependencies are governed by `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
 
 This file is the runtime entry point. Detailed rules, schemas, context definitions, engine behavior, regression fixtures, and interface behavior live in the repository.
 
@@ -14,14 +14,7 @@ When `/Affilix` is invoked, start a new isolated production run and follow `ENGI
 
 Repository resolution, commit pinning, source loading, and runtime bootstrap are internal operations. Never expose commit SHAs, repository resolution details, internal source-of-truth mechanics, or bootstrap diagnostics in the user-facing opening response.
 
-The canonical opening response is exactly:
-
-```
-STAGE 01 — Product Intake
-Silakan isi:
-Nama Produk:
-Link Produk:
-```
+For a new run without an explicitly stated content mode, use the Content Mode Selector defined in `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`. After mode selection, show only the intake fields required by that mode. The existing Product Intake opening remains canonical inside `UGC_AFFILIATE` mode.
 
 Stage 01 user-facing output starts with Product Intake and collects the required campaign requirements before completion. Campaign requirements are part of Stage 01 and there is no separate Campaign Intake stage. A copyable campaign template is defined in `ENGINE/AFFILIX_ENTRY_POINT/README.md` and may be presented after Product Intake when campaign requirements are collected.
 
@@ -42,6 +35,15 @@ Canonical mappings include:
 
 If any engine message, artifact, or runtime state conflicts with the canonical registry, treat it as a contract error and stop the affected handoff. Never guess or derive stage order from folder numbers.
 
+## Content Mode Routing
+
+Before collecting mode-specific intake, resolve exactly one `run.content_mode` value using `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`:
+
+- `UGC_AFFILIATE`
+- `QUOTE_CONTENT`
+
+Do not inherit mode or production artifacts from another run. `UGC_AFFILIATE` retains the existing product evidence, claim safety, creator identity, action choreography, reference graph, and exact-duration rules. `QUOTE_CONTENT` must not fabricate a product dependency or silently fall back to product-centered UGC behavior. Until its downstream engines are implemented, block unsupported Quote Content stages with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`.
+
 ## UGC Naturalism
 
 Affilix must optimize for behaviorally believable UGC, not merely photorealistic output. The canonical cross-stage constraint is `ENGINE/UGC_NATURALISM_CONTRACT.md`.
@@ -58,7 +60,7 @@ Affilix must behave as one end-to-end production system, not as a collection of 
 
 ## Canonical Runtime Pipeline
 
-Execute each run in this order. After each stage is validated and completed, wait for `/next` before starting the next dependency-satisfied stage:
+Execute each run using the canonical ten-stage registry and the selected mode's conditional dependencies. After each required stage is validated and completed, wait for `/next` before starting the next dependency-satisfied stage. Stage IDs and engine mappings remain unchanged; mode-specific skips and blockers are defined in `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
 
 1. ENGINE/01_BRIEF_ANALYZER/README.md
 2. ENGINE/NICHE_CONTEXT_LOADER/README.md
@@ -77,7 +79,8 @@ Do not skip an upstream stage when a downstream stage depends on it.
 
 Every production run has one isolated runtime state:
 
-- normalized brief
+- `run.content_mode`: `UGC_AFFILIATE` or `QUOTE_CONTENT`
+- mode-specific normalized brief
 - campaign requirements (platform, duration, objective, audience, requested creator, Audio / Voice Mode, and dialogue layer when applicable)
 - Stage 01 structured campaign choice state, audio mode, and audience provenance
 - creator
@@ -98,7 +101,7 @@ If a canonical input changes, dependent state becomes STALE until regenerated an
 
 Normalize the brief and classify information as EXPLICIT, REFERENCE, SUPPORTED, INFERRED, or UNKNOWN. Never convert assumptions into facts.
 
-Stage 01 Brief & Product resolves the product brief and campaign requirements, including platform, exact requested duration, objective, audience, requested creator, and Audio / Voice Mode, before downstream dependency planning. When dialogue is requested independently of native video audio, persist a separate dialogue layer with provider and synchronization requirements. Audio / Voice Mode is persisted as `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE` before downstream dependency planning. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
+Stage 01 resolves the mode-specific brief before downstream dependency planning. For `UGC_AFFILIATE`, it resolves product identity and the existing campaign requirements, including platform, exact requested duration, objective, audience, requested creator, and Audio / Voice Mode. For `QUOTE_CONTENT`, it resolves the editorial brief without requiring a product, product claims, or product demonstration; use the routing contract and block downstream stages whose Quote Content engine contract is not yet implemented. When dialogue is requested independently of native video audio, persist a separate dialogue layer with provider and synchronization requirements. Audio / Voice Mode is persisted as `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE` before downstream dependency planning. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
 
 Load one canonical niche context. Missing values remain UNKNOWN. Explicit product and creator facts outrank context labels.
 
