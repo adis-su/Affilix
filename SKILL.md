@@ -42,7 +42,7 @@ Before collecting mode-specific intake, resolve exactly one `run.content_mode` v
 - `UGC_AFFILIATE`
 - `QUOTE_CONTENT`
 
-Do not inherit mode or production artifacts from another run. `UGC_AFFILIATE` retains the existing product evidence, claim safety, creator identity, action choreography, reference graph, and exact-duration rules. `QUOTE_CONTENT` must not fabricate a product dependency or silently fall back to product-centered UGC behavior. Until its downstream engines are implemented, block unsupported Quote Content stages with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`.
+Do not inherit mode or production artifacts from another run. `UGC_AFFILIATE` retains the existing product evidence, claim safety, creator identity, action choreography, reference graph, and exact-duration rules. `QUOTE_CONTENT` must not fabricate a product dependency or silently fall back to product-centered UGC behavior. Stage 02 editorial context, Stage 04 strategy, and Stage 05 hook use their mode-specific contracts. Until the applicable downstream production engines and Quote Content output contract are implemented, block unsupported required stages with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`.
 
 ## UGC Naturalism
 
@@ -71,7 +71,7 @@ Execute each run using the canonical ten-stage registry and the selected mode's 
 7. ENGINE/06_VISUAL_PROMPT_ENGINE/README.md
 8. ENGINE/08_VOICE_SCRIPT_ENGINE/README.md when spoken dialogue is required, including external dialogue under `NO_SPOKEN_VOICE`; otherwise mark Stage 08 `SKIPPED` with reason `AUDIO_MODE_NO_SPOKEN_VOICE`
 9. ENGINE/07_VIDEO_PROMPT_ENGINE/README.md when video output is required
-10. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md
+10. ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md for `UGC_AFFILIATE`; for `QUOTE_CONTENT`, use the mode-specific output contract when implemented and otherwise block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`.
 
 Do not skip an upstream stage when a downstream stage depends on it.
 
@@ -103,7 +103,7 @@ Normalize the brief and classify information as EXPLICIT, REFERENCE, SUPPORTED, 
 
 Stage 01 resolves the mode-specific brief before downstream dependency planning. For `UGC_AFFILIATE`, it resolves product identity and the existing campaign requirements, including platform, exact requested duration, objective, audience, requested creator, and Audio / Voice Mode. For `QUOTE_CONTENT`, it resolves the editorial brief without requiring a product, product claims, or product demonstration; use the routing contract and block downstream stages whose Quote Content engine contract is not yet implemented. When dialogue is requested independently of native video audio, persist a separate dialogue layer with provider and synchronization requirements. Audio / Voice Mode is persisted as `SPOKEN_ON_CAMERA`, `VOICE_OVER`, or `NO_SPOKEN_VOICE` before downstream dependency planning. Target audience is initially derived from validated Stage 01 product research and may be corrected by the user. Creator choices are enumerated from the current pinned `CREATOR_LIBRARY/`, never from a hard-coded list.
 
-Load one canonical niche context. Missing values remain UNKNOWN. Explicit product and creator facts outrank context labels.
+Load one canonical mode-appropriate context. For `UGC_AFFILIATE`, missing product/niche values remain UNKNOWN and explicit product/creator facts outrank context labels. For `QUOTE_CONTENT`, load editorial niche, audience context, topic context, and sensitivity flags without manufacturing product dimensions.
 
 Load the selected Creator Library records and preserve identity across scenes. Never invent missing creator attributes.
 
