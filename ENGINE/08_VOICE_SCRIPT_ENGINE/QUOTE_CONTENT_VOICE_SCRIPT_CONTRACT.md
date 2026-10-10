@@ -24,7 +24,7 @@ Voice Script owns exact spoken wording, speaker identity/role, pronunciation not
 
 Stage 08 consumes only the current, validated Stage 06 artifact for the active campaign and repository snapshot. Record the storyboard artifact ID/version (or canonical source artifact reference) in `source_artifacts`; preserve its `source_commit_sha`. Do not use a stale storyboard or silently mix artifacts generated from different source commits.
 
-Each dialogue line MUST bind to an existing storyboard `scene_id` and `dialogue_anchor` from a specific Stage 06 beat. The line's `dialogue_anchor` field must identify that anchor unambiguously (prefer `beat_id` plus `anchor_id` when multiple anchors exist; otherwise use the unique `beat_id`). Preserve the anchor's `semantic_intent`. Require numeric `start_time` and `end_time` in seconds on the final-video timeline, with `0 <= start_time < end_time <= 20`. The line interval must fit entirely inside the anchor's `action_window` and its owning scene window. The referenced `target_reference` must resolve to the exact declared `reference_id@reference_version` in Stage 06. No nearest-reference, missing-anchor, inferred-timing, or stale-artifact fallback is permitted.
+Each dialogue line MUST bind to an existing storyboard `scene_id` and `dialogue_anchor` from a specific Stage 06 beat. The line's `dialogue_anchor` object must identify that anchor unambiguously using `beat_id` and, when a beat contains multiple anchors, `anchor_id`. Preserve the anchor's `semantic_intent`. Require numeric `start_time` and `end_time` in seconds on the final-video timeline, with `0 <= start_time < end_time <= 20`. The line interval must fit entirely inside the anchor's `action_window` and its owning scene window. The referenced `target_reference` must resolve to the exact declared `reference_id@reference_version` in Stage 06. No nearest-reference, missing-anchor, inferred-timing, or stale-artifact fallback is permitted.
 
 Validate line-level intervals as well as total duration. Reject or refine any line that overlaps a storyboard-declared protected pause, critical reaction, or visually dependent action. Concurrent speech is allowed only when the storyboard explicitly permits it and it does not contradict the action's semantic intent. If a line cannot fit, first shorten or re-deliver the wording while preserving meaning; if that cannot satisfy the anchor, return `NEEDS_REFINEMENT` or `BLOCKED` as appropriate rather than editing Storyboard timing from Stage 08.
 
@@ -68,6 +68,8 @@ dialogue:
       scene_id:
       source_beat_id:
       dialogue_anchor:
+        beat_id:
+        anchor_id: null | string
       speaker_role:
       exact_text:
       intended_meaning:
