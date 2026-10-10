@@ -229,3 +229,93 @@ Phase 01 does not certify Quote Content end-to-end production. That depends on P
 
 - Every individual post is forced to meet batch percentages.
 - The mix is described as a proven platform algorithm requirement.
+
+
+## CM-012 — Quote Content Storyboard Preserves Editorial Format
+
+**Input**
+
+- `QUOTE_CONTENT` strategy selects `RELATABLE_STORY_REELS`.
+- Current hook identifies a concrete, non-sensitive household situation.
+
+**Expected**
+
+- Stage 06 uses `QUOTE_CONTENT_STORYBOARD_CONTRACT.md`.
+- Each scene expresses trigger → intention → action → resulting state.
+- No product demo, invented testimony, or generic UGC product sequence is introduced.
+- Reference trajectory and immutable bridge IDs are preserved.
+
+**Fail if**
+
+- The storyboard invokes product-proof requirements without a product brief.
+- A changed bridge reference is not propagated to dependent transitions.
+
+## CM-013 — Quote Content Visual Prompt Coverage
+
+**Input**
+
+- A video storyboard declares multiple reference states across scenes, including one shared bridge reference.
+
+**Expected**
+
+- Stage 07 emits exactly one static image prompt per declared reference state.
+- Every prompt describes one frozen state.
+- Shared bridge references use the same ID and version.
+
+**Fail if**
+
+- References are collapsed into one image prompt per scene.
+- Image prompts contain temporal motion instructions or invent visual story beats.
+
+## CM-014 — Quote Content Video Prompt Count and Duration
+
+**Input**
+
+- A video storyboard has N scenes and a requested final duration that is exactly composable from 4s, 6s, 8s, and 10s segments.
+
+**Expected**
+
+- Stage 09 emits exactly N standalone user-facing Video Prompt code blocks.
+- Generation segment durations sum exactly to the requested final duration.
+- Segment count and reference count do not change the Video Prompt count.
+- Dialogue is synchronized only when the current audio mode requires it.
+
+**Fail if**
+
+- Video Prompt count differs from scene count.
+- Duration is rounded, extended, truncated, or padded with filler.
+- Product-centered UGC actions are inserted into an editorial-only story.
+
+## CM-015 — Quote Content Voice Is Conditional and Non-Fabricated
+
+**Input**
+
+- A Quote Content brief requests `VOICE_OVER` for a mini-story, or explicitly selects `NO_SPOKEN_VOICE`.
+
+**Expected**
+
+- Spoken mode uses the canonical Voice Script contract and storyboard anchors.
+- No-spoken mode skips Stage 08 with `NO_SPOKEN_VOICE_REQUIRED` when permitted.
+- First-person testimony is not fabricated and video prompts do not rewrite canonical dialogue.
+
+**Fail if**
+
+- A voice script is created for a static quote image.
+- Dialogue invents lived experience, quote attribution, or unsupported factual claims.
+
+## CM-016 — Quote Content Production Output Never Falls Back to UGC
+
+**Input**
+
+- A valid `QUOTE_CONTENT` static image or video run has current applicable upstream artifacts.
+
+**Expected**
+
+- Stage 10 assembles with `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`.
+- Explicitly skipped stages preserve their reasons and are not represented as generated artifacts.
+- Output preserves platform, format, pillar, message, provenance, prompt counts, and exact duration where applicable.
+
+**Fail if**
+
+- UGC production output template is used.
+- A required artifact is missing/stale or a validation blocker is suppressed.
