@@ -88,6 +88,8 @@ EXAMPLES/ contains validation at several scopes:
 - universal runtime matrices
 - E2E runtime tests
 - skill runtime regression matrix
+- Quote Content regression matrix (`QCR-001`–`QCR-018`)
+- automated static contract validation via `.github/workflows/contract-validation.yml` and `scripts/validate_contracts.py`
 - failure/stale validation
 - live smoke-test plan/result
 - niche/product-type fixtures
@@ -113,6 +115,6 @@ For niche or product-type changes, update the canonical context system before mo
 
 The latest repository architecture audit is recorded in REPOSITORY_ARCHITECTURE_AUDIT.md.
 
-Current status: **QUOTE CONTENT PRODUCTION CONTRACTS ADDED; REGRESSION SPECIFICATIONS ADDED**
+Current status: **QUOTE CONTENT CONTRACTS ADDED; STATIC CONTRACT CI PASSING; END-TO-END REGRESSION PENDING**
 
-Quote Content now has mode-specific editorial context, strategy, hook, storyboard, visual prompt, conditional voice, video prompt, and production-output contracts. Campaign execution must still validate every stage and current dependency; repository contract presence does not imply generated assets or completed end-to-end tests. Phase 04 now includes an explicit Quote Content regression matrix. End-to-end runtime execution and observed PASS/FAIL evidence remain pending.
+Quote Content now has mode-specific editorial context, strategy, hook, storyboard, visual prompt, conditional voice, video prompt, and production-output contracts. Campaign execution must still validate every stage and current dependency; repository contract presence does not imply generated assets or completed end-to-end tests. Phase 04 now includes an explicit Quote Content regression matrix. The new static contract CI passed 27/27 checks, covering contract presence, stage routing, mode isolation, static-image skips, reference coverage, prompt/scene cardinality, exact-duration blockers, and regression-matrix coverage. This is static contract validation only; end-to-end runtime execution and observed campaign-level PASS/FAIL evidence remain pending.
