@@ -76,7 +76,7 @@ Render these fields as selectable controls:
 - **Pilar dan subpilar konten** — Stage 01 (displayed as **Brief**) may collect an optional pillar preference, but the canonical confirmation/selection happens in Stage 02 (displayed as **Sub Pilar**). In Stage 02, show 15 recommended subpillars from `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md` for the active pillar as native selectable controls. The user explicitly selects one. Include a **Ganti Subpilar** control that requests a fresh batch of exactly 15 alternatives for the same pillar. Each click must generate/retrieve 15 new, semantically distinct candidates, not shuffle, rename, or re-display the previous batch. Preserve prior batches and selected choices in the current run's per-pillar exploration history. If the pillar changes, show a fresh batch for that pillar while retaining its history. Do not require the user to type or copy subpillar names. Stage 04 consumes the Stage 02 selection and must not repeat the picker. Subpillar topics must be developed without blaming, shaming, stereotyping, or cornering anyone.
 - **Tujuan publikasi** — required selection, presented as concise clickable options appropriate to editorial content, such as engagement, relatability/community, emotional reflection, or relationship communication/education. Do not expose product-sales objectives in Quote Content mode unless the user explicitly reclassifies the run.
 - **Durasi video** — required only for video formats: 18 detik, 28 detik, or 30 detik. For Quote Image, automatically set duration to NOT_APPLICABLE and hide/disable this control.
-- **Voice/Audio** — selectable options: Otomatis (AI memilih), Teks saja, Voice-over, Dialog. Resolve the selected option into the canonical audio/dialogue state before downstream dependency planning.
+- **Voice/Audio** — selectable options: Otomatis (default: ngomong langsung ke kamera), Teks saja, Voice-over, Dialog langsung ke kamera. Resolve the selected option into the canonical audio/dialogue state before downstream dependency planning. `Otomatis` resolves to `SPOKEN_ON_CAMERA` for video formats and uses `DIRECT_TO_CAMERA_TALKING_HEAD` as the visual delivery mode. `Dialog langsung ke kamera` also resolves to `SPOKEN_ON_CAMERA`. `Voice-over` and `Teks saja` are explicit audio overrides; they do not silently replace the default visual treatment with montage/B-roll.
 - **Topik atau konteks khusus** — optional free-text input. If supplied, use it to recommend a matching pillar/subpillar and angle; do not force a mismatch. The user may leave it blank and let Affilix derive a coherent topic from the selected pillar, objective, and available editorial context.
 
 Use concise labels and sensible defaults. Do not force users to fill optional fields, do not request a content quantity/batch-count field, and do not add a user-selected CTA field. CTA remains an editorial decision only when it serves the objective.
@@ -86,6 +86,8 @@ When the interface supports interactive controls, collect selections through tho
 Required intake controls are platform, publishing objective, topic/audience context sufficient for a coherent concept, and video duration when a video format is requested. Format and pillar may be left on automatic selection. Audio mode may be inferred from an explicit format/context when safe; otherwise use the minimum-question principle. For static `QUOTE_IMAGE`, duration is `NOT_APPLICABLE`, not a video-duration choice.
 
 Do not collect or require a content quantity/batch-count field or a user-selected CTA field. Affilix may plan batch distribution only when separately requested, and may derive a CTA only when it serves the publishing objective.
+
+For Quote Content video formats, default the visual delivery to `DIRECT_TO_CAMERA_TALKING_HEAD`: the creator speaks to the lens, not as voice-over over B-roll. The selected Voice/Audio option can explicitly override spoken delivery, but must not silently change the visual treatment. Persist `delivery_mode` with the normalized campaign/strategy state and pass it to Storyboard, Visual Prompt, Voice Script, and Video Prompt.
 
 For spoken video, the selected duration is a hard creative constraint for script length and timing:
 - 18 seconds: initial target 35–42 spoken words.
@@ -120,6 +122,7 @@ campaign:
   audience: UNKNOWN
   creator: UNKNOWN
   audio_mode: UNKNOWN
+  delivery_mode: DIRECT_TO_CAMERA_TALKING_HEAD
   dialogue:
     enabled: UNKNOWN
     delivery: UNKNOWN
@@ -259,7 +262,7 @@ The selected value is the requested creator input and is later resolved/validate
 
 Audio / Voice Mode is a required Stage 01 campaign choice.
 
-- `SPOKEN_ON_CAMERA`: creator speaks on camera; Stage 08 Voice Script is required and Stage 08 must synchronize canonical dialogue with visible creator speech.
+- `SPOKEN_ON_CAMERA`: creator speaks directly to the camera by default; Stage 08 Voice Script is required and Stage 08 must synchronize canonical dialogue with visible creator speech.
 - `VOICE_OVER`: narration exists without requiring the creator to speak on camera; Stage 08 Voice Script is required and Stage 08 must synchronize the canonical voice-over with the visual action.
 - `NO_SPOKEN_VOICE`: no native spoken dialogue or voice-over; Stage 08 is skipped only when no dialogue layer is requested.
 - `NO_SPOKEN_VOICE + EXTERNAL_PROVIDER`: the video provider generates silent video while Stage 08 authors canonical dialogue/timing for a separate external audio asset. Stage 09 carries synchronization anchors without native voice-generation or lip-sync requirements.
