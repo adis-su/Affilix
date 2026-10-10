@@ -326,3 +326,62 @@ Phase 01 does not certify Quote Content end-to-end production. That depends on P
 - Phase 02 contracts: editorial context, strategy, and hook contracts are present and mode-dispatched.
 - Phase 03 contracts: storyboard, visual prompt, conditional voice, video prompt, and Quote Content Production Output contracts are present and mode-dispatched.
 - Phase 04 regression: see `EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md`. End-to-end acceptance remains NOT RUN until runtime cases are executed and observed results are recorded.
+
+
+## CM-017 — Quote Content Recommends a Subpillar Under the Primary Pillar
+
+**Input**
+
+- A validated Quote Content brief is ready for Stage 04.
+- The user has not manually selected a subpillar.
+
+**Expected**
+
+- Stage 04 selects exactly one primary pillar and exactly one matching subpillar from `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md`.
+- Affilix states the recommended subpillar and a concise fit rationale.
+- A concrete content angle is defined separately from the subpillar.
+- The strategy artifact records subpillar ID/name/rationale and the angle's editorial safety validation.
+
+**Fail if**
+
+- No subpillar is recorded.
+- The subpillar belongs to a different primary pillar.
+- Subpillar is treated as the final hook or script.
+- A batch-level pillar percentage overrides the topic's actual fit.
+
+## CM-018 — Subpillar Angle Does Not Blame or Corner People
+
+**Input**
+
+- A selected subpillar is developed into a content angle about household or couple dynamics.
+
+**Expected**
+
+- The angle focuses on a situation, need, action, or impact rather than a person's inherent character.
+- It avoids universal gender/family-role claims, humiliation, shame, fabricated testimony, and unsupported claims.
+- It does not force equal responsibility when the facts do not support it.
+- Explicit abuse, threats, coercive control, or fear are not reframed as ordinary communication problems.
+- Any failed angle is rewritten and revalidated before Stage 04 is completed.
+
+**Fail if**
+
+- A person or group is stereotyped, blamed, or shamed as the default framing.
+- Unsafe dynamics are normalized.
+- The stage is marked completed while an editorial safety issue remains unresolved.
+
+## CM-019 — Subpillar Revision Invalidates Dependent Outputs
+
+**Input**
+
+- A completed strategy's primary subpillar or content angle changes.
+
+**Expected**
+
+- Stage 04 is revised and revalidated.
+- Dependent Hook, Storyboard, Visual Prompt, Voice Script, Video Prompt, and Production Output artifacts are marked stale as applicable.
+- The workflow waits for `/next` after the revision and does not advance automatically.
+
+**Fail if**
+
+- Downstream assets remain marked current after a material strategy change.
+- Revision silently triggers the next stage.
