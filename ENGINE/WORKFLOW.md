@@ -152,7 +152,7 @@ For `UGC_AFFILIATE`, the supplied product link/reference must be actively inspec
 Input: completed Stage 01 brief artifact.
 
 - `UGC_AFFILIATE`: output exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
-- `QUOTE_CONTENT`: use the editorial context branch in `ENGINE/NICHE_CONTEXT_LOADER/README.md` to resolve editorial niche, audience context, topic context, publishing context, and sensitivity flags without manufacturing product or product-type state.
+- `QUOTE_CONTENT`: use `ENGINE/NICHE_CONTEXT_LOADER/README.md` to resolve editorial niche, audience context, topic context, publishing context, sensitivity flags, and the user-selected editorial pillar/subpillar. Stage 02 displays 15 selectable subpillars for the active pillar and provides **Ganti Subpilar** for a fresh, deduplicated batch of exactly 15 candidates. Persist the selection and per-pillar exploration history in the Stage 02 context artifact.
 
 Output and validation must preserve `content_mode` and source provenance.
 
@@ -170,7 +170,7 @@ Any selected creator must come from the current pinned repository. Identity is l
 Input: completed Stage 01 and Stage 02 artifacts, plus Stage 03 Creator when required by the selected mode.
 
 - `UGC_AFFILIATE`: use the existing product-centered strategy contract and output objective, audience, product role, angle, core message, story arc, and proof strategy.
-- `QUOTE_CONTENT`: use `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md` for pillar, format, editorial message, emotional strategy, and validation. Do not invoke product proof scoring.
+- `QUOTE_CONTENT`: use `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md` for format, content angle, editorial message, emotional strategy, and validation. Consume the pillar/subpillar selected in Stage 02; do not ask the user to select them again or run the Stage 02 subpillar picker here. Do not invoke product proof scoring.
 
 ### 05 — Hook
 
