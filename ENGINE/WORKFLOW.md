@@ -145,7 +145,7 @@ The canonical stage ID and registry entry remain unchanged; the artifact schema 
 
 Use `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` to validate the selected mode and its required inputs.
 
-The supplied product link/reference must be actively inspected when accessible. Unsupported marketing language must not be promoted to fact.
+For `UGC_AFFILIATE`, the supplied product link/reference must be actively inspected when accessible. Unsupported marketing language must not be promoted to fact. `QUOTE_CONTENT` does not require a product reference.
 
 ### 02 — Niche & Context
 
@@ -167,19 +167,20 @@ Any selected creator must come from the current pinned repository. Identity is l
 
 ### 04 — Content Strategy
 
-Input: completed Brief & Product, Niche & Context, and Creator.
+Input: completed Stage 01 and Stage 02 artifacts, plus Stage 03 Creator when required by the selected mode.
 
-Output: objective, audience, product role, angle, core message, story arc, and proof strategy.
+- `UGC_AFFILIATE`: use the existing product-centered strategy contract and output objective, audience, product role, angle, core message, story arc, and proof strategy.
+- `QUOTE_CONTENT`: use the editorial strategy, pillar, and format contract when implemented. Do not invoke product proof scoring. Until that contract is implemented, block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`.
 
 ### 05 — Hook
 
-Input: completed Strategy.
+Input: completed Strategy when required by the selected mode/format.
 
-Output: validated hook direction/copy and delivery direction.
+Output: validated hook direction/copy and delivery direction. A static format may skip this stage only when the mode-specific contract explicitly permits it.
 
 ### 06 — Storyboard
 
-Input: completed Hook and all required upstream state.
+Input: completed Hook and all required upstream state for a video/story format. Static image-only formats may skip this stage only when the mode-specific contract explicitly permits it.
 
 Output: the canonical temporal scene sequence, action choreography, Reference Plan, reference graph, creative timing, and generation-segmentation intent.
 
@@ -225,7 +226,7 @@ Human-looking motion must be controlled, action-coupled, and physically plausibl
 
 ### 07 — Visual Prompt
 
-Input: completed Storyboard and required reference states.
+Input: completed Storyboard and required reference states for video formats. For static image-only formats, Stage 07 uses the validated content strategy and image-specific brief/reference requirements without inventing a storyboard.
 
 Output: **one static image prompt per required visual reference state**, with every Storyboard-declared reference state rendered exactly once.
 
@@ -286,7 +287,7 @@ This is the final assembly step, not a separate QC or approval gate.
 
 ## Content Mode Routing
 
-`ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` defines the mode selector, mode-specific intake, conditional stage dependencies, and implementation blockers. The canonical ten-stage registry in this file remains unchanged. Changes to mode selection invalidate all mode-dependent run artifacts; never reuse production artifacts across modes.
+`ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` defines the mode selector, mode-specific intake, conditional stage dependencies, and implementation blockers. The canonical ten-stage registry in this file remains unchanged. Changes to mode selection invalidate all mode-dependent run artifacts; never reuse production artifacts across modes. Where this contract defines mode-specific applicability, stage prerequisites must be interpreted through that routing contract rather than treating every UGC dependency as universal.
 
 ## Spoken Audio and External Dialogue
 
