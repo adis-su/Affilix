@@ -10,7 +10,12 @@
 
 ## Purpose
 
-Generate opening concepts that capture attention while remaining faithful to approved strategy, creator identity, product facts, campaign constraints, and loaded niche context.
+Generate opening concepts that capture attention while remaining faithful to the active mode's validated strategy and context. For `UGC_AFFILIATE`, preserve product facts and campaign constraints. For `QUOTE_CONTENT`, preserve editorial pillar, format, audience, message, takeaway, and sensitivity constraints without inventing personal testimony.
+
+## Mode Routing
+
+- `UGC_AFFILIATE`: use the existing product-aware hook contract below.
+- `QUOTE_CONTENT`: use the editorial hook contract in `QUOTE_CONTENT_HOOK_CONTRACT.md`. Do not require product identity, product connection, product proof, or a creator unless the selected format requires one.
 
 ## Input
 
@@ -188,7 +193,9 @@ The hook must be physically and visually executable.
 
 ## Handoff
 
-Approved hook becomes the opening beat for:
+For `QUOTE_CONTENT`, the selected hook becomes the opening editorial beat for the applicable format. For video formats it passes to Storyboard and downstream production. For `QUOTE_IMAGE`, Stage 05 may be skipped only as explicitly permitted by the editorial strategy contract.
+
+For `UGC_AFFILIATE`, the approved hook becomes the opening beat for:
 
 - 05_STORYBOARD_ENGINE
 - 06_VISUAL_PROMPT_ENGINE
