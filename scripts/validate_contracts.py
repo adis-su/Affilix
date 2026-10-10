@@ -14,6 +14,9 @@ REQUIRED_FILES = [
     "SKILL.md",
     "ENGINE/WORKFLOW.md",
     "ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md",
+    "ENGINE/AFFILIX_ENTRY_POINT/README.md",
+    "ENGINE/01_BRIEF_ANALYZER/README.md",
+    "ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md",
     "ENGINE/05_STORYBOARD_ENGINE/QUOTE_CONTENT_STORYBOARD_CONTRACT.md",
     "ENGINE/06_VISUAL_PROMPT_ENGINE/QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md",
     "ENGINE/07_VIDEO_PROMPT_ENGINE/QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md",
@@ -53,6 +56,9 @@ visual = read("ENGINE/06_VISUAL_PROMPT_ENGINE/QUOTE_CONTENT_VISUAL_PROMPT_CONTRA
 video = read("ENGINE/07_VIDEO_PROMPT_ENGINE/QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md")
 output = read("ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md")
 matrix = read("EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md")
+entry = read("ENGINE/AFFILIX_ENTRY_POINT/README.md")
+brief = read("ENGINE/01_BRIEF_ANALYZER/README.md")
+voice = read("ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md")
 
 # Canonical registry identity and the non-numeric engine-to-stage mappings.
 stage_rows = re.findall(r"^\|\s*(\d{2})\s*\|", workflow, flags=re.MULTILINE)
@@ -100,8 +106,19 @@ for content, label in [(storyboard, "Storyboard"), (video, "Video Prompt"), (out
           f"{label} contract preserves exact segment duration and infeasible-duration blocking")
 check("NOT RUN as an end-to-end runtime suite" in matrix,
       "regression matrix clearly distinguishes test specifications from runtime execution")
-check(all(f"QCR-{i:03d}" in matrix for i in range(1, 19)),
-      "Quote Content regression matrix includes QCR-001 through QCR-018")
+check(all(f"QCR-{i:03d}" in matrix for i in range(1, 23)),
+      "Quote Content regression matrix includes QCR-001 through QCR-022")
+
+# Quote Content intake and duration-bound script rules.
+for duration in ("18", "28", "30"):
+    check(duration in entry and duration in routing and duration in voice,
+          f"Quote Content duration {duration}s is documented across intake, routing, and voice contract")
+check("content quantity" in entry.lower() and "user-selected CTA" in entry,
+      "Quote Content intake excludes content quantity and user-selected CTA fields")
+check("35–42" in voice and "55–65" in voice and "60–70" in voice,
+      "Quote Content voice contract defines duration-specific spoken-word targets")
+check("requested video duration" in brief.lower() and "NOT_APPLICABLE" in brief,
+      "Brief Analyzer normalizes video duration and static-image not-applicable state")
 
 print(f"\nStatic contract checks: {checks - len(errors)}/{checks} passed.")
 if errors:
