@@ -73,14 +73,20 @@ The analyzer must persist `content_mode` and normalize the brief according to th
 For `QUOTE_CONTENT`, normalize at minimum:
 
 ### Editorial Brief
-- Topic/theme: [DEFINE / UNKNOWN]
+- Platform: [DEFINE / UNKNOWN]
+- Topic/theme or audience situation: [DEFINE / UNKNOWN]
 - Audience context: [DEFINE / UNKNOWN]
 - Publishing objective: [DEFINE / UNKNOWN]
+- Format preference: [EXPLICIT FORMAT / AUTO]
+- Editorial pillar preference: [EXPLICIT PILLAR / AUTO]
+- Requested video duration: [18 / 28 / 30 seconds / NOT_APPLICABLE for static `QUOTE_IMAGE`]
+- Audio/voice preference: [AUTO / TEXT_ONLY / VOICE_OVER / DIALOGUE]
 - Intended emotional response: [DEFINE / UNKNOWN]
 - Intended takeaway: [DEFINE / UNKNOWN]
+- Additional user context or constraints: [DEFINE / NONE]
 - Source/provenance for explicit and inferred fields
 
-Do not require product identity, product facts, product claims, creator identity, or product proof in this branch unless the user explicitly requests product-centered content.
+Do not collect or require a content quantity/batch-count field or a user-selected CTA field. CTA strategy is decided downstream only when it serves the publishing objective. For video formats, preserve the requested duration as a hard constraint and pass it to Voice Script so spoken wording can be budgeted and timing-validated. Do not require product identity, product facts, product claims, creator identity, or product proof in this branch unless the user explicitly requests product-centered content.
 
 For `UGC_AFFILIATE`, normalize the existing product-centered brief:
 
@@ -160,7 +166,7 @@ List only information that is genuinely required for the next production stage.
 
 ## Editorial Brief Normalization
 
-For `QUOTE_CONTENT`, normalize editorial topic, audience context, publishing objective, intended emotional response, and takeaway. Preserve explicit versus inferred provenance. Do not convert a broad audience label into unsupported demographic facts, and do not frame harmful or abusive relationship dynamics as ordinary communication problems. Missing non-critical details remain `UNKNOWN`.
+For `QUOTE_CONTENT`, normalize platform, editorial topic, audience context, publishing objective, format/pillar preference, requested duration, audio/voice preference, intended emotional response, takeaway, and optional context. Preserve explicit versus inferred provenance. For video formats, accept only 18, 28, or 30 seconds; for static `QUOTE_IMAGE`, set duration to `NOT_APPLICABLE`. Do not create input requirements for content quantity or CTA. Do not convert a broad audience label into unsupported demographic facts, and do not frame harmful or abusive relationship dynamics as ordinary communication problems. Missing non-critical details remain `UNKNOWN`.
 
 ## Niche Detection
 
