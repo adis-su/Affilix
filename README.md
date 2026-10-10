@@ -11,10 +11,15 @@ Affilix supports two routed content modes: `UGC_AFFILIATE` for product-centered 
 3. [ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md](ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md) — content mode selection, mode-specific intake, conditional stage dependencies, and implementation blockers
 4. [ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md](ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md) — editorial pillars, formats, strategy selection, and validation
 5. [ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md](ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md) — editorial hook families and safety rules
-6. [ENGINE/NICHE_CONTEXT_LOADER/README.md](ENGINE/NICHE_CONTEXT_LOADER/README.md) — canonical product/editorial context
-7. [ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md](ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md) — UGC production output contract
-8. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
-9. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT Project interface boundary
+6. [ENGINE/05_STORYBOARD_ENGINE/QUOTE_CONTENT_STORYBOARD_CONTRACT.md](ENGINE/05_STORYBOARD_ENGINE/QUOTE_CONTENT_STORYBOARD_CONTRACT.md) — editorial video storyboard and action choreography
+7. [ENGINE/06_VISUAL_PROMPT_ENGINE/QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md](ENGINE/06_VISUAL_PROMPT_ENGINE/QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md) — static quote image and reference-state prompts
+8. [ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md](ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md) — conditional editorial dialogue
+9. [ENGINE/07_VIDEO_PROMPT_ENGINE/QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md](ENGINE/07_VIDEO_PROMPT_ENGINE/QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md) — scene-level editorial video prompts
+10. [ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md](ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md) — Quote Content output assembly
+11. [ENGINE/NICHE_CONTEXT_LOADER/README.md](ENGINE/NICHE_CONTEXT_LOADER/README.md) — canonical product/editorial context
+12. [ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md](ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md) — UGC production output contract
+13. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
+14. [ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md](ENGINE/AFFILIX_ENTRY_POINT/INTERFACE_ADAPTER_CONTRACT.md) — ChatGPT Project interface boundary
 
 ## Repository Map
 
@@ -107,6 +112,6 @@ For niche or product-type changes, update the canonical context system before mo
 
 The latest repository architecture audit is recorded in REPOSITORY_ARCHITECTURE_AUDIT.md.
 
-Current status: **MODE ROUTING FOUNDATION ADDED**
+Current status: **QUOTE CONTENT PRODUCTION CONTRACTS ADDED; REGRESSION HARDENING PENDING**
 
-Quote Content downstream strategy and production engines remain phased implementation work; unsupported stages must block rather than fall back to UGC behavior.
+Quote Content now has mode-specific editorial context, strategy, hook, storyboard, visual prompt, conditional voice, video prompt, and production-output contracts. Campaign execution must still validate every stage and current dependency; repository contract presence does not imply generated assets or completed end-to-end tests. Phase 04 regression hardening remains pending.
