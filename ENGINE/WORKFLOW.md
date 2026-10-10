@@ -10,6 +10,17 @@ Affilix runs as one continuous, dependency-aware production workflow. Engines ar
 
 The user-facing command is `/Affilix`.
 
+### Mode-Specific User-Facing Stage Names
+
+Canonical stage IDs, internal registry names, and engine paths remain unchanged. Display the following names only when `run.content_mode = QUOTE_CONTENT`; `UGC_AFFILIATE` continues to use the canonical names.
+
+| Stage ID | UGC Affiliate display name | Quote Content display name |
+|---|---|---|
+| 01 | Brief & Product | Brief |
+| 02 | Niche & Context | Sub Pilar |
+
+These are presentation aliases for `QUOTE_CONTENT`, not new stages or changed dependency IDs.
+
 A new `/Affilix` run must resolve the current `main` branch head, pin that commit for the run, load the relevant repository contracts, initialize isolated run state, resolve `run.content_mode`, and begin Stage 01 using the intake contract for that mode.
 
 Repository resolution, commit pinning, source loading, and diagnostics are internal. They must never appear in the canonical Stage 01 opening.
@@ -60,9 +71,9 @@ Naturalism validation failure is handled inside the affected stage. It never cre
   ↓
 CONTENT MODE SELECTOR (when mode is not explicit)
   ↓
-01 BRIEF & PRODUCT / MODE-SPECIFIC BRIEF
+01 BRIEF (QUOTE_CONTENT) / BRIEF & PRODUCT (UGC_AFFILIATE)
   ↓ /next
-02 NICHE & CONTEXT
+02 SUB PILAR (QUOTE_CONTENT) / NICHE & CONTEXT (UGC_AFFILIATE)
   ↓ /next
 03 CREATOR
   ↓ /next
@@ -136,7 +147,7 @@ There is no `REVIEW` state because Affilix has no approval workflow.
 
 ## Canonical Stage Contracts
 
-### 01 — Brief & Product
+### 01 — Brief & Product (canonical; displayed as “Brief” for QUOTE_CONTENT)
 
 The canonical stage ID and registry entry remain unchanged; the artifact schema is mode-aware.
 
@@ -147,7 +158,7 @@ Use `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` to validate the selected mode and 
 
 For `UGC_AFFILIATE`, the supplied product link/reference must be actively inspected when accessible. Unsupported marketing language must not be promoted to fact. `QUOTE_CONTENT` does not require a product reference.
 
-### 02 — Niche & Context
+### 02 — Niche & Context (canonical; displayed as “Sub Pilar” for QUOTE_CONTENT)
 
 Input: completed Stage 01 brief artifact.
 
