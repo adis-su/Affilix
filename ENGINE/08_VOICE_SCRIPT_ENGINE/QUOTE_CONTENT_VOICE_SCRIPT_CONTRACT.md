@@ -20,6 +20,21 @@ Current Stage 01 editorial brief, Stage 02 context, Stage 04 strategy, Stage 05 
 
 Voice Script owns exact spoken wording, speaker identity/role, pronunciation notes, delivery, timing, pauses, and voice performance plan. Video Prompt may synchronize the canonical script but must not rewrite it. The script must support the selected pillar, format, primary message, and takeaway without introducing a new narrative claim.
 
+## Duration-Bound Spoken Word Budget
+
+For Quote Content video formats, Stage 01 must supply a requested final duration of exactly 18, 28, or 30 seconds. The selected duration is the source of truth for the spoken script; do not substitute a provider segment duration for the final video duration.
+
+Use these initial target ranges for all spoken words combined across narration and character dialogue:
+- 18 seconds: 35–42 words.
+- 28 seconds: 55–65 words.
+- 30 seconds: 60–70 words.
+
+These ranges assume conversational delivery around 130–140 words per minute and are drafting targets, not a timing guarantee. Validate the actual script against measured/read-aloud pace, pauses, speaker changes, emotional beats, and storyboard dialogue anchors. The spoken script must fit within the exact final duration without rushed delivery, arbitrary silence, filler, or omitted lines.
+
+If the script falls outside its target range, revise wording and/or pause timing while preserving the strategy and storyboard. If a deliberate slower delivery or pause-heavy style warrants a different word count, record the rationale and validate that the complete spoken performance still fits the requested duration. Do not alter the requested duration to accommodate the script.
+
+For `TEXT_ONLY` or other explicitly no-spoken-voice output, spoken-word targets do not apply. Validate on-screen text for legibility and available reading time instead. Static `QUOTE_IMAGE` has no video duration or voice script.
+
 ## Format and Editorial Rules
 
 - `CINEMATIC_QUOTE_REELS`: speech is optional; if present, it supports the core statement and does not compete with on-screen text.
@@ -72,6 +87,6 @@ source_commit_sha:
 
 ## Validation and Invalidation
 
-Spoken text must fit the storyboard's timing and dialogue anchors. Mark `NEEDS_REFINEMENT` when wording or timing can be corrected without changing the strategy/storyboard. Mark `BLOCKED` if coherent dialogue requires fabricated lived experience, unsupported factual claims, unsafe framing, or incompatible story changes.
+For video formats, validate the selected duration is exactly 18, 28, or 30 seconds and check the combined spoken-word count against the corresponding initial target range, unless a documented delivery rationale justifies a different count. Spoken text must fit the storyboard's timing and dialogue anchors. Mark `NEEDS_REFINEMENT` when wording or timing can be corrected without changing the strategy/storyboard. Mark `BLOCKED` if duration is unsupported or coherent dialogue requires fabricated lived experience, unsupported factual claims, unsafe framing, or incompatible story changes.
 
 Changes to topic, audience, strategy, hook, storyboard, speaker, audio mode, or delivery constraints invalidate affected voice assets. Mark completed and wait for `/next`.
