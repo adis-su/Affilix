@@ -1,13 +1,14 @@
 # Affilix
 
-**ChatGPT-native UGC Affiliate production system**
+**ChatGPT-native content production system: UGC Affiliate + Quote Content**
 
-Affilix turns a product brief, creator identity, references, and campaign constraints into structured UGC production outputs. The repository is the source of truth for runtime behavior, creator identity, product facts, niche context, production rules, and regression tests.
+Affilix supports two routed content modes: `UGC_AFFILIATE` for product-centered UGC production and `QUOTE_CONTENT` for editorial, quote-led social content. The repository is the source of truth for mode routing, runtime behavior, creator identity, product facts, niche/editorial context, production rules, and regression tests.
 
 ## Start Here
 
 1. [SKILL.md](SKILL.md) — runtime entry point and governing behavior
-2. [ENGINE/WORKFLOW.md](ENGINE/WORKFLOW.md) — dependency, invalidation, reclassification, and revision contract
+2. [ENGINE/WORKFLOW.md](ENGINE/WORKFLOW.md) — canonical stage registry, dependency, invalidation, reclassification, and revision contract
+3. [ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md](ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md) — content mode selection, mode-specific intake, conditional stage dependencies, and implementation blockers
 3. [ENGINE/NICHE_CONTEXT_LOADER/README.md](ENGINE/NICHE_CONTEXT_LOADER/README.md) — canonical runtime context
 4. [ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md](ENGINE/UGC_PRODUCTION_OUTPUT_TEMPLATE.md) — final production output contract
 5. [EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md](EXAMPLES/SKILL_RUNTIME_REGRESSION_MATRIX.md) — runtime regression coverage
@@ -19,6 +20,7 @@ Affilix turns a product brief, creator identity, references, and campaign constr
 |---|---|
 | SKILL.md | Runtime entry point and top-level execution rules |
 | ENGINE/ | Universal production engines and runtime contracts |
+| ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md | Canonical mode selection and mode-specific stage routing |
 | ENGINE/01_BRIEF_ANALYZER/ | Normalize and classify incoming briefs |
 | ENGINE/NICHE_CONTEXT_LOADER/ | Resolve one canonical niche/product context per run |
 | ENGINE/02_CREATOR_SELECTOR/ | Select and load creator identity |
@@ -41,13 +43,15 @@ Affilix turns a product brief, creator identity, references, and campaign constr
 
 ## Runtime Flow
 
-`/Affilix` → Product Intake → Brief Analysis → Niche Context → Creator → Strategy → Hook → Storyboard → Visual/Video/Voice → Production Output
+`/Affilix` → Content Mode Selector (when needed) → mode-specific Stage 01 intake → canonical ten-stage workflow with mode-specific dependencies
 
 The canonical context is created before creative decisions. A material upstream change invalidates dependent downstream state.
 
 ## Runtime Invariants
 
 - one canonical runtime context per run
+- one isolated `content_mode` per run (`UGC_AFFILIATE` or `QUOTE_CONTENT`)
+- no cross-mode artifact reuse
 - no cross-run context leakage
 - creator identity remains locked
 - product identity remains locked
@@ -98,4 +102,6 @@ For niche or product-type changes, update the canonical context system before mo
 
 The latest repository architecture audit is recorded in REPOSITORY_ARCHITECTURE_AUDIT.md.
 
-Current status: **PASS**
+Current status: **MODE ROUTING FOUNDATION ADDED**
+
+Quote Content downstream strategy and production engines remain phased implementation work; unsupported stages must block rather than fall back to UGC behavior.
