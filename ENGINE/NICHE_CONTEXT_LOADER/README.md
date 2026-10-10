@@ -44,6 +44,20 @@ When `content_mode = QUOTE_CONTENT`, do not run product-niche classification or 
 
 Do not infer demographics, relationship facts, personal testimony, diagnoses, or lived experiences from broad audience labels. Do not frame abuse, threats, coercive control, or fear as ordinary communication problems. Editorial context is not product evidence and must not create product fields.
 
+### Stage 02 Pillar and Subpillar Selection — QUOTE_CONTENT
+
+Stage 02 is the canonical user-facing stage for editorial pillar and subpillar selection. This applies only to `QUOTE_CONTENT`; do not change the `UGC_AFFILIATE` niche/sub-niche behavior.
+
+1. Resolve or confirm the primary editorial pillar using the Stage 01 preference, topic context, publishing objective, and user constraints. Supported pillars are `PILLAR_01 — CURHAT_RELATE_RUMAH_TANGGA`, `PILLAR_02 — SELF_HEALING_ISTRI_IBU`, and `PILLAR_03 — RELASI_KOMUNIKASI_PASANGAN`.
+2. Display exactly 15 subpillar candidates for the active pillar as selectable native controls. Use the canonical registry at `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md` as the seed catalogue; additional candidates may be generated when needed to provide a fresh batch.
+3. The user explicitly chooses one subpillar in Stage 02. Provide a visible **Ganti Subpilar** action that generates/retrieves exactly 15 fresh, semantically distinct candidates for the same pillar.
+4. Keep per-run exploration history by pillar: all candidate IDs/names previously shown, batch number, and selected subpillar. Do not repeat, reorder, synonym-swap, or cosmetically rename previously shown candidates. Preserve the current selection until a replacement is selected.
+5. If the pillar changes, display a fresh batch for the new pillar while retaining that pillar's exploration history for deduplication. The selected pillar and subpillar become part of the canonical Stage 02 editorial context artifact.
+6. Every candidate must pass the registry's editorial safety rules. Do not blame, humiliate, stereotype, corner, or make universal claims about a person or group. If 15 valid distinct alternatives cannot be generated, mark the refresh `BLOCKED`; never pad with duplicates.
+7. Stage 02 must validate and persist `editorial_pillar.id`, `editorial_pillar.name`, `editorial_pillar.rationale`, `editorial_subpillar.id`, `editorial_subpillar.name`, `editorial_subpillar.rationale`, `subpillar_batch_id`, `subpillar_batch_number`, `subpillar_exploration_history`, and editorial safety status.
+8. Stage 04 consumes the selected Stage 02 pillar/subpillar as upstream inputs and develops the content angle and strategy. Stage 04 must not ask the user to select the same pillar/subpillar again unless the user explicitly requests a revision.
+
+
 ## Resolution
 
 For `UGC_AFFILIATE`, determine:
