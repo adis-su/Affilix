@@ -8,11 +8,21 @@ Affilix is invoked with:
 
 `/Affilix`
 
-The command starts a new isolated UGC production run. Users do not manually invoke individual engines. The entry point routes the session into the canonical continuous production workflow defined in `ENGINE/WORKFLOW.md`. Each stage completes and is validated before the next dependency-satisfied stage is available; `/next` is the progression command.
+The command starts a new isolated production run. Resolve `content_mode` using `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` before mode-specific intake unless the user's request already makes the mode explicit. Users do not manually invoke individual engines. The entry point routes the session into the canonical continuous production workflow defined in `ENGINE/WORKFLOW.md`. Each stage completes and is validated before the next dependency-satisfied stage is available; `/next` is the progression command.
 
 ## 1. Invocation
 
-When the user invokes `/Affilix`, start a new run and respond with exactly this user-facing intake:
+When the user invokes `/Affilix` without an explicit mode, start a new isolated run and show this mode selector:
+
+```
+STAGE 01 — Content Mode
+
+Pilih mode produksi:
+1. UGC Affiliate — konten promosi produk
+2. Quote Content — konten editorial dan relatable
+```
+
+If the user explicitly requests a mode in the invocation message, do not ask them to select it again. After mode resolution, show only that mode's intake. For `UGC_AFFILIATE`, the Product Intake prompt remains:
 
 ```
 STAGE 01 — Product Intake
@@ -21,7 +31,7 @@ Nama Produk:
 Link Produk:
 ```
 
-This opening response is intentionally minimal. Do not prepend or append:
+Do not prepend or append to the active mode's canonical intake:
 
 - welcome text
 - production-run headers
@@ -34,14 +44,35 @@ This opening response is intentionally minimal. Do not prepend or append:
 
 Repository resolution and version pinning remain internal runtime operations.
 
-## 2. Initial Required Input
+## 2. Mode Selection and Initial Input
 
-Request only:
+Resolve and persist exactly one `run.content_mode` value:
+
+- `UGC_AFFILIATE`
+- `QUOTE_CONTENT`
+
+A clear user request may determine the mode directly. Otherwise show the Content Mode Selector above. Never inherit mode from another run.
+
+### UGC Affiliate
+
+Request only the initial product fields:
 
 - Nama Produk
 - Link Produk
 
-Natural-language input is supported.
+Natural-language input is supported. Continue to use the existing UGC campaign template and validation rules.
+
+### Quote Content
+
+Do not request product name or product link as mandatory fields. Collect the minimum editorial brief required to begin Stage 01:
+
+- Platform
+- Tujuan publikasi
+- Target audiens atau konteks audiens
+- Topik/tema atau situasi audiens
+- Dampak emosional atau takeaway yang dituju
+
+Optional constraints may be collected separately when materially relevant. The six-field UGC campaign template is not used for Quote Content.
 
 ## 3. Product Intake State
 
@@ -54,7 +85,8 @@ Initialize isolated state:
 ```yaml
 run:
   entry_command: /Affilix
-  status: PRODUCT_INTAKE
+  status: CONTENT_MODE_SELECTION
+  content_mode: UNKNOWN
 
 product:
   name: UNKNOWN
@@ -73,13 +105,23 @@ campaign:
     delivery: UNKNOWN
     sync_required: UNKNOWN
 
+editorial_brief:
+  topic: UNKNOWN
+  audience_context: UNKNOWN
+  intended_emotional_response: UNKNOWN
+  takeaway: UNKNOWN
+
 niche_context:
   status: NOT_LOADED
 ```
 
-Do not inherit product, creator, niche, claims, storyboard, prompts, or production state from another run.
+Do not inherit content mode, product, creator, niche, claims, editorial brief, storyboard, prompts, or production state from another run.
 
 ## 4. Stage 01 Completion
+
+Apply the mode-specific intake and validation rules from `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
+
+For `UGC_AFFILIATE`:
 
 1. Normalize through `ENGINE/01_BRIEF_ANALYZER/README.md`.
 2. Actively inspect the supplied product link/reference and extract all accessible, materially useful product information.
@@ -92,7 +134,7 @@ Do not inherit product, creator, niche, claims, storyboard, prompts, or producti
 
 ## 5. Stage 01 — Campaign Requirements
 
-Before Stage 01 is marked complete, collect the structured campaign requirements.
+For `UGC_AFFILIATE`, before Stage 01 is marked complete, collect the structured campaign requirements below. For `QUOTE_CONTENT`, collect and validate the editorial brief instead; do not require product-specific fields.
 
 ### Copyable Campaign Template
 
@@ -232,7 +274,7 @@ Additional fields such as target audience corrections, aspect ratio, key message
 
 ## 6. Runtime Handoff
 
-The canonical workflow is defined only by `ENGINE/WORKFLOW.md`:
+The canonical stage registry is defined only by `ENGINE/WORKFLOW.md`; mode-specific intake and dependencies are defined by `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`:
 
 ```text
 /Affilix
