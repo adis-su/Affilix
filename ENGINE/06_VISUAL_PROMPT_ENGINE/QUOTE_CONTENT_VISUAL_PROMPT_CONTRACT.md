@@ -12,6 +12,18 @@ Required for every supported Quote Content format. Inputs are the current Stage 
 
 For `QUOTE_IMAGE`, create one prompt for the single requested static quote image. For video formats, create exactly one image prompt for each Storyboard-declared reference state. Do not collapse references or invent additional states.
 
+## Stage 06 Dependency Failure Recovery
+
+The reference-graph gate is a hard dependency, but a failed gate must not become a repetitive Stage 07 dead end. When preflight finds missing or inconsistent Stage 06 metadata:
+
+1. Do not generate prompts and do not mark Stage 07 completed.
+2. Produce a structured defect list containing the exact scene ID, reference/transition/beat ID, field, observed value, and violated invariant.
+3. Route that defect list back to Stage 06 as a Stage 06-owned repair/revalidation pass. Stage 07 MUST NOT edit the storyboard or invent upstream metadata.
+4. Stage 06 may repair only fields deterministically derivable from its existing artifact, then must revalidate and version the changed artifact. If creative interpretation is required, stop at Stage 06 with `NEEDS_REFINEMENT` and ask only for the missing decision.
+5. After a successful Stage 06 repair, stop and wait for `/next`. Do not automatically continue into Stage 07 in the same turn. On the next `/next`, re-run the gate against the newly completed exact storyboard version.
+
+Do not repeatedly display the same stale defect list against an unchanged artifact. If the artifact identity/version and serialized content have not changed, report that no repair was applied and identify the precise unresolved dependency instead of claiming a fresh validation.
+
 ## Prompt Authority
 
 Every image prompt represents one frozen visual state, not a motion sequence. Preserve the editorial message and selected format's visible mechanism without adding story beats, unsupported biographical details, or a different message. Text content must be exact and readable if rendered in-image; when image models are unreliable at typography, explicitly specify layout and reserve a clean text-safe area, and carry exact text separately in production metadata.
