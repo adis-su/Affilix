@@ -49,6 +49,12 @@ FINAL VIDEO GENERATION INSTRUCTION
 
 For editorial-only formats, `PRODUCT INTERACTION: NOT APPLICABLE` unless a relevant non-product prop is part of the storyboard. Do not fabricate a product role or force affiliate-style demonstrations.
 
+## Default Direct-to-Camera Generation Behavior
+
+For every Quote Content video format, the default `delivery_mode` is `DIRECT_TO_CAMERA_TALKING_HEAD`. The creator remains the primary on-screen subject and addresses the lens in a vertical 9:16 medium close-up or close-up. Use stable, eye-level framing and only motivated subtle reframing. Do not generate montage, unrelated B-roll, cinematic cutaways, extra characters, or acted relationship scenes as a substitute for the creator speaking directly to the viewer unless the user explicitly requests a different treatment.
+
+When `audio_mode = SPOKEN_ON_CAMERA`, the creator visibly speaks the exact Stage 08 canonical dialogue with synchronized mouth movement, line timing, natural conversational cadence, and intentional pauses. Gaze primarily holds the lens; brief gaze breaks, blinks, breathing, small head movements, posture adjustments, and purposeful hand gestures must be motivated and restrained. Expressions evolve in response to the spoken idea rather than cycling randomly. Preserve the same creator, wardrobe, setting, and framing logic across references. If `VOICE_OVER` or `NO_SPOKEN_VOICE` is explicitly selected, do not force lip-sync, but retain the direct-to-camera visual composition unless the user explicitly requests a different visual treatment.
+
 ## Motion and Editorial Causality
 
 Every scene prompt must implement the storyboard's ordered action beats and reference trajectory. Explain trigger → intention → action → physical/emotional consequence → target state. Include motivated body movement, hand motion where relevant, gaze, restrained expression changes, bounded micro-motion, and camera response. “Move naturally” is never sufficient.
@@ -73,6 +79,7 @@ skip_reason: null | STATIC_IMAGE_FORMAT
 audio_mode: SPOKEN_ON_CAMERA | VOICE_OVER | NO_SPOKEN_VOICE
 scenes:
   - scene_id:
+    delivery_mode: DIRECT_TO_CAMERA_TALKING_HEAD | USER_OVERRIDE
     video_prompt_id:
     user_facing_prompt_count: 1
     creative_duration:
