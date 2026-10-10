@@ -53,6 +53,13 @@ Phase 04 verifies that Quote Content mode contracts, the canonical ten-stage wor
 
 | QCR-027 | Complete Stage 06 artifact identity, upstream provenance, five-state trajectory and beat mapping | A completed storyboard includes `storyboard_id`, `storyboard_version`, pinned `source_commit_sha`, versioned upstream `source_artifacts`, and traceable `provenance`; when the Reference Plan declares R01@v1–R05@v1, trajectory order matches exactly and four causal adjacent transitions exist; every beat's `reference_after` resolves to an explicit state ID/version. Missing or invented data prevents completion | Critical | NOT RUN |
 
+
+| QCR-028 | Run-wide exact segment composition | Across all scene records, exactly two technical segments exist: 10 seconds at final timeline [0, 10] and 10 seconds at [10, 20], with no gap or overlap; segment count is not inferred per scene | Critical | NOT RUN |
+| QCR-029 | Segment-to-scene mapping | Each technical segment identifies its source scene(s), start/target reference ID and version, and transition IDs; a segment may cross a scene boundary without merging user-facing scene prompts | Critical | NOT RUN |
+| QCR-030 | Stage 10 reference coverage and lineage | Production Output blocks if Visual Prompt coverage differs from unique canonical Storyboard reference states or if Stage 07/08/09 artifacts cite a different Storyboard artifact/version or pinned source snapshot | Critical | NOT RUN |
+| QCR-031 | Downstream invalidation propagation | Storyboard changes stale affected Stage 07/08/09/10 artifacts; Stage 07 changes stale Stage 09/10; Stage 08 changes stale Stage 09/10; Stage 09 changes stale Stage 10 | Critical | NOT RUN |
+| QCR-032 | Stage 08/09 authority separation | Voice Script owns exact spoken wording and delivery; Video Prompt synchronizes but cannot rewrite it; neither downstream stage may add or alter Storyboard-owned action causality or resulting states | Critical | NOT RUN |
+
 ## Execution Protocol
 
 For each case:
