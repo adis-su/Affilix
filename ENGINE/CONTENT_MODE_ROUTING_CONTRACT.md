@@ -59,7 +59,7 @@ Collect only the inputs materially needed to establish the editorial brief:
 - intended emotional response or takeaway
 - optional format preference (automatic selection is allowed)
 - optional editorial pillar preference (automatic selection is allowed)
-- requested video duration: exactly 18, 28, or 30 seconds for video formats
+- fixed final video duration: exactly 20 seconds for video formats; not a user-selectable field; generation composition is exactly `10 + 10` seconds
 - audio/voice preference when it affects stage dependencies
 - optional additional context or constraints
 
