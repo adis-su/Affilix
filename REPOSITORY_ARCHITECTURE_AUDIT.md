@@ -146,3 +146,30 @@ The repository now defines the mode-selection boundary and mode-specific intake/
 1. Implement the Quote Content strategy, pillar, format, and editorial validation contracts.
 2. Implement mode-aware image/video/voice and production-output behavior.
 3. Add end-to-end Quote Content regression fixtures and validate existing UGC regressions.
+
+
+---
+
+## Quote Content Strategy Addendum
+
+### Addendum Date
+2026-10-10
+
+### Scope
+Phase 02 — Editorial Context, Strategy, and Hook Contracts.
+
+### Changes
+- Added `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md` with three editorial pillars, a five-format registry, strategy selection, validation, provenance, and invalidation rules.
+- Added `ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md` with editorial hook families, format-specific opening requirements, and safety/accuracy rules.
+- Added the `QUOTE_CONTENT` editorial context branch to `ENGINE/NICHE_CONTEXT_LOADER/README.md`.
+- Added mode-specific Stage 04 and Stage 05 runtime output shapes.
+- Updated the canonical workflow, mode-routing readiness, repository index, and regression fixtures.
+- Kept the canonical ten-stage registry unchanged and retained the UGC strategy/hook branches.
+
+### Phase 02 Status
+**PASS — editorial context, strategy, and hook contracts added.**
+
+This phase does not certify end-to-end Quote Content production. Stage 06 Storyboard, Stage 07 Visual Prompt, Stage 08 conditional Voice Script, Stage 09 Video Prompt, and Stage 10 Quote Content assembly remain mode-specific implementation work. Required unsupported stages must block rather than invoke UGC behavior.
+
+### Regression Coverage
+Fixtures CM-007 through CM-011 cover product-free editorial context, pillar/format selection, hook alignment, static-image skips, and batch-mix semantics. These are repository fixtures; they have not been represented as a completed automated runtime test suite.
