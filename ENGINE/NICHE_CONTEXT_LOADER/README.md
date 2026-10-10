@@ -10,12 +10,15 @@
 
 ## Purpose
 
-Resolve the product's niche and product type, then load applicable sub-niche and creative context for downstream UGC generation.
+Resolve the correct canonical context for the active content mode. For `UGC_AFFILIATE`, resolve the product's niche and product type and load applicable sub-niche/creative context. For `QUOTE_CONTENT`, resolve editorial niche, audience context, topic context, and relevant constraints without manufacturing a product or product type.
 
 This is a context-loading stage, not a separate creative engine.
 
 ## Input
 
+Common input: validated Stage 01 brief and persisted `content_mode`.
+
+For `UGC_AFFILIATE`:
 - Normalized brief
 - Product identity
 - Product references
@@ -26,9 +29,24 @@ This is a context-loading stage, not a separate creative engine.
 - Applicable sub-niche registry/context assets
 - Applicable product-type rules
 
+## Quote Content Editorial Context
+
+When `content_mode = QUOTE_CONTENT`, do not run product-niche classification or load product-type rules. Resolve a single canonical editorial context containing:
+
+- `editorial_niche`: for example household relationships, self-reflection, or relationship communication when supported by the brief
+- `audience_context`: only user-supplied or explicitly supported audience context
+- `topic_context`: the situation, question, or theme the content addresses
+- `publishing_context`: platform and objective when supplied
+- `sensitivity_flags`: potential abuse/coercion, mental-health framing, private-person claims, or other context needing careful treatment
+- `style_context`: supplied tone/aesthetic preferences, otherwise `UNKNOWN`
+- `evidence` and `provenance` for each non-UNKNOWN field
+- `unresolved_fields` and `conflict_flags`
+
+Do not infer demographics, relationship facts, personal testimony, diagnoses, or lived experiences from broad audience labels. Do not frame abuse, threats, coercive control, or fear as ordinary communication problems. Editorial context is not product evidence and must not create product fields.
+
 ## Resolution
 
-Determine:
+For `UGC_AFFILIATE`, determine:
 
 - niche_id
 - niche_name
@@ -115,7 +133,7 @@ If an explicit user instruction conflicts with a generic compatibility rule, pre
 
 ## Output
 
-Return a structured Niche Context:
+Return a mode-specific canonical context object. For `UGC_AFFILIATE`, return the existing structured Niche Context:
 
 - Niche
 - Sub-Niche
@@ -155,7 +173,7 @@ This prevents one stage from silently changing a context dimension and creating 
 
 ## Downstream Use
 
-Pass the full context to:
+For `QUOTE_CONTENT`, pass the editorial context to the Quote Content Strategy and Hook contracts. For `UGC_AFFILIATE`, pass the full product/niche context to:
 
 - Content Strategy
 - Hook Engine
@@ -182,7 +200,13 @@ A reclassification must replace the previous canonical context for the current r
 
 ## Runtime Invariants
 
-The loader must enforce:
+For both modes, the loader must enforce:
+
+- `content_mode` is persisted and matches the active run.
+- Product-specific dimensions are not fabricated or required for `QUOTE_CONTENT`.
+- Editorial audience/topic/sensitivity fields are not reused across runs without explicit provenance.
+
+The loader must also enforce:
 
 1. Single canonical context: downstream stages consume the same resolved context.
 2. No stale state: a reclassification invalidates dependent outputs from the previous context.
@@ -192,6 +216,33 @@ The loader must enforce:
 6. UNKNOWN preservation: unknown values remain unknown until authoritative evidence resolves them.
 7. Traceability: every non-UNKNOWN dimension has evidence.
 8. Conflict visibility: unresolved source conflicts are surfaced instead of silently normalized.
+
+## Quote Content Runtime Output Shape
+
+When `content_mode = QUOTE_CONTENT`, return:
+
+```yaml
+stage: 02_NICHE_CONTEXT
+content_mode: QUOTE_CONTENT
+status: COMPLETED | BLOCKED
+context:
+  editorial_niche:
+  audience_context:
+  topic_context:
+  publishing_context:
+  style_context:
+  sensitivity_flags: []
+confidence:
+evidence: []
+provenance: []
+unresolved_fields: []
+conflict_flags: []
+source_stage: 01_BRIEF_PRODUCT
+source_artifact_id:
+source_commit_sha:
+```
+
+For this mode, set product niche, product type, and product behavior to `NOT_APPLICABLE`, not invented values. This shape is consumed by `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md`.
 
 ## Example
 
