@@ -22,8 +22,8 @@ state:
     hand_positions:
     gaze:
     expression:
-  wardrobe:
-  hijab:
+  wardrobe: INHERIT_LOCKED_CONFIGURATION | EXPLICIT_STATE_OVERRIDE | UNKNOWN
+  hijab: INHERIT_LOCKED_CONFIGURATION | EXPLICIT_STATE_OVERRIDE | UNKNOWN
   product:
     position:
     orientation:
@@ -33,7 +33,7 @@ state:
     framing:
     angle:
     orientation:
-  environment:
+  environment: INHERIT_LOCKED_CONFIGURATION | EXPLICIT_STATE_OVERRIDE | UNKNOWN
   lighting:
 
 continuity_critical: []
@@ -54,7 +54,7 @@ The prompt describes the state, never the transition into or out of the state.
 
 ## Continuity
 
-When rendering a reference, preserve continuity-critical attributes from its predecessor unless the Storyboard explicitly changes them.
+When rendering a reference, inherit the already-approved wardrobe and environment configuration instead of designing them again. Preserve continuity-critical attributes from the canonical configuration and predecessor unless the Storyboard or an explicit user instruction authorizes a specific change. If a required configuration is unavailable, mark it UNKNOWN and do not invent replacement details. An override must be explicit and limited to the affected attribute; it must not silently redesign unrelated visual attributes.
 
 Continuity-critical examples:
 
