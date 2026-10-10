@@ -103,3 +103,8 @@ The artifact is validated, marked COMPLETED, and waits for `/next` then continue
 ## Invalidation
 
 Changes to Content Format, Storyboard, Strategy, Hook, Creator, Product, or campaign language requirements invalidate the Voice Script as STALE.
+
+
+## Mode-Specific Schema Dispatch
+
+For `content_mode = QUOTE_CONTENT`, use `QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md` as the authoritative output schema and skip rules. Do not require product claims or product proof. Preserve exact wording, provenance, dialogue timing, and non-fabrication checks. For `UGC_AFFILIATE`, retain this contract unchanged.
