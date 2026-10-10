@@ -51,6 +51,10 @@ Stage 03 Creator is optional. If the selected format requires a visible on-scree
 - Emotional approach: specific and balanced without forcing false equivalence.
 - Avoid: presenting abuse, threats, coercive control, or fear as ordinary communication issues. Prioritize safety and support where such dynamics are explicit.
 
+### Subpillar Selection
+
+The canonical 45-item catalogue and runtime rules live in `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_SUBPILLAR_REGISTRY.md`. Every `QUOTE_CONTENT` strategy must select exactly one primary subpillar beneath its primary pillar, recommend one automatically when the user has not chosen, derive a concrete content angle, and pass the angle through the registry's editorial safety rules. Store subpillar ID/name/rationale, content angle, and safety validation in the Stage 04 artifact. Changes to pillar, subpillar, or angle invalidate dependent downstream artifacts.
+
 ### Editorial Mix
 
 The initial batch-planning hypothesis is:
@@ -127,6 +131,8 @@ A strategy is valid only if:
 - exactly one primary format is selected from the registry;
 - platform and format are separate fields;
 - audience and topic are sufficiently defined for a coherent concept;
+- exactly one subpillar is selected under the primary pillar and a concrete content angle is defined;
+- the content angle passes the subpillar registry's non-blaming editorial safety rules;
 - one primary message and takeaway are present;
 - format-specific dependencies and skipped stages are recorded;
 - no product claim, fake testimonial, fabricated quote attribution, or unsupported performance claim is introduced;
@@ -163,6 +169,15 @@ audience:
   core_need:
   awareness_level:
 editorial_topic:
+subpillar:
+  id:
+  name:
+  rationale:
+content_angle:
+editorial_safety_validation:
+  status:
+  issues: []
+  corrections: []
 primary_message:
 takeaway:
 emotional_strategy:
