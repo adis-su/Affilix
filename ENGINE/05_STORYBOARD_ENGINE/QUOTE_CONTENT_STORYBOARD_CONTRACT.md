@@ -19,9 +19,15 @@ This contract extends the universal Storyboard engine for quote-led editorial vi
 
 Current Stage 01 editorial brief, Stage 02 editorial context, Stage 04 Quote Content Strategy, and Stage 05 Hook when required. Creator is optional unless the strategy explicitly requires a visible persona. No product or product interaction is required.
 
+## Default Direct-to-Camera Talking-Head Treatment
+
+All Quote Content video formats default to `DIRECT_TO_CAMERA_TALKING_HEAD`. The creator speaks directly to the lens as the primary storytelling channel; format differences are expressed through the spoken narrative, gaze, expression, gestures, and motivated timing, not by automatically switching to montage or acted scenes. Preserve this treatment across scenes unless the user explicitly requests a different visual treatment.
+
+Storyboard every beat as a causal performance process: trigger/intention for the line → visible delivery/action → emotional or informational result → resulting reference state. Specify the creator's body posture, purposeful hand gesture, gaze to lens or brief motivated gaze break, expression progression, micro-motion, and restrained camera behavior. A speaker may pause, breathe, glance briefly away to recall a thought, then return gaze to the lens when motivated; avoid constant motion, exaggerated acting, random gestures, and unexplained camera movement. Keep the creator visually present and speaking on camera when `audio_mode = SPOKEN_ON_CAMERA`. When `VOICE_OVER` or `NO_SPOKEN_VOICE` is explicitly selected, preserve the direct-to-camera composition by default but do not require visible lip-sync.
+
 ## Editorial Story Mechanism
 
-Preserve the selected format's mechanism. A relationship or reflective story must not be turned into a product-demo structure.
+Preserve the selected format's mechanism. A relationship or reflective story must not be turned into a product-demo structure. Under the default talking-head treatment, communicate that mechanism through the creator's direct spoken delivery, expressions, gestures, and controlled changes of state rather than unrelated cutaways.
 
 | Format | Required scene progression |
 |---|---|
@@ -71,6 +77,7 @@ metadata:
   strategy_id:
   hook_id:
   format_id:
+  delivery_mode: DIRECT_TO_CAMERA_TALKING_HEAD | USER_OVERRIDE
   requested_duration:
   creative_duration:
   scene_count:
@@ -78,6 +85,7 @@ metadata:
 scenes:
   - scene_id:
     scene_purpose:
+    delivery_mode: DIRECT_TO_CAMERA_TALKING_HEAD | USER_OVERRIDE
     duration:
     hook_continuation:
     action_graph:
