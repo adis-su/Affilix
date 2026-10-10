@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#!/usr/bin/env python3
 """Static contract checks for Affilix.
 
 These checks verify repository wiring and critical documented invariants.
@@ -107,8 +106,8 @@ for content, label in [(storyboard, "Storyboard"), (video, "Video Prompt"), (out
           f"{label} contract preserves exact segment duration and infeasible-duration blocking")
 check("NOT RUN as an end-to-end runtime suite" in matrix,
       "regression matrix clearly distinguishes test specifications from runtime execution")
-check(all(f"QCR-{i:03d}" in matrix for i in range(1, 23)),
-      "Quote Content regression matrix includes QCR-001 through QCR-022")
+check(all(f"QCR-{i:03d}" in matrix for i in range(1, 27)),
+      "Quote Content regression matrix includes QCR-001 through QCR-026")
 
 # Quote Content intake and duration-bound script rules.
 check("20 seconds" in entry and "20 seconds" in routing and "20 seconds" in voice,
@@ -119,6 +118,18 @@ check("content quantity" in entry.lower() and "user-selected CTA" in entry,
       "Quote Content intake excludes content quantity and user-selected CTA fields")
 check("38–44" in voice,
       "Quote Content voice contract defines the 20-second spoken-word target")
+
+# Cross-stage timing and source-integrity invariants.
+check("time_window:" in storyboard and "start_time:" in storyboard and "end_time:" in storyboard,
+      "Quote Content Storyboard schema exposes explicit beat timing windows")
+check("dialogue_anchor:" in storyboard and "semantic_intent:" in storyboard and "action_window:" in storyboard and "target_reference:" in storyboard,
+      "Quote Content Storyboard schema exposes resolvable dialogue anchors")
+check("anchor_resolution: PASS | NEEDS_REFINEMENT | BLOCKED" in voice and "source_freshness: PASS | BLOCKED" in voice,
+      "Quote Content Voice Script requires anchor-resolution and source-freshness validation")
+check("action_window" in voice and "target_reference" in voice and "protected pause" in voice.lower(),
+      "Voice Script validates line timing, target references, and protected visual beats")
+check("QCR-024" in matrix and "QCR-025" in matrix and "QCR-026" in matrix,
+      "Regression matrix includes timing, dialogue-anchor, and stale-source integration cases")
 check("requested video duration" in brief.lower() and "NOT_APPLICABLE" in brief,
       "Brief Analyzer normalizes video duration and static-image not-applicable state")
 
