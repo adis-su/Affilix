@@ -77,10 +77,15 @@ Each prompt must map to exactly one Storyboard reference:
 reference_id:
 reference_role: START | INTERMEDIATE | END | BRIDGE
 reference_version:
+source_scene_id: required source scene ID
+source_beat_id: required source beat ID
+sequence_index: required scene-local order
+source_storyboard_id: required exact storyboard artifact ID
+source_storyboard_version: required exact storyboard artifact version
 continuity_lock: PASS | NEEDS_REFINEMENT
 ```
 
-A scene may therefore contain multiple prompts. Visual Prompt output count is driven by the Storyboard Reference Plan, not by scene count. Every declared reference state must produce exactly one static image prompt. A bridge prompt must use the same reference version used by both adjacent scenes.
+A scene may therefore contain multiple prompts. Visual Prompt output count is driven by the Storyboard Reference Plan, not by scene count. Every declared canonical reference state must produce exactly one static image prompt across the active storyboard artifact. A shared bridge is one canonical state and must not produce duplicate prompts merely because two scenes reference it. A bridge prompt must use the same reference version used by both adjacent scenes.
 
 ### Reference Density Invariant
 
@@ -101,6 +106,10 @@ Stage completion: process, validate, mark `COMPLETED`, then wait for `/next`. A 
 
 For `content_mode = QUOTE_CONTENT`, use `QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md` as the authoritative output schema, including the static `QUOTE_IMAGE` path and one prompt per declared video reference state. For `UGC_AFFILIATE`, retain this contract unchanged.
 
+
+## Exact Storyboard Source and Reference Graph Gate
+
+For video-mode Quote Content, Stage 07 MUST require `metadata.storyboard_id`, `metadata.storyboard_version`, and `source_commit_sha` from the current completed Stage 06 artifact. Record the exact artifact ID/version in `source_artifacts`; every prompt must carry source scene, source beat, sequence index, reference ID/version, and the same source storyboard ID/version. Validate all states before generation: non-empty required metadata, scene/beat resolution, contiguous unique sequence indices, trajectory/Reference Plan equality, exactly n−1 adjacent transitions per scene, valid `reference_after` links, and identical bridge ID/version at both boundaries. Generate one prompt per unique canonical state in source order. Missing or inconsistent data returns `NEEDS_REFINEMENT` with exact scene/field details; never fabricate metadata or mark Stage 07 completed. Do not change the UGC-specific behavior except where the universal exact-source identity requirement applies.
 
 ## Quote Content Exact-Value Validation Gate
 
