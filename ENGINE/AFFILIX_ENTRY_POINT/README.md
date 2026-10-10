@@ -121,8 +121,6 @@ Do not inherit content mode, product, creator, niche, claims, editorial brief, s
 
 Apply the mode-specific intake and validation rules from `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
 
-For `UGC_AFFILIATE`:
-
 1. Normalize through `ENGINE/01_BRIEF_ANALYZER/README.md` using the selected content mode.
 2. For `UGC_AFFILIATE`, inspect the supplied product link/reference, reconcile accessible product facts with Product Library records, and preserve genuinely unavailable fields as UNKNOWN.
 3. For `QUOTE_CONTENT`, normalize the editorial brief and its provenance without requiring a product reference.
