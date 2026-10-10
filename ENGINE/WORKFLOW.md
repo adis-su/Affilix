@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This is the **single canonical execution contract** for the Affilix production runtime.
+This is the **single canonical stage registry and execution contract** for the Affilix production runtime. Mode selection and mode-specific conditional dependencies are defined by `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`; this file remains the sole authority for stage IDs, names, order, and implementation paths.
 
 Affilix runs as one continuous, dependency-aware production workflow. Engines are internal implementation components, not separate user-facing commands.
 
@@ -10,7 +10,7 @@ Affilix runs as one continuous, dependency-aware production workflow. Engines ar
 
 The user-facing command is `/Affilix`.
 
-A new `/Affilix` run must resolve the current `main` branch head, pin that commit for the run, load the relevant repository contracts, initialize isolated run state, and begin Stage 01.
+A new `/Affilix` run must resolve the current `main` branch head, pin that commit for the run, load the relevant repository contracts, initialize isolated run state, resolve `run.content_mode`, and begin Stage 01 using the intake contract for that mode.
 
 Repository resolution, commit pinning, source loading, and diagnostics are internal. They must never appear in the canonical Stage 01 opening.
 
@@ -58,7 +58,9 @@ Naturalism validation failure is handled inside the affected stage. It never cre
 ```text
 /Affilix
   ↓
-01 BRIEF & PRODUCT
+CONTENT MODE SELECTOR (when mode is not explicit)
+  ↓
+01 BRIEF & PRODUCT / MODE-SPECIFIC BRIEF
   ↓ /next
 02 NICHE & CONTEXT
   ↓ /next
@@ -81,7 +83,7 @@ Naturalism validation failure is handled inside the affected stage. It never cre
 
 No QC stage, Final UGC Package stage, or approval gate exists.
 
-Only Stage 08 may be skipped when `audio_mode` is `NO_SPOKEN_VOICE`. All other canonical stages remain required for the Affilix UGC production pipeline. Skipping is a dependency decision, not an approval decision.
+For `UGC_AFFILIATE`, the existing UGC stage requirements remain in force. Across modes, conditional stage skips are allowed only where `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` or the applicable mode contract explicitly permits them. A skipped stage must record `SKIPPED` plus a reason. A stage whose mode-specific implementation is not yet available must be `BLOCKED`, never silently replaced by an unrelated engine.
 
 ## Stage Execution Contract
 
@@ -136,25 +138,32 @@ There is no `REVIEW` state because Affilix has no approval workflow.
 
 ### 01 — Brief & Product
 
-Input: product name and product link/reference.
+The canonical stage ID and registry entry remain unchanged; the artifact schema is mode-aware.
 
-Output: normalized product brief plus researched product facts, evidence/provenance, supported claims, and genuine unknowns.
+- `UGC_AFFILIATE`: input is product name and product link/reference. Output is a normalized product brief, researched product facts, evidence/provenance, supported claims, and genuine unknowns.
+- `QUOTE_CONTENT`: input is an editorial brief. Product identity, product link, product claims, and product demonstration are not required unless the user explicitly requests product-centered content. Output is a normalized editorial brief with source provenance and genuine unknowns.
+
+Use `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` to validate the selected mode and its required inputs.
 
 The supplied product link/reference must be actively inspected when accessible. Unsupported marketing language must not be promoted to fact.
 
 ### 02 — Niche & Context
 
-Input: completed Stage 01 Brief & Product.
+Input: completed Stage 01 brief artifact.
 
-Output: exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
+- `UGC_AFFILIATE`: output exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
+- `QUOTE_CONTENT`: resolve editorial niche, audience context, and topic context without manufacturing a product or product-type state.
+
+Output and validation must preserve `content_mode` and source provenance.
 
 ### 03 — Creator
 
-Input: completed Niche & Context and Brief & Product.
+Input: completed Stage 01 and Stage 02 artifacts.
 
-Output: resolved canonical creator identity and applicable Creator Library references.
+- `UGC_AFFILIATE`: resolve the requested canonical creator identity and applicable Creator Library references.
+- `QUOTE_CONTENT`: select a creator only when the brief or selected editorial direction requires an on-screen/persona identity. If not required, mark Stage 03 `SKIPPED` with an explicit reason.
 
-Creator selection must come from the current pinned repository. Identity is locked downstream.
+Any selected creator must come from the current pinned repository. Identity is locked downstream.
 
 ### 04 — Content Strategy
 
@@ -267,13 +276,17 @@ Spoken naturalization must preserve factual meaning and campaign intent.
 
 ### 10 — Production Output
 
-Input: all required current, non-STALE upstream artifacts, including the selected Content Format and its downstream propagation state.
+Input: all required current, non-STALE upstream artifacts for the selected `content_mode`.
 
-Output: consolidated production output assembled from current runtime state, with Content Format traceability preserved through Hook, Storyboard, Visual Prompt, Video Prompt, and Voice Script when applicable.
+Output must be assembled by the applicable mode-specific output contract and include only required, current assets. `UGC_AFFILIATE` retains the existing UGC output contract. `QUOTE_CONTENT` must not use the UGC output template as an implicit fallback until its mode-specific strategy and production contracts are implemented.
 
-Production Output must block final assembly when the selected Content Format is missing, stale, or contradicted by a required downstream artifact.
+Production Output must block final assembly when the selected mode or format is missing, stale, unsupported, or contradicted by a required downstream artifact.
 
 This is the final assembly step, not a separate QC or approval gate.
+
+## Content Mode Routing
+
+`ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md` defines the mode selector, mode-specific intake, conditional stage dependencies, and implementation blockers. The canonical ten-stage registry in this file remains unchanged. Changes to mode selection invalidate all mode-dependent run artifacts; never reuse production artifacts across modes.
 
 ## Spoken Audio and External Dialogue
 
