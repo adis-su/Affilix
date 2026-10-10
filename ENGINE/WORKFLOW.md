@@ -152,7 +152,7 @@ For `UGC_AFFILIATE`, the supplied product link/reference must be actively inspec
 Input: completed Stage 01 brief artifact.
 
 - `UGC_AFFILIATE`: output exactly one canonical niche/product context. Missing values remain `UNKNOWN`.
-- `QUOTE_CONTENT`: the intended output is editorial niche, audience context, and topic context without manufacturing a product or product-type state. The current Niche Context Loader has not yet been adapted for this mode; block Stage 02 with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED` until that adapter is implemented.
+- `QUOTE_CONTENT`: use the editorial context branch in `ENGINE/NICHE_CONTEXT_LOADER/README.md` to resolve editorial niche, audience context, topic context, publishing context, and sensitivity flags without manufacturing product or product-type state.
 
 Output and validation must preserve `content_mode` and source provenance.
 
@@ -170,11 +170,14 @@ Any selected creator must come from the current pinned repository. Identity is l
 Input: completed Stage 01 and Stage 02 artifacts, plus Stage 03 Creator when required by the selected mode.
 
 - `UGC_AFFILIATE`: use the existing product-centered strategy contract and output objective, audience, product role, angle, core message, story arc, and proof strategy.
-- `QUOTE_CONTENT`: use the editorial strategy, pillar, and format contract when implemented. Do not invoke product proof scoring. Until that contract is implemented, block with `QUOTE_CONTENT_ENGINE_NOT_IMPLEMENTED`.
+- `QUOTE_CONTENT`: use `ENGINE/03_CONTENT_STRATEGY/QUOTE_CONTENT_STRATEGY_CONTRACT.md` for pillar, format, editorial message, emotional strategy, and validation. Do not invoke product proof scoring.
 
 ### 05 — Hook
 
 Input: completed Strategy when required by the selected mode/format.
+
+- `UGC_AFFILIATE`: use the existing product-aware Hook contract.
+- `QUOTE_CONTENT`: use `ENGINE/04_HOOK_ENGINE/QUOTE_CONTENT_HOOK_CONTRACT.md` for editorial hook families, format-specific openings, and sensitivity validation.
 
 Output: validated hook direction/copy and delivery direction. A static format may skip this stage only when the mode-specific contract explicitly permits it.
 
