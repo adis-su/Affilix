@@ -357,6 +357,18 @@ After Stage 06 Storyboard, the workflow intentionally executes the spoken-conten
 
 Stage 08 Voice Script is a Storyboard descendant and does not depend on Visual Prompt. Stage 09 Video Prompt consumes the current Storyboard, current Visual Prompt when visual continuity is required, and the current Stage 08 Voice Script when spoken content exists. This ordering reflects the actual data dependency rather than treating Voice Script as a final post-processing artifact.
 
+## Quote Content Production Contract Dispatch
+
+For `content_mode = QUOTE_CONTENT`, the universal stages retain their canonical IDs but load these mode-specific contracts:
+
+- Stage 06 Storyboard: `ENGINE/05_STORYBOARD_ENGINE/QUOTE_CONTENT_STORYBOARD_CONTRACT.md`. `QUOTE_IMAGE` skips with `STATIC_IMAGE_FORMAT`.
+- Stage 07 Visual Prompt: `ENGINE/06_VISUAL_PROMPT_ENGINE/QUOTE_CONTENT_VISUAL_PROMPT_CONTRACT.md`. Static quote image produces one image prompt; video formats produce one prompt per Storyboard reference state.
+- Stage 08 Voice Script: `ENGINE/08_VOICE_SCRIPT_ENGINE/QUOTE_CONTENT_VOICE_SCRIPT_CONTRACT.md`. Conditional on spoken/external dialogue; skipped only with a declared reason.
+- Stage 09 Video Prompt: `ENGINE/07_VIDEO_PROMPT_ENGINE/QUOTE_CONTENT_VIDEO_PROMPT_CONTRACT.md`. Static quote image skips; video prompt count must equal scene count exactly.
+- Stage 10 Production Output: `ENGINE/QUOTE_CONTENT_PRODUCTION_OUTPUT_CONTRACT.md`. It is distinct from the UGC output template.
+
+These contracts preserve the existing ten-stage registry. Editorial-only content has no invented product dependency. Exact duration composition, action causality, reference-state versioning, bridge immutability, source provenance, and downstream invalidation remain mandatory. The presence of contracts does not mean any specific campaign asset has been generated; each stage must still process and validate current inputs.
+
 ## Revision and Invalidation
 
 When a canonical upstream input changes:
