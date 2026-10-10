@@ -173,3 +173,27 @@ This phase does not certify end-to-end Quote Content production. Stage 06 Storyb
 
 ### Regression Coverage
 Fixtures CM-007 through CM-011 cover product-free editorial context, pillar/format selection, hook alignment, static-image skips, and batch-mix semantics. These are repository fixtures; they have not been represented as a completed automated runtime test suite.
+
+
+---
+
+## Quote Content Production Addendum
+
+### Addendum Date
+2026-10-10
+
+### Scope
+Phase 03 — Quote Content production contracts.
+
+### Changes
+- Added mode-specific Storyboard contract with editorial story mechanisms, action causality, reference graph, bridge immutability, and exact duration rules.
+- Added mode-specific Visual Prompt contract for static quote images and one prompt per Storyboard reference state.
+- Added conditional Quote Content Voice Script contract with non-fabrication and dialogue ownership rules.
+- Added mode-specific Video Prompt contract with exactly one user-facing prompt per Storyboard scene and exact generation-segment composition.
+- Added a distinct Quote Content Production Output contract, separate from the UGC template.
+- Wired mode-specific dispatch into the canonical workflow, routing readiness, runtime loader, engine READMEs/runtime contracts, repository index, and regression fixtures CM-012–CM-016.
+
+### Phase 03 Status
+**CONTRACTS ADDED; STATIC CONSISTENCY VERIFICATION REQUIRED; AUTOMATED REGRESSION NOT CLAIMED.**
+
+This addendum records repository contract changes only. It does not claim that image/video generation or end-to-end campaign execution was run. Phase 04 regression and hardening remains pending.
