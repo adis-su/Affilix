@@ -85,9 +85,13 @@ Each prompt MUST map to exactly one complete, declared Stage 06 reference state 
 - `continuity_lock`
 - the applicable ordered `reference_trajectory` and transition IDs as traceability metadata
 
-Stage 07 must first validate the incoming storyboard. If a required reference ID, version, source beat, sequence index, state summary, ordered trajectory, or transition is missing, do not invent it in the image prompt and do not report Stage 07 as completed. Return a specific `NEEDS_REFINEMENT` dependency report identifying the exact scene and missing fields, and require Stage 06 to regenerate/revalidate its reference plan. If a value can be deterministically populated from the current storyboard's existing beat IDs and states without changing creative meaning, that repair belongs in Stage 06, followed by revalidation.
+The incoming video storyboard MUST expose `metadata.storyboard_id` and `metadata.storyboard_version`; `source_commit_sha` alone is not artifact identity. Stage 07 records the exact `(storyboard_id, storyboard_version)` pair in `source_artifacts` and binds every prompt to that same pair. Mixing states across storyboard versions is invalid. Stage 07 must first validate the incoming storyboard. If a required reference ID, version, source beat, sequence index, state summary, ordered trajectory, or transition is missing, do not invent it in the image prompt and do not report Stage 07 as completed. Return a specific `NEEDS_REFINEMENT` dependency report identifying the exact scene and missing fields, and require Stage 06 to regenerate/revalidate its reference plan. If a value can be deterministically populated from the current storyboard's existing beat IDs and states without changing creative meaning, that repair belongs in Stage 06, followed by revalidation.
 
-Every storyboard-declared reference state produces exactly one prompt; no missing or extra prompts are allowed. A shared bridge reference uses the same ID and version at both adjacent scene boundaries. Never reinterpret an immutable bridge independently for each scene. Validate `prompt_count == declared_reference_state_count` and preserve storyboard ordering.
+Every storyboard-declared reference state produces exactly one prompt; no missing or extra prompts are allowed. A shared bridge reference uses the same ID and version at both adjacent scene boundaries. Never reinterpret an immutable bridge independently for each scene. Validate `prompt_count == declared_reference_state_count` across the entire active storyboard artifact, not merely per scene, and preserve storyboard ordering. If a bridge appears at both scene boundaries, generate one prompt for the one canonical bridge state; do not duplicate it because it is referenced by two scenes. Validate the unique canonical reference-state count after bridge deduplication.
+
+## Deterministic Reference Coverage Validation
+
+Before generation, validate the full Stage 06 artifact: every state has non-empty `reference_id`, `reference_version`, `source_scene_id`, `source_beat_id`, `sequence_index`, `state_summary`, and `continuity_invariants`; every source scene and beat resolves within the pinned storyboard artifact; sequence indices are unique and contiguous per scene; the ordered trajectory exactly equals the Reference Plan; for each scene with n states there are exactly n−1 valid adjacent transition records; every `reference_after` resolves; and bridge identity/version matches at both scene boundaries. Then generate exactly one prompt per unique declared canonical state, preserving source order. If any check fails, return `NEEDS_REFINEMENT` with scene ID and missing/invalid fields and do not claim completion. Do not repair Stage 06 data inside Stage 07.
 
 ## Validation
 
@@ -113,7 +117,11 @@ prompts:
       format_mechanism: PASS | NEEDS_REFINEMENT
       continuity: PASS | NEEDS_REFINEMENT
       non_fabrication: PASS | BLOCKED
-source_artifacts: []
+source_artifacts:
+  - artifact_type: 06_STORYBOARD
+    artifact_id: required storyboard_id from source
+    artifact_version: required storyboard_version from source
+    source_commit_sha: exact source commit SHA
 provenance: []
 source_commit_sha:
 ```
