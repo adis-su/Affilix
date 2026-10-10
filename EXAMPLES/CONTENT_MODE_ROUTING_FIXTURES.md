@@ -2,7 +2,7 @@
 
 ## Purpose
 
-These fixtures validate the Phase 01 routing foundation. They do not claim that the Quote Content strategy or production engines are complete.
+These fixtures cover mode selection, cross-mode isolation, and Quote Content stage routing through the current mode-specific contracts. They are behavioral test specifications; their presence does not claim end-to-end execution. For production-specific cases, use `EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md`.
 
 Canonical routing contract: `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
 
@@ -121,7 +121,7 @@ Canonical routing contract: `ENGINE/CONTENT_MODE_ROUTING_CONTRACT.md`.
 - Stage order is inferred from folder names.
 - A skip is treated as generated output or approval.
 
-## Phase 01 Acceptance
+## Routing Fixture Acceptance
 
 Phase 01 is accepted when the mode contract, entrypoint, Skill, canonical workflow, runtime state contract, Brief Analyzer, and repository loader agree on:
 
@@ -319,3 +319,10 @@ Phase 01 does not certify Quote Content end-to-end production. That depends on P
 
 - UGC production output template is used.
 - A required artifact is missing/stale or a validation blocker is suppressed.
+
+
+## Phase 02–04 Acceptance
+
+- Phase 02 contracts: editorial context, strategy, and hook contracts are present and mode-dispatched.
+- Phase 03 contracts: storyboard, visual prompt, conditional voice, video prompt, and Quote Content Production Output contracts are present and mode-dispatched.
+- Phase 04 regression: see `EXAMPLES/QUOTE_CONTENT_REGRESSION_MATRIX.md`. End-to-end acceptance remains NOT RUN until runtime cases are executed and observed results are recorded.
